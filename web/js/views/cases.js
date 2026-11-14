@@ -11,6 +11,7 @@ import { exhibit } from "./exhibit.js";
 import { caseFrame } from "../viz/anomaly-map.js";
 import { METHOD_NAME } from "../data.js";
 import { hasNote, plainReason as no2Reason, whyBlock, mapBanner, limits as no2Limits } from "./no2.js";
+import { briefLimits, exploratoryPanel, moreLimits, indexNote } from "./disclosure.js";
 
 const NA = () => h("span", { class: "muted" }, "Not in this bundle yet.");
 const NOT_SHOWN = "Not shown: failed its coverage check.";
@@ -35,7 +36,7 @@ const scopeLine = c => [cap(c.region.name), c.season.toLowerCase(), range(c.peri
 export function caseList(b) {
   return { title: "Case files", node: h("div", {},
     h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "Case files"),
-      h("p", { class: "lede" }, "Questions registered before each claim's data were downloaded, then tested with NASA data. The questions cannot be edited. The methods were amended and disclosed, and the final gate is frozen.")),
+      h("p", { class: "lede" }, "Questions registered before each claim's data were downloaded, then tested with NASA data. The questions cannot be edited. The methods were amended and disclosed, and the final gate is frozen."), indexNote()),
     h("div", { class: "case-rows" }, b.claims.map(c => {
       const r = c.regional, iv = r.interval, u = U(r.units);
       return h("article", { class: "case-row", "aria-labelledby": "ct-" + c.id },
@@ -71,7 +72,7 @@ export function caseDocket(b, c, query = "") {
         ruleNote.append(lead, `Under the round 2 rules this case was withheld (run ${ref.run_id}). The round 3 rules, written after outside review and after the round 2 bundles had been seen, simulate negative persistence and match the noise shape to the record. Under them the court now gives a ruling: ${v.label.toLowerCase()}. Both runs stay on record. `, link, ".");
       } else if (ref.p != null && t && iv) {
         const before = ref.regional_test === "mk_independent" ? "plain Mann-Kendall, no correction" : (METHOD_NAME[ref.regional_test] || ref.regional_test);
-        ruleNote.append(lead, `Round 2 rule (${before}): p ${fmtPx(ref.p)}, interval ${signed(ref.interval[0], 2)} to ${signed(ref.interval[1], 2)} ${u} per decade, ${area(ref.area_in_direction)} of the area flagged in the claimed direction. Round 3 rule, after outside review, now simulates negative persistence (${t.title}): p ${fmtPx(t.p)}, interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}, ${area(finalQ.flagged_fraction_claimed)} flagged. The ruling is ${v.label.toLowerCase()} in both rounds. The result looks stronger, but only because a rule was changed after the results were seen, so read both. The round 2 numbers stay on record. `, link, ".");
+        ruleNote.append(lead, `Round 2 rule (${before}): p ${fmtPx(ref.p)}, interval ${signed(ref.interval[0], 2)} to ${signed(ref.interval[1], 2)} ${u} per decade, ${area(ref.area_in_direction)} of the area flagged in the claimed direction. Round 3 rule, after outside review, now simulates negative persistence (${t.title}): p ${fmtPx(t.p)}, interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}, ${area(finalQ.flagged_fraction_claimed)} flagged. The ruling is ${v.label.toLowerCase()} in both rounds. Read both p-values together: the round 2 test was already valid for this series, only cautious, so the change bought power, not validity. The round 2 numbers stay on record. `, link, ".");
       } else return;
       ruleNote.hidden = false;
     } catch (e) { /* the note is an addition; the ruling stands without it */ }
@@ -242,12 +243,13 @@ export function caseDocket(b, c, query = "") {
   const limits = disc("Limits of this finding",
     withheld ? h("p", {}, h("b", {}, "Why the ruling is withheld. "), (v.withheld_reasons && v.withheld_reasons.length ? v.withheld_reasons : c.gate.reasons).join(" "), " ", h("a", { href: "#/method" }, "How the checks work")) : withheldNote(c),
     hasNote(c) ? no2Limits(c) : null,
+    moreLimits(c),
     c.gate.adaptive_notes && c.gate.adaptive_notes.length ? c.gate.adaptive_notes.map(x => h("p", { class: "muted small" }, h("b", {}, "Calibration note. "), x)) : null,
     !iv && !withheld && c.gate.reasons_interval && c.gate.reasons_interval.length ? h("p", { class: "muted small" }, h("b", {}, "Why no interval. "), c.gate.reasons_interval.join(" ")) : null,
     f.scope_text ? h("p", {}, h("b", {}, "What this number describes. "), f.scope_text) : null,
     f.not_supported ? [h("p", {}, h("b", {}, "What the evidence does not support")), h("ul", {}, f.not_supported.map(x => h("li", {}, x)))] : null,
     c.conservative && c.conservative.length ? h("p", {}, h("b", {}, "The test is conservative here. "), c.conservative.join(" ")) : null,
-    withheld ? null : h("p", {}, h("b", {}, "How to read the ruling. "), `The map and the regional series come from the same data, so they are not independent evidence. The ${pct(th.breadth, 0)} and ${pct(th.local, 0)} area thresholds that separate "supported" from "partly supported" are conventions we chose before seeing results, not a calibrated scale. Flagged-area percentages are shares of the tested area, not the chance that the claim is true. "Partly supported" can mean that the regional average changed significantly while few cells did: it combines two questions, whether the average moved and how widespread the change is across the map.`),
+    withheld ? null : h("p", {}, h("b", {}, "How to read the ruling. "), `The map and the regional series come from the same data, so they are not independent evidence. The ${pct(th.breadth, 0)} and ${pct(th.local, 0)} area thresholds that separate "supported" from "partly supported" are conventions we chose before seeing results, not a calibrated scale. Flagged-area percentages are shares of the tested area, not the chance that the claim is true. "Partly supported" can mean that the regional average changed significantly while few cells did: it combines two questions, whether the average moved and how widespread the change is across the map. A small flagged share is also limited by what a map this size can see: at 25 seasons it finds only a small fraction of the cells that truly change, so it is not evidence that the change is narrow.`),
     h("p", {}, h("b", {}, "Values over time. "), "Each square is one grid cell against its own baseline, with no smoothing in space. Colors blend between years only while the animation plays."),
     h("p", {}, h("b", {}, "Distribution. "), "This view pools every cell in every year of a 10-year period (the last period can be shorter), unweighted, so its mean differs from the area-weighted regional record. Neighboring cells and years are correlated, so these curves describe the data and are not independent observations. A small share of extreme values can fall outside the drawn range (the figure says how many). None of these views is a test, and none changes the ruling."),
     c.id === "C-A" ? h("p", {}, h("b", {}, "Changing observation time may affect the record. "), "Terra's daytime overpass has been getting earlier since NASA stopped adjusting its orbit in 2020 (", h("a", { href: "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/", target: "_blank", rel: "noopener" }, "NASA Science, 2025"), "), so its readings now come from earlier in the morning. The Witness check finds that the satellite's daytime readings track overpass time closely (the correlation is given there), which is consistent with an earlier pass reading cooler. It does not show that the drift caused the ruling. The registered reason this claim is withheld is failed calibration under year-to-year dependence, and the Witness check is exploratory, not the registered test.") : null,
@@ -272,7 +274,7 @@ export function caseDocket(b, c, query = "") {
     h("header", { class: "case-head" },
       h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id) + " · the registered claim"), h("h1", { id: "page-title", tabindex: "-1" }, "“" + c.claim_text + "”"),
       h("p", { class: "definition" }, h("b", {}, c.variable.name.replace(/^[A-Za-z0-9]+ \((.*)\)$/, (m, x) => cap(x)) + ": "), c.variable.plain)),
-    ex.node, ruling, hasNote(c) ? whyBlock(c) : null, ruleNote,
+    ex.node, ruling, hasNote(c) ? whyBlock(c) : null, ruleNote, briefLimits(c), exploratoryPanel(c),
     (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(),
     h("div", { class: "docket-more" }, statistics, limits, provenance)),
     afterMount: () => ex.start(), dispose: () => ex.dispose() };

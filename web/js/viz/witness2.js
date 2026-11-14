@@ -28,9 +28,11 @@ function addStation(A, d, extra) {
   const sigWord = [k.p_hamed_rao_registered, esa.p_hamed_rao_registered].every((p) => p > 0.05) ? "neither is significant" : "see the p-values";
   A.thirdS = { label: "CRU TS station air temperature (2 m daily maximum)", short: "CRU air", v: ix.map((i) => extra.series.knmi_cru_tmx_jja_anomaly_degC[i]), slope: k.sen_per_decade, p: k.p_hamed_rao_registered };
   A.r3 = { modis: st.agreement_knmi_vs_modis_same_footprint.pearson_r, esa: st.agreement_knmi_vs_esa.pearson_r };
+  const pre = ((extra.divergence_from_2021 || {}).trend_of_difference_before_2021 || {}).knmi_minus_modis;
   A.words.push(
     `Station air temperature and the ESA record both lean up (${signed(k.sen_per_decade, 2)} and ${signed(esa.sen_per_decade, 2)} ${u} per decade; ${sigWord}) while MODIS Terra leans down (${signed(mod.sen_per_decade, 2)}). The gap between MODIS and the air temperature grows through the record (station minus MODIS: ${signed(gap.sen_per_decade, 2)} ${u} per decade)` +
     (ry.length ? `, and most of all in the early 2020s: the registered MODIS series sits colder than its ${res.fit_years[0]}\u2013${res.fit_years[1]} relation to air temperature predicts, by ${plain(Math.abs(res.residuals_later_years[ry[0]]), 2)} ${u} in ${ry[0]} and ${plain(Math.abs(res.residuals_later_years[ry[ry.length - 1]]), 2)} ${u} in ${ry[ry.length - 1]}. ` : ". ") +
+    (pre ? `MODIS already trails station air temperature before the orbit change: over 2001–2020, station minus MODIS is ${signed(pre.sen_per_decade, 2)} ${u} per decade (p ${fp(pre.p_hamed_rao_registered)}). So the drift does not explain the whole gap; part of it may be a real difference between land surface (skin) temperature and air temperature. ` : "") +
     "The comparison records do not show the same cooling trend.");
   A.kind3 = "The third line is station-based 2 m air temperature (CRU TS 4.10 daily maximum, via KNMI Climate Explorer), not land surface skin temperature, so compare changes, not levels. Station records share no input with MODIS or ESA. It is a cross-check, not ground truth, and it does not show which satellite series is right.";
   A.links.push(["CRU TS station data on KNMI Climate Explorer", extra.witness.page_url]);
@@ -80,11 +82,11 @@ function adaptKnmi(d) {
     caseS: { label: `${caseName} (the case series)`, short: rain ? "IMERG" : "MERRA-2", v: d.series[cSeries], slope: cs.sen_per_decade, p: pick(cs) },
     witS: { label: "CRU TS station-based record", short: "CRU TS", v: d.series[wSeries], slope: ws.sen_per_decade, p: pick(ws) },
     r: ag.pearson_r, n: ag.n_years, band: null, mark: null,
-    kind: `CRU TS 4.10, a ${rain ? "rain-gauge" : "weather-station"} record gridded at 0.5 degrees and served by KNMI Climate Explorer. It is a different kind of measurement from the ${rain ? "satellite" : "reanalysis model"}, but it is not ground truth.`,
+    kind: `CRU TS 4.10, a ${rain ? "rain-gauge" : "weather-station"} record gridded at 0.5 degrees and served by KNMI Climate Explorer. It is a different kind of measurement from the ${rain ? "satellite" : "reanalysis model"}, but it is not ground truth.${rain ? " IMERG Final is also adjusted to rain-gauge totals, and the two records share many of the same gauges, so their agreement is partly shared input: a cross-check, not a second independent measurement." : ""}`,
     words: [
       `The station-based record shows ${signed(ws.sen_per_decade, 2)} ${u} per decade over ${first}–${last} (p ${fp(pick(ws))}), in ${dir} the case series' ${signed(cs.sen_per_decade, 2)} (p ${fp(pick(cs))}). The two series track each other year by year (r ${r2(ag.pearson_r)}).`,
       rain ? `It agrees on direction; its interval ${ws.sen_ci95_per_decade[0] < 0 ? "reaches below zero" : "stays above zero"}, so it does not settle the claim by itself. The ruling below is unchanged.`
-        : `It also shows warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The ruling below is unchanged.`,
+        : `It also shows warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The MERRA-2 box includes sea cells; the station record is land only. The ruling below is unchanged.`,
     ],
     caveat: d.caveat,
     links: [["Data on KNMI Climate Explorer", d.witness.page_url], ["CRU TS 4.10 (Harris et al. 2020)", "https://doi.org/10.1038/s41597-020-0453-3"]],

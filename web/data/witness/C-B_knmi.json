@@ -1,8 +1,8 @@
 {
  "claim_id": "C-B",
- "status": "independent partner-agency witness, exploratory check, not the registered test",
+ "status": "station-based partner-agency witness, exploratory check, not the registered test",
  "title": "A second witness from the ground: station-based rainfall from KNMI Climate Explorer",
- "generated_utc": "2026-11-14T21:49:52+00:00",
+ "generated_utc": "2026-11-14T23:31:33+00:00",
  "witness": {
   "name": "KNMI Climate Explorer (Royal Netherlands Meteorological Institute)",
   "dataset": "CRU TS 4.10 precipitation (pre), 0.5 degree, land points, 1901-2025",
@@ -12,7 +12,7 @@
   "accessed": "2026-11-14 (KNMI run stamp 2026-11-14 19:38:00)",
   "saved_copy": "data/witness_knmi/C-B_cru_ts410_pre_raw.txt",
   "citation": "KNMI Climate Explorer, Royal Netherlands Meteorological Institute; data: CRU TS 4.10, Harris et al. 2020 / University of East Anglia CRU",
-  "kind": "station-based gridded analysis (rain gauges interpolated to 0.5 degree), independent of satellites and reanalysis"
+  "kind": "station-based gridded analysis (rain gauges interpolated to 0.5 degree), built from gauges rather than satellite or model output; it shares many gauges with IMERG Final, so it is not fully independent of that record"
  },
  "case": {
   "claim_text": "Wet-season rainfall over the central Sahel has increased",

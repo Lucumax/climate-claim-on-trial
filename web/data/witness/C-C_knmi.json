@@ -1,8 +1,8 @@
 {
  "claim_id": "C-C",
- "status": "independent partner-agency witness, exploratory check, not the registered test",
+ "status": "station-based partner-agency witness, exploratory check, not the registered test",
  "title": "A second witness from the ground: station-based air temperature from KNMI Climate Explorer",
- "generated_utc": "2026-11-14T18:42:29+00:00",
+ "generated_utc": "2026-11-14T23:31:33+00:00",
  "witness": {
   "name": "KNMI Climate Explorer (Royal Netherlands Meteorological Institute)",
   "dataset": "CRU TS 4.10 mean temperature (tmp), 0.5 degree, land points, 1901-2025",
@@ -12,7 +12,7 @@
   "accessed": "2026-11-14 (KNMI run stamp 2026-11-14 19:39:13)",
   "saved_copy": "data/witness_knmi/C-C_cru_ts410_tmp_raw.txt",
   "citation": "KNMI Climate Explorer, Royal Netherlands Meteorological Institute; data: CRU TS 4.10, Harris et al. 2020 / University of East Anglia CRU",
-  "kind": "station-based gridded analysis (weather stations interpolated to 0.5 degree), independent of satellites and reanalysis"
+  "kind": "station-based gridded analysis (weather stations interpolated to 0.5 degree), built from stations rather than satellite or model output"
  },
  "case": {
   "claim_text": "Near-surface air temperature over interior and western Alaska has risen",

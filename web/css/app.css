@@ -781,3 +781,14 @@ main:has(.home) { padding-top: var(--sp-4); }
 .calib-list { margin: 0 0 var(--sp-2); padding-left: 1.2em; }
 .calib-list li { margin: 0 0 4px; }
 .ex-more { margin: 0 0 var(--sp-3); }
+
+/* Post-result disclosure on case pages (views/disclosure.js): a short list under the ruling, a collapsed exploratory panel, the Method page list */
+.case-limits { margin: var(--sp-4) 0; }
+.case-limits ul { margin: var(--sp-2) 0 var(--sp-3); padding-left: 1.25rem; }
+.case-limits li { margin: 0 0 var(--sp-2); }
+details.disc .xp h3 { margin: var(--sp-4) 0 var(--sp-1); font-size: 1rem; }
+details.disc .xp .scroll { margin: var(--sp-2) 0; max-height: none; }
+details.disc .xp table.data th, details.disc .xp table.data td { white-space: nowrap; }
+.limits-list { padding-left: 1.25rem; }
+.limits-list li { margin: 0 0 var(--sp-3); }
+.case-index-note { margin: var(--sp-3) 0 0; max-width: 62ch; }

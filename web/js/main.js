@@ -45,7 +45,7 @@ function resolve(hash) {
     const c = claimById(bundle, id); if (!c) return { nav: "cases", v: notFound() };
     return { nav: "cases", v: caseDocket(bundle, c, query) }; // older sub-page links (/ladder, /series, /verdict) land on the same docket
   }
-  if (a === "method") return { nav: "how", v: method(bundle) };
+  if (a === "method") return { nav: "how", v: method(bundle), anchor: id === "limits" ? "known-limits" : null };
   if (a === "glossary") return { nav: "how", v: glossary(catalog) };
   if (a === "false-alarm") { const v = falseAlarm(); return { nav: "how", v: { ...v, node: howShell("false-alarm", v.node) } }; }
   if (a === "data") return { nav: "data", v: provenance(bundle, id === "registration" ? null : id), anchor: id === "registration" ? "registration" : null };

@@ -1,4 +1,4 @@
-"""Build the independent KNMI/CRU TS 4.10 witness files for C-B and C-C.
+"""Build the station-based KNMI/CRU TS 4.10 witness files for C-B and C-C.
 
 Run:  stats\\.venv\\Scripts\\python.exe -I data\\witness_knmi\\make_knmi_witness.py
 Reads the saved KNMI text copies in this folder and the (read-only) case bundles.
@@ -122,7 +122,7 @@ def main():
     overlap = not (tb_k["sen_ci95_per_decade"][1] < ci_i["low"] or tb_k["sen_ci95_per_decade"][0] > ci_i["high"])
     cb = {
         "claim_id": "C-B",
-        "status": "independent partner-agency witness, exploratory check, not the registered test",
+        "status": "station-based partner-agency witness, exploratory check, not the registered test",
         "title": "A second witness from the ground: station-based rainfall from KNMI Climate Explorer",
         "generated_utc": now,
         "witness": {
@@ -137,7 +137,7 @@ def main():
             "accessed": "2026-11-14 (KNMI run stamp 2026-11-14 19:38:00)",
             "saved_copy": "data/witness_knmi/C-B_cru_ts410_pre_raw.txt",
             "citation": CITATION,
-            "kind": "station-based gridded analysis (rain gauges interpolated to 0.5 degree), independent of satellites and reanalysis",
+            "kind": "station-based gridded analysis (rain gauges interpolated to 0.5 degree), built from gauges rather than satellite or model output; it shares many gauges with IMERG Final, so it is not fully independent of that record",
         },
         "case": {"claim_text": bB["claim"]["claim_text"] if isinstance(bB.get("claim"), dict) and "claim_text" in bB["claim"] else "Wet-season rainfall over the central Sahel has increased",
                  "box": {"lat_min": 10, "lat_max": 18, "lon_min": -17, "lon_max": 25},
@@ -194,7 +194,7 @@ def main():
     overlapC = not (tc_k["sen_ci95_per_decade"][1] < ci_m["low"] or tc_k["sen_ci95_per_decade"][0] > ci_m["high"])
     cc = {
         "claim_id": "C-C",
-        "status": "independent partner-agency witness, exploratory check, not the registered test",
+        "status": "station-based partner-agency witness, exploratory check, not the registered test",
         "title": "A second witness from the ground: station-based air temperature from KNMI Climate Explorer",
         "generated_utc": now,
         "witness": {
@@ -209,7 +209,7 @@ def main():
             "accessed": "2026-11-14 (KNMI run stamp 2026-11-14 19:39:13)",
             "saved_copy": "data/witness_knmi/C-C_cru_ts410_tmp_raw.txt",
             "citation": CITATION,
-            "kind": "station-based gridded analysis (weather stations interpolated to 0.5 degree), independent of satellites and reanalysis",
+            "kind": "station-based gridded analysis (weather stations interpolated to 0.5 degree), built from stations rather than satellite or model output",
         },
         "case": {"claim_text": bC["claim"]["claim_text"] if isinstance(bC.get("claim"), dict) and "claim_text" in bC["claim"] else "Near-surface air temperature over interior and western Alaska has risen",
                  "box": {"lat_min": 60, "lat_max": 70, "lon_min": -165, "lon_max": -140},

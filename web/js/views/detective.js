@@ -535,28 +535,26 @@ export function detective(cat, bundle, query = "") {
         h("div", { class: "btns" }, ok.map(d => h("button", { class: "btn-quiet", type: "button", onclick: () => startDemo(d) }, d.title, h("span", { class: "btn-tag" }, d.tag))))));
       return;
     }
-    launchHost.replaceChildren(h("p", { class: "muted small", style: "margin:0 0 var(--sp-4)" }, `Guided example running: ${demo.d.title}. Use the card at the bottom of the screen, or change any input to end it.`));
-    const { d, k } = demo, R = state.result, L = state.last, ready = L && !L.W.tooShort && state.status === "ready" && !pending && R && R.v.key === d.key && R.y0 === d.y0;
-    const wait = state.status === "error" ? "The data could not be fetched just now. Try the example again, or skip it." : "Running the real computation.";
-    const caps = [null, d.s1, d.s2, d.s3, ready ? recordCaption(L) : wait, ready ? h("span", {}, trialCaption(L), d.after ? d.after() : null) : wait];
-    const titles = ["", "Choose variable", "Pick region", "Set period", "Examine the series", "Test significance"];
-    demoHost.replaceChildren(h("section", { class: "demo-card", id: "demo", "aria-labelledby": "demo-h" },
-      h("div", {}, h("p", { class: "eyebrow brass" }, `Guided example: ${d.title}`, R && R.data && R.data.cached ? " · cached copy from Nov 14" : ""), h("h2", { id: "demo-h", tabindex: "-1" }, `Step ${k} of 5: ${titles[k]}`), h("p", { id: "demo-cap", "aria-live": "polite", class: "demo-cap" }, caps[k])),
-      h("div", { class: "actions" }, h("button", { class: "btn-quiet", type: "button", disabled: k <= 1, onclick: () => goDemo(k - 1) }, "Back"), h("button", { class: "btn", type: "button", onclick: () => k >= 5 ? exitDemo() : goDemo(k + 1) }, k >= 5 ? "Done" : "Next"), h("button", { class: "btn-quiet", type: "button", onclick: exitDemo }, "Skip example"))));
+    // A running example shows all five steps at once, as a plain numbered list: nothing to click through, nothing sticky, nothing that moves focus on a timer.
+    const { d } = demo, R = state.result, L = state.last, ready = L && !L.W.tooShort && state.status === "ready" && !pending && R && R.v.key === d.key && R.y0 === d.y0;
+    const wait = state.status === "error" ? "The data could not be fetched just now. Try the example again, or close it." : "Running the real computation.";
+    const steps = [["Choose variable", d.s1], ["Pick region", d.s2], ["Set period", d.s3],
+      ["Examine the series", ready ? recordCaption(L) : wait], ["Test significance", ready ? h("span", {}, trialCaption(L), d.after ? d.after() : null) : wait]];
+    launchHost.replaceChildren(h("section", { class: "demo-card demo-list", id: "demo", "aria-labelledby": "demo-h" },
+      h("p", { class: "eyebrow brass" }, `Guided example: ${d.title}`, R && R.data && R.data.cached ? " · cached copy from Nov 14" : ""),
+      h("h2", { id: "demo-h", tabindex: "-1" }, "The five steps, all at once"),
+      h("ol", { class: "demo-steps" }, steps.map(([t, c], i) => h("li", {}, h("b", {}, `${i + 1}. ${t}. `), c))),
+      h("p", { class: "muted small" }, "The settings above were filled in for you and the result below was computed live. Change any setting to ask your own question."),
+      h("div", { class: "actions" }, h("button", { class: "btn-quiet", type: "button", onclick: () => exitDemo() }, "Close example"))));
+    demoHost.replaceChildren();
   }
-  function focusDemo(k) {
-    document.querySelectorAll(".demo-focus").forEach(e => e.classList.remove("demo-focus"));
-    const el = document.getElementById(STEPS[k - 1].target);
-    if (el) { el.classList.add("demo-focus"); el.scrollIntoView({ block: k >= 4 ? "center" : "nearest", behavior: reducedMotion() ? "auto" : "smooth" }); }
-  }
-  function goDemo(k) { demo.k = k; drawProgress(); drawDemoCard(); focusDemo(k); document.getElementById("demo-h")?.focus({ preventScroll: true }); }
   function startDemo(d) {
-    demo = { d, k: 1 }; state.view = "values"; state.chart = "yearly";
+    demo = { d }; state.view = "values"; state.chart = "yearly";
     state.src = d.src; state.key = d.key; state.y0 = d.y0; state.y1 = d.y1; state.season = d.season;
     const box = d.box || P.find(q => q.key === d.preset).box;
     state.box = { ...box }; wm.setBox(state.box); for (const k of "nswe") inputs[k].value = state.box[k];
     drawMeasure(); drawPeriod(); drawPlace(""); drawHeader();
-    run(false); drawProgress(); drawDemoCard(); focusDemo(1); document.getElementById("demo-h")?.focus({ preventScroll: true });
+    run(); drawProgress(); drawDemoCard(); document.getElementById("demo-h")?.focus({ preventScroll: true });
   }
   function exitDemo() { demo = null; document.querySelectorAll(".demo-focus").forEach(e => e.classList.remove("demo-focus")); drawDemoCard(); drawProgress(); document.getElementById("demo")?.querySelector("summary")?.focus(); }
 

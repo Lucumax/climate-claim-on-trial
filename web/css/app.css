@@ -770,3 +770,7 @@ main:has(.home) { padding-top: var(--sp-4); }
 .hl-whole { margin-top: var(--sp-2); }
 .band-fa { margin-top: var(--sp-5); }
 .fa-preview .fa-stage { margin-left: 0 !important; margin-right: 0 !important; border-left: 1px solid var(--line) !important; border-right: 1px solid var(--line) !important; max-width: 100%; }
+
+.demo-card.demo-list { position: static; display: block; margin: 0 0 var(--sp-5); }
+.demo-steps { list-style: none; margin: var(--sp-3) 0; padding: 0; display: grid; gap: var(--sp-3); max-width: 72ch; }
+.demo-steps li { font-size: 1rem; line-height: 1.5; }

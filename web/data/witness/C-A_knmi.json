@@ -1,0 +1,731 @@
+{
+ "claim_id": "C-A",
+ "status": "station-based air-temperature witness, exploratory check, not the registered test; the C-A verdict (withheld) is unchanged. It measures a different quantity (2 m air temperature, daily maximum) from the case (land surface skin temperature at the satellite overpass).",
+ "title": "A third witness from the ground: station-based summer daily maximum air temperature from KNMI Climate Explorer",
+ "generated_utc": "2026-11-14T19:59:10+00:00",
+ "witness": {
+  "name": "KNMI Climate Explorer (Royal Netherlands Meteorological Institute)",
+  "dataset": "CRU TS 4.10 maximum temperature (tmx), 0.5 degree, land points, 1901-2025",
+  "dataset_authors": "Harris et al. 2020; University of East Anglia Climatic Research Unit (CRU)",
+  "how_made": "Climate Explorer 'Monthly observations' > Maximum temperature (land) > CRU TS 4.10 0.5 deg, 'Make average' over lat 30-37N, lon 90W-75.5W, land points only (more than 50 percent land from the CRU land/sea mask, at least 30 percent valid points), monthly series in degrees Celsius; JJA mean computed here as the plain mean of June, July and August",
+  "page_url": "https://climexp.knmi.nl/data/icru4_tmx_-90--75.5E_30-37N_firstyear-lastyear_n_5lan.dat",
+  "accessed": "2026-11-14 (KNMI run stamp 2026-11-14 20:56:29)",
+  "saved_copy": "data/witness_knmi/C-A_cru_ts410_tmx_raw.txt",
+  "sensitivity_dataset": "CRU TS 4.10 mean temperature (tmp), same box and mask, saved copy data/witness_knmi/C-A_cru_ts410_tmp_raw.txt (run stamp 2026-11-14 20:57:13)",
+  "citation": "KNMI Climate Explorer, Royal Netherlands Meteorological Institute; data: CRU TS 4.10, Harris et al. 2020 / University of East Anglia CRU",
+  "kind": "station-based gridded analysis (weather stations interpolated to 0.5 degree); uses no satellite or reanalysis input, so it shares no input with MODIS or the ESA LST record",
+  "sensors": "none (ground stations only)"
+ },
+ "case": {
+  "claim_text": "Summer daytime land surface temperature over the Southeastern United States has risen",
+  "box": {
+   "lat_min": 30,
+   "lat_max": 37,
+   "lon_min": -90,
+   "lon_max": -75.5
+  },
+  "season": "JJA",
+  "period": [
+   2001,
+   2025
+  ]
+ },
+ "quantity_warning": "CRU tmx is the monthly mean of daily maximum air temperature at 2 m. The case product is MODIS Terra daytime land surface (skin) temperature at roughly 10:30 local overpass; ESA LST is also skin temperature. Skin and air temperature differ in level (skin is usually warmer by day, by an amount that depends on vegetation, soil moisture and cloud), so levels are never compared; only trends and year-to-year changes are.",
+ "units": {
+  "temperature": "degC",
+  "anomaly": "degC"
+ },
+ "years": [
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008,
+  2009,
+  2010,
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "series": {
+  "knmi_cru_tmx_jja_degC": [
+   30.74361,
+   31.859483,
+   30.29418,
+   30.400047,
+   31.404247,
+   32.195697,
+   32.405873,
+   31.97746,
+   31.31793,
+   33.18005,
+   33.515437,
+   31.952917,
+   30.474947,
+   31.24261,
+   32.131743,
+   33.010633,
+   31.109583,
+   32.009553,
+   32.13828,
+   31.827083,
+   31.319433,
+   32.206903,
+   32.01994,
+   32.629657,
+   31.819277
+  ],
+  "knmi_cru_tmx_jja_anomaly_degC": [
+   -1.063853,
+   0.05202,
+   -1.513283,
+   -1.407416,
+   -0.403216,
+   0.388234,
+   0.59841,
+   0.169997,
+   -0.489533,
+   1.372587,
+   1.707974,
+   0.145454,
+   -1.332516,
+   -0.564853,
+   0.32428,
+   1.20317,
+   -0.69788,
+   0.20209,
+   0.330817,
+   0.01962,
+   -0.48803,
+   0.39944,
+   0.212477,
+   0.822194,
+   0.011814
+  ],
+  "knmi_cru_tmp_jja_degC": [
+   25.25572,
+   25.96857,
+   25.13029,
+   25.080383,
+   26.145017,
+   26.156313,
+   26.256127,
+   25.953017,
+   25.568823,
+   27.45103,
+   27.275897,
+   26.047817,
+   25.39511,
+   25.600207,
+   26.436367,
+   27.258413,
+   25.824357,
+   26.469987,
+   26.411217,
+   26.366407,
+   26.045287,
+   26.620603,
+   26.255483,
+   26.827517,
+   26.438903
+  ],
+  "knmi_cru_tmp_jja_anomaly_degC": [
+   -0.913834,
+   -0.200984,
+   -1.039264,
+   -1.089171,
+   -0.024538,
+   -0.013241,
+   0.086572,
+   -0.216538,
+   -0.600731,
+   1.281476,
+   1.106342,
+   -0.121738,
+   -0.774444,
+   -0.569348,
+   0.266812,
+   1.088859,
+   -0.345198,
+   0.300432,
+   0.241662,
+   0.196852,
+   -0.124268,
+   0.451049,
+   0.085929,
+   0.657962,
+   0.269349
+  ],
+  "modis_terra_registered_jja_anomaly_degC": [
+   -0.656077,
+   1.12379,
+   -1.28851,
+   -1.12623,
+   -0.310183,
+   1.08584,
+   1.61612,
+   0.921687,
+   -0.175263,
+   0.877154,
+   1.89237,
+   0.500793,
+   -1.47089,
+   -0.469954,
+   0.099206,
+   0.638474,
+   -0.675213,
+   -0.284022,
+   0.141364,
+   -0.087375,
+   -0.72269,
+   0.047085,
+   -0.337807,
+   -0.004603,
+   -1.33903
+  ],
+  "modis_terra_same_footprint_as_esa_anomaly_degC": [
+   -0.7144,
+   1.1472,
+   -1.3677,
+   -1.2283,
+   -0.3698,
+   1.0308,
+   1.5873,
+   0.9248,
+   -0.2764,
+   0.8529,
+   1.8412,
+   0.5206,
+   -1.5723,
+   -0.5336,
+   0.0302,
+   0.6156,
+   -0.7475,
+   -0.3565,
+   0.0564,
+   -0.1388,
+   -0.7794,
+   0.0099,
+   -0.4728,
+   -0.0593,
+   null
+  ],
+  "esa_jja_anomaly_degC": [
+   -1.989,
+   1.0453,
+   -2.0063,
+   -1.4517,
+   -0.6395,
+   0.9945,
+   1.6391,
+   0.8103,
+   -0.3282,
+   0.632,
+   1.9765,
+   0.164,
+   -1.8608,
+   -0.6522,
+   0.1681,
+   0.664,
+   -1.1789,
+   -0.354,
+   0.0683,
+   -0.1024,
+   -0.2723,
+   0.6343,
+   0.2033,
+   1.1727,
+   null
+  ],
+  "knmi_minus_modis_registered_degC": [
+   -0.407934,
+   -1.071928,
+   -0.224931,
+   -0.281345,
+   -0.093192,
+   -0.697765,
+   -1.017868,
+   -0.751848,
+   -0.314428,
+   0.495275,
+   -0.184555,
+   -0.355498,
+   0.138215,
+   -0.095057,
+   0.224916,
+   0.564538,
+   -0.022825,
+   0.485954,
+   0.189295,
+   0.106837,
+   0.234502,
+   0.352197,
+   0.550126,
+   0.826638,
+   1.350685
+  ],
+  "knmi_minus_esa_degC": [
+   0.898018,
+   -1.020408,
+   0.465888,
+   0.017155,
+   0.209155,
+   -0.633395,
+   -1.067818,
+   -0.667432,
+   -0.188462,
+   0.713458,
+   -0.295655,
+   -0.045675,
+   0.501155,
+   0.060218,
+   0.129052,
+   0.512042,
+   0.453892,
+   0.528962,
+   0.235388,
+   0.094892,
+   -0.242858,
+   -0.261988,
+   -0.017952,
+   -0.377635,
+   null
+  ]
+ },
+ "levels": {
+  "knmi_tmx_jja_mean_degC": 31.807463,
+  "knmi_tmp_jja_mean_degC": 26.169554,
+  "modis_jja_mean_level_degC": 28.915,
+  "note": "levels are shown only so nobody mistakes the series for the same thing; they are different quantities and are not compared"
+ },
+ "stats": {
+  "knmi_tmx_2001_2025": {
+   "n": 25,
+   "sen_per_decade": 0.300627,
+   "sen_ci95_per_decade": [
+    -0.132356,
+    0.852178
+   ],
+   "p_mk_independent": 0.154258,
+   "p_hamed_rao_registered": 0.154258,
+   "p_yue_wang": 0.247805,
+   "tau": 0.206667,
+   "ols_per_decade": 0.349046,
+   "ols_p": 0.13265
+  },
+  "modis_terra_registered_2001_2025": {
+   "n": 25,
+   "sen_per_decade": -0.350335,
+   "sen_ci95_per_decade": [
+    -0.837988,
+    0.316536
+   ],
+   "p_mk_independent": 0.272343,
+   "p_hamed_rao_registered": 0.272343,
+   "p_yue_wang": 0.367022,
+   "tau": -0.16,
+   "ols_per_decade": -0.263103,
+   "ols_p": 0.306067
+  },
+  "knmi_tmx_2001_2024": {
+   "n": 24,
+   "sen_per_decade": 0.435245,
+   "sen_ci95_per_decade": [
+    -0.114534,
+    0.938522
+   ],
+   "p_mk_independent": 0.096534,
+   "p_hamed_rao_registered": 0.096534,
+   "p_yue_wang": 0.186438,
+   "tau": 0.246377,
+   "ols_per_decade": 0.39329,
+   "ols_p": 0.118089
+  },
+  "esa_2001_2024": {
+   "n": 24,
+   "sen_per_decade": 0.368855,
+   "sen_ci95_per_decade": [
+    -0.475257,
+    1.115425
+   ],
+   "p_mk_independent": 0.38531,
+   "p_hamed_rao_registered": 0.38531,
+   "p_yue_wang": 0.449443,
+   "tau": 0.130435,
+   "ols_per_decade": 0.33114,
+   "ols_p": 0.320575
+  },
+  "modis_same_footprint_2001_2024": {
+   "n": 24,
+   "sen_per_decade": -0.2443,
+   "sen_ci95_per_decade": [
+    -0.829933,
+    0.442877
+   ],
+   "p_mk_independent": 0.535185,
+   "p_hamed_rao_registered": 0.535185,
+   "p_yue_wang": 0.61273,
+   "tau": -0.094203,
+   "ols_per_decade": -0.164646,
+   "ols_p": 0.550048
+  },
+  "knmi_tmp_2001_2025_sensitivity": {
+   "n": 25,
+   "sen_per_decade": 0.383486,
+   "sen_ci95_per_decade": [
+    0.112102,
+    0.718375
+   ],
+   "p_mk_independent": 0.014196,
+   "p_hamed_rao_registered": 0.014196,
+   "p_yue_wang": 0.031139,
+   "tau": 0.353333,
+   "ols_per_decade": 0.394356,
+   "ols_p": 0.021468
+  },
+  "difference_knmi_minus_modis_registered": {
+   "n": 25,
+   "sen_per_decade": 0.623675,
+   "sen_ci95_per_decade": [
+    0.388282,
+    0.867871
+   ],
+   "p_mk_independent": 1e-05,
+   "p_hamed_rao_registered": 1e-05,
+   "p_yue_wang": 7.3e-05,
+   "tau": 0.633333,
+   "ols_per_decade": 0.61215,
+   "ols_p": 2e-06
+  },
+  "difference_knmi_minus_esa": {
+   "n": 24,
+   "sen_per_decade": 0.005085,
+   "sen_ci95_per_decade": [
+    -0.368465,
+    0.410848
+   ],
+   "p_mk_independent": 1.0,
+   "p_hamed_rao_registered": 1.0,
+   "p_yue_wang": 1.0,
+   "tau": 0.0,
+   "ols_per_decade": 0.062149,
+   "ols_p": 0.691386
+  },
+  "difference_knmi_minus_modis_same_footprint": {
+   "n": 24,
+   "sen_per_decade": 0.536683,
+   "sen_ci95_per_decade": [
+    0.327961,
+    0.846039
+   ],
+   "p_mk_independent": 3.4e-05,
+   "p_hamed_rao_registered": 3.4e-05,
+   "p_yue_wang": 0.000115,
+   "tau": 0.608696,
+   "ols_per_decade": 0.557935,
+   "ols_p": 1.6e-05
+  },
+  "agreement_knmi_vs_modis_registered": {
+   "pearson_r": 0.790852,
+   "pearson_p": 3e-06,
+   "spearman_rho": 0.796154,
+   "spearman_p": 2e-06,
+   "r_year_to_year_changes": 0.915641,
+   "r_year_to_year_changes_p": 0.0,
+   "r_detrended": 0.922123,
+   "r_detrended_p": 0.0,
+   "n_years": 25
+  },
+  "agreement_knmi_vs_esa": {
+   "pearson_r": 0.894274,
+   "pearson_p": 0.0,
+   "spearman_rho": 0.866957,
+   "spearman_p": 0.0,
+   "r_year_to_year_changes": 0.887684,
+   "r_year_to_year_changes_p": 0.0,
+   "r_detrended": 0.893346,
+   "r_detrended_p": 0.0,
+   "n_years": 24
+  },
+  "agreement_knmi_vs_modis_same_footprint": {
+   "pearson_r": 0.827186,
+   "pearson_p": 1e-06,
+   "spearman_rho": 0.805217,
+   "spearman_p": 2e-06,
+   "r_year_to_year_changes": 0.913914,
+   "r_year_to_year_changes_p": 0.0,
+   "r_detrended": 0.927686,
+   "r_detrended_p": 0.0,
+   "n_years": 24
+  },
+  "agreement_knmi_tmp_vs_modis_registered": {
+   "pearson_r": 0.589277,
+   "pearson_p": 0.001938,
+   "spearman_rho": 0.521538,
+   "spearman_p": 0.007502,
+   "r_year_to_year_changes": 0.752539,
+   "r_year_to_year_changes_p": 2.2e-05,
+   "r_detrended": 0.790623,
+   "r_detrended_p": 3e-06,
+   "n_years": 25
+  },
+  "same_sign_knmi_modis": false,
+  "same_sign_knmi_esa": true,
+  "knmi_ci_overlaps_modis_ci": true,
+  "knmi_ci_overlaps_esa_ci": true,
+  "sensitivity_2001_2020": {
+   "knmi": {
+    "n": 20,
+    "sen_per_decade": 0.535053,
+    "sen_ci95_per_decade": [
+     -0.228329,
+     1.377682
+    ],
+    "p_mk_independent": 0.229969,
+    "p_hamed_rao_registered": 0.229969,
+    "p_yue_wang": 0.337979,
+    "tau": 0.2,
+    "ols_per_decade": 0.4809,
+    "ols_p": 0.174773
+   },
+   "modis_registered": {
+    "n": 20,
+    "sen_per_decade": -0.149183,
+    "sen_ci95_per_decade": [
+     -0.966692,
+     0.846891
+    ],
+    "p_mk_independent": 0.871131,
+    "p_hamed_rao_registered": 0.871131,
+    "p_yue_wang": 0.897278,
+    "tau": -0.031579,
+    "ols_per_decade": -0.052119,
+    "ols_p": 0.891734
+   },
+   "agreement": {
+    "pearson_r": 0.872525,
+    "pearson_p": 1e-06,
+    "spearman_rho": 0.866165,
+    "spearman_p": 1e-06,
+    "r_year_to_year_changes": 0.911509,
+    "r_year_to_year_changes_p": 0.0,
+    "r_detrended": 0.930952,
+    "r_detrended_p": 0.0,
+    "n_years": 20
+   }
+  },
+  "sensitivity_2002_2024_without_2001": {
+   "knmi": {
+    "n": 23,
+    "sen_per_decade": 0.253987,
+    "sen_ci95_per_decade": [
+     -0.170805,
+     0.897841
+    ],
+    "p_mk_independent": 0.186661,
+    "p_hamed_rao_registered": 0.186661,
+    "p_yue_wang": 0.303809,
+    "tau": 0.201581,
+    "ols_per_decade": 0.32083,
+    "ols_p": 0.230594
+   },
+   "esa": {
+    "n": 23,
+    "sen_per_decade": 0.099,
+    "sen_ci95_per_decade": [
+     -0.665246,
+     1.008314
+    ],
+    "p_mk_independent": 0.711571,
+    "p_hamed_rao_registered": 0.711571,
+    "p_yue_wang": 0.769942,
+    "tau": 0.059289,
+    "ols_per_decade": 0.143721,
+    "ols_p": 0.672613
+   },
+   "modis": {
+    "n": 23,
+    "sen_per_decade": -0.370667,
+    "sen_ci95_per_decade": [
+     -0.896486,
+     0.399066
+    ],
+    "p_mk_independent": 0.315573,
+    "p_hamed_rao_registered": 0.315573,
+    "p_yue_wang": 0.445553,
+    "tau": -0.15415,
+    "ols_per_decade": -0.271809,
+    "ols_p": 0.356239
+   }
+  }
+ },
+ "divergence_from_2021": {
+  "knmi_minus_modis_registered_2001_2025": {
+   "split_year": 2021,
+   "n_early": 20,
+   "n_late": 5,
+   "mean_early": -0.165707,
+   "mean_late": 0.662829,
+   "late_minus_early": 0.828537,
+   "welch_t": 3.682245,
+   "welch_p": 0.009125,
+   "permutation_p": 0.00165,
+   "note": "indicative only: years are autocorrelated and the late block is short"
+  },
+  "knmi_minus_esa_2001_2024": {
+   "split_year": 2021,
+   "n_early": 20,
+   "n_late": 4,
+   "mean_early": 0.045022,
+   "mean_late": -0.225108,
+   "late_minus_early": -0.27013,
+   "welch_t": -1.87092,
+   "welch_p": 0.076793,
+   "permutation_p": 0.35555,
+   "note": "indicative only: years are autocorrelated and the late block is short"
+  },
+  "knmi_minus_modis_same_footprint_2001_2024": {
+   "split_year": 2021,
+   "n_early": 20,
+   "n_late": 4,
+   "mean_early": -0.112483,
+   "mean_late": 0.562417,
+   "late_minus_early": 0.6749,
+   "welch_t": 3.890569,
+   "welch_p": 0.00512,
+   "permutation_p": 0.01435,
+   "note": "indicative only: years are autocorrelated and the late block is short"
+  },
+  "residual_modis_on_knmi": {
+   "fit_years": [
+    2001,
+    2020
+   ],
+   "slope": 0.918675,
+   "intercept": 0.161812,
+   "residual_sd_fit": 0.475918,
+   "residuals_later_years": {
+    "2021": -0.436003,
+    "2022": -0.481525,
+    "2023": -0.694658,
+    "2024": -0.921585,
+    "2025": -1.511537
+   },
+   "mean_residual_later": -0.809062,
+   "mean_residual_later_in_sd": -1.700004,
+   "note": "y = MODIS or ESA anomaly, x = KNMI air-temperature anomaly; a negative later residual means the satellite series sits colder than the 2001-2020 relation to air temperature predicts"
+  },
+  "residual_esa_on_knmi": {
+   "fit_years": [
+    2001,
+    2020
+   ],
+   "slope": 1.155208,
+   "intercept": -0.037096,
+   "residual_sd_fit": 0.547817,
+   "residuals_later_years": {
+    "2021": 0.356192,
+    "2022": 0.23758,
+    "2023": 0.022561,
+    "2024": 0.287612
+   },
+   "mean_residual_later": 0.225986,
+   "mean_residual_later_in_sd": 0.412522,
+   "note": "y = MODIS or ESA anomaly, x = KNMI air-temperature anomaly; a negative later residual means the satellite series sits colder than the 2001-2020 relation to air temperature predicts"
+  },
+  "residual_modis_footprint24_on_knmi": {
+   "fit_years": [
+    2001,
+    2020
+   ],
+   "slope": 0.93957,
+   "intercept": 0.110081,
+   "residual_sd_fit": 0.494636,
+   "residuals_later_years": {
+    "2021": -0.430948,
+    "2022": -0.475488,
+    "2023": -0.782523,
+    "2024": -0.941894
+   },
+   "mean_residual_later": -0.657713,
+   "mean_residual_later_in_sd": -1.329691,
+   "note": "y = MODIS or ESA anomaly, x = KNMI air-temperature anomaly; a negative later residual means the satellite series sits colder than the 2001-2020 relation to air temperature predicts"
+  },
+  "trend_of_difference_before_2021": {
+   "knmi_minus_modis": {
+    "n": 20,
+    "sen_per_decade": 0.529641,
+    "sen_ci95_per_decade": [
+     0.237128,
+     0.90221
+    ],
+    "p_mk_independent": 0.00255,
+    "p_hamed_rao_registered": 0.00255,
+    "p_yue_wang": 0.003587,
+    "tau": 0.494737,
+    "ols_per_decade": 0.533019,
+    "ols_p": 0.001163
+   },
+   "knmi_minus_esa": {
+    "n": 20,
+    "sen_per_decade": 0.352006,
+    "sen_ci95_per_decade": [
+     -0.207533,
+     0.895649
+    ],
+    "p_mk_independent": 0.205754,
+    "p_hamed_rao_registered": 0.205754,
+    "p_yue_wang": 0.205754,
+    "tau": 0.210526,
+    "ols_per_decade": 0.271166,
+    "ols_p": 0.213167
+   }
+  },
+  "modis_tail_2021_2025_anomaly": [
+   -0.72269,
+   0.047085,
+   -0.337807,
+   -0.004603,
+   -1.33903
+  ],
+  "knmi_tail_2021_2025_anomaly": [
+   -0.48803,
+   0.39944,
+   0.212477,
+   0.822194,
+   0.011814
+  ]
+ },
+ "registered_reference": {
+  "note": "Copied read-only from the registered C-A bundle. Nothing in this file changes it.",
+  "sen_per_decade": -0.350337,
+  "hamed_rao_p": 0.272343,
+  "verdict": "withheld"
+ },
+ "caveat": "CRU TS tmx is built from weather-station records and does not depend on satellites or on a reanalysis model, but it has limits: the station network has changed over time; tmx is derived from gridded mean temperature and diurnal temperature range (the range from fewer stations than the mean), so it leans on interpolation and on the long-term climatology where stations are few; it covers land points only (the box includes Atlantic and Gulf ocean, which MODIS and ESA also drop, but the land masks differ); and the daily maximum falls in the afternoon, not at the satellite overpass. A match or mismatch in trend does not prove which satellite series is right. No causal claim is made.",
+ "scope_note": "exploratory check, not the registered test. The registered result is the trend test in the case bundle (verdict withheld); nothing here replaces or changes it.",
+ "provenance": {
+  "script": "data/witness_knmi/make_knmi_ca_witness.py",
+  "saved_copies": [
+   "data/witness_knmi/C-A_cru_ts410_tmx_raw.txt",
+   "data/witness_knmi/C-A_cru_ts410_tmp_raw.txt"
+  ],
+  "modis_source": "web/data/bundle_C-A.json regional.anomaly (registered MOD11C3 V061 regional JJA anomaly, 25 seasons)",
+  "esa_source": "web/data/witness/C-A_esa.json (ESA LST CCI multi-sensor, 24 seasons; MODIS on ESA fixed footprint)"
+ }
+}

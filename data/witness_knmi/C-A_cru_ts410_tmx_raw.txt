@@ -1,0 +1,59 @@
+# SAVED COPY (rows 2001-2025 only; the KNMI file runs 1901-2025, rows before 2001 omitted here, not used)
+# page_url :: https://climexp.knmi.nl/data/icru4_tmx_-90--75.5E_30-37N_firstyear-lastyear_n_5lan.dat
+# made_by :: KNMI Climate Explorer get_index.cgi, "Monthly observations" -> Land maximum temperature -> CRU TS 4.10 (land) 0.5 deg -> average, land points, lat 30-37N, lon -90 to -75.5E, degrees Celsius (no login, no download; plain HTTP read of the generated page text)
+# dataset :: CRU TS4.10 Maximum Temperature (variable tmx, degC), University of East Anglia CRU / Harris et al. 2020; served by KNMI Climate Explorer
+# accessed :: 2026-11-14 (KNMI server history stamp 2026-11-14 20:56:29)
+# KNMI header lines kept verbatim below
+# using year1  -999
+# using year2  -999
+# minimal_valid_fraction ::  30.00
+# using only more than 50% land points from land/sea mask in /data/climexp_data_collection/CRUData/lsmask_05.nc
+# operating on CRU TS4.10 Maximum Temperature
+# <a href=http://climexp.knmi.nl/select.cgi?field=cru4_tmx>climexp.knmi.nl/select.cgi?field=cru4_tmx</a>
+# file :: /data/climexp_data_collection/CRUData/cru_ts4.10.1901.2025.tmx.dat.nc
+# title :: spatial statistic of CRU TS4.10 Maximum Temperature
+# cdi :: Climate Data Interface version 2.5.3 (https://mpimet.mpg.de/cdi)
+# source :: Run ID = 2604091129. Data generated from:TMX derived from gridded TMP & DTR absolutes, DTR in turn derived from tmn.2604081855.dtb, tmx.2604081855.dtb
+# institution :: KNMI Climate Explorer and Data held at British Atmospheric Data Centre, RAL, UK.
+# description :: number of DTR stations contributing to each datum, TMP counts may be higher or lower
+# references :: Information on the data is available at http://badc.nerc.ac.uk/data/cru/
+# comment :: Access to these data is available to any registered CEDA user.
+# contact :: support@ceda.ac.uk
+# cdo :: Climate Data Operators version 2.5.3 (https://mpimet.mpg.de/cdo)
+# geospatial_lat_max ::     90.0
+# geospatial_lon_min ::   -180.0
+# geospatial_lon_units :: degrees_east
+# geospatial_lon_resolution ::      0.5
+# time_coverage_start :: 1901-01-15
+# time_coverage_end :: 2025-12-15
+# climexp_url :: https://climexp.knmi.nl/select.cgi?cru4_tmx
+# scripturl01 :: http://climexp.knmi.nl/get_index.cgi?delta_lat=0.50&delta_lon=0.50&email=someone@somewhere&field=cru4_tmx&gridpoints=false&intertype=nearest&lat1=30&lat2=37&lat_max=89.75&lat_min=-89.75&lon1=-90&lon2=-75.5&lon_max=179.75&lon_min=-179.75&masktype=5lan&minfac=30&year_max=2025&year_min=1901
+# history ::  2026-11-14 20:56:29 bin/get_index /data/climexp_data_collection/CRUData/cru_ts4.10.1901.2025.tmx.dat.nc -90 -75.5 30 37 dipole no year1 -999 year2 -999 minfac 30 nearest lsmask /data/climexp_data_collection/CRUData/lsmask_05.nc 5lan cru4_tmx_-90--75.5E_30-37N_firstyear-lastyear_n_5lan\nFri Aug 28 12:53:26 2026: cdo -r -f nc4 -z zip selvar,tmx tmx/cru_ts4.10.1901.2025.tmx.dat.nc cru_ts4.10.1901.2025.tmx.dat.nc\nThu  9 Apr 19:54:46 BST 2026 : User sadmin : Program makegridsauto.for called by update.for
+# ave_region :: lon=  -90.000  -75.500, lat=   30.000   37.000
+# averaging anomalies over region lon=  -90.000  -75.500, lat=   30.000   37.000
+# tmx [degrees Celsius] near-surface temperature maximum
+2001   11.20539       16.39640       15.79525       24.27666       27.55174       29.69666       31.19483       31.33934       27.42439       23.42984       22.16918       15.95508
+2002   14.33827       14.18351       19.02289       24.72881       26.78505       30.92588       32.48494       32.16763       29.66440       23.29636       16.43732       12.40866
+2003   9.762957       12.86565       19.25860       22.74965       26.30429       28.86449       30.73983       31.27822       27.89838       23.57362       20.97941       12.76223
+2004   11.96859       12.23064       20.51532       23.31383       28.81500       29.80401       31.47775       29.91838       28.14622       24.61596       19.47537       13.44047
+2005   14.18747       15.00698       17.14141       22.65312       25.98902       30.01857       31.97286       32.22131       31.01191       24.06512       19.98786       12.03130
+2006   16.28361       13.60295       18.96381       25.64366       26.95827       30.97865       32.73735       32.87109       27.88930       22.93233       18.61621       16.20330
+2007   13.42519       12.74037       22.05727       22.33662       28.44079       31.70884       31.33821       34.17057       30.52582       25.82066       18.80561       16.24632
+2008   11.77992       15.96830       18.78852       22.84394       26.90084       32.31144       32.41062       31.21032       28.88100       23.12243       16.92028       15.00756
+2009   12.08791       15.39019       18.89715       23.06139       26.72702       31.74649       31.03484       31.17246       28.23772       22.16861       18.86236       11.84527
+2010   9.642277       9.522760       17.06468       25.24747       28.39122       32.79445       33.53165       33.21405       31.34808       25.90707       19.31038       9.469692
+2011   10.12694       16.15731       19.20420       25.43024       27.80038       33.30590       33.56359       33.67682       28.33836       23.24138       19.64495       15.79207
+2012   15.62664       16.28214       23.88817       24.58652       29.10584       31.01763       33.72386       31.11726       28.63120       23.32748       17.85475       16.10327
+2013   14.79674       13.94268       15.60646       23.00632       26.02461       30.50297       30.53315       30.38872       29.41668       24.20189       16.94663       14.60543
+2014   9.852465       13.88855       17.26513       23.65055       27.90837       30.94336       31.04126       31.74321       29.06394       25.01587       16.00769       14.62153
+2015   11.87834       10.18648       19.36970       23.98364       28.54214       31.79272       32.91041       31.69210       29.35057       23.95273       20.36578       19.05551
+2016   11.44153       14.88916       21.57874       23.90151       26.99533       32.29172       33.86617       32.87401       31.56099       27.30209       21.55100       14.72089
+2017   16.19074       19.63338       19.99617       25.87529       27.38342       29.83230       32.56038       30.93607       29.24953       25.32266       19.63233       13.29339
+2018   10.88743       19.05831       17.83726       22.00026       29.64721       31.97684       32.19223       31.85959       31.01974       25.13550       15.95570       14.16344
+2019   12.76437       17.58341       18.21392       24.41474       29.73560       30.82350       32.94259       32.64875       32.97347       25.89531       17.24945       16.06550
+2020   14.97406       15.68556       21.91298       23.08059       26.29032       30.40259       33.20114       31.87752       28.31114       25.14063       21.30644       13.97373
+2021   12.78147       12.98961       20.91920       23.26918       26.94814       30.42680       31.65947       31.87203       28.85633       25.42809       18.08280       19.26782
+2022   12.15094       16.62865       20.89284       23.57478       28.82708       32.46988       32.82925       31.32158       29.28902       23.70933       19.38178       13.82480
+2023   16.16813       19.29523       20.37016       24.02565       26.68539       30.25159       32.99737       32.81086       30.19044       25.13267       19.29364       15.86201
+2024   12.39169       17.87933       20.69475       24.36876       28.60924       32.24401       32.81391       32.83105       29.14577       26.29230       21.17947       14.82334
+2025   10.28918       16.77600       21.60031       25.41833       26.94153       31.49830       33.44424       30.51529       30.11520       24.31253       20.14493       14.43338

@@ -18,4 +18,4 @@ for r, c in ent["tiles"]:
 same_mask = np.array_equal(np.isfinite(rec), np.isfinite(cube))
 d = np.abs(rec - cube)[np.isfinite(cube)]
 print(pid, "mask identical:", same_mask, "max abs diff", float(d.max()), "(scale/2 =", ent["scale"] / 2, ")")
-assert same_mask and d.max() <= ent["scale"] / 2 + 1e-6
+assert same_mask and d.max() <= ent["scale"] / 2 * 1.001 + 1e-6

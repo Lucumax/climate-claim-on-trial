@@ -1,0 +1,107 @@
+{
+ "id": "tws_grace",
+ "product": "GRACE and GRACE-FO JPL mascons RL06.3 v04 (CRI)",
+ "collection": {
+  "concept_id": "C3195527175-POCLOUD",
+  "short_name": "TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4",
+  "version": "RL06.3Mv04",
+  "doi": "10.5067/TEMSC-3JC634",
+  "title": "JPL GRACE and GRACE-FO Mascon Ocean, Ice, and Hydrology Equivalent Water Height Coastal Resolution Improvement (CRI) Filtered Release 06.3 Version 04",
+  "temporal": [
+   {
+    "BeginningDateTime": "2002-04-04T00:00:00.000Z"
+   }
+  ]
+ },
+ "agency_archive": "NASA PO.DAAC",
+ "source_variable": "lwe_thickness",
+ "access": "Earthdata Login (environment token); PO.DAAC HTTPS download of the single global netCDF (about 46 MB) to a scratch dir, read once, deleted (no approval error: HTTP 200)",
+ "retrieved_utc": [
+  "2026-11-14T18:05:06.971553+00:00",
+  "2026-11-14T18:05:11.244091+00:00"
+ ],
+ "regrid": "0.5 degree to 1 degree: mean of valid land cells in each 2 x 2 block, kept if >= 2 of 4 valid; ocean cells masked with the file's land_mask; longitudes rolled from 0..360 to -180..180",
+ "granules": [
+  {
+   "granule_ur": "GRCTellus.JPL.200204_202609.GLO.RL06.3M.MSCNv04CRI",
+   "url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4/GRCTellus.JPL.200204_202609.GLO.RL06.3M.MSCNv04CRI.nc",
+   "sha256_download": "3522dd579cc10326339efdecece550ba01f41b9bee599d0ed915fc35f9eafb64",
+   "bytes": 46365171,
+   "n_solutions": 261,
+   "duplicate_months": [
+    "2012-01",
+    "2015-04"
+   ]
+  }
+ ],
+ "outputs_sha256": {
+  "global_series.json": "75c333de09fa00be472975b0a82f48f6b5b66b31a1d58fe5bde30fceec32a574",
+  "tile_0_0.bin.gz": "fd00b479c974289c5aecec5732fffd31ee0a52afd6df590ce61d1aa47596dd88",
+  "tile_0_1.bin.gz": "3cc994578fa9ddba6e93692926c9df3e082c488edf0bf70b16fcbba291a76021",
+  "tile_0_10.bin.gz": "6e2ca8a7608b929e8e7b7b1293e2e86974451b90ad81fecf8d38a836cac66833",
+  "tile_0_11.bin.gz": "5973e01e57bb1aa3ff4e717b0b62970a1e8fb2ba705e60c3a5a8fbf79a1ce519",
+  "tile_0_2.bin.gz": "dcf6241c596e35c91a6f578b04ac567e6d2db5d2a17eaa96cde7e61bcb863eb1",
+  "tile_0_3.bin.gz": "cf69c265080f1eb67e0ea055fdbaf17750e7f88277c022431da07dd551870c03",
+  "tile_0_4.bin.gz": "5d1a75ecda164e0fc6826f693d356fad1217e15fc4a378912f1382ca69f22b15",
+  "tile_0_5.bin.gz": "6c32067248b01af2d2df57966bbcd4c9b83dfaa53f1135975676d2d89d7ee4ae",
+  "tile_0_6.bin.gz": "40affbd39640b348409a2971bb508e3b972f9578433a0373efa02719fcb9c8c7",
+  "tile_0_7.bin.gz": "111411141bd8e4cfcbf6864d7779e4bf56a1a2fba145c93c576f3ea45123107c",
+  "tile_0_8.bin.gz": "ba3e12154e7acda46587b1b830a8c1788b23c3a8eceddeb1717ba75782393462",
+  "tile_0_9.bin.gz": "a52d30b8f15031fb4354ef818962c4be0f2290390c007ae0f8914bdf2379eab3",
+  "tile_1_0.bin.gz": "f2633dd5c5135d15238de4799439d7ed20e27fd0f2886882c81dc1f16b2f02a4",
+  "tile_1_1.bin.gz": "c5ec565d2ef59b8fe289535a722ad694e2075b2c0849da6f327fd40e68e84260",
+  "tile_1_10.bin.gz": "beab7dcea136dfca1476a2fdb17775e3256d44c9b8e71295e943d09c998ba3f3",
+  "tile_1_11.bin.gz": "b8cfc4d1a850d2a105c5182fbe7ffbd6461c40e897a7ff9693c3c00ff60ee468",
+  "tile_1_2.bin.gz": "1ef4f5242377758d8277e7c138f141a6fd2377de52b7c03a0042a28805215071",
+  "tile_1_3.bin.gz": "1cb41de5bba99eb03e68daa00ee92cc8f3651173df05e51a65046fdc95f99c3d",
+  "tile_1_4.bin.gz": "aec53fd4e7f4818bf21db5c53b37d691009c1ba5dd99915e2d269dfc570142e1",
+  "tile_1_5.bin.gz": "92f22df485bfa936cbb79b0e2816048865d7e7c9a5ef52f43e4cb46f799dd125",
+  "tile_1_6.bin.gz": "8bd2c52ca1ebaac84f0d8128e261b9d9bff54e7f3eb93a64bbb8513fb1b638d6",
+  "tile_1_7.bin.gz": "33a5e0381e398d833980487c16a8a17f17c5e6cb262ce459a9d8e7b211668c14",
+  "tile_1_8.bin.gz": "b02c7d3574d2df07a7b3cc01a19694da0495cf2fb525b2a9a1953f51acef99ce",
+  "tile_1_9.bin.gz": "a5a376d12e345a8030734caf0a2989cc3b59ce880f91cee0e27b8841cdb0fccc",
+  "tile_2_10.bin.gz": "a326cf344642f82df09d1c1bb149813f178159b5f49d3e824fb00e3d13c94271",
+  "tile_2_2.bin.gz": "474c716b29f97acc79b804e0a17966ddb83213eda6c2101d60f1b7550b42b1e0",
+  "tile_2_3.bin.gz": "14ef078ef1cfee1354a70ebd67392424ecfd5882bc4d7a656f21c125caa743aa",
+  "tile_2_4.bin.gz": "43f83c3e7f2a4f72b24e15b1a264fcdb62e7e57b51c21c05a98dd8f569333874",
+  "tile_2_5.bin.gz": "b7e4ed129d3eb207870e413260c7df78b6284042cfba339159db474657c17116",
+  "tile_2_6.bin.gz": "5a7e55f1633d98098064dec4282f40d8ff5836134824ecd74a4bb871a8f83d49",
+  "tile_2_7.bin.gz": "64d9f1f17566a36a006e9101c09ca5562984ab1252829c59521a5991edbe9566",
+  "tile_2_8.bin.gz": "5c4c3f5dc688861d9a2b7c3282767b9749e50f8fd186d6ed84965123e2a56a75",
+  "tile_2_9.bin.gz": "71b5e818d54b8411567bc8c04e5f9fdf16075651310360d4be6f756329a4f8a1",
+  "tile_3_10.bin.gz": "388cf0fd6e0675cee4caceb4bc03d8f9ad215b27e1e1ad9daf9b788b588b2e22",
+  "tile_3_11.bin.gz": "74f52328354603c6c8c0ec161dc9384a6e1ebf1e2993e5226252ca62e9b6d504",
+  "tile_3_3.bin.gz": "f0a1f86cb5ccda012bf8fe4fce935d9fabf4ac63eefc3f7871cfff8c6d95db0a",
+  "tile_3_4.bin.gz": "e291307851f3f9d54d80dd843f59765542cfc4d808c996886b74fae4534128c7",
+  "tile_3_6.bin.gz": "79df15245f93b993e79decb22932fd52549db156e7a683d3d6ab3b1f4c26c0e1",
+  "tile_3_7.bin.gz": "fc48f95f0094913e709f482d5220383555588cde59aa867a869f009bb0d5cf63",
+  "tile_3_9.bin.gz": "da3e39e2223d10ec7da36f52d33925e5c91df6c0e164087f9ecb02d17d351341",
+  "tile_4_10.bin.gz": "c02c61888092a0c59f37b146462829e2434d0a96b7200e5708648aa2904ddcc8",
+  "tile_4_11.bin.gz": "fb3b5fee69d0ab3683132518cf3ec270652cf6e4125a9447a0461292a7f02565",
+  "tile_4_3.bin.gz": "78f6317465b18e92c434b13ddc826514cc8fd72e6c85b0574a957c0c32755562",
+  "tile_4_4.bin.gz": "ffb68f09689a45544e722e0e9fb91d5754f5062fb98470db4b57212667993f41",
+  "tile_4_6.bin.gz": "b770ad5a64032c3c46393aac8528e8ca9de00d9bf2d6349a0e366aeb805d54e6",
+  "tile_4_7.bin.gz": "eb07bc2bb35462142a4f3159760984e62aa922bdf2a2010bb86cca30dd437df1",
+  "tile_4_9.bin.gz": "433d9f4411dafe5684777472dbca482dad97fc820d9d59ff1740405ab6c9f6d7",
+  "tile_5_0.bin.gz": "df6c8131b06217e21c50529e1e48e86b099789c55b2cc705758eb2206ab124cf",
+  "tile_5_1.bin.gz": "b57f18fcc0f722130968a38ff85d0c6e3a436e00a12c96b964cea20771669f3c",
+  "tile_5_10.bin.gz": "1cadfc73b20341a438f161b2598baf8f165fb878305fb9a6d8efe7a949862eb5",
+  "tile_5_11.bin.gz": "8fcc0c0e5cb316effdd00463b04476806f487e5d46345e250d3727673e9115ef",
+  "tile_5_2.bin.gz": "3af78461245c44cb30adae5d7a4b7edd2c645c152e6f318513a3df7edd11562f",
+  "tile_5_3.bin.gz": "fb70f66b674219395e813cfb2d7dc13bd969974854f6b940bf22b1284ba3e727",
+  "tile_5_4.bin.gz": "33b139a761d1bcf7d15da7e8e7191a9b2815e948b836333f520429cedfccdd8a",
+  "tile_5_5.bin.gz": "7540e02bf91e01efe9b360b15781099e3959cb30723258db3fbebac821616a69",
+  "tile_5_6.bin.gz": "d1eac3ea1dfe16777b1ca7a6bca3d80944f7ae3d3616c2962c29ecf3064bde57",
+  "tile_5_7.bin.gz": "33291abaa3fb4c6b203e8e1ab30354349505c5924d9d9046743dca72466bd6da",
+  "tile_5_8.bin.gz": "c66fb02ec3223a9c481846bc7369674e1b39ad49c45551e5e18364095a0265f8",
+  "tile_5_9.bin.gz": "0e2d2f36d48e35b8a1e62d93cc11dc9c0c7bf698fcf8acbe1ae477ebb8ca027d",
+  "tile_means.json": "ba7ff86bfd816ee30b4fcaa92c142c1c6a659524beaaae8a6d893c4e354a3805"
+ },
+ "builder_scripts": [
+  "data/library/scripts/libcommon.py",
+  "data/library/scripts/products.py",
+  "data/library/scripts/finalize.py",
+  "data/library/scripts/build_grace.py"
+ ],
+ "note": "Raw granules are not kept; only the 1-degree monthly derivative is shipped. No trend statistic is computed in the build."
+}

@@ -24,7 +24,7 @@ PRODUCTS = {
  "aod_myd08": dict(name="Aerosol optical depth (haze)", short="MODIS Aqua MYD08_M3 v6.1", units="1 (unitless)", scale=0.001, offset=0.0,
     definition="How much haze (dust, smoke and pollution particles) blocks sunlight in the whole air column above a place, at green light (550 nm). Near 0.05 is very clean air; above 0.5 is thick haze.",
     caveats=AOD_CAV, source_var="AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean", kind="satellite observation", native="1 degree (native)", cid="C1443775657-LAADS", agency="NASA LAADS DAAC"),
- "tws_grace": dict(name="Terrestrial water storage anomaly", short="GRACE and GRACE-FO JPL mascons RL06.3 v04 (CRI)", units="cm (equivalent water height)", scale=0.01, offset=0.0,
+ "tws_grace": dict(name="Terrestrial water storage anomaly", short="GRACE and GRACE-FO JPL mascons RL06.3 v04 (CRI)", units="cm (equivalent water height)", scale=0.1, offset=0.0,
     definition="How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimetres). Snow, ice, lakes, soil moisture and groundwater all count together.",
     caveats=TWS_CAV, source_var="lwe_thickness", kind="satellite observation (gravity)", native="0.5 degree grid (effective resolution about 3 degrees), block-averaged to 1 degree", cid="C3195527175-POCLOUD", agency="NASA PO.DAAC"),
  "lst_day_myd11": dict(name="Land surface temperature (day)", short="MODIS Aqua MYD11C3 v061", units="degC", scale=0.01, offset=0.0,

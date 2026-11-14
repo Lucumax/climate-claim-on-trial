@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Climate Claim on Trial</title>
+<meta name="description" content="Put a regional climate claim on trial with NASA Earth data. Each test step shows exactly what it changes, in both directions.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232F3FBF'/%3E%3Cpath d='M7 21l6-7 4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="hatch-nodata" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="5" height="5" fill="var(--surface)"/><line x1="0" y1="0" x2="0" y2="5" stroke="var(--edge)" stroke-width="1.6"/>
+    </pattern>
+  </defs>
+</svg>
+<div id="synth" class="synth" hidden><div class="wrap"><strong>SYNTHETIC DATA</strong><span id="synth-text"></span></div></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l6-7 4 4 8-9"/></svg></span>
+      <span>Climate Claim on Trial</span>
+    </a>
+    <nav class="main" aria-label="Main">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/detective" data-nav="detective">Detective</a>
+      <a href="#/cases" data-nav="cases">Case files</a>
+      <a href="#/method" data-nav="method">Method</a>
+      <a href="#/evidence" data-nav="evidence">Evidence</a>
+    </nav>
+    <button id="theme-toggle" class="btn-quiet" type="button" aria-pressed="false">Dark mode</button>
+  </div>
+</header>
+<main id="main" tabindex="-1"><div class="wrap" id="view"><p class="loading muted">Loading the evidence bundle.</p></div></main>
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<footer class="foot"><div class="wrap">
+  <p>Climate Claim on Trial is an independent entry in the NASA Space Apps Challenge. It is not endorsed by NASA. It uses public NASA Earth data products and does not use NASA logos or mission identifiers.</p>
+  <p>No server and no AI model runs on this page. Every number and sentence was prepared in advance and is read from one data bundle. <a href="#/method">How it works</a> &middot; <a href="#/evidence">Download the evidence</a></p>
+</div></footer>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

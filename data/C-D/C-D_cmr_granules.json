@@ -1,0 +1,712 @@
+{
+ "claim": "C-D",
+ "cmr_queried_utc": "2026-11-14T15:38:07.599354+00:00",
+ "collection": {
+  "concept_id": "C1443775657-LAADS",
+  "short_name": "MYD08_M3",
+  "version": "6.1",
+  "doi": "10.5067/MODIS/MYD08_M3.061",
+  "title": "MODIS/Aqua Aerosol Cloud Water Vapor Ozone Monthly L3 Global 1Deg CMG",
+  "temporal": [
+   {
+    "BeginningDateTime": "2002-07-01T00:00:00.000Z"
+   }
+  ]
+ },
+ "n_granules": 69,
+ "n_expected": 69,
+ "missing_year_months": [],
+ "total_size_mb": 24759.2,
+ "granules": [
+  {
+   "year": 2003,
+   "month": 6,
+   "granule_ur": "LAADS:2956611626",
+   "begin": "2003-06-01T00:00:00.000Z",
+   "size_mb": 350.929189682007,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2003152.061.2018007234108.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2003152.061.2018007234108.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2003/152/MYD08_M3.A2003152.061.2018007234108.hdf.html"
+  },
+  {
+   "year": 2003,
+   "month": 7,
+   "granule_ur": "LAADS:2957002397",
+   "begin": "2003-07-01T00:00:00.000Z",
+   "size_mb": 356.780348777771,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2003182.061.2018008130414.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2003182.061.2018008130414.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2003/182/MYD08_M3.A2003182.061.2018008130414.hdf.html"
+  },
+  {
+   "year": 2003,
+   "month": 8,
+   "granule_ur": "LAADS:2963146976",
+   "begin": "2003-08-01T00:00:00.000Z",
+   "size_mb": 374.234254837036,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2003213.061.2018008235250.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2003213.061.2018008235250.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2003/213/MYD08_M3.A2003213.061.2018008235250.hdf.html"
+  },
+  {
+   "year": 2004,
+   "month": 6,
+   "granule_ur": "LAADS:2984314125",
+   "begin": "2004-06-01T00:00:00.000Z",
+   "size_mb": 349.967502593994,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2004153.061.2018015081230.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2004153.061.2018015081230.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2004/153/MYD08_M3.A2004153.061.2018015081230.hdf.html"
+  },
+  {
+   "year": 2004,
+   "month": 7,
+   "granule_ur": "LAADS:2985029154",
+   "begin": "2004-07-01T00:00:00.000Z",
+   "size_mb": 357.274974822998,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2004183.061.2018015213720.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2004183.061.2018015213720.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2004/183/MYD08_M3.A2004183.061.2018015213720.hdf.html"
+  },
+  {
+   "year": 2004,
+   "month": 8,
+   "granule_ur": "LAADS:2985561250",
+   "begin": "2004-08-01T00:00:00.000Z",
+   "size_mb": 372.739023208618,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2004214.061.2018016072235.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2004214.061.2018016072235.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2004/214/MYD08_M3.A2004214.061.2018016072235.hdf.html"
+  },
+  {
+   "year": 2005,
+   "month": 6,
+   "granule_ur": "LAADS:3014971121",
+   "begin": "2005-06-01T00:00:00.000Z",
+   "size_mb": 350.826329231262,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2005152.061.2018024205600.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2005152.061.2018024205600.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2005/152/MYD08_M3.A2005152.061.2018024205600.hdf.html"
+  },
+  {
+   "year": 2005,
+   "month": 7,
+   "granule_ur": "LAADS:3016067757",
+   "begin": "2005-07-01T00:00:00.000Z",
+   "size_mb": 358.169959068298,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2005182.061.2018025123501.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2005182.061.2018025123501.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2005/182/MYD08_M3.A2005182.061.2018025123501.hdf.html"
+  },
+  {
+   "year": 2005,
+   "month": 8,
+   "granule_ur": "LAADS:3016981448",
+   "begin": "2005-08-01T00:00:00.000Z",
+   "size_mb": 372.961743354797,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2005213.061.2018026010845.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2005213.061.2018026010845.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2005/213/MYD08_M3.A2005213.061.2018026010845.hdf.html"
+  },
+  {
+   "year": 2006,
+   "month": 6,
+   "granule_ur": "LAADS:3011535158",
+   "begin": "2006-06-01T00:00:00.000Z",
+   "size_mb": 349.517711639404,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2006152.061.2018023142825.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2006152.061.2018023142825.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2006/152/MYD08_M3.A2006152.061.2018023142825.hdf.html"
+  },
+  {
+   "year": 2006,
+   "month": 7,
+   "granule_ur": "LAADS:3014955278",
+   "begin": "2006-07-01T00:00:00.000Z",
+   "size_mb": 356.888195991516,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2006182.061.2018024202023.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2006182.061.2018024202023.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2006/182/MYD08_M3.A2006182.061.2018024202023.hdf.html"
+  },
+  {
+   "year": 2006,
+   "month": 8,
+   "granule_ur": "LAADS:3015622203",
+   "begin": "2006-08-01T00:00:00.000Z",
+   "size_mb": 371.778275489807,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2006213.061.2018025054243.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2006213.061.2018025054243.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2006/213/MYD08_M3.A2006213.061.2018025054243.hdf.html"
+  },
+  {
+   "year": 2007,
+   "month": 6,
+   "granule_ur": "LAADS:3044462635",
+   "begin": "2007-06-01T00:00:00.000Z",
+   "size_mb": 352.268854141235,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2007152.061.2018041022610.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2007152.061.2018041022610.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2007/152/MYD08_M3.A2007152.061.2018041022610.hdf.html"
+  },
+  {
+   "year": 2007,
+   "month": 7,
+   "granule_ur": "LAADS:3049593105",
+   "begin": "2007-07-01T00:00:00.000Z",
+   "size_mb": 357.485385894775,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2007182.061.2018043011505.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2007182.061.2018043011505.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2007/182/MYD08_M3.A2007182.061.2018043011505.hdf.html"
+  },
+  {
+   "year": 2007,
+   "month": 8,
+   "granule_ur": "LAADS:3050698612",
+   "begin": "2007-08-01T00:00:00.000Z",
+   "size_mb": 371.793909072876,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2007213.061.2018043105437.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2007213.061.2018043105437.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2007/213/MYD08_M3.A2007213.061.2018043105437.hdf.html"
+  },
+  {
+   "year": 2008,
+   "month": 6,
+   "granule_ur": "LAADS:3033333530",
+   "begin": "2008-06-01T00:00:00.000Z",
+   "size_mb": 350.284811973572,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2008153.061.2018035120858.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2008153.061.2018035120858.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2008/153/MYD08_M3.A2008153.061.2018035120858.hdf.html"
+  },
+  {
+   "year": 2008,
+   "month": 7,
+   "granule_ur": "LAADS:3033879812",
+   "begin": "2008-07-01T00:00:00.000Z",
+   "size_mb": 356.333940505981,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2008183.061.2018036082107.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2008183.061.2018036082107.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2008/183/MYD08_M3.A2008183.061.2018036082107.hdf.html"
+  },
+  {
+   "year": 2008,
+   "month": 8,
+   "granule_ur": "LAADS:3037688141",
+   "begin": "2008-08-01T00:00:00.000Z",
+   "size_mb": 372.80379486084,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2008214.061.2018038120949.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2008214.061.2018038120949.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2008/214/MYD08_M3.A2008214.061.2018038120949.hdf.html"
+  },
+  {
+   "year": 2009,
+   "month": 6,
+   "granule_ur": "LAADS:3053738610",
+   "begin": "2009-06-01T00:00:00.000Z",
+   "size_mb": 352.016609191895,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2009152.061.2018044185347.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2009152.061.2018044185347.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2009/152/MYD08_M3.A2009152.061.2018044185347.hdf.html"
+  },
+  {
+   "year": 2009,
+   "month": 7,
+   "granule_ur": "LAADS:3059410959",
+   "begin": "2009-07-01T00:00:00.000Z",
+   "size_mb": 356.788034439087,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2009182.061.2018046041929.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2009182.061.2018046041929.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2009/182/MYD08_M3.A2009182.061.2018046041929.hdf.html"
+  },
+  {
+   "year": 2009,
+   "month": 8,
+   "granule_ur": "LAADS:3059429683",
+   "begin": "2009-08-01T00:00:00.000Z",
+   "size_mb": 370.823068618774,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2009213.061.2018046052828.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2009213.061.2018046052828.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2009/213/MYD08_M3.A2009213.061.2018046052828.hdf.html"
+  },
+  {
+   "year": 2010,
+   "month": 6,
+   "granule_ur": "LAADS:3085504545",
+   "begin": "2010-06-01T00:00:00.000Z",
+   "size_mb": 350.701033592224,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2010152.061.2018061041450.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2010152.061.2018061041450.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2010/152/MYD08_M3.A2010152.061.2018061041450.hdf.html"
+  },
+  {
+   "year": 2010,
+   "month": 7,
+   "granule_ur": "LAADS:3086467355",
+   "begin": "2010-07-01T00:00:00.000Z",
+   "size_mb": 356.578240394592,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2010182.061.2018061162318.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2010182.061.2018061162318.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2010/182/MYD08_M3.A2010182.061.2018061162318.hdf.html"
+  },
+  {
+   "year": 2010,
+   "month": 8,
+   "granule_ur": "LAADS:3087249353",
+   "begin": "2010-08-01T00:00:00.000Z",
+   "size_mb": 371.486029624939,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2010213.061.2018062030411.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2010213.061.2018062030411.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2010/213/MYD08_M3.A2010213.061.2018062030411.hdf.html"
+  },
+  {
+   "year": 2011,
+   "month": 6,
+   "granule_ur": "LAADS:3026735825",
+   "begin": "2011-06-01T00:00:00.000Z",
+   "size_mb": 351.323293685913,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2011152.061.2018032061155.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2011152.061.2018032061155.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2011/152/MYD08_M3.A2011152.061.2018032061155.hdf.html"
+  },
+  {
+   "year": 2011,
+   "month": 7,
+   "granule_ur": "LAADS:3027748218",
+   "begin": "2011-07-01T00:00:00.000Z",
+   "size_mb": 356.720593452454,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2011182.061.2018032200129.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2011182.061.2018032200129.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2011/182/MYD08_M3.A2011182.061.2018032200129.hdf.html"
+  },
+  {
+   "year": 2011,
+   "month": 8,
+   "granule_ur": "LAADS:3028947800",
+   "begin": "2011-08-01T00:00:00.000Z",
+   "size_mb": 370.690724372864,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2011213.061.2018033130405.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2011213.061.2018033130405.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2011/213/MYD08_M3.A2011213.061.2018033130405.hdf.html"
+  },
+  {
+   "year": 2012,
+   "month": 6,
+   "granule_ur": "LAADS:3044413952",
+   "begin": "2012-06-01T00:00:00.000Z",
+   "size_mb": 351.677912712097,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2012153.061.2018041020348.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2012153.061.2018041020348.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2012/153/MYD08_M3.A2012153.061.2018041020348.hdf.html"
+  },
+  {
+   "year": 2012,
+   "month": 7,
+   "granule_ur": "LAADS:3045891428",
+   "begin": "2012-07-01T00:00:00.000Z",
+   "size_mb": 357.651688575745,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2012183.061.2018041145527.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2012183.061.2018041145527.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2012/183/MYD08_M3.A2012183.061.2018041145527.hdf.html"
+  },
+  {
+   "year": 2012,
+   "month": 8,
+   "granule_ur": "LAADS:3047659766",
+   "begin": "2012-08-01T00:00:00.000Z",
+   "size_mb": 374.194033622742,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2012214.061.2018042055527.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2012214.061.2018042055527.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2012/214/MYD08_M3.A2012214.061.2018042055527.hdf.html"
+  },
+  {
+   "year": 2013,
+   "month": 6,
+   "granule_ur": "LAADS:3059081373",
+   "begin": "2013-06-01T00:00:00.000Z",
+   "size_mb": 350.881265640259,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2013152.061.2018047153645.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2013152.061.2018047153645.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2013/152/MYD08_M3.A2013152.061.2018047153645.hdf.html"
+  },
+  {
+   "year": 2013,
+   "month": 7,
+   "granule_ur": "LAADS:3061072508",
+   "begin": "2013-07-01T00:00:00.000Z",
+   "size_mb": 357.879266738892,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2013182.061.2018048014655.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2013182.061.2018048014655.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2013/182/MYD08_M3.A2013182.061.2018048014655.hdf.html"
+  },
+  {
+   "year": 2013,
+   "month": 8,
+   "granule_ur": "LAADS:3062634189",
+   "begin": "2013-08-01T00:00:00.000Z",
+   "size_mb": 372.806018829346,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2013213.061.2018048130057.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2013213.061.2018048130057.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2013/213/MYD08_M3.A2013213.061.2018048130057.hdf.html"
+  },
+  {
+   "year": 2014,
+   "month": 6,
+   "granule_ur": "LAADS:3072596694",
+   "begin": "2014-06-01T00:00:00.000Z",
+   "size_mb": 349.786894798279,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2014152.061.2018054131712.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2014152.061.2018054131712.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2014/152/MYD08_M3.A2014152.061.2018054131712.hdf.html"
+  },
+  {
+   "year": 2014,
+   "month": 7,
+   "granule_ur": "LAADS:3073971970",
+   "begin": "2014-07-01T00:00:00.000Z",
+   "size_mb": 357.427112579346,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2014182.061.2018055060208.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2014182.061.2018055060208.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2014/182/MYD08_M3.A2014182.061.2018055060208.hdf.html"
+  },
+  {
+   "year": 2014,
+   "month": 8,
+   "granule_ur": "LAADS:3074343283",
+   "begin": "2014-08-01T00:00:00.000Z",
+   "size_mb": 371.895262718201,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2014213.061.2018055105438.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2014213.061.2018055105438.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2014/213/MYD08_M3.A2014213.061.2018055105438.hdf.html"
+  },
+  {
+   "year": 2015,
+   "month": 6,
+   "granule_ur": "LAADS:3066686996",
+   "begin": "2015-06-01T00:00:00.000Z",
+   "size_mb": 350.638155937195,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2015152.061.2018051013624.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2015152.061.2018051013624.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2015/152/MYD08_M3.A2015152.061.2018051013624.hdf.html"
+  },
+  {
+   "year": 2015,
+   "month": 7,
+   "granule_ur": "LAADS:3067898613",
+   "begin": "2015-07-01T00:00:00.000Z",
+   "size_mb": 356.935790061951,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2015182.061.2018051224106.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2015182.061.2018051224106.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2015/182/MYD08_M3.A2015182.061.2018051224106.hdf.html"
+  },
+  {
+   "year": 2015,
+   "month": 8,
+   "granule_ur": "LAADS:3069905076",
+   "begin": "2015-08-01T00:00:00.000Z",
+   "size_mb": 371.998410224915,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2015213.061.2018053002113.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2015213.061.2018053002113.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2015/213/MYD08_M3.A2015213.061.2018053002113.hdf.html"
+  },
+  {
+   "year": 2016,
+   "month": 6,
+   "granule_ur": "LAADS:3083449611",
+   "begin": "2016-06-01T00:00:00.000Z",
+   "size_mb": 351.892726898193,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2016153.061.2018060103510.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2016153.061.2018060103510.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2016/153/MYD08_M3.A2016153.061.2018060103510.hdf.html"
+  },
+  {
+   "year": 2016,
+   "month": 7,
+   "granule_ur": "LAADS:3086567235",
+   "begin": "2016-07-01T00:00:00.000Z",
+   "size_mb": 357.656853675842,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2016183.061.2018061172807.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2016183.061.2018061172807.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2016/183/MYD08_M3.A2016183.061.2018061172807.hdf.html"
+  },
+  {
+   "year": 2016,
+   "month": 8,
+   "granule_ur": "LAADS:3088456562",
+   "begin": "2016-08-01T00:00:00.000Z",
+   "size_mb": 374.539566040039,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2016214.061.2018062233458.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2016214.061.2018062233458.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2016/214/MYD08_M3.A2016214.061.2018062233458.hdf.html"
+  },
+  {
+   "year": 2017,
+   "month": 6,
+   "granule_ur": "LAADS:3030121273",
+   "begin": "2017-06-01T00:00:00.000Z",
+   "size_mb": 350.422073364258,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2017152.061.2018034002555.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2017152.061.2018034002555.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2017/152/MYD08_M3.A2017152.061.2018034002555.hdf.html"
+  },
+  {
+   "year": 2017,
+   "month": 7,
+   "granule_ur": "LAADS:3032350311",
+   "begin": "2017-07-01T00:00:00.000Z",
+   "size_mb": 356.849725723267,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2017182.061.2018034181409.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2017182.061.2018034181409.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2017/182/MYD08_M3.A2017182.061.2018034181409.hdf.html"
+  },
+  {
+   "year": 2017,
+   "month": 8,
+   "granule_ur": "LAADS:3041475642",
+   "begin": "2017-08-01T00:00:00.000Z",
+   "size_mb": 372.94321346283,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2017213.061.2018040005004.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2017213.061.2018040005004.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2017/213/MYD08_M3.A2017213.061.2018040005004.hdf.html"
+  },
+  {
+   "year": 2018,
+   "month": 6,
+   "granule_ur": "LAADS:3224407113",
+   "begin": "2018-06-01T00:00:00.000Z",
+   "size_mb": 351.056699752808,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2018152.061.2018186191202.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2018152.061.2018186191202.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2018/152/MYD08_M3.A2018152.061.2018186191202.hdf.html"
+  },
+  {
+   "year": 2018,
+   "month": 7,
+   "granule_ur": "LAADS:3244610037",
+   "begin": "2018-07-01T00:00:00.000Z",
+   "size_mb": 356.956672668457,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2018182.061.2018213182606.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2018182.061.2018213182606.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2018/182/MYD08_M3.A2018182.061.2018213182606.hdf.html"
+  },
+  {
+   "year": 2018,
+   "month": 8,
+   "granule_ur": "LAADS:3265507498",
+   "begin": "2018-08-01T00:00:00.000Z",
+   "size_mb": 371.446383476257,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2018213.061.2018244182923.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2018213.061.2018244182923.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2018/213/MYD08_M3.A2018213.061.2018244182923.hdf.html"
+  },
+  {
+   "year": 2019,
+   "month": 6,
+   "granule_ur": "LAADS:4995532638",
+   "begin": "2019-06-01T00:00:00.000Z",
+   "size_mb": 351.573710441589,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2019152.061.2019182185731.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2019152.061.2019182185731.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2019/152/MYD08_M3.A2019152.061.2019182185731.hdf.html"
+  },
+  {
+   "year": 2019,
+   "month": 7,
+   "granule_ur": "LAADS:5015938941",
+   "begin": "2019-07-01T00:00:00.000Z",
+   "size_mb": 356.174747467041,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2019182.061.2019213205431.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2019182.061.2019213205431.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2019/182/MYD08_M3.A2019182.061.2019213205431.hdf.html"
+  },
+  {
+   "year": 2019,
+   "month": 8,
+   "granule_ur": "LAADS:5032885535",
+   "begin": "2019-08-01T00:00:00.000Z",
+   "size_mb": 370.964336395264,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2019213.061.2019244183905.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2019213.061.2019244183905.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2019/213/MYD08_M3.A2019213.061.2019244183905.hdf.html"
+  },
+  {
+   "year": 2020,
+   "month": 6,
+   "granule_ur": "LAADS:5432594955",
+   "begin": "2020-06-01T00:00:00.000Z",
+   "size_mb": 349.586396217346,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2020153.061.2020188194833.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2020153.061.2020188194833.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2020/153/MYD08_M3.A2020153.061.2020188194833.hdf.html"
+  },
+  {
+   "year": 2020,
+   "month": 7,
+   "granule_ur": "LAADS:5478876595",
+   "begin": "2020-07-01T00:00:00.000Z",
+   "size_mb": 356.501030921936,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2020183.061.2020214191520.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2020183.061.2020214191520.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2020/183/MYD08_M3.A2020183.061.2020214191520.hdf.html"
+  },
+  {
+   "year": 2020,
+   "month": 8,
+   "granule_ur": "LAADS:5583665337",
+   "begin": "2020-08-01T00:00:00.000Z",
+   "size_mb": 326.408023834229,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2020214.061.2020258142300.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2020214.061.2020258142300.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2020/214/MYD08_M3.A2020214.061.2020258142300.hdf.html"
+  },
+  {
+   "year": 2021,
+   "month": 6,
+   "granule_ur": "LAADS:6224241382",
+   "begin": "2021-06-01T00:00:00.000Z",
+   "size_mb": 351.860936164856,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2021152.061.2021183014652.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2021152.061.2021183014652.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2021/152/MYD08_M3.A2021152.061.2021183014652.hdf.html"
+  },
+  {
+   "year": 2021,
+   "month": 7,
+   "granule_ur": "LAADS:6328092603",
+   "begin": "2021-07-01T00:00:00.000Z",
+   "size_mb": 358.321641921997,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2021182.061.2021213203220.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2021182.061.2021213203220.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2021/182/MYD08_M3.A2021182.061.2021213203220.hdf.html"
+  },
+  {
+   "year": 2021,
+   "month": 8,
+   "granule_ur": "LAADS:6439244434",
+   "begin": "2021-08-01T00:00:00.000Z",
+   "size_mb": 372.966473579407,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2021213.061.2021244193725.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2021213.061.2021244193725.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2021/213/MYD08_M3.A2021213.061.2021244193725.hdf.html"
+  },
+  {
+   "year": 2022,
+   "month": 6,
+   "granule_ur": "LAADS:7207177048",
+   "begin": "2022-06-01T00:00:00.000Z",
+   "size_mb": 349.959568977356,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2022152.061.2022333075806.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2022152.061.2022333075806.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2022/152/MYD08_M3.A2022152.061.2022333075806.hdf.html"
+  },
+  {
+   "year": 2022,
+   "month": 7,
+   "granule_ur": "LAADS:7207180178",
+   "begin": "2022-07-01T00:00:00.000Z",
+   "size_mb": 356.278175354004,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2022182.061.2022333080017.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2022182.061.2022333080017.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2022/182/MYD08_M3.A2022182.061.2022333080017.hdf.html"
+  },
+  {
+   "year": 2022,
+   "month": 8,
+   "granule_ur": "LAADS:7050592696",
+   "begin": "2022-08-01T00:00:00.000Z",
+   "size_mb": 371.64685344696,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2022213.061.2022245064818.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2022213.061.2022245064818.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2022/213/MYD08_M3.A2022213.061.2022245064818.hdf.html"
+  },
+  {
+   "year": 2023,
+   "month": 6,
+   "granule_ur": "LAADS:7679418529",
+   "begin": "2023-06-01T00:00:00.000Z",
+   "size_mb": 349.282948493958,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2023152.061.2023193055402.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2023152.061.2023193055402.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2023/152/MYD08_M3.A2023152.061.2023193055402.hdf.html"
+  },
+  {
+   "year": 2023,
+   "month": 7,
+   "granule_ur": "LAADS:7777312099",
+   "begin": "2023-07-01T00:00:00.000Z",
+   "size_mb": 354.836334228516,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2023182.061.2023215182812.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2023182.061.2023215182812.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2023/182/MYD08_M3.A2023182.061.2023215182812.hdf.html"
+  },
+  {
+   "year": 2023,
+   "month": 8,
+   "granule_ur": "LAADS:7806069611",
+   "begin": "2023-08-01T00:00:00.000Z",
+   "size_mb": 371.581007957458,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2023213.061.2023250153636.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2023213.061.2023250153636.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2023/213/MYD08_M3.A2023213.061.2023250153636.hdf.html"
+  },
+  {
+   "year": 2024,
+   "month": 6,
+   "granule_ur": "LAADS:8330973484",
+   "begin": "2024-06-01T00:00:00.000Z",
+   "size_mb": 345.932149887085,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2024153.061.2024187025207.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2024153.061.2024187025207.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2024/153/MYD08_M3.A2024153.061.2024187025207.hdf.html"
+  },
+  {
+   "year": 2024,
+   "month": 7,
+   "granule_ur": "LAADS:8384880709",
+   "begin": "2024-07-01T00:00:00.000Z",
+   "size_mb": 352.462821006775,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2024183.061.2024226151349.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2024183.061.2024226151349.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2024/183/MYD08_M3.A2024183.061.2024226151349.hdf.html"
+  },
+  {
+   "year": 2024,
+   "month": 8,
+   "granule_ur": "LAADS:8479000828",
+   "begin": "2024-08-01T00:00:00.000Z",
+   "size_mb": 369.361531257629,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2024214.061.2024267191906.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2024214.061.2024267191906.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2024/214/MYD08_M3.A2024214.061.2024267191906.hdf.html"
+  },
+  {
+   "year": 2025,
+   "month": 6,
+   "granule_ur": "LAADS:8967709880",
+   "begin": "2025-06-01T00:00:00.000Z",
+   "size_mb": 341.301389694214,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2025152.061.2025183014844.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2025152.061.2025183014844.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2025/152/MYD08_M3.A2025152.061.2025183014844.hdf.html"
+  },
+  {
+   "year": 2025,
+   "month": 7,
+   "granule_ur": "LAADS:9009464250",
+   "begin": "2025-07-01T00:00:00.000Z",
+   "size_mb": 348.217943191528,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2025182.061.2025213212919.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2025182.061.2025213212919.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2025/182/MYD08_M3.A2025182.061.2025213212919.hdf.html"
+  },
+  {
+   "year": 2025,
+   "month": 8,
+   "granule_ur": "LAADS:9044477049",
+   "begin": "2025-08-01T00:00:00.000Z",
+   "size_mb": 366.322833061218,
+   "https_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MYD08_M3/MYD08_M3.A2025213.061.2025246015406.hdf",
+   "s3_url": "s3://prod-lads/MYD08_M3/MYD08_M3.A2025213.061.2025246015406.hdf",
+   "opendap_url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MYD08_M3/2025/213/MYD08_M3.A2025213.061.2025246015406.hdf.html"
+  }
+ ]
+}

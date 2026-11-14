@@ -1,0 +1,49 @@
+/* Neutral tokens (pre-mockup). One token set per theme. Light is the default; dark follows the system setting or the
+   manual toggle (data-theme). The two dark blocks must match. After changing any colour run, from web/:
+   python tools/check_contrast.py */
+
+:root {
+  color-scheme: light;
+  --bg: #F6F7F9;        --surface: #FFFFFF;   --surface-2: #EEF0F4;  --ink: #171A1F;   --muted: #565D68;  --ink-soft: #6B7280;
+  --line: #E3E6EB;      --edge: #7B838F;
+  --accent: #2F3FBF;    --on-accent: #FFFFFF; --focus: #2F3FBF;
+  --ok: #0B7A47;        --warn: #9A4205;      --bad: #B5231A;
+  --ok-bg: #E4F3EB;     --warn-bg: #FCEEDD;   --bad-bg: #FBE9E7;
+  /* map categories: increase / decrease flagged, not flagged */
+  --up: #C2410C;        --down: #2F5FD0;      --nf: #DDE1E7;
+  --up-text: #A8380A;   --down-text: #2450BA;
+  /* chart palette */
+  --c1: #2F5FD0; --c2: #C2410C; --c3: #0F766E; --c4: #A21CAF; --c5: #8A5A00; --c6: #4D7C0F;
+  --radius: 10px;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --shadow-1: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0C0D10;      --surface: #15171B; --surface-2: #1E2127; --ink: #ECEDEF;   --muted: #A1A6AF;  --ink-soft: #8D939D;
+    --line: #2A2D34;    --edge: #6B7079;
+    --accent: #9AA6FF;  --on-accent: #0C0D10; --focus: #9AA6FF;
+    --ok: #4FD196;      --warn: #FFB060;    --bad: #FF8A80;
+    --ok-bg: #0F2A1D;   --warn-bg: #2E1F0C; --bad-bg: #341615;
+    --up: #FF9A5C;      --down: #7AA2FF;    --nf: #2B2F36;
+    --up-text: #FF9A5C; --down-text: #8DB0FF;
+    --c1: #7AA2FF; --c2: #FF9A5C; --c3: #4FD1C5; --c4: #E58BFF; --c5: #F2C14E; --c6: #A3D65C;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0C0D10;      --surface: #15171B; --surface-2: #1E2127; --ink: #ECEDEF;   --muted: #A1A6AF;  --ink-soft: #8D939D;
+  --line: #2A2D34;    --edge: #6B7079;
+  --accent: #9AA6FF;  --on-accent: #0C0D10; --focus: #9AA6FF;
+  --ok: #4FD196;      --warn: #FFB060;    --bad: #FF8A80;
+  --ok-bg: #0F2A1D;   --warn-bg: #2E1F0C; --bad-bg: #341615;
+  --up: #FF9A5C;      --down: #7AA2FF;    --nf: #2B2F36;
+  --up-text: #FF9A5C; --down-text: #8DB0FF;
+  --c1: #7AA2FF; --c2: #FF9A5C; --c3: #4FD1C5; --c4: #E58BFF; --c5: #F2C14E; --c6: #A3D65C;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
+}

@@ -1,0 +1,4 @@
+.venv/
+raw/
+*.hdf
+*.h5

@@ -1,0 +1,21 @@
+{
+  "_help": "Each pair is [foreground token, background token]. text pairs need 4.5:1 (WCAG AA); graphics pairs (chart marks, map categories, borders) need 3:1. Both themes are checked.",
+  "text": [
+    ["ink", "bg"], ["ink", "surface"], ["ink", "surface-2"],
+    ["muted", "bg"], ["muted", "surface"], ["muted", "surface-2"],
+    ["accent", "bg"], ["accent", "surface"],
+    ["on-accent", "accent"],
+    ["ok", "surface"], ["warn", "surface"], ["bad", "surface"],
+    ["ok", "ok-bg"], ["warn", "warn-bg"], ["bad", "bad-bg"],
+    ["ink", "ok-bg"], ["ink", "warn-bg"],
+    ["up-text", "surface"], ["down-text", "surface"]
+  ],
+  "graphics": [
+    ["c1", "surface"], ["c2", "surface"], ["c3", "surface"],
+    ["c4", "surface"], ["c5", "surface"], ["c6", "surface"],
+    ["up", "surface"], ["down", "surface"],
+    ["up", "nf"], ["down", "nf"],
+    ["edge", "surface"], ["focus", "bg"], ["focus", "surface"],
+    ["ink-soft", "surface"]
+  ]
+}

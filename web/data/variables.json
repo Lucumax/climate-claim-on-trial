@@ -1,0 +1,31 @@
+{
+  "_note": "Variable catalogue for Detective mode. power_param is the NASA POWER parameter name to request; the data worker confirms which are live. 'stub' fields only drive the synthetic preview series and are never shown as results.",
+  "variables": [
+    { "key": "t2m", "name": "Air temperature", "one_line": "How warm the air is about two metres above the ground, where a weather station thermometer sits.", "units": "deg C", "kind": "model_reanalysis", "source": "MERRA-2 (NASA reanalysis), via NASA POWER", "power_param": "T2M", "since": 1981, "stub": { "base": 12, "amp": 14, "noise": 0.8, "trend": 0.3 } },
+    { "key": "precip", "name": "Rainfall", "one_line": "How much rain and snow-melt equivalent fell, averaged per day.", "units": "mm per day", "kind": "model_reanalysis", "source": "MERRA-2 corrected precipitation, via NASA POWER", "power_param": "PRECTOTCORR", "since": 1981, "stub": { "base": 2.5, "amp": 1.5, "noise": 0.5, "trend": 0.0 } },
+    { "key": "solar", "name": "Sunlight reaching the ground", "one_line": "How much of the Sun's energy reaches the surface under real skies, clouds included.", "units": "kWh per m2 per day", "kind": "model_reanalysis", "source": "NASA POWER all-sky surface shortwave", "power_param": "ALLSKY_SFC_SW_DWN", "since": 1984, "stub": { "base": 4.5, "amp": 2.0, "noise": 0.25, "trend": 0.02 } },
+    { "key": "wind", "name": "Wind speed", "one_line": "How fast the air moves, measured ten metres above the ground.", "units": "m per s", "kind": "model_reanalysis", "source": "MERRA-2 wind at 10 m, via NASA POWER", "power_param": "WS10M", "since": 1981, "stub": { "base": 4, "amp": 0.8, "noise": 0.3, "trend": -0.05 } },
+    { "key": "humidity", "name": "Water vapour near the ground", "one_line": "How much water is held in the air as invisible vapour, as grams per kilogram of air.", "units": "g per kg", "kind": "model_reanalysis", "source": "MERRA-2 specific humidity at 2 m, via NASA POWER", "power_param": "QV2M", "since": 1981, "stub": { "base": 8, "amp": 5, "noise": 0.4, "trend": 0.15 } },
+    { "key": "pressure", "name": "Air pressure", "one_line": "The weight of the air above you, at the surface.", "units": "kPa", "kind": "model_reanalysis", "source": "MERRA-2 surface pressure, via NASA POWER", "power_param": "PS", "since": 1981, "stub": { "base": 98, "amp": 0.6, "noise": 0.3, "trend": 0.0 } },
+    { "key": "soil", "name": "Soil wetness", "one_line": "How wet the top layer of soil is, from 0 (bone dry) to 1 (soaked).", "units": "fraction", "kind": "model_reanalysis", "source": "GEOS surface soil wetness, via NASA POWER", "power_param": "GWETTOP", "since": 1981, "stub": { "base": 0.5, "amp": 0.15, "noise": 0.05, "trend": -0.01 } },
+    { "key": "aod", "name": "Smoke and haze (aerosol optical depth)", "one_line": "How much smoke, dust and haze blocks sunlight in the air column. Higher means hazier skies.", "units": "unitless", "kind": "satellite_observation", "source": "MODIS Aqua aerosol optical depth (satellite)", "power_param": null, "since": 2002, "stub": { "base": 0.12, "amp": 0.06, "noise": 0.04, "trend": 0.01 } }
+  ],
+  "presets": [
+    { "key": "world", "name": "Whole world", "box": { "s": -90, "n": 90, "w": -180, "e": 180 } },
+    { "key": "wisconsin", "name": "Wisconsin (box around the state)", "box": { "s": 42.5, "n": 47.1, "w": -92.9, "e": -86.8 } },
+    { "key": "sus", "name": "Southeastern United States", "box": { "s": 30, "n": 37, "w": -90, "e": -75.5 } },
+    { "key": "sahel", "name": "Central Sahel", "box": { "s": 10, "n": 18, "w": -17, "e": 25 } },
+    { "key": "alaska", "name": "Interior and western Alaska", "box": { "s": 60, "n": 70, "w": -165, "e": -140 } },
+    { "key": "amazon", "name": "Amazon basin", "box": { "s": -15, "n": 5, "w": -75, "e": -50 } },
+    { "key": "europe", "name": "Western and central Europe", "box": { "s": 42, "n": 55, "w": -5, "e": 20 } },
+    { "key": "india", "name": "India", "box": { "s": 8, "n": 28, "w": 70, "e": 88 } }
+  ],
+  "seasons": [
+    { "key": "all", "name": "Whole year", "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+    { "key": "djf", "name": "Winter (Dec, Jan, Feb)", "months": [12, 1, 2] },
+    { "key": "mam", "name": "Spring (Mar, Apr, May)", "months": [3, 4, 5] },
+    { "key": "jja", "name": "Summer (Jun, Jul, Aug)", "months": [6, 7, 8] },
+    { "key": "son", "name": "Autumn (Sep, Oct, Nov)", "months": [9, 10, 11] },
+    { "key": "jjas", "name": "Wet season, northern tropics (Jun to Sep)", "months": [6, 7, 8, 9] }
+  ]
+}

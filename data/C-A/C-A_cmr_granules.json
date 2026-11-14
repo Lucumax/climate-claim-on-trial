@@ -1,0 +1,772 @@
+{
+ "claim": "C-A",
+ "cmr_queried_utc": "2026-11-14T15:33:53.679741+00:00",
+ "collection": {
+  "concept_id": "C2565788897-LPCLOUD",
+  "short_name": "MOD11C3",
+  "version": "061",
+  "doi": "10.5067/MODIS/MOD11C3.061",
+  "title": "MODIS/Terra Land Surface Temperature/Emissivity Monthly L3 Global 0.05Deg CMG V061",
+  "temporal": [
+   {
+    "BeginningDateTime": "2000-02-01T00:00:00.000Z"
+   }
+  ]
+ },
+ "n_granules": 75,
+ "n_expected": 75,
+ "missing_year_months": [],
+ "total_size_mb": 5212.3,
+ "granules": [
+  {
+   "year": 2001,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2001152.061.2020094140405",
+   "begin": "2001-06-01T00:00:00.000Z",
+   "size_mb": 62.066,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2001152.061.2020094140405/MOD11C3.A2001152.061.2020094140405.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2001152.061.2020094140405/MOD11C3.A2001152.061.2020094140405.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2001152.061.2020094140405"
+  },
+  {
+   "year": 2001,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2001182.061.2020097064005",
+   "begin": "2001-07-01T00:00:00.000Z",
+   "size_mb": 67.3445,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2001182.061.2020097064005/MOD11C3.A2001182.061.2020097064005.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2001182.061.2020097064005/MOD11C3.A2001182.061.2020097064005.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2001182.061.2020097064005"
+  },
+  {
+   "year": 2001,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2001213.061.2020099180647",
+   "begin": "2001-08-01T00:00:00.000Z",
+   "size_mb": 68.4566,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2001213.061.2020099180647/MOD11C3.A2001213.061.2020099180647.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2001213.061.2020099180647/MOD11C3.A2001213.061.2020099180647.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2001213.061.2020099180647"
+  },
+  {
+   "year": 2002,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2002152.061.2020118060151",
+   "begin": "2002-06-01T00:00:00.000Z",
+   "size_mb": 68.3763,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2002152.061.2020118060151/MOD11C3.A2002152.061.2020118060151.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2002152.061.2020118060151/MOD11C3.A2002152.061.2020118060151.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2002152.061.2020118060151"
+  },
+  {
+   "year": 2002,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2002182.061.2020149191104",
+   "begin": "2002-07-01T00:00:00.000Z",
+   "size_mb": 69.3719,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2002182.061.2020149191104/MOD11C3.A2002182.061.2020149191104.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2002182.061.2020149191104/MOD11C3.A2002182.061.2020149191104.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2002182.061.2020149191104"
+  },
+  {
+   "year": 2002,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2002213.061.2020149193932",
+   "begin": "2002-08-01T00:00:00.000Z",
+   "size_mb": 70.1485,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2002213.061.2020149193932/MOD11C3.A2002213.061.2020149193932.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2002213.061.2020149193932/MOD11C3.A2002213.061.2020149193932.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2002213.061.2020149193932"
+  },
+  {
+   "year": 2003,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2003152.061.2020150004137",
+   "begin": "2003-06-01T00:00:00.000Z",
+   "size_mb": 69.6703,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2003152.061.2020150004137/MOD11C3.A2003152.061.2020150004137.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2003152.061.2020150004137/MOD11C3.A2003152.061.2020150004137.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2003152.061.2020150004137"
+  },
+  {
+   "year": 2003,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2003182.061.2020150042221",
+   "begin": "2003-07-01T00:00:00.000Z",
+   "size_mb": 68.9966,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2003182.061.2020150042221/MOD11C3.A2003182.061.2020150042221.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2003182.061.2020150042221/MOD11C3.A2003182.061.2020150042221.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2003182.061.2020150042221"
+  },
+  {
+   "year": 2003,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2003213.061.2020150191611",
+   "begin": "2003-08-01T00:00:00.000Z",
+   "size_mb": 70.5545,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2003213.061.2020150191611/MOD11C3.A2003213.061.2020150191611.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2003213.061.2020150191611/MOD11C3.A2003213.061.2020150191611.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2003213.061.2020150191611"
+  },
+  {
+   "year": 2004,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2004153.061.2020181195359",
+   "begin": "2004-06-01T00:00:00.000Z",
+   "size_mb": 70.0598,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2004153.061.2020181195359/MOD11C3.A2004153.061.2020181195359.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2004153.061.2020181195359/MOD11C3.A2004153.061.2020181195359.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2004153.061.2020181195359"
+  },
+  {
+   "year": 2004,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2004183.061.2020199042852",
+   "begin": "2004-07-01T00:00:00.000Z",
+   "size_mb": 69.834,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2004183.061.2020199042852/MOD11C3.A2004183.061.2020199042852.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2004183.061.2020199042852/MOD11C3.A2004183.061.2020199042852.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2004183.061.2020199042852"
+  },
+  {
+   "year": 2004,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2004214.061.2020208024206",
+   "begin": "2004-08-01T00:00:00.000Z",
+   "size_mb": 70.6684,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2004214.061.2020208024206/MOD11C3.A2004214.061.2020208024206.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2004214.061.2020208024206/MOD11C3.A2004214.061.2020208024206.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2004214.061.2020208024206"
+  },
+  {
+   "year": 2005,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2005152.061.2020246043059",
+   "begin": "2005-06-01T00:00:00.000Z",
+   "size_mb": 70.3709,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2005152.061.2020246043059/MOD11C3.A2005152.061.2020246043059.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2005152.061.2020246043059/MOD11C3.A2005152.061.2020246043059.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2005152.061.2020246043059"
+  },
+  {
+   "year": 2005,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2005182.061.2020247152632",
+   "begin": "2005-07-01T00:00:00.000Z",
+   "size_mb": 69.5748,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2005182.061.2020247152632/MOD11C3.A2005182.061.2020247152632.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2005182.061.2020247152632/MOD11C3.A2005182.061.2020247152632.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2005182.061.2020247152632"
+  },
+  {
+   "year": 2005,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2005213.061.2020248223958",
+   "begin": "2005-08-01T00:00:00.000Z",
+   "size_mb": 70.0831,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2005213.061.2020248223958/MOD11C3.A2005213.061.2020248223958.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2005213.061.2020248223958/MOD11C3.A2005213.061.2020248223958.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2005213.061.2020248223958"
+  },
+  {
+   "year": 2006,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2006152.061.2020292225106",
+   "begin": "2006-06-01T00:00:00.000Z",
+   "size_mb": 69.7114,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2006152.061.2020292225106/MOD11C3.A2006152.061.2020292225106.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2006152.061.2020292225106/MOD11C3.A2006152.061.2020292225106.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2006152.061.2020292225106"
+  },
+  {
+   "year": 2006,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2006182.061.2020285084715",
+   "begin": "2006-07-01T00:00:00.000Z",
+   "size_mb": 69.394,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2006182.061.2020285084715/MOD11C3.A2006182.061.2020285084715.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2006182.061.2020285084715/MOD11C3.A2006182.061.2020285084715.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2006182.061.2020285084715"
+  },
+  {
+   "year": 2006,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2006213.061.2020286063353",
+   "begin": "2006-08-01T00:00:00.000Z",
+   "size_mb": 69.696,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2006213.061.2020286063353/MOD11C3.A2006213.061.2020286063353.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2006213.061.2020286063353/MOD11C3.A2006213.061.2020286063353.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2006213.061.2020286063353"
+  },
+  {
+   "year": 2007,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2007152.061.2021068024232",
+   "begin": "2007-06-01T00:00:00.000Z",
+   "size_mb": 70.2112,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2007152.061.2021068024232/MOD11C3.A2007152.061.2021068024232.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2007152.061.2021068024232/MOD11C3.A2007152.061.2021068024232.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2007152.061.2021068024232"
+  },
+  {
+   "year": 2007,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2007182.061.2021070203244",
+   "begin": "2007-07-01T00:00:00.000Z",
+   "size_mb": 69.6511,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2007182.061.2021070203244/MOD11C3.A2007182.061.2021070203244.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2007182.061.2021070203244/MOD11C3.A2007182.061.2021070203244.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2007182.061.2021070203244"
+  },
+  {
+   "year": 2007,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2007213.061.2021075030450",
+   "begin": "2007-08-01T00:00:00.000Z",
+   "size_mb": 69.8449,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2007213.061.2021075030450/MOD11C3.A2007213.061.2021075030450.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2007213.061.2021075030450/MOD11C3.A2007213.061.2021075030450.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2007213.061.2021075030450"
+  },
+  {
+   "year": 2008,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2008153.061.2021104005726",
+   "begin": "2008-06-01T00:00:00.000Z",
+   "size_mb": 69.4893,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2008153.061.2021104005726/MOD11C3.A2008153.061.2021104005726.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2008153.061.2021104005726/MOD11C3.A2008153.061.2021104005726.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2008153.061.2021104005726"
+  },
+  {
+   "year": 2008,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2008183.061.2021107004534",
+   "begin": "2008-07-01T00:00:00.000Z",
+   "size_mb": 69.1366,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2008183.061.2021107004534/MOD11C3.A2008183.061.2021107004534.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2008183.061.2021107004534/MOD11C3.A2008183.061.2021107004534.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2008183.061.2021107004534"
+  },
+  {
+   "year": 2008,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2008214.061.2021108180626",
+   "begin": "2008-08-01T00:00:00.000Z",
+   "size_mb": 70.363,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2008214.061.2021108180626/MOD11C3.A2008214.061.2021108180626.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2008214.061.2021108180626/MOD11C3.A2008214.061.2021108180626.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2008214.061.2021108180626"
+  },
+  {
+   "year": 2009,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2009152.061.2021144070554",
+   "begin": "2009-06-01T00:00:00.000Z",
+   "size_mb": 70.3725,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2009152.061.2021144070554/MOD11C3.A2009152.061.2021144070554.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2009152.061.2021144070554/MOD11C3.A2009152.061.2021144070554.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2009152.061.2021144070554"
+  },
+  {
+   "year": 2009,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2009182.061.2021145165618",
+   "begin": "2009-07-01T00:00:00.000Z",
+   "size_mb": 69.9976,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2009182.061.2021145165618/MOD11C3.A2009182.061.2021145165618.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2009182.061.2021145165618/MOD11C3.A2009182.061.2021145165618.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2009182.061.2021145165618"
+  },
+  {
+   "year": 2009,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2009213.061.2021148103932",
+   "begin": "2009-08-01T00:00:00.000Z",
+   "size_mb": 69.507,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2009213.061.2021148103932/MOD11C3.A2009213.061.2021148103932.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2009213.061.2021148103932/MOD11C3.A2009213.061.2021148103932.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2009213.061.2021148103932"
+  },
+  {
+   "year": 2010,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2010152.061.2021176021431",
+   "begin": "2010-06-01T00:00:00.000Z",
+   "size_mb": 69.8681,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2010152.061.2021176021431/MOD11C3.A2010152.061.2021176021431.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2010152.061.2021176021431/MOD11C3.A2010152.061.2021176021431.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2010152.061.2021176021431"
+  },
+  {
+   "year": 2010,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2010182.061.2021177070804",
+   "begin": "2010-07-01T00:00:00.000Z",
+   "size_mb": 69.5838,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2010182.061.2021177070804/MOD11C3.A2010182.061.2021177070804.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2010182.061.2021177070804/MOD11C3.A2010182.061.2021177070804.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2010182.061.2021177070804"
+  },
+  {
+   "year": 2010,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2010213.061.2021178214058",
+   "begin": "2010-08-01T00:00:00.000Z",
+   "size_mb": 69.8675,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2010213.061.2021178214058/MOD11C3.A2010213.061.2021178214058.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2010213.061.2021178214058/MOD11C3.A2010213.061.2021178214058.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2010213.061.2021178214058"
+  },
+  {
+   "year": 2011,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2011152.061.2021196175424",
+   "begin": "2011-06-01T00:00:00.000Z",
+   "size_mb": 69.1349,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2011152.061.2021196175424/MOD11C3.A2011152.061.2021196175424.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2011152.061.2021196175424/MOD11C3.A2011152.061.2021196175424.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2011152.061.2021196175424"
+  },
+  {
+   "year": 2011,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2011182.061.2021198053942",
+   "begin": "2011-07-01T00:00:00.000Z",
+   "size_mb": 69.3628,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2011182.061.2021198053942/MOD11C3.A2011182.061.2021198053942.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2011182.061.2021198053942/MOD11C3.A2011182.061.2021198053942.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2011182.061.2021198053942"
+  },
+  {
+   "year": 2011,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2011213.061.2021200015457",
+   "begin": "2011-08-01T00:00:00.000Z",
+   "size_mb": 69.5266,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2011213.061.2021200015457/MOD11C3.A2011213.061.2021200015457.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2011213.061.2021200015457/MOD11C3.A2011213.061.2021200015457.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2011213.061.2021200015457"
+  },
+  {
+   "year": 2012,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2012153.061.2021222115722",
+   "begin": "2012-06-01T00:00:00.000Z",
+   "size_mb": 69.8631,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2012153.061.2021222115722/MOD11C3.A2012153.061.2021222115722.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2012153.061.2021222115722/MOD11C3.A2012153.061.2021222115722.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2012153.061.2021222115722"
+  },
+  {
+   "year": 2012,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2012183.061.2021226214145",
+   "begin": "2012-07-01T00:00:00.000Z",
+   "size_mb": 69.123,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2012183.061.2021226214145/MOD11C3.A2012183.061.2021226214145.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2012183.061.2021226214145/MOD11C3.A2012183.061.2021226214145.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2012183.061.2021226214145"
+  },
+  {
+   "year": 2012,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2012214.061.2021231123740",
+   "begin": "2012-08-01T00:00:00.000Z",
+   "size_mb": 70.0028,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2012214.061.2021231123740/MOD11C3.A2012214.061.2021231123740.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2012214.061.2021231123740/MOD11C3.A2012214.061.2021231123740.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2012214.061.2021231123740"
+  },
+  {
+   "year": 2013,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2013152.061.2021306124435",
+   "begin": "2013-06-01T00:00:00.000Z",
+   "size_mb": 69.5252,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2013152.061.2021306124435/MOD11C3.A2013152.061.2021306124435.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2013152.061.2021306124435/MOD11C3.A2013152.061.2021306124435.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2013152.061.2021306124435"
+  },
+  {
+   "year": 2013,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2013182.061.2021306125010",
+   "begin": "2013-07-01T00:00:00.000Z",
+   "size_mb": 68.9701,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2013182.061.2021306125010/MOD11C3.A2013182.061.2021306125010.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2013182.061.2021306125010/MOD11C3.A2013182.061.2021306125010.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2013182.061.2021306125010"
+  },
+  {
+   "year": 2013,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2013213.061.2021308122542",
+   "begin": "2013-08-01T00:00:00.000Z",
+   "size_mb": 70.5868,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2013213.061.2021308122542/MOD11C3.A2013213.061.2021308122542.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2013213.061.2021308122542/MOD11C3.A2013213.061.2021308122542.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2013213.061.2021308122542"
+  },
+  {
+   "year": 2014,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2014152.061.2021335172331",
+   "begin": "2014-06-01T00:00:00.000Z",
+   "size_mb": 69.8829,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2014152.061.2021335172331/MOD11C3.A2014152.061.2021335172331.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2014152.061.2021335172331/MOD11C3.A2014152.061.2021335172331.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2014152.061.2021335172331"
+  },
+  {
+   "year": 2014,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2014182.061.2021338041916",
+   "begin": "2014-07-01T00:00:00.000Z",
+   "size_mb": 69.3564,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2014182.061.2021338041916/MOD11C3.A2014182.061.2021338041916.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2014182.061.2021338041916/MOD11C3.A2014182.061.2021338041916.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2014182.061.2021338041916"
+  },
+  {
+   "year": 2014,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2014213.061.2021339145154",
+   "begin": "2014-08-01T00:00:00.000Z",
+   "size_mb": 70.181,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2014213.061.2021339145154/MOD11C3.A2014213.061.2021339145154.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2014213.061.2021339145154/MOD11C3.A2014213.061.2021339145154.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2014213.061.2021339145154"
+  },
+  {
+   "year": 2015,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2015152.061.2021358204659",
+   "begin": "2015-06-01T00:00:00.000Z",
+   "size_mb": 69.5349,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2015152.061.2021358204659/MOD11C3.A2015152.061.2021358204659.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2015152.061.2021358204659/MOD11C3.A2015152.061.2021358204659.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2015152.061.2021358204659"
+  },
+  {
+   "year": 2015,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2015182.061.2021360043245",
+   "begin": "2015-07-01T00:00:00.000Z",
+   "size_mb": 69.6786,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2015182.061.2021360043245/MOD11C3.A2015182.061.2021360043245.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2015182.061.2021360043245/MOD11C3.A2015182.061.2021360043245.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2015182.061.2021360043245"
+  },
+  {
+   "year": 2015,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2015213.061.2021361100124",
+   "begin": "2015-08-01T00:00:00.000Z",
+   "size_mb": 70.1111,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2015213.061.2021361100124/MOD11C3.A2015213.061.2021361100124.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2015213.061.2021361100124/MOD11C3.A2015213.061.2021361100124.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2015213.061.2021361100124"
+  },
+  {
+   "year": 2016,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2016153.061.2022016221146",
+   "begin": "2016-06-01T00:00:00.000Z",
+   "size_mb": 69.5074,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2016153.061.2022016221146/MOD11C3.A2016153.061.2022016221146.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2016153.061.2022016221146/MOD11C3.A2016153.061.2022016221146.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2016153.061.2022016221146"
+  },
+  {
+   "year": 2016,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2016183.061.2022018055805",
+   "begin": "2016-07-01T00:00:00.000Z",
+   "size_mb": 69.0805,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2016183.061.2022018055805/MOD11C3.A2016183.061.2022018055805.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2016183.061.2022018055805/MOD11C3.A2016183.061.2022018055805.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2016183.061.2022018055805"
+  },
+  {
+   "year": 2016,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2016214.061.2022019051824",
+   "begin": "2016-08-01T00:00:00.000Z",
+   "size_mb": 69.6324,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2016214.061.2022019051824/MOD11C3.A2016214.061.2022019051824.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2016214.061.2022019051824/MOD11C3.A2016214.061.2022019051824.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2016214.061.2022019051824"
+  },
+  {
+   "year": 2017,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2017152.061.2021306102554",
+   "begin": "2017-06-01T00:00:00.000Z",
+   "size_mb": 69.577,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2017152.061.2021306102554/MOD11C3.A2017152.061.2021306102554.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2017152.061.2021306102554/MOD11C3.A2017152.061.2021306102554.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2017152.061.2021306102554"
+  },
+  {
+   "year": 2017,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2017182.061.2021308043120",
+   "begin": "2017-07-01T00:00:00.000Z",
+   "size_mb": 68.0808,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2017182.061.2021308043120/MOD11C3.A2017182.061.2021308043120.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2017182.061.2021308043120/MOD11C3.A2017182.061.2021308043120.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2017182.061.2021308043120"
+  },
+  {
+   "year": 2017,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2017213.061.2021309131707",
+   "begin": "2017-08-01T00:00:00.000Z",
+   "size_mb": 69.8961,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2017213.061.2021309131707/MOD11C3.A2017213.061.2021309131707.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2017213.061.2021309131707/MOD11C3.A2017213.061.2021309131707.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2017213.061.2021309131707"
+  },
+  {
+   "year": 2018,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2018152.061.2021350141459",
+   "begin": "2018-06-01T00:00:00.000Z",
+   "size_mb": 69.8878,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2018152.061.2021350141459/MOD11C3.A2018152.061.2021350141459.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2018152.061.2021350141459/MOD11C3.A2018152.061.2021350141459.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2018152.061.2021350141459"
+  },
+  {
+   "year": 2018,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2018182.061.2021350141511",
+   "begin": "2018-07-01T00:00:00.000Z",
+   "size_mb": 68.7457,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2018182.061.2021350141511/MOD11C3.A2018182.061.2021350141511.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2018182.061.2021350141511/MOD11C3.A2018182.061.2021350141511.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2018182.061.2021350141511"
+  },
+  {
+   "year": 2018,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2018213.061.2021350141511",
+   "begin": "2018-08-01T00:00:00.000Z",
+   "size_mb": 69.7823,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2018213.061.2021350141511/MOD11C3.A2018213.061.2021350141511.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2018213.061.2021350141511/MOD11C3.A2018213.061.2021350141511.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2018213.061.2021350141511"
+  },
+  {
+   "year": 2019,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2019152.061.2020355101541",
+   "begin": "2019-06-01T00:00:00.000Z",
+   "size_mb": 70.3618,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2019152.061.2020355101541/MOD11C3.A2019152.061.2020355101541.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2019152.061.2020355101541/MOD11C3.A2019152.061.2020355101541.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2019152.061.2020355101541"
+  },
+  {
+   "year": 2019,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2019182.061.2020357054550",
+   "begin": "2019-07-01T00:00:00.000Z",
+   "size_mb": 69.5102,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2019182.061.2020357054550/MOD11C3.A2019182.061.2020357054550.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2019182.061.2020357054550/MOD11C3.A2019182.061.2020357054550.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2019182.061.2020357054550"
+  },
+  {
+   "year": 2019,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2019213.061.2020359034216",
+   "begin": "2019-08-01T00:00:00.000Z",
+   "size_mb": 70.0681,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2019213.061.2020359034216/MOD11C3.A2019213.061.2020359034216.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2019213.061.2020359034216/MOD11C3.A2019213.061.2020359034216.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2019213.061.2020359034216"
+  },
+  {
+   "year": 2020,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2020153.061.2021012103333",
+   "begin": "2020-06-01T00:00:00.000Z",
+   "size_mb": 70.6606,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2020153.061.2021012103333/MOD11C3.A2020153.061.2021012103333.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2020153.061.2021012103333/MOD11C3.A2020153.061.2021012103333.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2020153.061.2021012103333"
+  },
+  {
+   "year": 2020,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2020183.061.2021013113245",
+   "begin": "2020-07-01T00:00:00.000Z",
+   "size_mb": 70.1796,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2020183.061.2021013113245/MOD11C3.A2020183.061.2021013113245.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2020183.061.2021013113245/MOD11C3.A2020183.061.2021013113245.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2020183.061.2021013113245"
+  },
+  {
+   "year": 2020,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2020214.061.2021014160553",
+   "begin": "2020-08-01T00:00:00.000Z",
+   "size_mb": 70.3945,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2020214.061.2021014160553/MOD11C3.A2020214.061.2021014160553.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2020214.061.2021014160553/MOD11C3.A2020214.061.2021014160553.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2020214.061.2021014160553"
+  },
+  {
+   "year": 2021,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2021152.061.2021190161921",
+   "begin": "2021-06-01T00:00:00.000Z",
+   "size_mb": 70.1849,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2021152.061.2021190161921/MOD11C3.A2021152.061.2021190161921.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2021152.061.2021190161921/MOD11C3.A2021152.061.2021190161921.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2021152.061.2021190161921"
+  },
+  {
+   "year": 2021,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2021182.061.2021213130808",
+   "begin": "2021-07-01T00:00:00.000Z",
+   "size_mb": 69.4828,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2021182.061.2021213130808/MOD11C3.A2021182.061.2021213130808.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2021182.061.2021213130808/MOD11C3.A2021182.061.2021213130808.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2021182.061.2021213130808"
+  },
+  {
+   "year": 2021,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2021213.061.2021244114947",
+   "begin": "2021-08-01T00:00:00.000Z",
+   "size_mb": 70.1414,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2021213.061.2021244114947/MOD11C3.A2021213.061.2021244114947.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2021213.061.2021244114947/MOD11C3.A2021213.061.2021244114947.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2021213.061.2021244114947"
+  },
+  {
+   "year": 2022,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2022152.061.2022201162837",
+   "begin": "2022-06-01T00:00:00.000Z",
+   "size_mb": 69.2545,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2022152.061.2022201162837/MOD11C3.A2022152.061.2022201162837.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2022152.061.2022201162837/MOD11C3.A2022152.061.2022201162837.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2022152.061.2022201162837"
+  },
+  {
+   "year": 2022,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2022182.061.2022227150912",
+   "begin": "2022-07-01T00:00:00.000Z",
+   "size_mb": 69.6069,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2022182.061.2022227150912/MOD11C3.A2022182.061.2022227150912.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2022182.061.2022227150912/MOD11C3.A2022182.061.2022227150912.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2022182.061.2022227150912"
+  },
+  {
+   "year": 2022,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2022213.061.2022244124553",
+   "begin": "2022-08-01T00:00:00.000Z",
+   "size_mb": 70.2973,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2022213.061.2022244124553/MOD11C3.A2022213.061.2022244124553.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2022213.061.2022244124553/MOD11C3.A2022213.061.2022244124553.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2022213.061.2022244124553"
+  },
+  {
+   "year": 2023,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2023152.061.2023193054115",
+   "begin": "2023-06-01T00:00:00.000Z",
+   "size_mb": 69.3681,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2023152.061.2023193054115/MOD11C3.A2023152.061.2023193054115.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2023152.061.2023193054115/MOD11C3.A2023152.061.2023193054115.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2023152.061.2023193054115"
+  },
+  {
+   "year": 2023,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2023182.061.2023215224507",
+   "begin": "2023-07-01T00:00:00.000Z",
+   "size_mb": 69.0349,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2023182.061.2023215224507/MOD11C3.A2023182.061.2023215224507.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2023182.061.2023215224507/MOD11C3.A2023182.061.2023215224507.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2023182.061.2023215224507"
+  },
+  {
+   "year": 2023,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2023213.061.2023250152840",
+   "begin": "2023-08-01T00:00:00.000Z",
+   "size_mb": 69.6513,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2023213.061.2023250152840/MOD11C3.A2023213.061.2023250152840.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2023213.061.2023250152840/MOD11C3.A2023213.061.2023250152840.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2023213.061.2023250152840"
+  },
+  {
+   "year": 2024,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2024153.061.2024187024328",
+   "begin": "2024-06-01T00:00:00.000Z",
+   "size_mb": 69.1640777587891,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2024153.061.2024187024328/MOD11C3.A2024153.061.2024187024328.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2024153.061.2024187024328/MOD11C3.A2024153.061.2024187024328.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2024153.061.2024187024328"
+  },
+  {
+   "year": 2024,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2024183.061.2024226150454",
+   "begin": "2024-07-01T00:00:00.000Z",
+   "size_mb": 68.08902645111084,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2024183.061.2024226150454/MOD11C3.A2024183.061.2024226150454.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2024183.061.2024226150454/MOD11C3.A2024183.061.2024226150454.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2024183.061.2024226150454"
+  },
+  {
+   "year": 2024,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2024214.061.2024267190123",
+   "begin": "2024-08-01T00:00:00.000Z",
+   "size_mb": 69.18690776824951,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2024214.061.2024267190123/MOD11C3.A2024214.061.2024267190123.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2024214.061.2024267190123/MOD11C3.A2024214.061.2024267190123.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2024214.061.2024267190123"
+  },
+  {
+   "year": 2025,
+   "month": 6,
+   "granule_ur": "MOD11C3.A2025152.061.2025182145012",
+   "begin": "2025-06-01T00:00:00.000Z",
+   "size_mb": 68.82183361053467,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2025152.061.2025182145012/MOD11C3.A2025152.061.2025182145012.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2025152.061.2025182145012/MOD11C3.A2025152.061.2025182145012.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2025152.061.2025182145012"
+  },
+  {
+   "year": 2025,
+   "month": 7,
+   "granule_ur": "MOD11C3.A2025182.061.2025213154157",
+   "begin": "2025-07-01T00:00:00.000Z",
+   "size_mb": 68.10508632659912,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2025182.061.2025213154157/MOD11C3.A2025182.061.2025213154157.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2025182.061.2025213154157/MOD11C3.A2025182.061.2025213154157.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2025182.061.2025213154157"
+  },
+  {
+   "year": 2025,
+   "month": 8,
+   "granule_ur": "MOD11C3.A2025213.061.2025246014643",
+   "begin": "2025-08-01T00:00:00.000Z",
+   "size_mb": 69.38779926300049,
+   "https_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11C3.061/MOD11C3.A2025213.061.2025246014643/MOD11C3.A2025213.061.2025246014643.hdf",
+   "s3_url": "s3://lp-prod-protected/MOD11C3.061/MOD11C3.A2025213.061.2025246014643/MOD11C3.A2025213.061.2025246014643.hdf",
+   "opendap_url": "https://opendap.earthdata.nasa.gov/collections/C2565788897-LPCLOUD/granules/MOD11C3.A2025213.061.2025246014643"
+  }
+ ]
+}

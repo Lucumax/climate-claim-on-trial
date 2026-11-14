@@ -1,0 +1,61 @@
+{
+  "claim": "C-C",
+  "variable": "T2M",
+  "units": "degC (POWER header: C)",
+  "fill_value": -999.0,
+  "rows_raw": 528255,
+  "rows_after_dedupe": 503685,
+  "n_fill_values": 0,
+  "cells": 861,
+  "n_lat": 21,
+  "n_lon": 41,
+  "lat_range": [
+    60.0,
+    70.0
+  ],
+  "lon_range": [
+    -165.0,
+    -140.0
+  ],
+  "lat_step": [
+    0.5
+  ],
+  "lon_step": [
+    0.625
+  ],
+  "year_range": [
+    1981,
+    2025
+  ],
+  "months_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "note_month13": "POWER month code 13 = POWER's own annual mean (ANN), kept as month=13; stats worker should recompute annual mean from months 1-12 per registered method and may cross-check against 13",
+  "rows_per_cell_expected": 585,
+  "cells_with_expected_rows": 861,
+  "t2m_min": -39.75,
+  "t2m_max": 19.59,
+  "n_nan": 0,
+  "per_year_month_cell_counts_unique": [
+    861
+  ],
+  "api_versions": [
+    "v2.10.0"
+  ],
+  "sources": [
+    "MERRA2"
+  ],
+  "key_required": false
+}

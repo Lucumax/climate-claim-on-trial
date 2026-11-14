@@ -22,8 +22,8 @@ import scipy
 from scipy import stats
 
 from . import __version__
-from .aggregate import (is_wrap, build_cube, cell_season_series, climatology, cos_weights, regional_monthly,
-                        season_mean)
+from .aggregate import (block_aggregate, is_wrap, build_cube, cell_season_series, climatology, cos_weights,
+                        regional_monthly, season_mean)
 from .bootstrap import residual_block_bootstrap
 from .trend import (BATCHED_METHODS, METHOD_LABELS, benjamini_hochberg, mk_core, ols, regional_test_p,
                     sen_ci_analytic)
@@ -38,6 +38,7 @@ DEFAULT_PARAMS = dict(
     boot_reps=2000, boot_block_len=3, boot_level=0.95, seed=20261114,
     sens_cov_thresholds=(0.7, 0.8, 0.9), sens_block_lens=(1, 3, 5),
     breadth_min=V.BREADTH_MIN, local_min=V.LOCAL_MIN,
+    cell_agg_k=None, cell_agg_native_cells_over=10000,
 )
 
 
@@ -139,6 +140,20 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     cube = build_cube(values, year, month, years, months)
     clim = climatology(cube, P["min_clim_frac"])
     weights = cos_weights(lat, nx)
+    # the REGIONAL series always uses the native cells; the cell ladder and map may use a coarser grid (STATS_LOG R2-3)
+    cell_k = int(P["cell_agg_k"]) if P.get("cell_agg_k") else (5 if ny * nx > P["cell_agg_native_cells_over"] else 1)
+    P["cell_agg_k"] = cell_k
+    ny_c, nx_c = ny // cell_k, nx // cell_k
+    if cell_k > 1:
+        masked = np.where(support[None], values, np.nan)
+        cube_c = build_cube(block_aggregate(masked, cell_k), year, month, years, months)
+        clim_c = climatology(cube_c, P["min_clim_frac"])
+        lat_c = lat[:ny_c * cell_k].reshape(ny_c, cell_k).mean(axis=1)
+        lon_c = lon[:nx_c * cell_k].reshape(nx_c, cell_k).mean(axis=1)
+        support_c = block_aggregate(support.astype(float), cell_k, 0.0) >= 0.5
+    else:
+        cube_c, clim_c, lat_c, lon_c, support_c = cube, clim, lat, lon, support
+    weights_c = cos_weights(lat_c, nx_c)
 
     # ---------- regional ----------
     R = regional_analysis(cube, clim, weights, support, lat, years, months, P)
@@ -159,8 +174,10 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         from .validation import gate_for_claim
         vres = json.loads(Path(validation_path).read_text(encoding="utf-8"))
         validation = gate_for_claim(vres, n_years=len(years), phi_hat=phi_hat,
-                                    has_gaps=bool(np.isnan(series).any()), q=P["bh_q"], skew=skew)
+                                    has_gaps=bool(np.isnan(series).any()), q=P["bh_q"], skew=skew,
+                                    n_cells=int(ny_c * nx_c))
         validation["claim_phi_hat"] = phi_hat
+        validation["adaptive"] = validation["gate"].get("adaptive")
         validation["claim_skewness"] = skew
         validation["source_sha256"] = sha256_file(validation_path)
     shipped_method = validation["gate"].get("regional_test")
@@ -181,7 +198,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     n_support = int(denom.any(axis=0).sum())
     years_dropped = [years[i] for i in range(len(years)) if not np.isfinite(series[i])]
     coverage = dict(
-        n_cells_grid=int(ny * nx), n_support_cells=int(support.sum()), n_cells_with_climatology=n_support,
+        n_cells_grid=int(ny * nx), n_native_cells=int(ny * nx), cell_agg_k=cell_k, n_support_cells=int(support.sum()), n_cells_with_climatology=n_support,
         cov_threshold=P["cov_threshold"], months_total=int(len(years) * len(months)),
         months_dropped=int(sum(1 for m in monthly_cov if not m["region_month_valid"])),
         years_total=len(years), years_valid=n_valid_years, years_dropped=years_dropped,
@@ -210,14 +227,14 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                                        "series' persistence (STATS_LOG addendum 2)")
                         if shipped_method and "shipped" in R else None),
             "sen": dict(slope_per_decade=mk1(mk, "slope") * dec, intercept=mk1(mk, "intercept"),
-                        ci_bootstrap_per_decade=[b["slope_ci"][0] * dec, b["slope_ci"][1] * dec],
-                        ci_analytic_hr_per_decade=[R["sen_ci_hr"][0] * dec, R["sen_ci_hr"][1] * dec],
-                        interval_method=None),
+                        note="the interval for this slope is in regional.interval (selected) and regional.interval.candidates"),
             "ols": dict(slope_per_decade=ols_r["slope"] * dec, se_per_decade=ols_r["se"] * dec,
                         t=ols_r["t"], df=ols_r["df"], p=ols_r["p"],
                         ci_per_decade=[ols_r["ci_low"] * dec, ols_r["ci_high"] * dec], n=ols_r["n"],
                         note="familiar baseline (least squares, t-test); context, not the verdict"),
         }
+        boot_ci = [b["slope_ci"][0] * dec, b["slope_ci"][1] * dec]
+        ana_ci = [R["sen_ci_hr"][0] * dec, R["sen_ci_hr"][1] * dec]
         band = dict(years=years, center=b["band_center"], lo=b["band_lo"], hi=b["band_hi"], level=P["boot_level"],
                     meaning=("pointwise 95% band for the Sen trend line (not for individual years), from the same "
                              "residual block bootstrap as the slope interval"),
@@ -225,6 +242,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         sen_line_centre = b["band_center"]
     else:
         band = None
+        boot_ci = ana_ci = None
         sen_line_centre = None
     reg["sen_line"] = sen_line_centre
     reg["tests"] = tests
@@ -259,12 +277,12 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                           "this is a sensitivity check, not independent validation")
 
     # ---------- cells (ladder) ----------
-    raw, an = cell_season_series(cube, clim, P["min_season_month_frac"])  # (Y, ny, nx)
+    raw, an = cell_season_series(cube_c, clim_c, P["min_season_month_frac"])  # (Y, ny_c, nx_c)
     Xraw = raw.reshape(len(years), -1).T
     Xan = an.reshape(len(years), -1).T
     nvy = np.isfinite(Xan).sum(axis=1)
     min_years = max(P["min_valid_years_abs"], math.ceil(P["min_valid_years_frac"] * len(years)))
-    cell_ok = support.reshape(-1) & (nvy >= min_years)
+    cell_ok = support_c.reshape(-1) & (nvy >= min_years)
     idx = np.where(cell_ok)[0]
     m1 = mk_core(Xraw[idx], t, hr=False)
     m2 = mk_core(Xan[idx], t, hr=False)
@@ -272,7 +290,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     cells_mode = validation["gate"].get("cells_mode", "off")
     m3reg = mk_core(Xan[idx], t, corr="hr")
     m3 = m3reg if cell_test == "hr_registered" else mk_core(Xan[idx], t, corr=BATCHED_METHODS[cell_test])
-    ncell = ny * nx
+    ncell = ny_c * nx_c
 
     def full(v):
         a = np.full(ncell, np.nan)
@@ -285,7 +303,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     rej4, adj4 = benjamini_hochberg(p3, P["bh_q"])
     flags = {1: p1 < P["alpha"], 2: p2 < P["alpha"], 3: p3 < P["alpha"], 4: rej4}
     slopes_for = {1: s_raw, 2: s_an, 3: s_an, 4: s_an}
-    w = weights.reshape(-1)
+    w = weights_c.reshape(-1)
     wv = w[cell_ok].sum()
     names = {1: ("Raw Mann-Kendall", "raw seasonal means, assuming independent years"),
              2: ("Seasonal anomalies", "anomalies against each cell's own same-month climatology"),
@@ -301,8 +319,28 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
             fr = (p3reg < P["alpha"]) & cell_ok
             extra = dict(method=cell_test, registered_hr_flagged_cells=int(fr.sum()),
                          registered_hr_flagged_area_frac=float(w[fr].sum() / wv) if wv else None)
+        n_t = int(cell_ok.sum())
+        if r == 4:
+            raw_cut = float(np.nanmax(p3[rej4 & cell_ok])) if (rej4 & cell_ok).any() else None
+            thr = dict(p_threshold=None, q=P["bh_q"], effective_raw_p_cutoff=raw_cut,
+                       threshold_text=f"flag when the Benjamini-Hochberg adjusted p is at most q = {P['bh_q']} "
+                                      f"(for this map that is a raw p of about {raw_cut:.3f} or less)" if raw_cut is not None
+                                      else f"flag when the Benjamini-Hochberg adjusted p is at most q = {P['bh_q']} (no cell qualified)",
+                       explain=("Rungs 1 to 3 flag a cell when its own p-value is below 0.05, which limits the chance of a false flag "
+                                "in each cell taken alone. Rung 4 asks a different question: it keeps the expected share of false "
+                                "flags among all flagged cells at or below q = 0.10 (Benjamini-Hochberg). The two rules use different "
+                                "cut-offs and answer different questions, so rung 4 can flag more cells than rung 3. That is not a "
+                                "bug, and neither percentage is the chance that a flagged cell is really changing."))
+        else:
+            thr = dict(p_threshold=P["alpha"], q=None, effective_raw_p_cutoff=P["alpha"],
+                       threshold_text=f"flag when the cell's own two-sided p is below {P['alpha']}", explain=None)
         rungs.append(dict(
-            rung=r, name=names[r][0], what_changes=names[r][1], **extra,
+            rung=r, name=names[r][0], what_changes=names[r][1], **extra, **thr,
+            cells_tested=n_t, flagged_cell_share=float(f.sum() / n_t) if n_t else None,
+            flagged_area_share=float(w[f].sum() / wv) if wv else None,
+            flagged_in_direction_cell_share=float(fd.sum() / n_t) if n_t else None,
+            flagged_in_direction_area_share=float(w[fd].sum() / wv) if wv else None,
+            share_note="cell_share = flagged cells / tested cells; area_share = cos(latitude)-weighted share of the tested area; they differ",
             flagged_cells=int(f.sum()), flagged_area_frac=float(w[f].sum() / wv) if wv else None,
             flagged_in_direction_cells=int(fd.sum()),
             flagged_in_direction_area_frac=float(w[fd].sum() / wv) if wv else None,
@@ -312,8 +350,9 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     rung2_p_changed = int(np.sum(np.isfinite(p1) & (np.abs(p1 - p2) > 1e-12)))
     hr_factor = full(m3["n_ns"])
     cells = dict(
-        grid=dict(ny=ny, nx=nx, lat=lat, lon=lon, order="row-major: index = iy * nx + ix"),
-        n_valid_cells=int(cell_ok.sum()), n_excluded_cells=int(support.sum() - cell_ok.sum()),
+        grid=dict(ny=ny_c, nx=nx_c, lat=lat_c, lon=lon_c, order="row-major: index = iy * nx + ix"),
+        n_valid_cells=int(cell_ok.sum()), n_excluded_cells=int(support_c.sum() - cell_ok.sum()),
+        n_native_cells=int(ny * nx), agg_k=cell_k, alpha_cell=P["alpha"], q=P["bh_q"],
         min_valid_years=int(min_years),
         fields=dict(
             valid=cell_ok.astype(int),
@@ -333,31 +372,76 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         area_weights="cos(latitude); fractions are of valid cells' weight; descriptive, never an error rate",
     )
 
-    # ---------- interval method chosen by the gate ----------
+    # ---------- interval: the selected one, and the candidates kept apart ----------
     gate0 = validation["gate"]
     imethod = gate0.get("interval_method")
-    if tests and gate0.get("interval_enabled"):
-        sen_t = tests["sen"]
-        if imethod == "analytic_hr":
-            lo_a, hi_a = sen_t["ci_analytic_hr_per_decade"]
-            sen_t["interval_used_per_decade"] = [lo_a, hi_a]
-            sen_t["interval_method"] = "analytic Sen interval (Gilbert) with Hamed-Rao variance"
-            pv = int(np.argmin(np.abs(np.asarray(years, float) - np.nanmedian(np.asarray(years, float)[np.isfinite(series)]))))
-            line = np.asarray(reg["sen_line"], float)
-            tt_ = np.asarray(years, float)
-            l1 = line[pv] + (lo_a / dec) * (tt_ - tt_[pv])
-            l2 = line[pv] + (hi_a / dec) * (tt_ - tt_[pv])
-            band = dict(years=years, center=line, lo=np.minimum(l1, l2), hi=np.maximum(l1, l2), level=0.95,
-                        meaning=("slope-range band: the Sen line rotated about its value at the median year between the "
-                                 "limits of the 95% slope interval; it does not include uncertainty in the level at the pivot"),
-                        method="analytic_hr", n=n_valid_years)
+    interval = None
+    if tests:
+        itab = gate0.get("interval_table") or {}
+        ad = gate0.get("adaptive") or {}
+        labels = dict(bootstrap="residual moving-block bootstrap around the Sen line, percentile 95%",
+                      analytic_hr="analytic Sen interval (Gilbert) with Hamed-Rao variance")
+        cand = {}
+        for key, ci in (("bootstrap", boot_ci), ("analytic_hr", ana_ci)):
+            t_ = itab.get(key, {})
+            cand[key] = dict(method=key, method_label=labels[key], low=ci[0], high=ci[1],
+                             passed_coverage_bar=t_.get("passed"), selected=bool(imethod == key and gate0.get("interval_enabled")),
+                             coverage_by_scenario=t_.get("coverage_by_scenario"),
+                             status=("shown to the user" if imethod == key and gate0.get("interval_enabled")
+                                     else "NOT shown: did not pass its coverage bar, or another interval was selected"))
+        cand["ols"] = dict(method="ols", method_label="least-squares slope with t-based 95% interval (familiar baseline)",
+                           low=tests["ols"]["ci_per_decade"][0], high=tests["ols"]["ci_per_decade"][1],
+                           passed_coverage_bar=None, selected=False,
+                           status="baseline for comparison only; assumes independent years; never the ruling interval")
+        selected = None
+        if gate0.get("interval_enabled") and imethod in labels:
+            lo_s, hi_s = (boot_ci if imethod == "bootstrap" else ana_ci)
+            cov = {k: v for k, v in (itab.get(imethod, {}).get("coverage_by_scenario") or {}).items() if v}
+            worst = min(cov.values(), key=lambda c: c["value"]) if cov else None
+            adc = {k: ad.get(k) for k in ("interval_coverage_null", "interval_coverage_trend")} if ad.get("status") == "run" else {}
+            head = (adc.get("interval_coverage_null") or worst or dict(value=None, se=None, R=None))
+            band_meaning = (
+                "The shaded band shows the range of trend lines that fit the data about as well, turning around the middle of the "
+                "record. It shows uncertainty in the slope only, not in the level of any single year, and it is not a band that "
+                "should contain individual years." if imethod == "analytic_hr" else
+                "The shaded band shows how far the fitted trend line could plausibly move when the scatter around it is re-shuffled "
+                "in short runs of years. It is a band for the trend line, not for individual years.")
+            selected = dict(
+                method=imethod, method_label=labels[imethod], low=lo_s, high=hi_s, level_nominal=P["boot_level"],
+                level_text="nominal 95% interval; the share of synthetic series whose true slope it actually contained is coverage_achieved",
+                coverage_achieved=dict(
+                    headline=dict(value=head["value"], se=head.get("se"), R=head.get("R"),
+                                  source=("whole adaptive procedure, trendless synthetic series" if adc.get("interval_coverage_null") else "fixed-persistence synthetic series, worst governing scenario")),
+                    fixed_persistence_by_scenario=cov, adaptive_procedure=adc,
+                    bar="at least 0.90 required to be shown", nominal=P["boot_level"]),
+                meaning=("A 95% interval for the Sen slope per decade built by the method named. It is an interval for the "
+                         "regional trend, not for individual years. How often such intervals contained the true slope was "
+                         "measured on synthetic series (coverage_achieved)."),
+                band_meaning=band_meaning)
+            if imethod == "analytic_hr":
+                pv = int(np.argmin(np.abs(np.asarray(years, float) - np.nanmedian(np.asarray(years, float)[np.isfinite(series)]))))
+                line = np.asarray(reg["sen_line"], float)
+                tt_ = np.asarray(years, float)
+                l1 = line[pv] + (lo_s / dec) * (tt_ - tt_[pv])
+                l2 = line[pv] + (hi_s / dec) * (tt_ - tt_[pv])
+                band = dict(years=years, center=line, lo=np.minimum(l1, l2), hi=np.maximum(l1, l2), level=0.95,
+                            meaning=("slope-range band: the Sen line rotated about its value at the median year between the "
+                                     "limits of the 95% slope interval; it does not include uncertainty in the level at the pivot"),
+                            band_meaning=band_meaning, method="analytic_hr", n=n_valid_years)
+            else:
+                band["band_meaning"] = band_meaning
+                band["method"] = "bootstrap"
+            reg["band"] = band
         else:
-            sen_t["interval_used_per_decade"] = sen_t["ci_bootstrap_per_decade"]
-            sen_t["interval_method"] = "residual moving-block bootstrap around the Sen line, percentile 95%"
-        reg["band"] = band
-    elif tests:
-        tests["sen"]["interval_used_per_decade"] = None
-        reg["band"] = None
+            reg["band"] = None
+        interval = dict(
+            selected=selected, candidates=cand,
+            selection_rule=("bootstrap if its coverage bar (0.90 of a nominal 95%) passed in every governing scenario, else the "
+                            "analytic Hamed-Rao interval if that passed, else none; then checked again inside the whole adaptive procedure"),
+            disabled_reasons=[] if selected else ((gate0.get("reasons_interval") or []) + ["no interval passed its coverage check at this series' persistence and length, or the regional test was withheld"]),
+            warning="Only regional.interval.selected may be displayed as the interval. Entries under candidates are for audit.")
+    reg["interval"] = interval
+    sel_iv = [interval["selected"]["low"], interval["selected"]["high"]] if interval and interval["selected"] else None
 
     # ---------- verdict ----------
     reasons = list(validation["gate"].get("reasons_blocking_verdict", [])) if validation["status"] != "not_run" else \
@@ -368,7 +452,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     sen = tests.get("sen", {})
     inp = dict(
         withheld_reasons=reasons, p=(tests.get("shipped") or {}).get("p"), slope=sen.get("slope_per_decade"),
-        ci=tuple(sen["interval_used_per_decade"]) if sen and gate.get("interval_enabled") and sen.get("interval_used_per_decade") else None,
+        ci=tuple(sel_iv) if sen and gate.get("interval_enabled") and sel_iv else None,
         direction=direction, interval_enabled=bool(gate.get("interval_enabled")),
         breadth_in_dir=rungs[3]["flagged_in_direction_area_frac"],
         breadth_available=gate.get("cells_mode") == "bh_flags" and cells["n_valid_cells"] > 0,
@@ -394,7 +478,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                    branches=["withheld", "contradicted", "supported", "partly_supported", "not_supported"])
 
     # ---------- finding card (spec 3.8) ----------
-    finding = build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid_years, len(years))
+    finding = build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid_years, len(years), interval)
 
     # ---------- run identity ----------
     h_claim, h_npz = sha256_file(cj), sha256_file(nz)
@@ -427,10 +511,11 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     return b
 
 
-def build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid, n_years):
+def build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid, n_years, interval=None):
     """Spec 3.8 fields. Every sentence is a fixed template with slots; no free text."""
     sen = tests.get("sen", {})
-    used = sen.get("interval_used_per_decade")
+    isel = (interval or {}).get("selected")
+    used = [isel["low"], isel["high"]] if isel else None
     prov = claim.get("product", {})
     not_sup = [
         "It does not say why the value changed, and it does not predict what happens next.",
@@ -452,9 +537,13 @@ def build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid,
         not_sup.append("The map flags are not shown as findings because validation did not run.")
     n_phrase = f"{n_valid} of {n_years} seasons"
     if claim.get("preregistered", True) and not claim.get("synthetic"):
-        sel = (f"This headline is the one regional test registered for this claim before any data were downloaded "
-               f"({claim.get('registration_ref', 'WP0 claim registration')}). The region, season and period were not changed after "
-               f"looking at results.")
+        sel = (f"The question, region, season and period were registered before any data were downloaded "
+               f"({claim.get('registration_ref', 'WP0 claim registration')}) and were not changed after looking at results. "
+               f"The regional test that decides the verdict was chosen by a rule declared in advance (method addendum 2), "
+               f"applied to simulated data only and before any claim result was seen: the candidate that kept its "
+               f"false-positive rate at this series' persistence, with the highest power. Raw Mann-Kendall and the originally "
+               f"registered Hamed-Rao version are shown as context. The method addenda and one later correction to the cell "
+               f"rule are in the stats log.")
     elif claim.get("synthetic"):
         sel = "Synthetic example data for layout testing only; nothing here is a real result."
     else:
@@ -462,7 +551,7 @@ def build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid,
     scope = ("The change per decade is for the area-weighted average of the whole region (the containing area), not for any "
              "hotspot or single cell. The map shows where individual cells pass the tests; any hotspot value is pointwise and "
              "is not adjusted for having been selected.")
-    meaning = sen.get("interval_method") if used else None
+    meaning = isel["method_label"] if isel else None
     return dict(
         place_name=vclaim["region_name"], variable=vclaim["variable"], units=vclaim["units"],
         period=vclaim["period_label"], season=vclaim["season_label"], seasons_used=n_phrase,

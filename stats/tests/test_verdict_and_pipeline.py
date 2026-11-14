@@ -1,3 +1,4 @@
+import numpy as np
 import itertools
 import json
 import re
@@ -221,7 +222,59 @@ def test_pipeline_without_validation_withholds(tmp_path):
 def test_pipeline_interval_and_band(synth_bundle):
     b, _, _ = synth_bundle
     sen = b["regional"]["tests"]["sen"]
-    lo, hi = sen["interval_used_per_decade"]
+    for k in ("ci_bootstrap_per_decade", "ci_analytic_hr_per_decade", "interval_used_per_decade"):
+        assert k not in sen   # the rejected interval cannot be picked up by accident
+    iv = b["regional"]["interval"]
+    sel = iv["selected"]
+    assert sel["method"] in ("bootstrap", "analytic_hr") and sel["band_meaning"] and sel["level_nominal"] == 0.95
+    lo, hi = sel["low"], sel["high"]
     assert lo < sen["slope_per_decade"] < hi
+    assert set(iv["candidates"]) == {"bootstrap", "analytic_hr", "ols"}
+    assert sum(1 for c in iv["candidates"].values() if c["selected"]) == 1
+    assert b["finding"]["change_per_decade"]["interval"] == [lo, hi]
     band = b["regional"]["band"]
-    assert all(lo_ <= c <= hi_ for lo_, c, hi_ in zip(band["lo"], band["center"], band["hi"]))
+    assert band["band_meaning"] and all(lo_ <= c <= hi_ for lo_, c, hi_ in zip(band["lo"], band["center"], band["hi"]))
+
+
+def test_pipeline_rung_fields(synth_bundle):
+    b, _, _ = synth_bundle
+    c = b["cells"]
+    assert c["q"] == 0.10 and c["alpha_cell"] == 0.05
+    for r in c["rungs"]:
+        assert r["cells_tested"] == c["n_valid_cells"]
+        assert abs(r["flagged_cell_share"] - r["flagged_cells"] / r["cells_tested"]) < 1e-3
+        assert 0 <= r["flagged_area_share"] <= 1
+        assert r["threshold_text"]
+    assert c["rungs"][0]["p_threshold"] == 0.05 and c["rungs"][3]["q"] == 0.10 and c["rungs"][3]["explain"]
+
+
+def test_pipeline_masked_case_builds_finding(tmp_path):
+    """Masked case (C-A has a land support mask): the pipeline and the finding card must build."""
+    make_claim_folder(tmp_path / "M", ny=14, nx=16, trend_per_decade=0.5, frac_trend=0.7, phi=0.0, seed=5)
+    z = dict(np.load(tmp_path / "M" / "monthly.npz"))
+    rng = np.random.default_rng(1)
+    sup = rng.random((14, 16)) < 0.75
+    z["support"] = sup
+    np.savez_compressed(tmp_path / "M" / "monthly.npz", **z)
+    vp = tmp_path / "v.json"
+    vp.write_text(json.dumps(fake_results()))
+    b = run_claim(tmp_path / "M", tmp_path / "o", params=dict(boot_reps=200), validation_path=vp, quiet=True)
+    assert b["cells"]["n_valid_cells"] <= int(sup.sum())
+    assert b["finding"]["change_per_decade"]["interval_method"]
+    assert b["finding"]["selection_disclosure"]
+    assert b["verdict"]["text"]
+    # without validation the finding still builds (interval disabled)
+    b2 = run_claim(tmp_path / "M", tmp_path / "o2", params=dict(boot_reps=200), quiet=True)
+    assert b2["finding"]["change_per_decade"]["interval"] is None and b2["regional"]["interval"]["selected"] is None
+
+
+def test_cell_aggregation_keeps_native_regional_series(tmp_path):
+    make_claim_folder(tmp_path / "A", ny=20, nx=20, seed=6)
+    vp = tmp_path / "v.json"
+    vp.write_text(json.dumps(fake_results()))
+    b1 = run_claim(tmp_path / "A", tmp_path / "o1", params=dict(boot_reps=200, cell_agg_k=1), validation_path=vp, quiet=True)
+    b5 = run_claim(tmp_path / "A", tmp_path / "o5", params=dict(boot_reps=200, cell_agg_k=5), validation_path=vp, quiet=True)
+    assert b5["cells"]["grid"]["ny"] == 4 and b5["cells"]["agg_k"] == 5 and b1["cells"]["agg_k"] == 1
+    assert b5["regional"]["anomaly"] == b1["regional"]["anomaly"]          # regional series from native cells
+    assert b5["regional"]["tests"]["sen"]["slope_per_decade"] == b1["regional"]["tests"]["sen"]["slope_per_decade"]
+    assert b5["coverage"]["n_native_cells"] == 400

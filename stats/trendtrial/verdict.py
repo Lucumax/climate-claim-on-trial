@@ -59,12 +59,12 @@ TEMPLATES = {
 DETECTIVE_TEMPLATES = {
     "significant_up": (
         "The trend is statistically significant (p {p}, below 0.05): the series rises by about "
-        "{abs_slope} {units} per decade. Significant means the rise is unlikely to be chance alone; it "
+        "{abs_slope} {units} per decade. Significant means a pattern this strong would be rare if there were no trend (p < 0.05); it "
         "does not say why it rose or what comes next."
     ),
     "significant_down": (
         "The trend is statistically significant (p {p}, below 0.05): the series falls by about "
-        "{abs_slope} {units} per decade. Significant means the fall is unlikely to be chance alone; it "
+        "{abs_slope} {units} per decade. Significant means a pattern this strong would be rare if there were no trend (p < 0.05); it "
         "does not say why it fell or what comes next."
     ),
     "not_significant": (

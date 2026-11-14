@@ -1,0 +1,222 @@
+{
+ "source": "synthetic validation, STATS_LOG run B (Yue-Wang size, 4000 series per row) and round 2 (adaptive procedure, seed family 2026)",
+ "correction": "yw",
+ "correction_name": "Mann-Kendall with Yue-Wang effective-sample-size correction",
+ "nominal_size": 0.05,
+ "rows": [
+  {
+   "n": 23,
+   "phi": 0.0,
+   "size": 0.0345,
+   "se": 0.0029,
+   "passes": true,
+   "power": 0.116,
+   "adaptive_size": 0.04,
+   "adaptive_release": 0.768,
+   "adaptive_size_given_release": 0.052
+  },
+  {
+   "n": 23,
+   "phi": 0.1,
+   "size": 0.0408,
+   "se": 0.0031,
+   "passes": true,
+   "power": 0.13,
+   "adaptive_size": 0.0445,
+   "adaptive_release": 0.654,
+   "adaptive_size_given_release": 0.068
+  },
+  {
+   "n": 23,
+   "phi": 0.2,
+   "size": 0.0638,
+   "se": 0.0039,
+   "passes": false,
+   "power": 0.138,
+   "adaptive_size": 0.0525,
+   "adaptive_release": 0.521,
+   "adaptive_size_given_release": 0.1007
+  },
+  {
+   "n": 23,
+   "phi": 0.3,
+   "size": 0.078,
+   "se": 0.0042,
+   "passes": false,
+   "power": 0.136,
+   "adaptive_size": 0.0542,
+   "adaptive_release": 0.371,
+   "adaptive_size_given_release": 0.1462
+  },
+  {
+   "n": 23,
+   "phi": 0.45,
+   "size": 0.103,
+   "se": 0.0048,
+   "passes": false,
+   "power": 0.15,
+   "adaptive_size": 0.0498,
+   "adaptive_release": 0.196,
+   "adaptive_size_given_release": 0.2545
+  },
+  {
+   "n": 23,
+   "phi": 0.6,
+   "size": 0.1242,
+   "se": 0.0052,
+   "passes": false,
+   "power": 0.161,
+   "adaptive_size": 0.0302,
+   "adaptive_release": 0.085,
+   "adaptive_size_given_release": 0.3569
+  },
+  {
+   "n": 25,
+   "phi": 0.0,
+   "size": 0.039,
+   "se": 0.0031,
+   "passes": true,
+   "power": 0.15,
+   "adaptive_size": 0.0375,
+   "adaptive_release": 0.773,
+   "adaptive_size_given_release": 0.0485
+  },
+  {
+   "n": 25,
+   "phi": 0.1,
+   "size": 0.0495,
+   "se": 0.0034,
+   "passes": true,
+   "power": 0.159,
+   "adaptive_size": 0.043,
+   "adaptive_release": 0.634,
+   "adaptive_size_given_release": 0.0678
+  },
+  {
+   "n": 25,
+   "phi": 0.2,
+   "size": 0.0665,
+   "se": 0.0039,
+   "passes": false,
+   "power": 0.161,
+   "adaptive_size": 0.053,
+   "adaptive_release": 0.494,
+   "adaptive_size_given_release": 0.1072
+  },
+  {
+   "n": 25,
+   "phi": 0.3,
+   "size": 0.0785,
+   "se": 0.0043,
+   "passes": false,
+   "power": 0.159,
+   "adaptive_size": 0.0447,
+   "adaptive_release": 0.346,
+   "adaptive_size_given_release": 0.1293
+  },
+  {
+   "n": 25,
+   "phi": 0.45,
+   "size": 0.102,
+   "se": 0.0048,
+   "passes": false,
+   "power": 0.166,
+   "adaptive_size": 0.039,
+   "adaptive_release": 0.17,
+   "adaptive_size_given_release": 0.2294
+  },
+  {
+   "n": 25,
+   "phi": 0.6,
+   "size": 0.1278,
+   "se": 0.0053,
+   "passes": false,
+   "power": 0.168,
+   "adaptive_size": 0.0253,
+   "adaptive_release": 0.07,
+   "adaptive_size_given_release": 0.3594
+  },
+  {
+   "n": 45,
+   "phi": 0.0,
+   "size": 0.0473,
+   "se": 0.0034,
+   "passes": true,
+   "power": 0.662,
+   "adaptive_size": 0.039,
+   "adaptive_release": 0.826,
+   "adaptive_size_given_release": 0.0472
+  },
+  {
+   "n": 45,
+   "phi": 0.1,
+   "size": 0.0563,
+   "se": 0.0036,
+   "passes": true,
+   "power": 0.627,
+   "adaptive_size": 0.0413,
+   "adaptive_release": 0.628,
+   "adaptive_size_given_release": 0.0657
+  },
+  {
+   "n": 45,
+   "phi": 0.2,
+   "size": 0.0635,
+   "se": 0.0039,
+   "passes": false,
+   "power": 0.543,
+   "adaptive_size": 0.039,
+   "adaptive_release": 0.389,
+   "adaptive_size_given_release": 0.1004
+  },
+  {
+   "n": 45,
+   "phi": 0.3,
+   "size": 0.07,
+   "se": 0.004,
+   "passes": false,
+   "power": 0.482,
+   "adaptive_size": 0.0248,
+   "adaptive_release": 0.178,
+   "adaptive_size_given_release": 0.139
+  },
+  {
+   "n": 45,
+   "phi": 0.45,
+   "size": 0.0838,
+   "se": 0.0044,
+   "passes": false,
+   "power": 0.393,
+   "adaptive_size": 0.0085,
+   "adaptive_release": 0.038,
+   "adaptive_size_given_release": 0.2237
+  },
+  {
+   "n": 45,
+   "phi": 0.6,
+   "size": 0.1042,
+   "se": 0.0048,
+   "passes": false,
+   "power": 0.308,
+   "adaptive_size": 0.003,
+   "adaptive_release": 0.005,
+   "adaptive_size_given_release": 0.5455
+  }
+ ],
+ "gaps": {
+  "n": 25,
+  "phi": 0.3,
+  "size": 0.0777
+ },
+ "skewed": {
+  "n": 25,
+  "phi": 0.3,
+  "size": 0.079
+ },
+ "rules": {
+  "n_min": 20,
+  "n_max": 50,
+  "skew_max": 0.8,
+  "phi_max": 0.6
+ }
+}

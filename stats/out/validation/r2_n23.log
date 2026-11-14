@@ -1,0 +1,6 @@
+R-trend-n23-phi0.0 {'regional_power': 0.124, 'regional_power_mk_independent': 0.126, 'regional_power_ols': 0.158, 'interval_coverage_bootstrap': 0.814, 'interval_coverage_analytic_hr': 0.954}
+R-trend-n23-phi0.1 {'regional_power': 0.155, 'regional_power_mk_independent': 0.158, 'regional_power_ols': 0.173, 'interval_coverage_bootstrap': 0.842, 'interval_coverage_analytic_hr': 0.941}
+R-trend-n23-phi0.2 {'regional_power': 0.175, 'regional_power_mk_independent': 0.177, 'regional_power_ols': 0.21, 'interval_coverage_bootstrap': 0.808, 'interval_coverage_analytic_hr': 0.88}
+R-trend-n23-phi0.3 {'regional_power': 0.207, 'regional_power_mk_independent': 0.216, 'regional_power_ols': 0.241, 'interval_coverage_bootstrap': 0.813, 'interval_coverage_analytic_hr': 0.89}
+R-trend-n23-phi0.45 {'regional_power': 0.24, 'regional_power_mk_independent': 0.264, 'regional_power_ols': 0.283, 'interval_coverage_bootstrap': 0.755, 'interval_coverage_analytic_hr': 0.82}
+R-trend-n23-phi0.6 {'regional_power': 0.293, 'regional_power_mk_independent': 0.339, 'regional_power_ols': 0.382, 'interval_coverage_bootstrap': 0.702, 'interval_coverage_analytic_hr': 0.771}

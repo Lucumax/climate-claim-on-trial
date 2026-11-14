@@ -1,5 +1,8 @@
 {
  "bundles": [
-  "bundle_C-C.json"
+  "bundle_C-C.json",
+  "bundle_C-B.json",
+  "bundle_C-A.json",
+  "bundle_C-D.json"
  ]
 }

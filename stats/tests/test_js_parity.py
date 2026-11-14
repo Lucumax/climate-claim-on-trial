@@ -57,6 +57,21 @@ def run_node(payload, tmp_path):
     return json.loads(r.stdout)
 
 
+def make_gate_series(seed=77):
+    """Detective-style series: lengths 12 to 70, persistence from 0 to 0.8, some with gaps or skew."""
+    from trendtrial.synth import ar1_series
+    rng = np.random.default_rng(seed)
+    out = []
+    for i in range(60):
+        n = int(rng.integers(12, 71)) if i % 3 else int(rng.choice([23, 25, 45]))
+        phi = float(rng.choice([0.0, 0.1, 0.3, 0.5, 0.8]))
+        y = ar1_series(1, n, phi, rng, "skewed" if i % 7 == 0 else "normal")[0] + 0.02 * np.arange(n) * (i % 2)
+        if i % 5 == 0:
+            y = np.where(rng.random(n) < 0.12, np.nan, y)
+        out.append(y)
+    return out
+
+
 def clean(a):
     return [None if not np.isfinite(v) else float(v) for v in a]
 
@@ -90,9 +105,12 @@ def js_results(tmp_path_factory):
                        (0.049, 1e-5, 30, "AOD"), (0.5, -3e-7, 25, "AOD"), (None, None, 4, "K"), (0.3, 1.0, 5, "K"),
                        (0.0499999, 100000.0, 40, "x"), (0.0501, -0.00123, 40, "x"), (1e-12, 0.0, 40, "x"), (0.04, 7.0, 8, "K")]:
         verdicts.append(dict(p=p, slope=s, n=n, units=u))
-    payload = dict(series=[dict(t=t.tolist(), y=[None if np.isnan(v) else float(v) for v in y]) for t, y in series],
+    gate_series = make_gate_series()
+    payload = dict(gate=[dict(t=list(range(len(y))), y=[None if np.isnan(v) else float(v) for v in y]) for y in gate_series],
+                   series=[dict(t=t.tolist(), y=[None if np.isnan(v) else float(v) for v in y]) for t, y in series],
                    seasonal=seasonal, verdict=verdicts)
     res = run_node(payload, tmp)
+    res["_gate_series"] = gate_series
     return series, seasonal, verdicts, res
 
 
@@ -212,3 +230,36 @@ def test_new_corrections_properties():
             one = mk_core(X[i:i + 1], t, corr=k)
             for key in big:
                 assert np.allclose(big[key][i], one[key][0], equal_nan=True)
+
+
+def test_exploratory_gate_parity(js_results):
+    from trendtrial import exploratory as E
+    _, _, _, res = js_results
+    assert res["gateTable"] == E.TABLE            # one table, shipped in both languages
+    seen = set()
+    for y, g in zip(res["_gate_series"], res["gate"]):
+        py = E.exploratory_gate([None if np.isnan(v) else float(v) for v in y])
+        assert g["nValid"] == py["nValid"] and g["hasGaps"] == py["hasGaps"]
+        assert abs(g["phiHat"] - py["phiHat"]) < 1e-9 and abs(g["skew"] - py["skew"]) < 1e-9
+        assert g["nGov"] == py["nGov"] and g["phiGov"] == py["phiGov"]
+        assert g["reasons"] == py["reasons"] and g["calibrated"] == py["calibrated"]
+        assert g["caveat"] == py["caveat"], (g["caveat"], py["caveat"])
+        assert g["label"] == py["label"]
+        seen.update(py["reasons"] or ["ok"])
+    assert {"ok", "size_liberal", "gaps", "length"} <= seen      # the fixtures exercise the main branches
+
+
+def test_exploratory_gate_properties():
+    from trendtrial import exploratory as E
+    from trendtrial.synth import ar1_series
+    rng = np.random.default_rng(5)
+    iid = ar1_series(1, 45, 0.0, rng)[0]
+    g = E.exploratory_gate(iid)
+    assert g["nGov"] == 45 and g["phiGov"] is not None and "not a pre-registered" in g["caveat"]
+    pers = ar1_series(1, 45, 0.8, rng)[0]
+    g2 = E.exploratory_gate(pers)
+    assert not g2["calibrated"] and "persistence" in g2["caveat"] or "too small" in g2["caveat"]
+    assert not E.exploratory_gate(iid[:10])["calibrated"]            # outside the tested length
+    with_gap = iid.copy()
+    with_gap[3] = np.nan
+    assert "gaps" in E.exploratory_gate(with_gap)["reasons"]

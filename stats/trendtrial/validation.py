@@ -29,6 +29,7 @@ REPLICATE_FLOORS = dict(regional_size=4000, regional_cov=1000, cells_fields=200)
 PHIS = (0.0, 0.1, 0.2, 0.3, 0.45, 0.6)
 NS = (23, 25, 45)
 TREND_SD_PER_DECADE = 0.3
+B4_FLOOR_SD = 0.025
 
 
 def _se_prop(p, R):
@@ -366,13 +367,35 @@ def finalize_with_run_a(b_path, a_path, out_path):
 
 # ---------------------------------------------------------------- gate
 
+def _b4_ok(v):
+    b = v.get("sen_bias_sd_per_decade")
+    if b and b.get("value") is not None and b.get("se") is not None:
+        return abs(b["value"]) <= max(3 * b["se"], B4_FLOOR_SD)
+    return bool(v["checks"]["B4"]["passed"])
+
+
 def _nearest_n(res, n):
     ns = sorted({s["n"] for s in res["scenarios"] if s["kind"] == "regional"})
     return min(ns, key=lambda m: (abs(m - n), m))
 
 
-def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
-    """Turn run-B results into browser-honoured flags and the shipped tests for one claim (rules: STATS_LOG addendum 2)."""
+def pick_cell_family(res, n_years, n_cells):
+    """Round 2 (STATS_LOG R2-3): the cell-validation family whose n is nearest (within 5) and whose cell count is nearest."""
+    import math
+    fams = res.get("cell_families") or {}
+    best = None
+    for name, f in fams.items():
+        if abs(f["n"] - n_years) > 5:
+            continue
+        key = (abs(f["n"] - n_years), abs(math.log(max(f["ny"] * f["nx"], 1) / max(n_cells, 1))))
+        if best is None or key < best[0]:
+            best = (key, name)
+    return best[1] if best else None
+
+
+def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None, use_adaptive=True):
+    """Turn validation results into browser-honoured flags and the shipped tests for one claim (rules: STATS_LOG
+    addendum 2 and round 2: R2-2 adaptive-procedure bars, R2-3 cell families)."""
     sc = {s["id"]: s for s in res["scenarios"]}
     n_gov = _nearest_n(res, n_years)
     phis = sorted({s["phi"] for s in res["scenarios"] if s["kind"] == "regional" and s["n"] == n_gov})
@@ -410,11 +433,16 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
     if any(v is None for v in interval):
         reasons.append("interval and Sen-bias results missing for a governing scenario")
         return dict(base, gate=off)
-    bias_ok = all(v["checks"]["B4"]["passed"] for v in interval)
+    # bar B4 as amended before C-A, C-B, C-D were run (WP0 registration, "Bar B4 amended"): pass if |bias| <= 3 SE or <= 0.025 SD/decade
+    bias_ok = all(_b4_ok(v) for v in interval)
     int_ok = all(v["checks"]["B3"]["passed"] for v in interval)
     int_ok_a = all(v["checks"]["B3a"]["passed"] for v in interval)
     if chosen is None:
-        reasons.append("no candidate regional test kept its size within 0.05 +/- 2 SE at this series' persistence: " +
+        why = {"skewed": "this series is strongly lopsided (skewness above 0.8), where every test was too liberal in simulation",
+               "gaps": "this series has missing years, where every test was too liberal in simulation"}
+        extra = [why[k] for k, i in (("gaps", "R-null-gaps-n25-phi0.3"), ("skewed", "R-null-skewed-n25-phi0.3")) if i in ids_null]
+        reasons.append("no candidate regional test kept its false-positive rate within 0.05 +/- 2 SE for this series" +
+                       (": " + "; ".join(extra) if extra else " at its persistence") + ". Size at the persistence scenario: " +
                        ", ".join(f"{c} {sc[ids_null[0]]['candidates'][c]['size']['value']:.3f}" for c in CAND_ORDER))
     if not bias_ok:
         reasons.append("Sen slope biased in a governing scenario")
@@ -422,27 +450,93 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
         v = sc[i]["size_checks"].get(chosen)
         if v and v["side"] == "conservative":
             flags.append(f"regional test conservative in {i}")
-    reg_ok = chosen is not None and bias_ok
+    interval_table = {
+        "bootstrap": dict(passed=bool(int_ok), coverage_by_scenario={i: sc[i]["interval"].get("coverage_bootstrap") for i in ids_null + [tr_id]}),
+        "analytic_hr": dict(passed=bool(int_ok_a), coverage_by_scenario={i: sc[i]["interval"].get("coverage_analytic_hr") for i in ids_null + [tr_id]}),
+    }
+    adaptive, adaptive_notes, ap_interval_ok = None, [], True
+    have_ad = bool(use_adaptive and res.get("adaptive"))
+    ac = ((res.get("adaptive") or {}).get("cells") or {}).get(f"n{n_gov}-phi{phi_gov}") if have_ad else None
+    if use_adaptive and not have_ad:
+        adaptive = dict(status="not_run")
+    ap1 = True
+    if ac:
+        nl, tr = ac["null"], ac["trend"]
+        size = nl["reject_unconditional"]
+        ap1 = size["value"] <= ALPHA + 2 * size["se"]
+        rg = nl["reject_given_release"]
+        cn, ct = nl["interval_coverage_given_shown"], tr["interval_coverage_given_shown"]
+        cov_vals = [c["value"] for c in (cn, ct) if c["R"] and c["value"] is not None]
+        ap3 = None if not cov_vals else all(v >= COVERAGE_BAR for v in cov_vals)
+        ap_interval_ok = ap3 is not False
+        adaptive = dict(
+            status="run", cell=f"n{n_gov}-phi{phi_gov}", n=n_gov, true_phi=phi_gov,
+            seed_family=res["adaptive"].get("seed_family"),
+            size_unconditional=size, release_rate=nl["release_rate"], size_given_release=rg,
+            power_unconditional=tr["positive_reject_unconditional"], power_given_release=tr["positive_reject_given_release"],
+            interval_coverage_null=cn, interval_coverage_trend=ct, interval_shown_rate=nl["interval_shown_rate"],
+            selected_share=nl["selected_share"], buckets=nl["buckets"],
+            bars=dict(AP1=dict(passed=bool(ap1), bar=ALPHA + 2 * size["se"], what="unconditional size of the whole procedure"),
+                      AP3=dict(passed=ap3, bar=COVERAGE_BAR, what="coverage of the selected interval, given shown")))
+        if not ap1:
+            reasons.append(f"the whole adaptive procedure (estimate persistence, pick scenario and test, then test) falsely "
+                           f"called a trend in {100 * size['value']:.1f}% of trendless synthetic series with persistence "
+                           f"{phi_gov} and {n_gov} seasons (limit {100 * (ALPHA + 2 * size['se']):.1f}%)")
+        if chosen is not None and bias_ok and rg["value"] is not None and rg["value"] > ALPHA + 2 * rg["se"]:
+            adaptive_notes.append(f"Among series for which a verdict was released, {100 * rg['value']:.1f}% of trendless synthetic "
+                                  f"series were called significant at persistence {phi_gov} ({n_gov} seasons), above the nominal 5%; "
+                                  f"the procedure withholds the verdict for the most persistent series, which keeps the overall "
+                                  f"false-positive rate at {100 * size['value']:.1f}%.")
+    elif have_ad:
+        adaptive = dict(status="no_cell", cell=f"n{n_gov}-phi{phi_gov}")
+        reasons.append("the adaptive procedure was not validated at this series length and persistence")
+    reg_ok = chosen is not None and bias_ok and (not have_ad or (ac is not None and ap1))
     method = "bootstrap" if int_ok else ("analytic_hr" if int_ok_a else None)
-    cell_ids = {k: f"C-{k}-phi{phi_gov}" for k in ("none", "positive", "mixed")}
-    cell_test, cells_mode = None, "unadjusted_descriptive"
-    if all(i in sc for i in cell_ids.values()):
-        gov += list(cell_ids.values())
-        ok_c = [c for c in CELL_CANDS if all(sc[i]["candidates"][c]["B2_passed"] for i in cell_ids.values())
-                and all(sc[i]["floor_ok"] for i in cell_ids.values())]
-        if ok_c:
-            # same corrected test as the regional one when it is a batched candidate that kept its FDR; else the
-            # candidate with the highest BH power among those that kept it
-            cell_test = chosen if chosen in ok_c else max(
-                ok_c, key=lambda c: sc[cell_ids["positive"]]["candidates"][c]["bh_power"]["value"])
-            cells_mode = "bh_flags"
+    reasons_interval = []
+    if not ap_interval_ok:
+        method = None
+        if chosen is not None and bias_ok:
+            reasons_interval.append("the interval chosen for this series' persistence covered the true slope in fewer than 90% of "
+                                    "synthetic series when run inside the whole adaptive procedure")
+    cell_test, cells_mode, family, cell_table = None, "unadjusted_descriptive", None, None
+    fam = pick_cell_family(res, n_years, n_cells) if n_cells else None
+    if fam:
+        family = fam
+        homog = {k: f"CF-{fam}-{k}-phi{phi_gov}" for k in ("none", "positive", "mixed")}
+        het = {k: f"CF-{fam}-{k}-het{phi_gov}" for k in ("none", "positive", "mixed")}
+        allids = list(homog.values()) + list(het.values())
+        if all(i in sc for i in allids):
+            gov += allids
+            floor = all(sc[i]["floor_ok"] for i in allids)
+            cell_table = {c: dict(homogeneous_passes=all(sc[i]["candidates"][c]["B2_passed"] for i in homog.values()),
+                                  heterogeneous_passes=all(sc[i]["candidates"][c]["B2_passed"] for i in het.values()),
+                                  bh_power=sc[homog["positive"]]["candidates"][c]["bh_power"]["value"]) for c in CELL_CANDS}
+            ok_c = [c for c in CELL_CANDS if cell_table[c]["homogeneous_passes"] and cell_table[c]["heterogeneous_passes"] and floor]
+            if ok_c:
+                cell_test = chosen if chosen in ok_c else max(ok_c, key=lambda c: cell_table[c]["bh_power"])
+                cells_mode = "bh_flags"
+            else:
+                cell_test = min(CELL_CANDS, key=lambda c: abs(sc[homog["none"]]["candidates"][c]["cell_size"]["value"] - ALPHA))
         else:
-            cell_test = min(CELL_CANDS, key=lambda c: abs(sc[cell_ids["none"]]["candidates"][c]["cell_size"]["value"] - ALPHA))
+            flags.append(f"no cell validation scenarios for family {fam} at persistence {phi_gov}")
+    else:
+        cell_ids = {k: f"C-{k}-phi{phi_gov}" for k in ("none", "positive", "mixed")}
+        if all(i in sc for i in cell_ids.values()):
+            gov += list(cell_ids.values())
+            ok_c = [c for c in CELL_CANDS if all(sc[i]["candidates"][c]["B2_passed"] for i in cell_ids.values())
+                    and all(sc[i]["floor_ok"] for i in cell_ids.values())]
+            if ok_c:
+                cell_test = chosen if chosen in ok_c else max(
+                    ok_c, key=lambda c: sc[cell_ids["positive"]]["candidates"][c]["bh_power"]["value"])
+                cells_mode = "bh_flags"
+            else:
+                cell_test = min(CELL_CANDS, key=lambda c: abs(sc[cell_ids["none"]]["candidates"][c]["cell_size"]["value"] - ALPHA))
     return dict(base, gate=dict(
         regional_verdict_enabled=reg_ok, regional_test=chosen if reg_ok else None, interval_enabled=bool(method) and reg_ok,
         interval_method=method if reg_ok else None, cells_enabled=cells_mode == "bh_flags", cells_mode=cells_mode,
-        cell_test=cell_test, reasons_blocking_verdict=reasons, conservative_flags=flags, governing=gov, governing_n=n_gov,
-        governing_phi=phi_gov,
+        cell_test=cell_test, cell_family=family, cell_table=cell_table, reasons_blocking_verdict=reasons,
+        reasons_interval=reasons_interval, interval_table=interval_table, adaptive_notes=adaptive_notes, conservative_flags=flags, governing=gov,
+        governing_n=n_gov, governing_phi=phi_gov, adaptive=adaptive,
         candidate_table={c: dict(size=sc[ids_null[0]]["candidates"][c]["size"]["value"],
                                  power=sc[tr_id]["candidates"][c]["power"]["value"],
                                  passes=c in passers) for c in CAND_ORDER}))

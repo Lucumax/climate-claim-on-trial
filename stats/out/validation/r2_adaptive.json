@@ -1,0 +1,4501 @@
+{
+ "kind": "adaptive_procedure_validation",
+ "generated_at": "2026-11-14T11:47:15-05:00",
+ "code_version": "1.1.0",
+ "seed_family": 2026,
+ "replicates": {
+  "series": 4000,
+  "coverage": 1000,
+  "bootstrap_reps": 2000
+ },
+ "bars": {
+  "AP1": "unconditional size <= 0.05 + 2 SE at the claim's own (n, phi)",
+  "AP2": "power reported, no bar",
+  "AP3": "selected-interval coverage given shown >= 0.90 (null and trend)"
+ },
+ "elapsed_seconds": 15.1,
+ "cells": {
+  "n23-phi0.0": {
+   "null": {
+    "n": 23,
+    "true_phi": 0.0,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.7685,
+     "se": 0.0066691032005810206,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.04,
+     "se": 0.0030983866769659332,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.05204944697462589,
+     "se": 0.004006350767036018,
+     "R": 3074
+    },
+    "positive_reject_unconditional": {
+     "value": 0.01975,
+     "se": 0.0021999964488607702,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.025699414443721535,
+     "se": 0.002854014427828324,
+     "R": 3074
+    },
+    "interval_shown_rate": {
+     "value": 0.775,
+     "se": 0.013205112646244256,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.952258064516129,
+     "se": 0.007659077943336038,
+     "R": 775
+    },
+    "interval_mean_width_sd_per_decade": 1.4060655831774531,
+    "phi_hat_mean": -0.08675586588091887,
+    "phi_hat_sd": 0.19487873432646277,
+    "share_skew_flag": 0.06725,
+    "buckets": {
+     "0.0": {
+      "count": 2682,
+      "share": 0.6705,
+      "released": 2493,
+      "reject_given_bucket": {
+       "value": 0.05331841909023117,
+       "se": 0.0043382163709426375,
+       "R": 2682
+      }
+     },
+     "0.1": {
+      "count": 615,
+      "share": 0.15375,
+      "released": 581,
+      "reject_given_bucket": {
+       "value": 0.027642276422764227,
+       "se": 0.0066109272656779475,
+       "R": 615
+      }
+     },
+     "0.2": {
+      "count": 416,
+      "share": 0.104,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.9029033784546006e-08,
+       "R": 416
+      }
+     },
+     "0.3": {
+      "count": 193,
+      "share": 0.04825,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.198157507486945e-08,
+       "R": 193
+      }
+     },
+     "0.45": {
+      "count": 87,
+      "share": 0.02175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.0721125348377948e-07,
+       "R": 87
+      }
+     },
+     "0.6": {
+      "count": 7,
+      "share": 0.00175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.779644730092272e-07,
+       "R": 7
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.14525,
+     "tfpw": 0.62325,
+     "withheld": 0.2315
+    },
+    "interval_method_counts": {
+     "analytic_hr": 3074
+    }
+   },
+   "trend": {
+    "n": 23,
+    "true_phi": 0.0,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.7725,
+     "se": 0.006628418929126312,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.11425,
+     "se": 0.005029834428189462,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.14789644012944983,
+     "se": 0.0063862484524638856,
+     "R": 3090
+    },
+    "positive_reject_unconditional": {
+     "value": 0.113,
+     "se": 0.005005771668783945,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.14627831715210357,
+     "se": 0.006357244194509544,
+     "R": 3090
+    },
+    "interval_shown_rate": {
+     "value": 0.752,
+     "se": 0.01365635383255721,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.961436170212766,
+     "se": 0.007021685712030336,
+     "R": 752
+    },
+    "interval_mean_width_sd_per_decade": 1.3818379555307978,
+    "phi_hat_mean": -0.08392558604026133,
+    "phi_hat_sd": 0.19255243044676928,
+    "share_skew_flag": 0.07,
+    "buckets": {
+     "0.0": {
+      "count": 2653,
+      "share": 0.66325,
+      "released": 2461,
+      "reject_given_bucket": {
+       "value": 0.13984168865435356,
+       "se": 0.006733469540289086,
+       "R": 2653
+      }
+     },
+     "0.1": {
+      "count": 674,
+      "share": 0.1685,
+      "released": 629,
+      "reject_given_bucket": {
+       "value": 0.12759643916913946,
+       "se": 0.012851329058755087,
+       "R": 674
+      }
+     },
+     "0.2": {
+      "count": 385,
+      "share": 0.09625,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.0964719143762554e-08,
+       "R": 385
+      }
+     },
+     "0.3": {
+      "count": 189,
+      "share": 0.04725,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.27392967453308e-08,
+       "R": 189
+      }
+     },
+     "0.45": {
+      "count": 92,
+      "share": 0.023,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.0425720702853739e-07,
+       "R": 92
+      }
+     },
+     "0.6": {
+      "count": 6,
+      "share": 0.0015,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.0824829046386305e-07,
+       "R": 6
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.15725,
+     "tfpw": 0.61525,
+     "withheld": 0.2275
+    },
+    "interval_method_counts": {
+     "analytic_hr": 3090
+    }
+   }
+  },
+  "n23-phi0.1": {
+   "null": {
+    "n": 23,
+    "true_phi": 0.1,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.6545,
+     "se": 0.007518805589985686,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.0445,
+     "se": 0.0032603584925587556,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.06799083269671505,
+     "se": 0.004919834017068962,
+     "R": 2618
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0235,
+     "se": 0.002395190493468108,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.03590527119938885,
+     "se": 0.00363625338686173,
+     "R": 2618
+    },
+    "interval_shown_rate": {
+     "value": 0.633,
+     "se": 0.015241751867813621,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9447077409162717,
+     "se": 0.009084040235328732,
+     "R": 633
+    },
+    "interval_mean_width_sd_per_decade": 1.3535073091062502,
+    "phi_hat_mean": -0.005789545932590878,
+    "phi_hat_sd": 0.19375955506829956,
+    "share_skew_flag": 0.076,
+    "buckets": {
+     "0.0": {
+      "count": 2049,
+      "share": 0.51225,
+      "released": 1887,
+      "reject_given_bucket": {
+       "value": 0.06734992679355783,
+       "se": 0.005536775941421618,
+       "R": 2049
+      }
+     },
+     "0.1": {
+      "count": 797,
+      "share": 0.19925,
+      "released": 731,
+      "reject_given_bucket": {
+       "value": 0.050188205771643665,
+       "se": 0.007733755774866331,
+       "R": 797
+      }
+     },
+     "0.2": {
+      "count": 573,
+      "share": 0.14325,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.177559931443569e-08,
+       "R": 573
+      }
+     },
+     "0.3": {
+      "count": 343,
+      "share": 0.08575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.399492471560389e-08,
+       "R": 343
+      }
+     },
+     "0.45": {
+      "count": 203,
+      "share": 0.05075,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.018624063435964e-08,
+       "R": 203
+      }
+     },
+     "0.6": {
+      "count": 35,
+      "share": 0.00875,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.690308509457033e-07,
+       "R": 35
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.18275,
+     "tfpw": 0.47175,
+     "withheld": 0.3455
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2618
+    }
+   },
+   "trend": {
+    "n": 23,
+    "true_phi": 0.1,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.6395,
+     "se": 0.007591767745393691,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.107,
+     "se": 0.004887509590783429,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.1673182173573104,
+     "se": 0.007380076710363727,
+     "R": 2558
+    },
+    "positive_reject_unconditional": {
+     "value": 0.10375,
+     "se": 0.004821460813384259,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.16223612197028928,
+     "se": 0.00728927480941673,
+     "R": 2558
+    },
+    "interval_shown_rate": {
+     "value": 0.629,
+     "se": 0.015276092432294327,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9220985691573926,
+     "se": 0.010686514235745065,
+     "R": 629
+    },
+    "interval_mean_width_sd_per_decade": 1.36008522335486,
+    "phi_hat_mean": -0.0002677546914582978,
+    "phi_hat_sd": 0.1932932547999307,
+    "share_skew_flag": 0.07675,
+    "buckets": {
+     "0.0": {
+      "count": 2011,
+      "share": 0.50275,
+      "released": 1854,
+      "reject_given_bucket": {
+       "value": 0.1636001989060169,
+       "se": 0.008248839221080774,
+       "R": 2011
+      }
+     },
+     "0.1": {
+      "count": 758,
+      "share": 0.1895,
+      "released": 704,
+      "reject_given_bucket": {
+       "value": 0.13060686015831136,
+       "se": 0.012239297636968564,
+       "R": 758
+      }
+     },
+     "0.2": {
+      "count": 605,
+      "share": 0.15125,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.0655781409087085e-08,
+       "R": 605
+      }
+     },
+     "0.3": {
+      "count": 385,
+      "share": 0.09625,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.0964719143762554e-08,
+       "R": 385
+      }
+     },
+     "0.45": {
+      "count": 218,
+      "share": 0.0545,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 6.772854614785964e-08,
+       "R": 218
+      }
+     },
+     "0.6": {
+      "count": 22,
+      "share": 0.0055,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.1320071635561043e-07,
+       "R": 22
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.176,
+     "tfpw": 0.4635,
+     "withheld": 0.3605
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2558
+    }
+   }
+  },
+  "n23-phi0.2": {
+   "trend": {
+    "n": 23,
+    "true_phi": 0.2,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.501,
+     "se": 0.007905678339016836,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.10325,
+     "se": 0.004811170270838478,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.2060878243512974,
+     "se": 0.009035736132038575,
+     "R": 2004
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0965,
+     "se": 0.004668719042735384,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.19261477045908185,
+     "se": 0.008809197262929473,
+     "R": 2004
+    },
+    "interval_shown_rate": {
+     "value": 0.497,
+     "se": 0.01581110369329099,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9014084507042254,
+     "se": 0.01337218769795891,
+     "R": 497
+    },
+    "interval_mean_width_sd_per_decade": 1.3328359234292855,
+    "phi_hat_mean": 0.07431398959546989,
+    "phi_hat_sd": 0.20038273955824804,
+    "share_skew_flag": 0.0765,
+    "buckets": {
+     "0.0": {
+      "count": 1435,
+      "share": 0.35875,
+      "released": 1323,
+      "reject_given_bucket": {
+       "value": 0.1902439024390244,
+       "se": 0.010361115999507876,
+       "R": 1435
+      }
+     },
+     "0.1": {
+      "count": 739,
+      "share": 0.18475,
+      "released": 681,
+      "reject_given_bucket": {
+       "value": 0.18944519621109607,
+       "se": 0.014414871373104935,
+       "R": 739
+      }
+     },
+     "0.2": {
+      "count": 715,
+      "share": 0.17875,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.739787960033829e-08,
+       "R": 715
+      }
+     },
+     "0.3": {
+      "count": 564,
+      "share": 0.141,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.210759605332595e-08,
+       "R": 564
+      }
+     },
+     "0.45": {
+      "count": 455,
+      "share": 0.11375,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.688072309384954e-08,
+       "R": 455
+      }
+     },
+     "0.6": {
+      "count": 88,
+      "share": 0.022,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.0660035817780522e-07,
+       "R": 88
+      }
+     },
+     "None": {
+      "count": 4,
+      "share": 0.001,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5e-07,
+       "R": 4
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.17025,
+     "tfpw": 0.33075,
+     "withheld": 0.499
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2004
+    }
+   },
+   "null": {
+    "n": 23,
+    "true_phi": 0.2,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.5215,
+     "se": 0.007898381954552464,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.0525,
+     "se": 0.0035264624625820137,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.10067114093959731,
+     "se": 0.006588015438781887,
+     "R": 2086
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02775,
+     "se": 0.002597110774495381,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.05321188878235858,
+     "se": 0.004914434863355226,
+     "R": 2086
+    },
+    "interval_shown_rate": {
+     "value": 0.494,
+     "se": 0.015810249839898167,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9048582995951417,
+     "se": 0.013201165238788677,
+     "R": 494
+    },
+    "interval_mean_width_sd_per_decade": 1.3190960347101457,
+    "phi_hat_mean": 0.06551011568171758,
+    "phi_hat_sd": 0.19951699469611983,
+    "share_skew_flag": 0.07375,
+    "buckets": {
+     "0.0": {
+      "count": 1488,
+      "share": 0.372,
+      "released": 1359,
+      "reject_given_bucket": {
+       "value": 0.09811827956989247,
+       "se": 0.007711667374765118,
+       "R": 1488
+      }
+     },
+     "0.1": {
+      "count": 776,
+      "share": 0.194,
+      "released": 727,
+      "reject_given_bucket": {
+       "value": 0.08247422680412371,
+       "se": 0.009875006767398546,
+       "R": 776
+      }
+     },
+     "0.2": {
+      "count": 695,
+      "share": 0.17375,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.793216209054408e-08,
+       "R": 695
+      }
+     },
+     "0.3": {
+      "count": 559,
+      "share": 0.13975,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.229549344378136e-08,
+       "R": 559
+      }
+     },
+     "0.45": {
+      "count": 392,
+      "share": 0.098,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.050762722761054e-08,
+       "R": 392
+      }
+     },
+     "0.6": {
+      "count": 81,
+      "share": 0.02025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.1111111111111111e-07,
+       "R": 81
+      }
+     },
+     "None": {
+      "count": 9,
+      "share": 0.00225,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.3333333333333335e-07,
+       "R": 9
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.18175,
+     "tfpw": 0.33975,
+     "withheld": 0.4785
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2086
+    }
+   }
+  },
+  "n23-phi0.45": {
+   "null": {
+    "n": 23,
+    "true_phi": 0.45,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.1955,
+     "se": 0.006270561179033341,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.04975,
+     "se": 0.0034378386196853394,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.2544757033248082,
+     "se": 0.015575811619259534,
+     "R": 782
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02675,
+     "se": 0.00255119763542537,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.13682864450127877,
+     "se": 0.012289483919980724,
+     "R": 782
+    },
+    "interval_shown_rate": {
+     "value": 0.21,
+     "se": 0.01288021738946979,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.7952380952380952,
+     "se": 0.027846045040217406,
+     "R": 210
+    },
+    "interval_mean_width_sd_per_decade": 1.150281457941927,
+    "phi_hat_mean": 0.26041663539705034,
+    "phi_hat_sd": 0.1975419782552582,
+    "share_skew_flag": 0.071,
+    "buckets": {
+     "0.0": {
+      "count": 421,
+      "share": 0.10525,
+      "released": 394,
+      "reject_given_bucket": {
+       "value": 0.25415676959619954,
+       "se": 0.02121942293966116,
+       "R": 421
+      }
+     },
+     "0.1": {
+      "count": 412,
+      "share": 0.103,
+      "released": 388,
+      "reject_given_bucket": {
+       "value": 0.22330097087378642,
+       "se": 0.020517435592745343,
+       "R": 412
+      }
+     },
+     "0.2": {
+      "count": 590,
+      "share": 0.1475,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.116934847963091e-08,
+       "R": 590
+      }
+     },
+     "0.3": {
+      "count": 728,
+      "share": 0.182,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.7062465833055055e-08,
+       "R": 728
+      }
+     },
+     "0.45": {
+      "count": 1176,
+      "share": 0.294,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.9160592175990214e-08,
+       "R": 1176
+      }
+     },
+     "0.6": {
+      "count": 583,
+      "share": 0.14575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.141576832812911e-08,
+       "R": 583
+      }
+     },
+     "None": {
+      "count": 90,
+      "share": 0.0225,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.0540925533894598e-07,
+       "R": 90
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.097,
+     "tfpw": 0.0985,
+     "withheld": 0.8045
+    },
+    "interval_method_counts": {
+     "analytic_hr": 782
+    }
+   },
+   "trend": {
+    "n": 23,
+    "true_phi": 0.45,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.192,
+     "se": 0.006227680145929141,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.0635,
+     "se": 0.0038557667849598992,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.3307291666666667,
+     "se": 0.016976829529179206,
+     "R": 768
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0565,
+     "se": 0.0036506078261023876,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.2942708333333333,
+     "se": 0.01644417283690166,
+     "R": 768
+    },
+    "interval_shown_rate": {
+     "value": 0.191,
+     "se": 0.012430567163247218,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.743455497382199,
+     "se": 0.031600369538099235,
+     "R": 191
+    },
+    "interval_mean_width_sd_per_decade": 1.128691231890659,
+    "phi_hat_mean": 0.2589633838071288,
+    "phi_hat_sd": 0.1929791880538281,
+    "share_skew_flag": 0.069,
+    "buckets": {
+     "0.0": {
+      "count": 377,
+      "share": 0.09425,
+      "released": 352,
+      "reject_given_bucket": {
+       "value": 0.33156498673740054,
+       "se": 0.02424617590276385,
+       "R": 377
+      }
+     },
+     "0.1": {
+      "count": 450,
+      "share": 0.1125,
+      "released": 416,
+      "reject_given_bucket": {
+       "value": 0.2866666666666667,
+       "se": 0.021317123471200794,
+       "R": 450
+      }
+     },
+     "0.2": {
+      "count": 645,
+      "share": 0.16125,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.937496154790789e-08,
+       "R": 645
+      }
+     },
+     "0.3": {
+      "count": 783,
+      "share": 0.19575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5737084494593163e-08,
+       "R": 783
+      }
+     },
+     "0.45": {
+      "count": 1080,
+      "share": 0.27,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.042903097250923e-08,
+       "R": 1080
+      }
+     },
+     "0.6": {
+      "count": 556,
+      "share": 0.139,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.2409446483998546e-08,
+       "R": 556
+      }
+     },
+     "None": {
+      "count": 109,
+      "share": 0.02725,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 9.578262852211514e-08,
+       "R": 109
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.104,
+     "tfpw": 0.088,
+     "withheld": 0.808
+    },
+    "interval_method_counts": {
+     "analytic_hr": 768
+    }
+   }
+  },
+  "n23-phi0.3": {
+   "null": {
+    "n": 23,
+    "true_phi": 0.3,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.371,
+     "se": 0.007638046216147163,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.05425,
+     "se": 0.0035814430576235606,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.14622641509433962,
+     "se": 0.009172069205993819,
+     "R": 1484
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02825,
+     "se": 0.0026197298286273723,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.0761455525606469,
+     "se": 0.006885049987676464,
+     "R": 1484
+    },
+    "interval_shown_rate": {
+     "value": 0.365,
+     "se": 0.015224158433227107,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8328767123287671,
+     "se": 0.01952820891766653,
+     "R": 365
+    },
+    "interval_mean_width_sd_per_decade": 1.2699534090102684,
+    "phi_hat_mean": 0.14605338296787165,
+    "phi_hat_sd": 0.1949073888298996,
+    "share_skew_flag": 0.07325,
+    "buckets": {
+     "0.0": {
+      "count": 901,
+      "share": 0.22525,
+      "released": 836,
+      "reject_given_bucket": {
+       "value": 0.15205327413984462,
+       "se": 0.0119624401073562,
+       "R": 901
+      }
+     },
+     "0.1": {
+      "count": 701,
+      "share": 0.17525,
+      "released": 648,
+      "reject_given_bucket": {
+       "value": 0.11412268188302425,
+       "se": 0.01200919140163241,
+       "R": 701
+      }
+     },
+     "0.2": {
+      "count": 798,
+      "share": 0.1995,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.539961627023943e-08,
+       "R": 798
+      }
+     },
+     "0.3": {
+      "count": 715,
+      "share": 0.17875,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.739787960033829e-08,
+       "R": 715
+      }
+     },
+     "0.45": {
+      "count": 657,
+      "share": 0.16425,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.901371573204352e-08,
+       "R": 657
+      }
+     },
+     "0.6": {
+      "count": 212,
+      "share": 0.053,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 6.868028197434452e-08,
+       "R": 212
+      }
+     },
+     "None": {
+      "count": 16,
+      "share": 0.004,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.5e-07,
+       "R": 16
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.162,
+     "tfpw": 0.209,
+     "withheld": 0.629
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1484
+    }
+   },
+   "trend": {
+    "n": 23,
+    "true_phi": 0.3,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.36525,
+     "se": 0.007613186545396087,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.08775,
+     "se": 0.004473531532804927,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.2402464065708419,
+     "se": 0.011177372477928904,
+     "R": 1461
+    },
+    "positive_reject_unconditional": {
+     "value": 0.08125,
+     "se": 0.004319966362716266,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.22245037645448323,
+     "se": 0.010880667081232158,
+     "R": 1461
+    },
+    "interval_shown_rate": {
+     "value": 0.379,
+     "se": 0.015341414537127925,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8575197889182058,
+     "se": 0.017954765834705476,
+     "R": 379
+    },
+    "interval_mean_width_sd_per_decade": 1.2709784222892793,
+    "phi_hat_mean": 0.1470091897726386,
+    "phi_hat_sd": 0.19591120215369215,
+    "share_skew_flag": 0.07275,
+    "buckets": {
+     "0.0": {
+      "count": 923,
+      "share": 0.23075,
+      "released": 851,
+      "reject_given_bucket": {
+       "value": 0.2296858071505959,
+       "se": 0.013845230145168077,
+       "R": 923
+      }
+     },
+     "0.1": {
+      "count": 661,
+      "share": 0.16525,
+      "released": 610,
+      "reject_given_bucket": {
+       "value": 0.2102874432677761,
+       "se": 0.01585040860856635,
+       "R": 661
+      }
+     },
+     "0.2": {
+      "count": 803,
+      "share": 0.20075,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5289233662029276e-08,
+       "R": 803
+      }
+     },
+     "0.3": {
+      "count": 730,
+      "share": 0.1825,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.701166050988026e-08,
+       "R": 730
+      }
+     },
+     "0.45": {
+      "count": 652,
+      "share": 0.163,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.9163022499397866e-08,
+       "R": 652
+      }
+     },
+     "0.6": {
+      "count": 204,
+      "share": 0.051,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.001400420140049e-08,
+       "R": 204
+      }
+     },
+     "None": {
+      "count": 27,
+      "share": 0.00675,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.9245008972987525e-07,
+       "R": 27
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.1525,
+     "tfpw": 0.21275,
+     "withheld": 0.63475
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1461
+    }
+   }
+  },
+  "n23-phi0.6": {
+   "null": {
+    "n": 23,
+    "true_phi": 0.6,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.08475,
+     "se": 0.004403618895295096,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.03025,
+     "se": 0.0027080868477580254,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.35693215339233036,
+     "se": 0.026020844337199735,
+     "R": 339
+    },
+    "positive_reject_unconditional": {
+     "value": 0.01325,
+     "se": 0.0018079295824229436,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.15634218289085547,
+     "se": 0.019725199487143446,
+     "R": 339
+    },
+    "interval_shown_rate": {
+     "value": 0.076,
+     "se": 0.008379976133617566,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.5657894736842105,
+     "se": 0.05685528086757625,
+     "R": 76
+    },
+    "interval_mean_width_sd_per_decade": 0.9915136695780066,
+    "phi_hat_mean": 0.3693402209003669,
+    "phi_hat_sd": 0.19084393318696274,
+    "share_skew_flag": 0.073,
+    "buckets": {
+     "0.0": {
+      "count": 162,
+      "share": 0.0405,
+      "released": 149,
+      "reject_given_bucket": {
+       "value": 0.3395061728395062,
+       "se": 0.03720494884805355,
+       "R": 162
+      }
+     },
+     "0.1": {
+      "count": 202,
+      "share": 0.0505,
+      "released": 190,
+      "reject_given_bucket": {
+       "value": 0.32673267326732675,
+       "se": 0.03300003251475394,
+       "R": 202
+      }
+     },
+     "0.2": {
+      "count": 385,
+      "share": 0.09625,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.0964719143762554e-08,
+       "R": 385
+      }
+     },
+     "0.3": {
+      "count": 561,
+      "share": 0.14025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.222003309207491e-08,
+       "R": 561
+      }
+     },
+     "0.45": {
+      "count": 1211,
+      "share": 0.30275,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.8736106756903908e-08,
+       "R": 1211
+      }
+     },
+     "0.6": {
+      "count": 1072,
+      "share": 0.268,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.05423610890763e-08,
+       "R": 1072
+      }
+     },
+     "None": {
+      "count": 407,
+      "share": 0.10175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.956815970966097e-08,
+       "R": 407
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.0475,
+     "tfpw": 0.03725,
+     "withheld": 0.91525
+    },
+    "interval_method_counts": {
+     "analytic_hr": 339
+    }
+   },
+   "trend": {
+    "n": 23,
+    "true_phi": 0.6,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.09375,
+     "se": 0.004608712876172695,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.045,
+     "se": 0.0032777660075118237,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.48,
+     "se": 0.025799224794555358,
+     "R": 375
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0375,
+     "se": 0.0030039037101744787,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.4,
+     "se": 0.025298221281347035,
+     "R": 375
+    },
+    "interval_shown_rate": {
+     "value": 0.106,
+     "se": 0.009734680272099337,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.5471698113207547,
+     "se": 0.04834769988284787,
+     "R": 106
+    },
+    "interval_mean_width_sd_per_decade": 0.9766295337753391,
+    "phi_hat_mean": 0.36508196133990056,
+    "phi_hat_sd": 0.1947230457379936,
+    "share_skew_flag": 0.073,
+    "buckets": {
+     "0.0": {
+      "count": 172,
+      "share": 0.043,
+      "released": 160,
+      "reject_given_bucket": {
+       "value": 0.4883720930232558,
+       "se": 0.03811433165866695,
+       "R": 172
+      }
+     },
+     "0.1": {
+      "count": 233,
+      "share": 0.05825,
+      "released": 215,
+      "reject_given_bucket": {
+       "value": 0.41201716738197425,
+       "se": 0.03224497306960719,
+       "R": 233
+      }
+     },
+     "0.2": {
+      "count": 392,
+      "share": 0.098,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.050762722761054e-08,
+       "R": 392
+      }
+     },
+     "0.3": {
+      "count": 556,
+      "share": 0.139,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.2409446483998546e-08,
+       "R": 556
+      }
+     },
+     "0.45": {
+      "count": 1177,
+      "share": 0.29425,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.914820186645445e-08,
+       "R": 1177
+      }
+     },
+     "0.6": {
+      "count": 1047,
+      "share": 0.26175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.0904851360770655e-08,
+       "R": 1047
+      }
+     },
+     "None": {
+      "count": 423,
+      "share": 0.10575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.862166383263152e-08,
+       "R": 423
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.05375,
+     "tfpw": 0.04,
+     "withheld": 0.90625
+    },
+    "interval_method_counts": {
+     "analytic_hr": 375
+    }
+   }
+  },
+  "n25-phi0.0": {
+   "trend": {
+    "n": 25,
+    "true_phi": 0.0,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.7705,
+     "se": 0.006648867384750579,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.12675,
+     "se": 0.0052603335802019245,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.16450356911096692,
+     "se": 0.0066779574077522755,
+     "R": 3082
+    },
+    "positive_reject_unconditional": {
+     "value": 0.1255,
+     "se": 0.005238075744011345,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.1628812459441921,
+     "se": 0.006651395311694149,
+     "R": 3082
+    },
+    "interval_shown_rate": {
+     "value": 0.745,
+     "se": 0.013783141876945184,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9557046979865772,
+     "se": 0.007538111510512169,
+     "R": 745
+    },
+    "interval_mean_width_sd_per_decade": 1.232277234035807,
+    "phi_hat_mean": -0.08090488029815199,
+    "phi_hat_sd": 0.18377480264454768,
+    "share_skew_flag": 0.071,
+    "buckets": {
+     "0.0": {
+      "count": 2673,
+      "share": 0.66825,
+      "released": 2467,
+      "reject_given_bucket": {
+       "value": 0.16011971567527122,
+       "se": 0.007093027098382215,
+       "R": 2673
+      }
+     },
+     "0.1": {
+      "count": 654,
+      "share": 0.1635,
+      "released": 615,
+      "reject_given_bucket": {
+       "value": 0.12079510703363915,
+       "se": 0.012743268844434915,
+       "R": 654
+      }
+     },
+     "0.2": {
+      "count": 405,
+      "share": 0.10125,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.9690399499995325e-08,
+       "R": 405
+      }
+     },
+     "0.3": {
+      "count": 200,
+      "share": 0.05,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.071067811865476e-08,
+       "R": 200
+      }
+     },
+     "0.45": {
+      "count": 58,
+      "share": 0.0145,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.3130643285972256e-07,
+       "R": 58
+      }
+     },
+     "0.6": {
+      "count": 10,
+      "share": 0.0025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.162277660168379e-07,
+       "R": 10
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.61675,
+     "yue_wang": 0.15375,
+     "withheld": 0.2295
+    },
+    "interval_method_counts": {
+     "analytic_hr": 3082
+    }
+   },
+   "null": {
+    "n": 25,
+    "true_phi": 0.0,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.77275,
+     "se": 0.00662584782310913,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.0375,
+     "se": 0.0030039037101744787,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.04852798447104497,
+     "se": 0.0038649567125118097,
+     "R": 3091
+    },
+    "positive_reject_unconditional": {
+     "value": 0.01825,
+     "se": 0.0021164201792177283,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.02361695244257522,
+     "se": 0.0027313197192151257,
+     "R": 3091
+    },
+    "interval_shown_rate": {
+     "value": 0.76,
+     "se": 0.013505554412907307,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.95,
+     "se": 0.007905694150420951,
+     "R": 760
+    },
+    "interval_mean_width_sd_per_decade": 1.223358152404602,
+    "phi_hat_mean": -0.0786695074889588,
+    "phi_hat_sd": 0.18547213527829065,
+    "share_skew_flag": 0.07,
+    "buckets": {
+     "0.0": {
+      "count": 2643,
+      "share": 0.66075,
+      "released": 2455,
+      "reject_given_bucket": {
+       "value": 0.04729474082482028,
+       "se": 0.004128926240719134,
+       "R": 2643
+      }
+     },
+     "0.1": {
+      "count": 681,
+      "share": 0.17025,
+      "released": 636,
+      "reject_given_bucket": {
+       "value": 0.03671071953010279,
+       "se": 0.007206116120856037,
+       "R": 681
+      }
+     },
+     "0.2": {
+      "count": 400,
+      "share": 0.1,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5e-08,
+       "R": 400
+      }
+     },
+     "0.3": {
+      "count": 191,
+      "share": 0.04775,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.235746052924216e-08,
+       "R": 191
+      }
+     },
+     "0.45": {
+      "count": 78,
+      "share": 0.0195,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.1322770341445957e-07,
+       "R": 78
+      }
+     },
+     "0.6": {
+      "count": 7,
+      "share": 0.00175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.779644730092272e-07,
+       "R": 7
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.61375,
+     "yue_wang": 0.159,
+     "withheld": 0.22725
+    },
+    "interval_method_counts": {
+     "analytic_hr": 3091
+    }
+   }
+  },
+  "n25-phi0.1": {
+   "null": {
+    "n": 25,
+    "true_phi": 0.1,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.634,
+     "se": 0.007616495257006335,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.043,
+     "se": 0.003207452259972079,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.06782334384858044,
+     "se": 0.004993028968460005,
+     "R": 2536
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02225,
+     "se": 0.0023321094260347216,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.03509463722397476,
+     "se": 0.003654164668582313,
+     "R": 2536
+    },
+    "interval_shown_rate": {
+     "value": 0.635,
+     "se": 0.015224158433227107,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9149606299212598,
+     "se": 0.011069407058311678,
+     "R": 635
+    },
+    "interval_mean_width_sd_per_decade": 1.204450937711156,
+    "phi_hat_mean": 0.004893215798712611,
+    "phi_hat_sd": 0.189769576744263,
+    "share_skew_flag": 0.0675,
+    "buckets": {
+     "0.0": {
+      "count": 1954,
+      "share": 0.4885,
+      "released": 1821,
+      "reject_given_bucket": {
+       "value": 0.06448311156601842,
+       "se": 0.005556310781711142,
+       "R": 1954
+      }
+     },
+     "0.1": {
+      "count": 776,
+      "share": 0.194,
+      "released": 715,
+      "reject_given_bucket": {
+       "value": 0.059278350515463915,
+       "se": 0.008477108933513645,
+       "R": 776
+      }
+     },
+     "0.2": {
+      "count": 629,
+      "share": 0.15725,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.9872611141445e-08,
+       "R": 629
+      }
+     },
+     "0.3": {
+      "count": 411,
+      "share": 0.10275,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.932636236669901e-08,
+       "R": 411
+      }
+     },
+     "0.45": {
+      "count": 202,
+      "share": 0.0505,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.035975447302919e-08,
+       "R": 202
+      }
+     },
+     "0.6": {
+      "count": 27,
+      "share": 0.00675,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.9245008972987525e-07,
+       "R": 27
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.45525,
+     "yue_wang": 0.17875,
+     "withheld": 0.366
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2536
+    }
+   },
+   "trend": {
+    "n": 25,
+    "true_phi": 0.1,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.654,
+     "se": 0.0075213695561380306,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.1275,
+     "se": 0.00527360763614435,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.19495412844036697,
+     "se": 0.007745646312005339,
+     "R": 2616
+    },
+    "positive_reject_unconditional": {
+     "value": 0.12625,
+     "se": 0.00525145069242776,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.1930428134556575,
+     "se": 0.007716728066993929,
+     "R": 2616
+    },
+    "interval_shown_rate": {
+     "value": 0.653,
+     "se": 0.01505293991218991,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9310872894333844,
+     "se": 0.00991261581807649,
+     "R": 653
+    },
+    "interval_mean_width_sd_per_decade": 1.2046055072906143,
+    "phi_hat_mean": -0.002540009177987852,
+    "phi_hat_sd": 0.1875664479202976,
+    "share_skew_flag": 0.07125,
+    "buckets": {
+     "0.0": {
+      "count": 1995,
+      "share": 0.49875,
+      "released": 1868,
+      "reject_given_bucket": {
+       "value": 0.20200501253132833,
+       "se": 0.00898896531673344,
+       "R": 1995
+      }
+     },
+     "0.1": {
+      "count": 815,
+      "share": 0.20375,
+      "released": 748,
+      "reject_given_bucket": {
+       "value": 0.1312883435582822,
+       "se": 0.011829655695325387,
+       "R": 815
+      }
+     },
+     "0.2": {
+      "count": 600,
+      "share": 0.15,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.08248290463863e-08,
+       "R": 600
+      }
+     },
+     "0.3": {
+      "count": 397,
+      "share": 0.09925,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.0188561322849555e-08,
+       "R": 397
+      }
+     },
+     "0.45": {
+      "count": 169,
+      "share": 0.04225,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.692307692307692e-08,
+       "R": 169
+      }
+     },
+     "0.6": {
+      "count": 23,
+      "share": 0.00575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.0851441405707478e-07,
+       "R": 23
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.467,
+     "yue_wang": 0.187,
+     "withheld": 0.346
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2616
+    }
+   }
+  },
+  "n25-phi0.2": {
+   "null": {
+    "n": 25,
+    "true_phi": 0.2,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.49425,
+     "se": 0.007905171369110224,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.053,
+     "se": 0.00354228033899069,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.10723318158826504,
+     "se": 0.006958734730642729,
+     "R": 1977
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0245,
+     "se": 0.0024443685278615415,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.04957005563985837,
+     "se": 0.004881647587474464,
+     "R": 1977
+    },
+    "interval_shown_rate": {
+     "value": 0.509,
+     "se": 0.015808826648426505,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8939096267190569,
+     "se": 0.013649787952759958,
+     "R": 509
+    },
+    "interval_mean_width_sd_per_decade": 1.1555686927809166,
+    "phi_hat_mean": 0.08012344974001646,
+    "phi_hat_sd": 0.187047597237572,
+    "share_skew_flag": 0.069,
+    "buckets": {
+     "0.0": {
+      "count": 1296,
+      "share": 0.324,
+      "released": 1206,
+      "reject_given_bucket": {
+       "value": 0.1087962962962963,
+       "se": 0.008649540691460386,
+       "R": 1296
+      }
+     },
+     "0.1": {
+      "count": 832,
+      "share": 0.208,
+      "released": 771,
+      "reject_given_bucket": {
+       "value": 0.08533653846153846,
+       "se": 0.009685822662787965,
+       "R": 832
+      }
+     },
+     "0.2": {
+      "count": 784,
+      "share": 0.196,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.571428571428571e-08,
+       "R": 784
+      }
+     },
+     "0.3": {
+      "count": 610,
+      "share": 0.1525,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.04888165089458e-08,
+       "R": 610
+      }
+     },
+     "0.45": {
+      "count": 405,
+      "share": 0.10125,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.9690399499995325e-08,
+       "R": 405
+      }
+     },
+     "0.6": {
+      "count": 67,
+      "share": 0.01675,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.221694443563052e-07,
+       "R": 67
+      }
+     },
+     "None": {
+      "count": 6,
+      "share": 0.0015,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.0824829046386305e-07,
+       "R": 6
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.3015,
+     "yue_wang": 0.19275,
+     "withheld": 0.50575
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1977
+    }
+   },
+   "trend": {
+    "n": 25,
+    "true_phi": 0.2,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.5015,
+     "se": 0.007905658574717226,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.11425,
+     "se": 0.005029834428189462,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.22781655034895315,
+     "se": 0.009364560847601065,
+     "R": 2006
+    },
+    "positive_reject_unconditional": {
+     "value": 0.1115,
+     "se": 0.004976639177195791,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.22233300099700898,
+     "se": 0.009283961600702929,
+     "R": 2006
+    },
+    "interval_shown_rate": {
+     "value": 0.518,
+     "se": 0.01580113919943749,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9208494208494209,
+     "se": 0.011861960629763526,
+     "R": 518
+    },
+    "interval_mean_width_sd_per_decade": 1.1636879272148317,
+    "phi_hat_mean": 0.08020435477810531,
+    "phi_hat_sd": 0.19065992609097696,
+    "share_skew_flag": 0.07,
+    "buckets": {
+     "0.0": {
+      "count": 1362,
+      "share": 0.3405,
+      "released": 1266,
+      "reject_given_bucket": {
+       "value": 0.22980910425844348,
+       "se": 0.011399721763432753,
+       "R": 1362
+      }
+     },
+     "0.1": {
+      "count": 791,
+      "share": 0.19775,
+      "released": 740,
+      "reject_given_bucket": {
+       "value": 0.1820480404551201,
+       "se": 0.013720459656118837,
+       "R": 791
+      }
+     },
+     "0.2": {
+      "count": 760,
+      "share": 0.19,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.6273812505500585e-08,
+       "R": 760
+      }
+     },
+     "0.3": {
+      "count": 573,
+      "share": 0.14325,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.177559931443569e-08,
+       "R": 573
+      }
+     },
+     "0.45": {
+      "count": 423,
+      "share": 0.10575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.862166383263152e-08,
+       "R": 423
+      }
+     },
+     "0.6": {
+      "count": 90,
+      "share": 0.0225,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.0540925533894598e-07,
+       "R": 90
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.3165,
+     "yue_wang": 0.185,
+     "withheld": 0.4985
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2006
+    }
+   }
+  },
+  "n25-phi0.45": {
+   "null": {
+    "n": 25,
+    "true_phi": 0.45,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.17,
+     "se": 0.005939276050159649,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.039,
+     "se": 0.0030610047370103824,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.22941176470588234,
+     "se": 0.01612369497320158,
+     "R": 680
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02025,
+     "se": 0.002227102237213191,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.11911764705882352,
+     "se": 0.012422029365440743,
+     "R": 680
+    },
+    "interval_shown_rate": {
+     "value": 0.166,
+     "se": 0.011766222843376714,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.7409638554216867,
+     "se": 0.03400358063891164,
+     "R": 166
+    },
+    "interval_mean_width_sd_per_decade": 0.9954846876797171,
+    "phi_hat_mean": 0.2704132394377517,
+    "phi_hat_sd": 0.1893047778301185,
+    "share_skew_flag": 0.07275,
+    "buckets": {
+     "0.0": {
+      "count": 349,
+      "share": 0.08725,
+      "released": 324,
+      "reject_given_bucket": {
+       "value": 0.23209169054441262,
+       "se": 0.022598091668590784,
+       "R": 349
+      }
+     },
+     "0.1": {
+      "count": 382,
+      "share": 0.0955,
+      "released": 356,
+      "reject_given_bucket": {
+       "value": 0.19633507853403143,
+       "se": 0.020323793568199654,
+       "R": 382
+      }
+     },
+     "0.2": {
+      "count": 610,
+      "share": 0.1525,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.04888165089458e-08,
+       "R": 610
+      }
+     },
+     "0.3": {
+      "count": 775,
+      "share": 0.19375,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5921060405354976e-08,
+       "R": 775
+      }
+     },
+     "0.45": {
+      "count": 1201,
+      "share": 0.30025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.885549284123806e-08,
+       "R": 1201
+      }
+     },
+     "0.6": {
+      "count": 580,
+      "share": 0.145,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.1522739926869985e-08,
+       "R": 580
+      }
+     },
+     "None": {
+      "count": 103,
+      "share": 0.02575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 9.853292781642932e-08,
+       "R": 103
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.081,
+     "yue_wang": 0.089,
+     "withheld": 0.83
+    },
+    "interval_method_counts": {
+     "analytic_hr": 680
+    }
+   },
+   "trend": {
+    "n": 25,
+    "true_phi": 0.45,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.17775,
+     "se": 0.006044727816452946,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.06625,
+     "se": 0.003932586219652406,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.3727144866385373,
+     "se": 0.018133680736632032,
+     "R": 711
+    },
+    "positive_reject_unconditional": {
+     "value": 0.06,
+     "se": 0.0037549966711037173,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.33755274261603374,
+     "se": 0.017734202913565193,
+     "R": 711
+    },
+    "interval_shown_rate": {
+     "value": 0.187,
+     "se": 0.012330085157856777,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.7593582887700535,
+     "se": 0.03125993130287181,
+     "R": 187
+    },
+    "interval_mean_width_sd_per_decade": 0.9907294731052388,
+    "phi_hat_mean": 0.26436994670853303,
+    "phi_hat_sd": 0.19260977643666,
+    "share_skew_flag": 0.0685,
+    "buckets": {
+     "0.0": {
+      "count": 368,
+      "share": 0.092,
+      "released": 335,
+      "reject_given_bucket": {
+       "value": 0.3804347826086957,
+       "se": 0.025308109994526016,
+       "R": 368
+      }
+     },
+     "0.1": {
+      "count": 406,
+      "share": 0.1015,
+      "released": 376,
+      "reject_given_bucket": {
+       "value": 0.3078817733990148,
+       "se": 0.022909684907927552,
+       "R": 406
+      }
+     },
+     "0.2": {
+      "count": 629,
+      "share": 0.15725,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.9872611141445e-08,
+       "R": 629
+      }
+     },
+     "0.3": {
+      "count": 760,
+      "share": 0.19,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.6273812505500585e-08,
+       "R": 760
+      }
+     },
+     "0.45": {
+      "count": 1149,
+      "share": 0.28725,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.9501220638256383e-08,
+       "R": 1149
+      }
+     },
+     "0.6": {
+      "count": 589,
+      "share": 0.14725,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.1204282171516456e-08,
+       "R": 589
+      }
+     },
+     "None": {
+      "count": 99,
+      "share": 0.02475,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.005037815259212e-07,
+       "R": 99
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.08375,
+     "yue_wang": 0.094,
+     "withheld": 0.82225
+    },
+    "interval_method_counts": {
+     "analytic_hr": 711
+    }
+   }
+  },
+  "n25-phi0.3": {
+   "null": {
+    "n": 25,
+    "true_phi": 0.3,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.346,
+     "se": 0.0075213695561380306,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.04475,
+     "se": 0.0032690762265508585,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.12933526011560695,
+     "se": 0.009020194532143602,
+     "R": 1384
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0245,
+     "se": 0.0024443685278615415,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.0708092485549133,
+     "se": 0.00689492246757107,
+     "R": 1384
+    },
+    "interval_shown_rate": {
+     "value": 0.356,
+     "se": 0.015141466243399283,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8567415730337079,
+     "se": 0.018567781240499466,
+     "R": 356
+    },
+    "interval_mean_width_sd_per_decade": 1.1022442451710461,
+    "phi_hat_mean": 0.15877873292100247,
+    "phi_hat_sd": 0.18799634065342508,
+    "share_skew_flag": 0.06275,
+    "buckets": {
+     "0.0": {
+      "count": 811,
+      "share": 0.20275,
+      "released": 767,
+      "reject_given_bucket": {
+       "value": 0.1405672009864365,
+       "se": 0.012204992964327303,
+       "R": 811
+      }
+     },
+     "0.1": {
+      "count": 661,
+      "share": 0.16525,
+      "released": 617,
+      "reject_given_bucket": {
+       "value": 0.09833585476550681,
+       "se": 0.011581841546369482,
+       "R": 661
+      }
+     },
+     "0.2": {
+      "count": 763,
+      "share": 0.19075,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.6202430712799825e-08,
+       "R": 763
+      }
+     },
+     "0.3": {
+      "count": 839,
+      "share": 0.20975,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.4523833987986266e-08,
+       "R": 839
+      }
+     },
+     "0.45": {
+      "count": 726,
+      "share": 0.1815,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.7113480951260276e-08,
+       "R": 726
+      }
+     },
+     "0.6": {
+      "count": 191,
+      "share": 0.04775,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.235746052924216e-08,
+       "R": 191
+      }
+     },
+     "None": {
+      "count": 9,
+      "share": 0.00225,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.3333333333333335e-07,
+       "R": 9
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.19175,
+     "yue_wang": 0.15425,
+     "withheld": 0.654
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1384
+    }
+   },
+   "trend": {
+    "n": 25,
+    "true_phi": 0.3,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.35375,
+     "se": 0.007559942749452537,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.085,
+     "se": 0.004409506775139369,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.24028268551236748,
+     "se": 0.011358187425547896,
+     "R": 1415
+    },
+    "positive_reject_unconditional": {
+     "value": 0.081,
+     "se": 0.0043139019460344714,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.22897526501766785,
+     "se": 0.01116992406210467,
+     "R": 1415
+    },
+    "interval_shown_rate": {
+     "value": 0.364,
+     "se": 0.015215255502291114,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8351648351648352,
+     "se": 0.019447346020018567,
+     "R": 364
+    },
+    "interval_mean_width_sd_per_decade": 1.098535752599543,
+    "phi_hat_mean": 0.15091909694101804,
+    "phi_hat_sd": 0.19253456608155345,
+    "share_skew_flag": 0.06975,
+    "buckets": {
+     "0.0": {
+      "count": 858,
+      "share": 0.2145,
+      "released": 794,
+      "reject_given_bucket": {
+       "value": 0.23426573426573427,
+       "se": 0.014459383674309044,
+       "R": 858
+      }
+     },
+     "0.1": {
+      "count": 680,
+      "share": 0.17,
+      "released": 621,
+      "reject_given_bucket": {
+       "value": 0.20441176470588235,
+       "se": 0.015464741451772183,
+       "R": 680
+      }
+     },
+     "0.2": {
+      "count": 803,
+      "share": 0.20075,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5289233662029276e-08,
+       "R": 803
+      }
+     },
+     "0.3": {
+      "count": 745,
+      "share": 0.18625,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.6637165272365584e-08,
+       "R": 745
+      }
+     },
+     "0.45": {
+      "count": 708,
+      "share": 0.177,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.758230140014144e-08,
+       "R": 708
+      }
+     },
+     "0.6": {
+      "count": 188,
+      "share": 0.047,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.293249574894728e-08,
+       "R": 188
+      }
+     },
+     "None": {
+      "count": 18,
+      "share": 0.0045,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.3570226039551583e-07,
+       "R": 18
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.1985,
+     "yue_wang": 0.15525,
+     "withheld": 0.64625
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1415
+    }
+   }
+  },
+  "n25-phi0.6": {
+   "null": {
+    "n": 25,
+    "true_phi": 0.6,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.07025,
+     "se": 0.004040882870735058,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.02525,
+     "se": 0.002480546184814949,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.3594306049822064,
+     "se": 0.028624470355747843,
+     "R": 281
+    },
+    "positive_reject_unconditional": {
+     "value": 0.01125,
+     "se": 0.001667590889576937,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.1601423487544484,
+     "se": 0.021877756207844594,
+     "R": 281
+    },
+    "interval_shown_rate": {
+     "value": 0.068,
+     "se": 0.007960904471226871,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.6176470588235294,
+     "se": 0.05893156169637058,
+     "R": 68
+    },
+    "interval_mean_width_sd_per_decade": 0.8620462225503429,
+    "phi_hat_mean": 0.38314640076892936,
+    "phi_hat_sd": 0.1855505008233243,
+    "share_skew_flag": 0.07175,
+    "buckets": {
+     "0.0": {
+      "count": 116,
+      "share": 0.029,
+      "released": 105,
+      "reject_given_bucket": {
+       "value": 0.43103448275862066,
+       "se": 0.04598010790207497,
+       "R": 116
+      }
+     },
+     "0.1": {
+      "count": 189,
+      "share": 0.04725,
+      "released": 176,
+      "reject_given_bucket": {
+       "value": 0.2698412698412698,
+       "se": 0.03228731457056188,
+       "R": 189
+      }
+     },
+     "0.2": {
+      "count": 364,
+      "share": 0.091,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.2414241836095915e-08,
+       "R": 364
+      }
+     },
+     "0.3": {
+      "count": 565,
+      "share": 0.14125,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.2070316191167124e-08,
+       "R": 565
+      }
+     },
+     "0.45": {
+      "count": 1175,
+      "share": 0.29375,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.9172998299578912e-08,
+       "R": 1175
+      }
+     },
+     "0.6": {
+      "count": 1127,
+      "share": 0.28175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.9787773436724965e-08,
+       "R": 1127
+      }
+     },
+     "None": {
+      "count": 464,
+      "share": 0.116,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.6423834544262965e-08,
+       "R": 464
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.02625,
+     "yue_wang": 0.044,
+     "withheld": 0.92975
+    },
+    "interval_method_counts": {
+     "analytic_hr": 281
+    }
+   },
+   "trend": {
+    "n": 25,
+    "true_phi": 0.6,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.0825,
+     "se": 0.004350107757286019,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.03775,
+     "se": 0.0030135086485689735,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.4575757575757576,
+     "se": 0.02742483853463306,
+     "R": 330
+    },
+    "positive_reject_unconditional": {
+     "value": 0.03175,
+     "se": 0.0027722706172017193,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.38484848484848483,
+     "se": 0.026784217908398536,
+     "R": 330
+    },
+    "interval_shown_rate": {
+     "value": 0.091,
+     "se": 0.009094998625618368,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.6153846153846154,
+     "se": 0.05099950339475353,
+     "R": 91
+    },
+    "interval_mean_width_sd_per_decade": 0.8322725383107149,
+    "phi_hat_mean": 0.37860906669494987,
+    "phi_hat_sd": 0.18751170030474815,
+    "share_skew_flag": 0.07225,
+    "buckets": {
+     "0.0": {
+      "count": 138,
+      "share": 0.0345,
+      "released": 126,
+      "reject_given_bucket": {
+       "value": 0.43478260869565216,
+       "se": 0.04219920768809885,
+       "R": 138
+      }
+     },
+     "0.1": {
+      "count": 213,
+      "share": 0.05325,
+      "released": 204,
+      "reject_given_bucket": {
+       "value": 0.4272300469483568,
+       "se": 0.03389465410871728,
+       "R": 213
+      }
+     },
+     "0.2": {
+      "count": 347,
+      "share": 0.08675,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.368281270950189e-08,
+       "R": 347
+      }
+     },
+     "0.3": {
+      "count": 555,
+      "share": 0.13875,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.2447635997800885e-08,
+       "R": 555
+      }
+     },
+     "0.45": {
+      "count": 1194,
+      "share": 0.2985,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.8939954008661635e-08,
+       "R": 1194
+      }
+     },
+     "0.6": {
+      "count": 1102,
+      "share": 0.2755,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.01237616564389e-08,
+       "R": 1102
+      }
+     },
+     "None": {
+      "count": 451,
+      "share": 0.11275,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.7088160934801114e-08,
+       "R": 451
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.0315,
+     "yue_wang": 0.051,
+     "withheld": 0.9175
+    },
+    "interval_method_counts": {
+     "analytic_hr": 330
+    }
+   }
+  },
+  "n45-phi0.1": {
+   "null": {
+    "n": 45,
+    "true_phi": 0.1,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.62775,
+     "se": 0.007643296695471136,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.04125,
+     "se": 0.003144377422479687,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.06571087216248507,
+     "se": 0.004944653994276097,
+     "R": 2511
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02075,
+     "se": 0.0022538543375737485,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.03305455993628036,
+     "se": 0.003567740992282432,
+     "R": 2511
+    },
+    "interval_shown_rate": {
+     "value": 0.629,
+     "se": 0.015276092432294327,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9252782193958664,
+     "se": 0.010484179625913902,
+     "R": 629
+    },
+    "interval_mean_width_sd_per_decade": 0.47881756193200953,
+    "phi_hat_mean": 0.04621914969091864,
+    "phi_hat_sd": 0.14321016727100375,
+    "share_skew_flag": 0.02325,
+    "buckets": {
+     "0.0": {
+      "count": 1471,
+      "share": 0.36775,
+      "released": 1433,
+      "reject_given_bucket": {
+       "value": 0.06866077498300475,
+       "se": 0.006593286707984871,
+       "R": 1471
+      }
+     },
+     "0.1": {
+      "count": 1103,
+      "share": 0.27575,
+      "released": 1078,
+      "reject_given_bucket": {
+       "value": 0.05802357207615594,
+       "se": 0.007039381332001677,
+       "R": 1103
+      }
+     },
+     "0.2": {
+      "count": 856,
+      "share": 0.214,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.417929635123316e-08,
+       "R": 856
+      }
+     },
+     "0.3": {
+      "count": 423,
+      "share": 0.10575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.862166383263152e-08,
+       "R": 423
+      }
+     },
+     "0.45": {
+      "count": 139,
+      "share": 0.03475,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 8.481889296799709e-08,
+       "R": 139
+      }
+     },
+     "0.6": {
+      "count": 8,
+      "share": 0.002,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5355339059327374e-07,
+       "R": 8
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.35825,
+     "yue_wang": 0.2695,
+     "withheld": 0.37225
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2511
+    }
+   },
+   "trend": {
+    "n": 45,
+    "true_phi": 0.1,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.637,
+     "se": 0.007603140798380627,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.43125,
+     "se": 0.007830604023637002,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.6770015698587127,
+     "se": 0.009263931429836662,
+     "R": 2548
+    },
+    "positive_reject_unconditional": {
+     "value": 0.43125,
+     "se": 0.007830604023637002,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.6770015698587127,
+     "se": 0.009263931429836662,
+     "R": 2548
+    },
+    "interval_shown_rate": {
+     "value": 0.627,
+     "se": 0.015292841462592882,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.937799043062201,
+     "se": 0.009645386952519298,
+     "R": 627
+    },
+    "interval_mean_width_sd_per_decade": 0.4770872614825647,
+    "phi_hat_mean": 0.04210446365645191,
+    "phi_hat_sd": 0.14292342902753263,
+    "share_skew_flag": 0.0235,
+    "buckets": {
+     "0.0": {
+      "count": 1514,
+      "share": 0.3785,
+      "released": 1479,
+      "reject_given_bucket": {
+       "value": 0.6869220607661823,
+       "se": 0.011918374500150649,
+       "R": 1514
+      }
+     },
+     "0.1": {
+      "count": 1098,
+      "share": 0.2745,
+      "released": 1069,
+      "reject_given_bucket": {
+       "value": 0.6238615664845173,
+       "se": 0.014618970893016288,
+       "R": 1098
+      }
+     },
+     "0.2": {
+      "count": 841,
+      "share": 0.21025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.448275862068966e-08,
+       "R": 841
+      }
+     },
+     "0.3": {
+      "count": 412,
+      "share": 0.103,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.926646390821466e-08,
+       "R": 412
+      }
+     },
+     "0.45": {
+      "count": 130,
+      "share": 0.0325,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 8.770580193070293e-08,
+       "R": 130
+      }
+     },
+     "0.6": {
+      "count": 5,
+      "share": 0.00125,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.472135954999579e-07,
+       "R": 5
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.36975,
+     "yue_wang": 0.26725,
+     "withheld": 0.363
+    },
+    "interval_method_counts": {
+     "analytic_hr": 2548
+    }
+   }
+  },
+  "n45-phi0.0": {
+   "null": {
+    "n": 45,
+    "true_phi": 0.0,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.82625,
+     "se": 0.005990845881426094,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.039,
+     "se": 0.0030610047370103824,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.04720121028744327,
+     "se": 0.0036888537197155916,
+     "R": 3305
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0215,
+     "se": 0.0022933463541297025,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.026021180030257187,
+     "se": 0.0027691884926351355,
+     "R": 3305
+    },
+    "interval_shown_rate": {
+     "value": 0.846,
+     "se": 0.011414201680362933,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9515366430260047,
+     "se": 0.0073830247445883426,
+     "R": 846
+    },
+    "interval_mean_width_sd_per_decade": 0.48473525356243835,
+    "phi_hat_mean": -0.04584634465994067,
+    "phi_hat_sd": 0.14241434499837097,
+    "share_skew_flag": 0.02175,
+    "buckets": {
+     "0.0": {
+      "count": 2501,
+      "share": 0.62525,
+      "released": 2449,
+      "reject_given_bucket": {
+       "value": 0.04798080767692923,
+       "se": 0.004273658180872767,
+       "R": 2501
+      }
+     },
+     "0.1": {
+      "count": 877,
+      "share": 0.21925,
+      "released": 856,
+      "reject_given_bucket": {
+       "value": 0.04104903078677309,
+       "se": 0.006699615184769232,
+       "R": 877
+      }
+     },
+     "0.2": {
+      "count": 455,
+      "share": 0.11375,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.688072309384954e-08,
+       "R": 455
+      }
+     },
+     "0.3": {
+      "count": 141,
+      "share": 0.03525,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 8.42151921066519e-08,
+       "R": 141
+      }
+     },
+     "0.45": {
+      "count": 26,
+      "share": 0.0065,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.9611613513818402e-07,
+       "R": 26
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.61225,
+     "yue_wang": 0.214,
+     "withheld": 0.17375
+    },
+    "interval_method_counts": {
+     "analytic_hr": 3305
+    }
+   },
+   "trend": {
+    "n": 45,
+    "true_phi": 0.0,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.8265,
+     "se": 0.005987439978822335,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.5645,
+     "se": 0.007839638862855864,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.6830006049606776,
+     "se": 0.008092604874524659,
+     "R": 3306
+    },
+    "positive_reject_unconditional": {
+     "value": 0.5645,
+     "se": 0.007839638862855864,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.6830006049606776,
+     "se": 0.008092604874524659,
+     "R": 3306
+    },
+    "interval_shown_rate": {
+     "value": 0.823,
+     "se": 0.012069424178476786,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9538274605103281,
+     "se": 0.007315211276701336,
+     "R": 823
+    },
+    "interval_mean_width_sd_per_decade": 0.4855618939270303,
+    "phi_hat_mean": -0.0456215282186893,
+    "phi_hat_sd": 0.1413671138417406,
+    "share_skew_flag": 0.02325,
+    "buckets": {
+     "0.0": {
+      "count": 2487,
+      "share": 0.62175,
+      "released": 2433,
+      "reject_given_bucket": {
+       "value": 0.6791314837153196,
+       "se": 0.009360576405764213,
+       "R": 2487
+      }
+     },
+     "0.1": {
+      "count": 898,
+      "share": 0.2245,
+      "released": 873,
+      "reject_given_bucket": {
+       "value": 0.6336302895322939,
+       "se": 0.0160782796160375,
+       "R": 898
+      }
+     },
+     "0.2": {
+      "count": 452,
+      "share": 0.113,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.7036043419179866e-08,
+       "R": 452
+      }
+     },
+     "0.3": {
+      "count": 136,
+      "share": 0.034,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 8.574929257125442e-08,
+       "R": 136
+      }
+     },
+     "0.45": {
+      "count": 26,
+      "share": 0.0065,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.9611613513818402e-07,
+       "R": 26
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.60825,
+     "yue_wang": 0.21825,
+     "withheld": 0.1735
+    },
+    "interval_method_counts": {
+     "analytic_hr": 3306
+    }
+   }
+  },
+  "n45-phi0.2": {
+   "trend": {
+    "n": 45,
+    "true_phi": 0.2,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.392,
+     "se": 0.007719067301170524,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.269,
+     "se": 0.007011401429101032,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.6862244897959183,
+     "se": 0.011718434571271872,
+     "R": 1568
+    },
+    "positive_reject_unconditional": {
+     "value": 0.269,
+     "se": 0.007011401429101032,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.6862244897959183,
+     "se": 0.011718434571271872,
+     "R": 1568
+    },
+    "interval_shown_rate": {
+     "value": 0.393,
+     "se": 0.015445096309184997,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.9033078880407125,
+     "se": 0.014907923286046471,
+     "R": 393
+    },
+    "interval_mean_width_sd_per_decade": 0.4704042758583836,
+    "phi_hat_mean": 0.13199538923904186,
+    "phi_hat_sd": 0.141295202778546,
+    "share_skew_flag": 0.022,
+    "buckets": {
+     "0.0": {
+      "count": 721,
+      "share": 0.18025,
+      "released": 702,
+      "reject_given_bucket": {
+       "value": 0.6782246879334258,
+       "se": 0.017397847707968688,
+       "R": 721
+      }
+     },
+     "0.1": {
+      "count": 888,
+      "share": 0.222,
+      "released": 866,
+      "reject_given_bucket": {
+       "value": 0.661036036036036,
+       "se": 0.015884840182786172,
+       "R": 888
+      }
+     },
+     "0.2": {
+      "count": 1117,
+      "share": 0.27925,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.992081462322006e-08,
+       "R": 1117
+      }
+     },
+     "0.3": {
+      "count": 810,
+      "share": 0.2025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5136418446315324e-08,
+       "R": 810
+      }
+     },
+     "0.45": {
+      "count": 420,
+      "share": 0.105,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.879500364742666e-08,
+       "R": 420
+      }
+     },
+     "0.6": {
+      "count": 43,
+      "share": 0.01075,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.5249857033260466e-07,
+       "R": 43
+      }
+     },
+     "None": {
+      "count": 1,
+      "share": 0.00025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1e-06,
+       "R": 1
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.1755,
+     "yue_wang": 0.2165,
+     "withheld": 0.608
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1568
+    }
+   },
+   "null": {
+    "n": 45,
+    "true_phi": 0.2,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.3885,
+     "se": 0.007706616475470931,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.039,
+     "se": 0.0030610047370103824,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.10038610038610038,
+     "se": 0.00762323597061567,
+     "R": 1554
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0225,
+     "se": 0.002344874730129522,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.05791505791505792,
+     "se": 0.005925367231002239,
+     "R": 1554
+    },
+    "interval_shown_rate": {
+     "value": 0.397,
+     "se": 0.01547226550961429,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8816120906801007,
+     "se": 0.0162142621741104,
+     "R": 397
+    },
+    "interval_mean_width_sd_per_decade": 0.4685411917307059,
+    "phi_hat_mean": 0.13312534309439433,
+    "phi_hat_sd": 0.14696359266423253,
+    "share_skew_flag": 0.0215,
+    "buckets": {
+     "0.0": {
+      "count": 740,
+      "share": 0.185,
+      "released": 723,
+      "reject_given_bucket": {
+       "value": 0.10135135135135136,
+       "se": 0.011094145944170242,
+       "R": 740
+      }
+     },
+     "0.1": {
+      "count": 849,
+      "share": 0.21225,
+      "released": 831,
+      "reject_given_bucket": {
+       "value": 0.09540636042402827,
+       "se": 0.010082345695170556,
+       "R": 849
+      }
+     },
+     "0.2": {
+      "count": 1070,
+      "share": 0.2675,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.057089202578715e-08,
+       "R": 1070
+      }
+     },
+     "0.3": {
+      "count": 806,
+      "share": 0.2015,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.522349768381734e-08,
+       "R": 806
+      }
+     },
+     "0.45": {
+      "count": 494,
+      "share": 0.1235,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 4.499212706658476e-08,
+       "R": 494
+      }
+     },
+     "0.6": {
+      "count": 39,
+      "share": 0.00975,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.6012815380508712e-07,
+       "R": 39
+      }
+     },
+     "None": {
+      "count": 2,
+      "share": 0.0005,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.071067811865475e-07,
+       "R": 2
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.18075,
+     "yue_wang": 0.20775,
+     "withheld": 0.6115
+    },
+    "interval_method_counts": {
+     "analytic_hr": 1554
+    }
+   }
+  },
+  "n45-phi0.3": {
+   "trend": {
+    "n": 45,
+    "true_phi": 0.3,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.1775,
+     "se": 0.006041393671993243,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.11875,
+     "se": 0.005114890944585231,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.6690140845070423,
+     "se": 0.017660102213597553,
+     "R": 710
+    },
+    "positive_reject_unconditional": {
+     "value": 0.1185,
+     "se": 0.005110228713081245,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.6676056338028169,
+     "se": 0.017678998104202308,
+     "R": 710
+    },
+    "interval_shown_rate": {
+     "value": 0.161,
+     "se": 0.011622349160131096,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8509316770186336,
+     "se": 0.02806900968596623,
+     "R": 161
+    },
+    "interval_mean_width_sd_per_decade": 0.44628409987361695,
+    "phi_hat_mean": 0.2243999384336427,
+    "phi_hat_sd": 0.13813369334474832,
+    "share_skew_flag": 0.02225,
+    "buckets": {
+     "0.0": {
+      "count": 218,
+      "share": 0.0545,
+      "released": 213,
+      "reject_given_bucket": {
+       "value": 0.7064220183486238,
+       "se": 0.030843638686692453,
+       "R": 218
+      }
+     },
+     "0.1": {
+      "count": 506,
+      "share": 0.1265,
+      "released": 497,
+      "reject_given_bucket": {
+       "value": 0.6343873517786561,
+       "se": 0.021409799743647356,
+       "R": 506
+      }
+     },
+     "0.2": {
+      "count": 972,
+      "share": 0.243,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.207501495497921e-08,
+       "R": 972
+      }
+     },
+     "0.3": {
+      "count": 1099,
+      "share": 0.27475,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.016484887033808e-08,
+       "R": 1099
+      }
+     },
+     "0.45": {
+      "count": 1014,
+      "share": 0.2535,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.1403714651066385e-08,
+       "R": 1014
+      }
+     },
+     "0.6": {
+      "count": 188,
+      "share": 0.047,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.293249574894728e-08,
+       "R": 188
+      }
+     },
+     "None": {
+      "count": 3,
+      "share": 0.00075,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.773502691896258e-07,
+       "R": 3
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.05325,
+     "yue_wang": 0.12425,
+     "withheld": 0.8225
+    },
+    "interval_method_counts": {
+     "analytic_hr": 710
+    }
+   },
+   "null": {
+    "n": 45,
+    "true_phi": 0.3,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.178,
+     "se": 0.006048057539408831,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.02475,
+     "se": 0.002456493308559989,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.13904494382022473,
+     "se": 0.012966651663506586,
+     "R": 712
+    },
+    "positive_reject_unconditional": {
+     "value": 0.01075,
+     "se": 0.0016305242638489008,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.060393258426966294,
+     "se": 0.008927447321554418,
+     "R": 712
+    },
+    "interval_shown_rate": {
+     "value": 0.181,
+     "se": 0.0121753439376471,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.8729281767955801,
+     "se": 0.02475566512003858,
+     "R": 181
+    },
+    "interval_mean_width_sd_per_decade": 0.453627982069435,
+    "phi_hat_mean": 0.2244743376575857,
+    "phi_hat_sd": 0.13975278053950202,
+    "share_skew_flag": 0.02775,
+    "buckets": {
+     "0.0": {
+      "count": 251,
+      "share": 0.06275,
+      "released": 246,
+      "reject_given_bucket": {
+       "value": 0.16733067729083664,
+       "se": 0.023560646651363044,
+       "R": 251
+      }
+     },
+     "0.1": {
+      "count": 482,
+      "share": 0.1205,
+      "released": 466,
+      "reject_given_bucket": {
+       "value": 0.11825726141078838,
+       "se": 0.01470826125826952,
+       "R": 482
+      }
+     },
+     "0.2": {
+      "count": 932,
+      "share": 0.233,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.275608910402092e-08,
+       "R": 932
+      }
+     },
+     "0.3": {
+      "count": 1147,
+      "share": 0.28675,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.952692976787463e-08,
+       "R": 1147
+      }
+     },
+     "0.45": {
+      "count": 985,
+      "share": 0.24625,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.1862649393858306e-08,
+       "R": 985
+      }
+     },
+     "0.6": {
+      "count": 195,
+      "share": 0.04875,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 7.161148740394329e-08,
+       "R": 195
+      }
+     },
+     "None": {
+      "count": 8,
+      "share": 0.002,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.5355339059327374e-07,
+       "R": 8
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.0615,
+     "yue_wang": 0.1165,
+     "withheld": 0.822
+    },
+    "interval_method_counts": {
+     "analytic_hr": 712
+    }
+   }
+  },
+  "n45-phi0.45": {
+   "null": {
+    "n": 45,
+    "true_phi": 0.45,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.038,
+     "se": 0.0030230779017418655,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.0085,
+     "se": 0.0014515293658758682,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.2236842105263158,
+     "se": 0.03379987391828075,
+     "R": 152
+    },
+    "positive_reject_unconditional": {
+     "value": 0.00375,
+     "se": 0.0009664286704149458,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.09868421052631579,
+     "se": 0.024190259718682768,
+     "R": 152
+    },
+    "interval_shown_rate": {
+     "value": 0.036,
+     "se": 0.005891010100144117,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.7222222222222222,
+     "se": 0.07465053470646806,
+     "R": 36
+    },
+    "interval_mean_width_sd_per_decade": 0.39634883749016075,
+    "phi_hat_mean": 0.35451716220185336,
+    "phi_hat_sd": 0.13739041349204686,
+    "share_skew_flag": 0.02675,
+    "buckets": {
+     "0.0": {
+      "count": 37,
+      "share": 0.00925,
+      "released": 36,
+      "reject_given_bucket": {
+       "value": 0.2972972972972973,
+       "se": 0.07514159864153769,
+       "R": 37
+      }
+     },
+     "0.1": {
+      "count": 119,
+      "share": 0.02975,
+      "released": 116,
+      "reject_given_bucket": {
+       "value": 0.19327731092436976,
+       "se": 0.03619754297876141,
+       "R": 119
+      }
+     },
+     "0.2": {
+      "count": 380,
+      "share": 0.095,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.1298917604257706e-08,
+       "R": 380
+      }
+     },
+     "0.3": {
+      "count": 800,
+      "share": 0.2,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.535533905932738e-08,
+       "R": 800
+      }
+     },
+     "0.45": {
+      "count": 1641,
+      "share": 0.41025,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.468571493056562e-08,
+       "R": 1641
+      }
+     },
+     "0.6": {
+      "count": 912,
+      "share": 0.228,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.31133089266261e-08,
+       "R": 912
+      }
+     },
+     "None": {
+      "count": 111,
+      "share": 0.02775,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 9.491579957524989e-08,
+       "R": 111
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.009,
+     "yue_wang": 0.029,
+     "withheld": 0.962
+    },
+    "interval_method_counts": {
+     "analytic_hr": 152
+    }
+   },
+   "trend": {
+    "n": 45,
+    "true_phi": 0.45,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.03825,
+     "se": 0.0030326118075019097,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.02675,
+     "se": 0.00255119763542537,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.6993464052287581,
+     "se": 0.03707094511934711,
+     "R": 153
+    },
+    "positive_reject_unconditional": {
+     "value": 0.02675,
+     "se": 0.00255119763542537,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.6993464052287581,
+     "se": 0.03707094511934711,
+     "R": 153
+    },
+    "interval_shown_rate": {
+     "value": 0.043,
+     "se": 0.006414904519944158,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.6744186046511628,
+     "se": 0.07145955928234195,
+     "R": 43
+    },
+    "interval_mean_width_sd_per_decade": 0.3982689899254045,
+    "phi_hat_mean": 0.35288436524281996,
+    "phi_hat_sd": 0.1364299782882918,
+    "share_skew_flag": 0.02675,
+    "buckets": {
+     "0.0": {
+      "count": 36,
+      "share": 0.009,
+      "released": 35,
+      "reject_given_bucket": {
+       "value": 0.6666666666666666,
+       "se": 0.07856742013183862,
+       "R": 36
+      }
+     },
+     "0.1": {
+      "count": 121,
+      "share": 0.03025,
+      "released": 118,
+      "reject_given_bucket": {
+       "value": 0.6859504132231405,
+       "se": 0.042194203101724934,
+       "R": 121
+      }
+     },
+     "0.2": {
+      "count": 366,
+      "share": 0.0915,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.227083734893167e-08,
+       "R": 366
+      }
+     },
+     "0.3": {
+      "count": 813,
+      "share": 0.20325,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.507153119159472e-08,
+       "R": 813
+      }
+     },
+     "0.45": {
+      "count": 1660,
+      "share": 0.415,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.4544034683690798e-08,
+       "R": 1660
+      }
+     },
+     "0.6": {
+      "count": 901,
+      "share": 0.22525,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.3314830232638475e-08,
+       "R": 901
+      }
+     },
+     "None": {
+      "count": 103,
+      "share": 0.02575,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 9.853292781642932e-08,
+       "R": 103
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.00875,
+     "yue_wang": 0.0295,
+     "withheld": 0.96175
+    },
+    "interval_method_counts": {
+     "analytic_hr": 153
+    }
+   }
+  },
+  "n45-phi0.6": {
+   "null": {
+    "n": 45,
+    "true_phi": 0.6,
+    "trend_sd_per_decade": 0.0,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.0055,
+     "se": 0.0011693748329770057,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.003,
+     "se": 0.000864725389936019,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.5454545454545454,
+     "se": 0.10615894693111677,
+     "R": 22
+    },
+    "positive_reject_unconditional": {
+     "value": 0.00175,
+     "se": 0.0006608588162383854,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.3181818181818182,
+     "se": 0.09930260198923899,
+     "R": 22
+    },
+    "interval_shown_rate": {
+     "value": 0.006,
+     "se": 0.002442130217658346,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.5,
+     "se": 0.2041241452319315,
+     "R": 6
+    },
+    "interval_mean_width_sd_per_decade": 0.3513347500358839,
+    "phi_hat_mean": 0.48291657804054494,
+    "phi_hat_sd": 0.13266379457664418,
+    "share_skew_flag": 0.02825,
+    "buckets": {
+     "0.0": {
+      "count": 3,
+      "share": 0.00075,
+      "released": 3,
+      "reject_given_bucket": {
+       "value": 1.0,
+       "se": 5.773502691896258e-07,
+       "R": 3
+      }
+     },
+     "0.1": {
+      "count": 20,
+      "share": 0.005,
+      "released": 19,
+      "reject_given_bucket": {
+       "value": 0.45,
+       "se": 0.11124297730643495,
+       "R": 20
+      }
+     },
+     "0.2": {
+      "count": 77,
+      "share": 0.01925,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.1396057645963795e-07,
+       "R": 77
+      }
+     },
+     "0.3": {
+      "count": 287,
+      "share": 0.07175,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 5.902813361009553e-08,
+       "R": 287
+      }
+     },
+     "0.45": {
+      "count": 1130,
+      "share": 0.2825,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.974820586543648e-08,
+       "R": 1130
+      }
+     },
+     "0.6": {
+      "count": 1697,
+      "share": 0.42425,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.427499107135649e-08,
+       "R": 1697
+      }
+     },
+     "None": {
+      "count": 786,
+      "share": 0.1965,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.566881875032108e-08,
+       "R": 786
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.00075,
+     "yue_wang": 0.00475,
+     "withheld": 0.9945
+    },
+    "interval_method_counts": {
+     "analytic_hr": 22
+    }
+   },
+   "trend": {
+    "n": 45,
+    "true_phi": 0.6,
+    "trend_sd_per_decade": 0.3,
+    "R": 4000,
+    "R_cov": 1000,
+    "release_rate": {
+     "value": 0.0075,
+     "se": 0.0013641618305758301,
+     "R": 4000
+    },
+    "reject_unconditional": {
+     "value": 0.0055,
+     "se": 0.0011693748329770057,
+     "R": 4000
+    },
+    "reject_given_release": {
+     "value": 0.7333333333333333,
+     "se": 0.08073734277593311,
+     "R": 30
+    },
+    "positive_reject_unconditional": {
+     "value": 0.0055,
+     "se": 0.0011693748329770057,
+     "R": 4000
+    },
+    "positive_reject_given_release": {
+     "value": 0.7333333333333333,
+     "se": 0.08073734277593311,
+     "R": 30
+    },
+    "interval_shown_rate": {
+     "value": 0.008,
+     "se": 0.0028170906978654416,
+     "R": 1000
+    },
+    "interval_coverage_given_shown": {
+     "value": 0.625,
+     "se": 0.1711632992203644,
+     "R": 8
+    },
+    "interval_mean_width_sd_per_decade": 0.37207496961838643,
+    "phi_hat_mean": 0.48183526093690465,
+    "phi_hat_sd": 0.13321977476012364,
+    "share_skew_flag": 0.03675,
+    "buckets": {
+     "0.0": {
+      "count": 7,
+      "share": 0.00175,
+      "released": 7,
+      "reject_given_bucket": {
+       "value": 0.8571428571428571,
+       "se": 0.13226001425322165,
+       "R": 7
+      }
+     },
+     "0.1": {
+      "count": 23,
+      "share": 0.00575,
+      "released": 23,
+      "reject_given_bucket": {
+       "value": 0.6956521739130435,
+       "se": 0.09594387554215139,
+       "R": 23
+      }
+     },
+     "0.2": {
+      "count": 86,
+      "share": 0.0215,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 1.0783277320343842e-07,
+       "R": 86
+      }
+     },
+     "0.3": {
+      "count": 249,
+      "share": 0.06225,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 6.337242505244779e-08,
+       "R": 249
+      }
+     },
+     "0.45": {
+      "count": 1142,
+      "share": 0.2855,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.959149780860911e-08,
+       "R": 1142
+      }
+     },
+     "0.6": {
+      "count": 1733,
+      "share": 0.43325,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 2.402153294460317e-08,
+       "R": 1733
+      }
+     },
+     "None": {
+      "count": 760,
+      "share": 0.19,
+      "released": 0,
+      "reject_given_bucket": {
+       "value": 0.0,
+       "se": 3.6273812505500585e-08,
+       "R": 760
+      }
+     }
+    },
+    "selected_share": {
+     "mk_independent": 0.00175,
+     "yue_wang": 0.00575,
+     "withheld": 0.9925
+    },
+    "interval_method_counts": {
+     "analytic_hr": 30
+    }
+   }
+  }
+ }
+}

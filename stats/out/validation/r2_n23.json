@@ -1,0 +1,378 @@
+{
+ "run": {
+  "kind": "R2_n23_trend_interval",
+  "generated_at": "2026-11-14T11:44:39-05:00",
+  "code_version": "1.1.0",
+  "seeds": [
+   301,
+   302,
+   303,
+   304,
+   305,
+   306
+  ],
+  "elapsed_seconds": 49.3
+ },
+ "scenarios": [
+  {
+   "id": "R-trend-n23-phi0.0",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.124,
+     "se": 0.005211141909409108,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.12575,
+     "se": 0.005242540831982141
+    },
+    "regional_power_ols": {
+     "value": 0.158,
+     "se": 0.009417572227844428,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0014593450870744266,
+     "se": 0.005207598288395349
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.814,
+     "se": 0.012304633273690038,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0178406352443832
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.954,
+     "se": 0.006624499981130654
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.010415196576790698
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n23-phi0.1",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.155,
+     "se": 0.005722215480039178,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.15775,
+     "se": 0.005763352702637589
+    },
+    "regional_power_ols": {
+     "value": 0.17266666666666666,
+     "se": 0.009758855427726105,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0038348639784148066,
+     "se": 0.005630903576717642
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.842,
+     "se": 0.011534123287012326,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0678795092930469
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.941,
+     "se": 0.007451107300260817
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.011261807153435284
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n23-phi0.2",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.175,
+     "se": 0.0060078074203489575,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.1775,
+     "se": 0.006041393671993243
+    },
+    "regional_power_ols": {
+     "value": 0.21,
+     "se": 0.010516653460107925,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0004446583059292273,
+     "se": 0.006070308254060141
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.808,
+     "se": 0.01245536029185828,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1327682585273717
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.88,
+     "se": 0.010276186062932104
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.012140616508120282
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n23-phi0.3",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.20725,
+     "se": 0.006408928098754112,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.21575,
+     "se": 0.006503882254084863
+    },
+    "regional_power_ols": {
+     "value": 0.24133333333333334,
+     "se": 0.011048123688529062,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.001097691349504262,
+     "se": 0.006772522753531919
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.813,
+     "se": 0.012330085157856779,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1574087311029717
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.89,
+     "se": 0.009894442884771228
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.013545045507063837
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n23-phi0.45",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.23975,
+     "se": 0.00675036920286587,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.2635,
+     "se": 0.0069654100740731695
+    },
+    "regional_power_ols": {
+     "value": 0.2826666666666667,
+     "se": 0.011626585116941325,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.007969585809055237,
+     "se": 0.007606390849098976
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.755,
+     "se": 0.013600551459407815,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.2301715792052106
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.82,
+     "se": 0.012149074038789953
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.015212781698197952
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n23-phi0.6",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.2935,
+     "se": 0.007199960937394036,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.3385,
+     "se": 0.007481940757584225
+    },
+    "regional_power_ols": {
+     "value": 0.382,
+     "se": 0.012545277996122685,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.00046906618132734845,
+     "se": 0.008900132626443303
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.702,
+     "se": 0.01446360950800318,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.225102960272707
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.771,
+     "se": 0.013287550564344055
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.017800265252886607
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  }
+ ]
+}

@@ -338,6 +338,335 @@
    "build_date_utc": "2026-11-14"
   },
   {
+   "id": "aod_myd08",
+   "name": "Aerosol optical depth (haze)",
+   "definition": "How much haze (dust, smoke and pollution particles) blocks sunlight in the whole air column above a place, at green light (550 nm). Near 0.05 is very clean air; above 0.5 is thick haze.",
+   "units": "unitless",
+   "product": "MODIS Aqua MYD08_M3 v6.1",
+   "version": "6.1",
+   "short_name": "MYD08_M3",
+   "concept_id": "C1443775657-LAADS",
+   "doi": "https://doi.org/10.5067/MODIS/MYD08_M3.061",
+   "agency": "NASA LAADS DAAC",
+   "kind": "satellite retrieval",
+   "source_variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean",
+   "period": {
+    "first_month": "2003-01",
+    "last_month": "2026-10",
+    "n_months_axis": 286,
+    "t0": [
+     2003,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "1 degree (native)",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.002,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "Daytime, cloud-free views only: monthly means use only the days and places where the satellite could see the surface, and bright snow, ice and desert surfaces or persistent cloud give gaps. Aqua's afternoon overpass time has drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), so a small part of any change after 2021 can come from the changing view time and not from the air. Dark Target and Deep Blue retrievals are merged by NASA into one 550 nm value. AOD describes haze through the whole air column above a place, not the particles you breathe at ground level, so it is not the same as ground-level PM2.5.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     2,
+     11
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "aod_myd08/global_series.json",
+    "tile_means": "aod_myd08/tile_means.json"
+   },
+   "limits": "Clear-sky only; AOD is a whole-column haze measure, not ground-level PM2.5; Aqua overpass drifts later after mid-2021, so months after Dec 2021 are flagged.",
+   "quality_end": "2021-12",
+   "quality_label": "Aqua overpass drift: view time moves later",
+   "quality_reason": "Aqua's overpass time was steady until mid-2021 and then drifted later (NSIDC data announcement, 28 Oct 2021). A different view time and sun angle can shift the retrieved haze, so months after this date are flagged and left out by default. Our own check of Aqua view time (from the land surface temperature product, which shares the satellite) found no shift through 2021 and +0.05 h in 2022, growing to +0.9 h in 2025; the view time of this haze product itself is not in the monthly file.",
+   "build_date_utc": "2026-11-14"
+  },
+  {
    "id": "tws_grace",
    "name": "Terrestrial water storage anomaly",
    "definition": "How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimetres). Snow, ice, lakes, soil moisture and groundwater all count together.",
@@ -655,7 +984,10 @@
    "concept_id": "C2565794044-LPCLOUD",
    "doi": "https://doi.org/10.5067/MODIS/MYD11C3.061",
    "agency": "NASA LP DAAC",
-   "kind": "satellite observation", "quality_end": "2021-12", "quality_label": "Aqua overpass drift: reads too cool", "quality_reason": "Aqua's overpass time was steady until 2021 and then drifted later, and a later daytime pass reads cooler. Months after this date are biased low, so they are left out by default and no verdict is given if you include them.",
+   "kind": "satellite observation",
+   "quality_end": "2021-12",
+   "quality_label": "Aqua overpass drift: reads too cool",
+   "quality_reason": "Aqua's overpass time was steady until 2021 and then drifted later, and a later daytime pass reads cooler. Months after this date are biased low, so they are left out by default and no verdict is given if you include them.",
    "source_variable": "LST_Day_CMG (K x 0.02 minus 273.15)",
    "period": {
     "first_month": "2003-01",

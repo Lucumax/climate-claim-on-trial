@@ -6,7 +6,8 @@ IMERG_CAV = ("Precipitation only (rain and snow water), not a measure of soil we
              "and weaker over high latitudes, ice and snow, and steep terrain. The record joins the older TRMM-era and the GPM-era satellite constellations, so small steps are possible. Ocean cells are included.")
 AOD_CAV = ("Daytime, cloud-free views only: monthly means use only the days and places where the satellite could see the surface, and bright snow, ice and desert surfaces or persistent cloud give gaps. "
            "Aqua's afternoon overpass time has drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), so a small part of any change after 2021 can come from the changing view time and not from the air. "
-           "Dark Target and Deep Blue retrievals are merged by NASA into one 550 nm value.")
+           "Dark Target and Deep Blue retrievals are merged by NASA into one 550 nm value. "
+           "AOD describes haze through the whole air column above a place, not the particles you breathe at ground level, so it is not the same as ground-level PM2.5.")
 TWS_CAV = ("Total water storage anomaly, not groundwater alone: it adds up snow, ice, surface water, soil moisture and groundwater, and shows change relative to the 2004-2009 average, not an absolute amount. "
            "The satellites measure gravity over areas of roughly 300 km (about 3 degrees), so small regions are blurred and a 1-degree cell is not an independent measurement. "
            "There is a gap between GRACE (ended Jun 2017) and GRACE-FO (began Jun 2018) and a few single missing months; those are left empty, not filled. Solid-earth effects (glacial rebound) are removed by NASA's model, not measured.")
@@ -33,9 +34,12 @@ PRODUCTS = {
     definition="How much rain and snow water reaches the ground, shown as the average amount per day over each month (millimetres of water per day).",
     caveats=IMERG_CAV, source_var="/Grid/precipitation (mm/hr x 24)", kind="satellite observation (multi-satellite, gauge-calibrated)", native="0.1 degree, block-averaged to 1 degree",
     cid="C2723754851-GES_DISC", agency="NASA GES DISC"),
- "aod_myd08": dict(name="Aerosol optical depth (haze)", short="MODIS Aqua MYD08_M3 v6.1", units="1 (unitless)", scale=0.002, offset=0.0,
+ "aod_myd08": dict(name="Aerosol optical depth (haze)", short="MODIS Aqua MYD08_M3 v6.1", units="unitless", scale=0.002, offset=0.0,
     definition="How much haze (dust, smoke and pollution particles) blocks sunlight in the whole air column above a place, at green light (550 nm). Near 0.05 is very clean air; above 0.5 is thick haze.",
-    caveats=AOD_CAV, source_var="AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean", kind="satellite observation", native="1 degree (native)", cid="C1443775657-LAADS", agency="NASA LAADS DAAC"),
+    caveats=AOD_CAV, source_var="AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean", kind="satellite retrieval",
+    limits="Clear-sky only; AOD is a whole-column haze measure, not ground-level PM2.5; Aqua overpass drifts later after mid-2021, so months after Dec 2021 are flagged.",
+    quality_end="2021-12", quality_label="Aqua overpass drift: view time moves later",
+    quality_reason="Aqua's overpass time was steady until mid-2021 and then drifted later (NSIDC data announcement, 28 Oct 2021). A different view time and sun angle can shift the retrieved haze, so months after this date are flagged and left out by default. Our own check of Aqua view time (from the land surface temperature product, which shares the satellite) found no shift through 2021 and +0.05 h in 2022, growing to +0.9 h in 2025; the view time of this haze product itself is not in the monthly file.", native="1 degree (native)", cid="C1443775657-LAADS", agency="NASA LAADS DAAC"),
  "tws_grace": dict(name="Terrestrial water storage anomaly", short="GRACE and GRACE-FO JPL mascons RL06.3 v04 (CRI)", units="cm (equivalent water height)", scale=0.1, offset=0.0,
     definition="How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimetres). Snow, ice, lakes, soil moisture and groundwater all count together.",
     caveats=TWS_CAV, source_var="lwe_thickness", kind="satellite observation (gravity)", native="0.5 degree grid (effective resolution about 3 degrees), block-averaged to 1 degree", cid="C3195527175-POCLOUD", agency="NASA PO.DAAC"),

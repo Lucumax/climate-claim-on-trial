@@ -39,6 +39,7 @@ entry = {"id": pid, "name": P["name"], "definition": P["definition"], "units": P
          "period": {"first_month": valid_months[0], "last_month": valid_months[-1], "n_months_axis": len(times), "t0": [times[0][0], times[0][1]], "months_all_missing": qc["months_all_missing"]},
          "native_resolution": P["native"], "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
          "scale": P["scale"], "offset": P["offset"], "nodata_int16": L.SENT, "caveats": P["caveats"], "tiles": tiles, "files": {"series": f"{pid}/global_series.json", "tile_means": f"{pid}/tile_means.json"},
+         **{k: P[k] for k in ("limits", "quality_end", "quality_label", "quality_reason") if k in P},
          "build_date_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")}
 L.update_manifest(entry)
 print(pid, "tiles", len(tiles), "tile bytes", nbytes, "web dir bytes", L.dir_bytes(L.WEB / pid), "period", valid_months[0], valid_months[-1], "missing", qc["months_all_missing"][:10])

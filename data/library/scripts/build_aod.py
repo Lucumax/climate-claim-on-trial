@@ -31,7 +31,7 @@ def one(g):
 
 cube = np.full((len(times), 180, 360), np.nan, np.float32); prov = []; idx = {t: i for i, t in enumerate(times)}
 t0 = dt.datetime.now(dt.timezone.utc); dec0 = None
-with ThreadPoolExecutor(12) as ex:
+with ThreadPoolExecutor(4) as ex:
     for k, (g, res) in enumerate(zip(gl, ex.map(one, gl))):
         v, h, dec, at = res
         if dec0 is None: dec0 = dict(decode=dec, attrs={a: at[a] for a in ("units", "scale_factor", "add_offset", "_FillValue", "valid_range") if a in at}); print("decode", dec0, flush=True)

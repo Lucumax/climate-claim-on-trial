@@ -43,7 +43,7 @@ Reason: the brief says one variable can trend one way in one region and the oppo
 | C-E2 | Tropospheric nitrogen dioxide over the Indo-Gangetic Plain (northern India) has risen | same product | 22-30N, 75-88E | Annual mean, 2005-2025 |
 Same regional test, ladder, gates and validation rules as the other cases (method addendum 2, adaptive-procedure gate). OMI row-anomaly data handling follows the product's own flags; document it. If time runs out, this pair is dropped and the drop is disclosed.
 
-## Addendum 4, Sat Nov 14 15:45 ET (orchestrator; AFTER results; disclosed as a post-result change)
+## Addendum 4, Sat Nov 14 14:52 ET (orchestrator; header time corrected at 15:01 ET from a mistyped "15:45", commit ca0dfc2 is 14:52; AFTER results; disclosed as a post-result change)
 What changed: the validation gate, not the registered claims, bars or candidate tests. Rules R3-1 to R3-8 were written in event_record/STATS_LOG.md at 13:40 ET, after the round-2 bundles (12:20 ET) had been seen and before any round-3 simulation was run. Trigger: the round-2 outside review showed that the old gate (a) rounded negative persistence up to zero, (b) checked skewness with one scenario (n 25, phi 0.3) that measured persistence rather than skew, and (c) let missing years pass the gap check.
 Effect on verdicts (round 2 -> round 3; commit 3152f39):
 - C-C Alaska: supported -> supported (unchanged numbers).

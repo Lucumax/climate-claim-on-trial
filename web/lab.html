@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Visual modules lab</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/viz.css">
+<script src="js/theme.js"></script>
+</head>
+<body class="lab">
+<header class="lab-head">
+  <div>
+    <h1>Visual modules lab</h1>
+    <p>Five views of the same case, each answering one question. Descriptive only: no trend, test or verdict is computed here. Not linked from the site.</p>
+  </div>
+  <div class="lab-tools">
+    <label for="case">Case</label>
+    <select id="case" aria-label="Choose a registered case"></select>
+    <button id="theme-toggle" type="button" class="viz-btn" aria-pressed="false">Dark mode</button>
+  </div>
+</header>
+<main class="lab-main" id="main">
+  <section class="lab-section" aria-labelledby="h-globe">
+    <h2 id="h-globe">Globe</h2>
+    <p class="lab-q"><b>Where is it changing?</b> The real cells of the case, year by year, on the planet.</p>
+    <div id="m-globe"></div>
+  </section>
+  <section class="lab-section" aria-labelledby="h-map">
+    <h2 id="h-map">Anomaly map</h2>
+    <p class="lab-q"><b>Where, and when?</b> The same cells on a flat map with a fixed colour range, so years can be compared by eye.</p>
+    <div id="m-map"></div>
+  </section>
+  <section class="lab-section" aria-labelledby="h-spiral">
+    <h2 id="h-spiral">Spiral</h2>
+    <p class="lab-q"><b>How did each season change over time?</b> Every month of the region, loop by loop, around the baseline ring.</p>
+    <div id="m-spiral"></div>
+  </section>
+  <section class="lab-section" aria-labelledby="h-dist">
+    <h2 id="h-dist">Distribution</h2>
+    <p class="lab-q"><b>Is the whole distribution moving, not just the average?</b> All cells and years in each period, side by side.</p>
+    <div id="m-dist"></div>
+  </section>
+  <section class="lab-section" aria-labelledby="h-stripes">
+    <h2 id="h-stripes">Stripes</h2>
+    <p class="lab-q"><b>What does the regional average look like, year after year?</b> One stripe per year; optional header strip.</p>
+    <div id="m-stripes"></div>
+  </section>
+</main>
+<script type="module" src="js/viz/lab.js"></script>
+</body>
+</html>

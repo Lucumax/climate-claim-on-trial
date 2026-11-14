@@ -1,0 +1,128 @@
+/* Visual modules (web/js/viz/*). Own tokens, same structure as tokens.css: one light set, the same dark set twice
+   (system setting and manual toggle). Every other colour comes from the app tokens (--ink, --surface, --line, --accent ...),
+   with fallbacks so a module also works on a bare page.
+   Anomaly palette (diverging, symmetric about zero, one neutral midpoint, two hues, CVD-safe blue/orange family):
+     cool = below the baseline for temperature, ABOVE it for rainfall (blue = water); warm = the other side.
+     Red is never used: it stays reserved for errors and simulated false alarms.
+   After any colour change run the contrast check described in event_record/WEB_LOG.md (Sonnet G). */
+
+:root {
+  --viz-mid: #ECE8DD;
+  --viz-cool-1: #C4D8E8; --viz-cool-2: #82AECF; --viz-cool-3: #3F7FB0; --viz-cool-4: #18507F;
+  --viz-warm-1: #F2D3AE; --viz-warm-2: #E4A266; --viz-warm-3: #B9601F; --viz-warm-4: #8C3C10;
+  --viz-stage: #DDE4E7;  --viz-atmos: #8FB1CC;
+  --viz-ring: #192D40;   --viz-grid: #B8B3A4;   --viz-ghost: #7C878D;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --viz-mid: #2A3944;
+    --viz-cool-1: #2F5878; --viz-cool-2: #4C86B3; --viz-cool-3: #7FB3E0; --viz-cool-4: #BEDDF7;
+    --viz-warm-1: #6A4128; --viz-warm-2: #A85F2E; --viz-warm-3: #E08A45; --viz-warm-4: #FAC590;
+    --viz-stage: #0A141D;  --viz-atmos: #3B6C93;
+    --viz-ring: #F4EDDE;   --viz-grid: #42525E;   --viz-ghost: #7E8E98;
+  }
+}
+
+:root[data-theme="dark"] {
+  --viz-mid: #2A3944;
+  --viz-cool-1: #2F5878; --viz-cool-2: #4C86B3; --viz-cool-3: #7FB3E0; --viz-cool-4: #BEDDF7;
+  --viz-warm-1: #6A4128; --viz-warm-2: #A85F2E; --viz-warm-3: #E08A45; --viz-warm-4: #FAC590;
+  --viz-stage: #0A141D;  --viz-atmos: #3B6C93;
+  --viz-ring: #F4EDDE;   --viz-grid: #42525E;   --viz-ghost: #7E8E98;
+}
+
+/* ------------------------------------------------------------------ shared frame */
+.viz { margin: 0; color: var(--ink, #192D40); font-family: var(--font-ui, Arial, Helvetica, sans-serif); font-size: 16px; line-height: 25px; min-width: 0; }
+.viz *, .viz *::before, .viz *::after { box-sizing: border-box; }
+.viz-num, .viz output, .viz svg text.num { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: "tnum" 1, "lnum" 1; }
+.viz-stage { position: relative; width: 100%; min-width: 0; overflow: hidden; border-radius: var(--radius, 4px); }
+.viz-stage--stage { background: var(--viz-stage); }
+.viz-stage canvas, .viz-stage svg { display: block; max-width: 100%; }
+.viz-stage:focus-visible, .viz button:focus-visible, .viz input:focus-visible, .viz summary:focus-visible { outline: 2px solid var(--focus, #7D5A15); outline-offset: 2px; }
+
+/* controls row: play, scrubber, year, extra toggle */
+.viz-controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3, 12px) var(--sp-4, 16px); padding: var(--sp-3, 12px) 0 0; min-width: 0; }
+.viz-btn { appearance: none; font: inherit; font-size: 14px; line-height: 20px; min-height: 40px; min-width: 88px; padding: 0 var(--sp-4, 16px); border-radius: var(--radius, 4px);
+  border: 1px solid var(--edge, #7D7868); background: var(--surface, #FFFDF7); color: var(--ink, #192D40); cursor: pointer; transition: background var(--t, 160ms), border-color var(--t, 160ms); }
+.viz-btn:hover { background: var(--surface-2, #EAE4D5); }
+.viz-btn--primary { background: var(--primary, #203345); color: var(--on-primary, #FCF8ED); border-color: var(--primary, #203345); }
+.viz-btn--primary:hover { background: var(--primary, #203345); filter: brightness(1.12); }
+.viz-btn[aria-pressed="true"] { border-color: var(--accent, #7D5A15); box-shadow: inset 0 0 0 1px var(--accent, #7D5A15); }
+.viz-scrub { flex: 1 1 220px; min-width: 0; display: flex; align-items: center; gap: var(--sp-3, 12px); }
+.viz-scrub input[type=range] { flex: 1; min-width: 0; height: 28px; margin: 0; accent-color: var(--accent, #7D5A15); }
+.viz-year { font-family: var(--font-serif, Georgia, serif); font-size: 20px; line-height: 26px; min-width: 4.2ch; text-align: right; }
+.viz-year--wide { min-width: 9ch; }
+
+/* legend: gradient bar, printed range, baseline */
+.viz-legend { display: grid; gap: 4px; max-width: 420px; margin-top: var(--sp-4, 16px); }
+.viz-legend__bar { height: 10px; border-radius: 2px; border: 1px solid var(--line, #C9C3B5); }
+.viz-legend__ticks { display: flex; justify-content: space-between; font-size: 12px; line-height: 16px; color: var(--muted, #56616A); }
+.viz-legend__cap { font-size: 12px; line-height: 16px; color: var(--muted, #56616A); }
+.viz-legend__zero { color: var(--ink, #192D40); }
+
+/* text */
+.viz-summary { margin: var(--sp-4, 16px) 0 0; max-width: 68ch; font-size: 14px; line-height: 20px; color: var(--ink, #192D40); }
+.viz-note { margin: var(--sp-2, 8px) 0 0; max-width: 68ch; font-size: 12px; line-height: 16px; color: var(--muted, #56616A); }
+.viz-readout { min-height: 20px; margin: var(--sp-3, 12px) 0 0; font-size: 14px; line-height: 20px; color: var(--ink, #192D40); }
+.viz-details { margin-top: var(--sp-3, 12px); font-size: 14px; line-height: 20px; }
+.viz-details summary { cursor: pointer; color: var(--ink, #192D40); text-decoration: underline; text-underline-offset: 3px; }
+.viz-details table { border-collapse: collapse; margin-top: var(--sp-2, 8px); font-variant-numeric: tabular-nums; }
+.viz-details th, .viz-details td { padding: 2px 12px 2px 0; text-align: right; font-weight: 400; border-bottom: 1px solid var(--line, #C9C3B5); }
+.viz-details th:first-child, .viz-details td:first-child { text-align: left; }
+.viz-details .viz-table-scroll { max-height: 240px; overflow: auto; max-width: 100%; }
+.viz-fallback { padding: var(--sp-5, 24px); font-size: 14px; line-height: 20px; color: var(--muted, #56616A); }
+
+/* svg text styles used by spiral, distribution, stripes */
+.viz svg text { fill: var(--ink, #192D40); font-family: var(--font-ui, Arial, Helvetica, sans-serif); }
+.viz svg .t-muted { fill: var(--muted, #56616A); }
+.viz svg .t-eyebrow { font-size: 12px; letter-spacing: .04em; }
+.viz svg .t-serif { font-family: var(--font-serif, Georgia, serif); }
+
+/* distribution: ridge reveal */
+.viz-ridge { transition: opacity 220ms ease, transform 220ms ease; }
+.viz-ridge[data-hidden="true"] { opacity: 0; transform: translateY(6px); }
+@media (prefers-reduced-motion: reduce) { .viz-ridge { transition: none; } .viz-btn { transition: none; } }
+
+/* ------------------------------------------------------------------ lab page */
+.lab { margin: 0; background: var(--bg, #F3EFE5); color: var(--ink, #192D40); font-family: var(--font-ui, Arial, Helvetica, sans-serif); font-size: 16px; line-height: 25px; }
+.lab a { color: inherit; }
+.lab-head { max-width: 1280px; margin: 0 auto; padding: var(--sp-6, 32px) var(--sp-5, 24px) var(--sp-4, 16px); display: flex; flex-wrap: wrap; gap: var(--sp-4, 16px) var(--sp-5, 24px); align-items: flex-end; justify-content: space-between; }
+.lab-head h1 { margin: 0; font-family: var(--font-serif, Georgia, serif); font-weight: 400; font-size: 36px; line-height: 42px; }
+.lab-head p { margin: var(--sp-2, 8px) 0 0; max-width: 56ch; color: var(--muted, #56616A); font-size: 14px; line-height: 20px; }
+.lab-tools { display: flex; flex-wrap: wrap; gap: var(--sp-3, 12px); align-items: center; }
+.lab-tools label { font-size: 14px; line-height: 20px; color: var(--muted, #56616A); }
+.lab-tools select { font: inherit; font-size: 14px; min-height: 40px; padding: 0 var(--sp-3, 12px); color: var(--ink, #192D40); background: var(--surface, #FFFDF7); border: 1px solid var(--edge, #7D7868); border-radius: var(--radius, 4px); }
+.lab-tools select:focus-visible, .lab-tools button:focus-visible { outline: 2px solid var(--focus, #7D5A15); outline-offset: 2px; }
+.lab-main { max-width: 1280px; margin: 0 auto; padding: 0 var(--sp-5, 24px) var(--sp-8, 64px); display: grid; gap: var(--sp-7, 48px); }
+.lab-section { background: var(--surface, #FFFDF7); border: 1px solid var(--line, #C9C3B5); border-radius: var(--radius, 4px); padding: var(--pad, 24px); min-width: 0; box-shadow: var(--shadow-1, none); }
+.lab-section h2 { margin: 0; font-family: var(--font-serif, Georgia, serif); font-weight: 400; font-size: 28px; line-height: 34px; }
+.lab-q { margin: var(--sp-1, 4px) 0 var(--sp-5, 24px); font-size: 16px; line-height: 25px; color: var(--muted, #56616A); max-width: 68ch; }
+.lab-q b { color: var(--ink, #192D40); font-weight: 400; }
+.lab-pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-5, 24px); }
+.lab-credit { margin-top: 0; font-size: 12px; line-height: 16px; color: var(--muted, #56616A); }
+@media (max-width: 700px) {
+  .lab-head { padding: var(--sp-5, 24px) var(--sp-4, 16px) var(--sp-3, 12px); }
+  .lab-head h1 { font-size: 32px; line-height: 38px; }
+  .lab-main { padding: 0 var(--sp-4, 16px) var(--sp-7, 48px); gap: var(--sp-6, 32px); }
+  .lab-section { padding: var(--sp-4, 16px); }
+  .lab-section h2 { font-size: 24px; line-height: 30px; }
+  .viz-btn { min-height: 44px; }
+  .viz-scrub { flex-basis: 100%; }
+}
+
+/* ------------------------------------------------------------------ anomaly map */
+.viz-map__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-2, 8px) var(--sp-5, 24px); margin-bottom: var(--sp-3, 12px); }
+.viz-map__year { font-family: var(--font-serif, Georgia, serif); font-size: 48px; line-height: 52px; font-variant-numeric: tabular-nums; }
+.viz-map__label { font-size: 12px; line-height: 16px; letter-spacing: .04em; color: var(--muted, #56616A); text-transform: none; }
+.viz-map__reg { text-align: right; }
+.viz-map__regv { font-family: var(--font-serif, Georgia, serif); font-size: 28px; line-height: 34px; font-variant-numeric: tabular-nums; }
+.viz-map__plot { position: relative; width: 100%; }
+.viz-map__plot canvas { position: absolute; }
+.viz-map__plot svg { position: absolute; left: 0; top: 0; pointer-events: none; }
+@media (max-width: 700px) { .viz-map__year { font-size: 36px; line-height: 40px; } .viz-map__regv { font-size: 24px; line-height: 30px; } }
+.lab-head > div { min-width: 0; }
+.lab-tools { max-width: 100%; min-width: 0; }
+.lab-tools select { max-width: 100%; min-width: 0; }
+@media (max-width: 700px) { .lab-tools { width: 100%; } .lab-tools select { flex: 1 1 100%; } .lab-tools label { flex: 0 0 100%; } }
+@media (max-width: 700px) { .viz-map__reg { text-align: left; } }

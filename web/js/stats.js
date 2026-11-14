@@ -13,7 +13,7 @@ export const detectiveVerdict = TT.detectiveVerdict;
 const DEFAULTS = {
   raw: { name: "Raw season means, Mann-Kendall", note: "Start. Each year's season average is treated as an independent draw, seasonal cycle left in." },
   anomaly: { name: "Seasonal cycle removed", note: "Each month is compared with its own average for that calendar month before the yearly mean is taken. If no months are missing this cannot change the ranking, so the p-value may stay exactly the same." },
-  autocorr: { name: "Autocorrelation correction (Hamed-Rao)", note: "Neighbouring years can resemble each other, which makes a trend look more certain than it is. The test is widened to allow for that. With a short record the widening can be small." },
+  autocorr: { name: "Autocorrelation correction (Hamed-Rao)", note: "Neighboring years can resemble each other, which makes a trend look more certain than it is. The test is widened to allow for that. With a short record the widening can be small." },
 };
 export function stepInfo(id, mk) {
   const fromModule = (TT.LADDER_STEPS || []).find(s => s.id === id);

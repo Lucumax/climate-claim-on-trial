@@ -28,7 +28,7 @@ export function planBox(b) {
   const dLat = b.n - b.s, dLon = b.e - b.w;
   if (dLat < MIN_DEG || dLon < MIN_DEG) {
     const c = { lat: +((b.s + b.n) / 2).toFixed(3), lon: +((b.w + b.e) / 2).toFixed(3) };
-    return { kind: "point", tiles: 1, point: c, message: `This box is under ${MIN_DEG} degrees on at least one side, which NASA POWER's area service does not accept. We will use the single grid cell at the centre of the box (${c.lat}, ${c.lon}) instead, so the result is for that one cell, not the whole box.` };
+    return { kind: "point", tiles: 1, point: c, message: `This box is under ${MIN_DEG} degrees on at least one side, which NASA POWER's area service does not accept. We will use the single grid cell at the center of the box (${c.lat}, ${c.lon}) instead, so the result is for that one cell, not the whole box.` };
   }
   const nTiles = Math.ceil(dLat / TILE_DEG - 1e-9) * Math.ceil(dLon / TILE_DEG - 1e-9);
   if (nTiles > MAX_TILES) {
@@ -38,7 +38,7 @@ export function planBox(b) {
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
     const alt = { s: clamp(cy - h, -90, 90 - 2 * h), n: 0, w: clamp(cx - w, -180, 180 - 2 * w), e: 0 };
     alt.s = +alt.s.toFixed(2); alt.n = +(alt.s + 2 * h).toFixed(2); alt.w = +alt.w.toFixed(2); alt.e = +(alt.w + 2 * w).toFixed(2);
-    return { kind: "too_big", tiles, alt, message: (world ? "A whole-world view is not supported. " : "This box is too large. ") + `NASA POWER live requests are limited to regional boxes: this one would need about ${tiles} requests of roughly 3 MB each, too slow for a browser. Live mode handles up to ${MAX_TILES} requests, roughly a ${MAX_LAT_DEG} by ${MAX_LON_DEG} degree box. Choose a smaller box, a preset region, or use the largest allowed box around the centre of your selection.` };
+    return { kind: "too_big", tiles, alt, message: (world ? "A whole-world view is not supported. " : "This box is too large. ") + `NASA POWER live requests are limited to regional boxes: this one would need about ${tiles} requests of roughly 3 MB each, too slow for a browser. Live mode handles up to ${MAX_TILES} requests, roughly a ${MAX_LAT_DEG} by ${MAX_LON_DEG} degree box. Choose a smaller box, a preset region, or use the largest allowed box around the center of your selection.` };
   }
   const tiles = []; for (const la of split(b.s, b.n)) for (const lo of split(b.w, b.e)) tiles.push({ s: la[0], n: la[1], w: lo[0], e: lo[1] });
   return { kind: "regional", tiles, message: tiles.length === 1 ? "One request to NASA POWER." : `${tiles.length} requests to NASA POWER, up to ${CONCURRENCY} at a time.` };

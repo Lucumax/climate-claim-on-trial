@@ -23,7 +23,7 @@ function plainReason(c) {
   if (hasNote(c)) return no2Reason(c);   // the registered NO2 pair has its own plain-English reason (views/no2.js)
   const rs = (c.verdict.withheld_reasons && c.verdict.withheld_reasons.length ? c.verdict.withheld_reasons : c.gate.reasons) || [];
   const why = rs.map(x => String(x).trim().replace(/\.$/, "")).filter(Boolean).join("; ");
-  return (why ? `Why: ${why}.` : "The checks that a verdict depends on did not pass for this record.") + " A ruling here would not be honest, so we withhold it.";
+  return (why ? `Why: ${why}.` : "The checks that a verdict depends on did not pass for this record.") + " The record did not pass our validation checks, so we withhold the ruling.";
 }
 // Calibration lines from the bundle (validation.display, or built from validation.adaptive); empty when the bundle has neither.
 const calLines = (c, withheld) => c.display ? [c.display.interval, withheld ? null : c.display.falsePositive].filter(Boolean) : [];
@@ -35,15 +35,15 @@ const scopeLine = c => [cap(c.region.name), c.season.toLowerCase(), range(c.peri
 export function caseList(b) {
   return { title: "Case files", node: h("div", {},
     h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "Case files"),
-      h("p", { class: "lede" }, "Claims we registered before looking at any data, then tested on NASA data. You cannot edit them, which is what makes them a fair test.")),
+      h("p", { class: "lede" }, "Claims we registered before downloading each claim's data, then tested using NASA data. You cannot edit them, which is what makes them a fair test.")),
     h("div", { class: "case-rows" }, b.claims.map(c => {
       const r = c.regional, iv = r.interval, u = U(r.units);
       return h("article", { class: "case-row", "aria-labelledby": "ct-" + c.id },
         h("div", { class: "locator" }, regionThumb(c.region.box, `Map showing where ${c.region.name} is; the box used is outlined.`)),
         h("div", {}, h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id)), h("h2", { id: "ct-" + c.id }, "“" + c.claim_text + ".”"),
           h("p", { class: "meta-line" }, `${cap(c.region.name)} · ${c.season.toLowerCase()}, ${range(c.period.start, c.period.end)} · ${datasetName(c)} · ${KIND[c.data_kind].split(",")[0]}`),
-          h("p", { class: "finding-line" }, h("b", {}, c.verdict.branch === "withheld" ? "Ruling withheld" : (c.verdict.scoped || c.verdict.label)), c.verdict.branch === "withheld" ? ": the evidence did not pass the court's own checks, so no verdict is given." : `: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade${iv ? ` (nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)})` : ""}`)),
-        h("a", { class: "btn", href: `#/case/${c.id}`, "aria-label": `Open docket ${caseNo(c.id)}` }, "Open docket"));
+          h("p", { class: "finding-line" }, h("b", {}, c.verdict.branch === "withheld" ? "Withheld" : (c.verdict.scoped || c.verdict.label)), c.verdict.branch === "withheld" ? ": the evidence did not pass the court's own checks, so no verdict is given." : `: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade${iv ? ` (nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)})` : ""}`)),
+        h("a", { class: "btn", href: `#/case/${c.id}`, "aria-label": `Open case file ${caseNo(c.id)}` }, "Open case file"));
     }))) };
 }
 
@@ -78,16 +78,18 @@ export function caseDocket(b, c, query = "") {
   })();
   const essential = withheld ? "The record and the map are shown below for reading. They are a description, not a basis for a verdict. The technical reasons are under Limits of this finding." :
     c.data_kind === "model_reanalysis" ? "This is model output, not a direct measurement, and a trend does not say why it changed." : (f.not_supported && f.not_supported[0]) || "A trend alone does not say why it changed or what comes next.";
-  const text = () => [withheld ? "The court cannot rule on this evidence (ruling withheld). " + plainReason(c) : v.scoped, v.headline, ...v.sentences,
+  const text = () => [withheld ? "Withheld: the court cannot rule on this evidence. " + plainReason(c) : v.scoped, v.headline, ...v.sentences,
     `Claim: ${c.claim_text}. Scope: ${scopeLine(c)}. Change: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade (Sen slope); ${iv ? `${iv.label} ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : "interval not shown: failed its coverage check"}.${calLines(c, withheld).length ? " " + calLines(c, withheld).join(". ") + "." : ""} Regional test: ${t ? `${t.title}, p = ${fmtPx(t.p)}, variance factor ${fac(t)}` : "not shown (it did not pass its calibration check)"}. Dataset: ${f.product.name}, version ${f.product.version}, DOI ${f.product.doi}. Run ${f.run_id}; ledger ${f.ledger_ref || "n/a"}.`,
     c.region.note || "", f.selection_disclosure || ""].filter(Boolean).join("\n");
   const ruling = h("section", { class: "surface verdict" + (withheld ? " withheld" : ""), role: "status", "aria-labelledby": "ruling-h" },
-    h("div", {}, h("p", { class: "eyebrow" }, "The ruling"), h("h2", { id: "ruling-h", class: "verdict-word" }, withheld ? "The court cannot rule on this evidence" : v.label),
+    h("div", {}, h("p", { class: "eyebrow" }, "The ruling"), h("h2", { id: "ruling-h", class: "verdict-word" }, withheld ? "Withheld" : v.label),
+      withheld ? h("p", { class: "verdict-scope" }, "The court cannot rule on this evidence.") : null,
       h("p", { class: "verdict-scope" }, scopeLine(c)),
       why ? h("p", { class: "verdict-scope" }, why) : null,
-      h("div", { class: "chips" }, h("span", { class: "chip" }, withheld ? "Ruling withheld" : "Regional ruling: final"), c.synthetic ? h("span", { class: "chip warn" }, "Synthetic test case") : h("a", { class: "chip", href: "#/data/registration" }, "Question registered; methods amended"), kindChip(c.data_kind))),
+      h("div", { class: "chips" }, h("span", { class: "chip" }, withheld ? "Withheld" : "Regional ruling: final"), c.synthetic ? h("span", { class: "chip warn" }, "Synthetic test case") : h("a", { class: "chip", href: "#/data/registration" }, "Question registered; methods amended"), kindChip(c.data_kind))),
     h("div", {}, h("p", { class: "eyebrow" }, withheld ? "What the record shows" : "Regional change"), h("p", { class: "verdict-num" }, signed(r.sen.slope_per_decade, 2), " ", h("small", {}, `${u} per decade (Sen slope${withheld ? ", descriptive only" : ""})`)),
-      iv ? h("p", { class: "verdict-iv" }, `Nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
+      h("p", { class: "small muted", style: "margin:4px 0 0" }, "The Sen slope estimates the rate of change from the median slope between pairs of years."),
+      iv ? h("p", { class: "verdict-iv" }, `Nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`, h("span", { class: "small muted", style: "display:block" }, "95% is the method's stated level. The measured coverage in simulations is given below.")) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
       calLines(c, withheld).map(x => h("p", { class: "small muted cal-line", style: "margin:4px 0 0" }, x.charAt(0).toUpperCase() + x.slice(1) + ".")),
       h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => ex.select("hearings", { scroll: true }) }, withheld ? "See the evidence by hearing" : "Explore the hearings"),
         copyButton("Copy finding", text, `finding_${c.id}.txt`))),
@@ -142,7 +144,7 @@ export function caseDocket(b, c, query = "") {
   function drawMap(fade) {
     if (!mapHost) return;
     const q = L[sel];
-    const descriptive = !c.gate.cells && hasNote(c) && L.length > 0;   // NO2 pair: the map is shown for reading, labelled unadjusted and descriptive
+    const descriptive = !c.gate.cells && hasNote(c) && L.length > 0;   // NO2 pair: the map is shown for reading, labeled unadjusted and descriptive
     if (!c.gate.cells && !descriptive) { mapHost.replaceChildren(withheldNote(c)); infoHost.replaceChildren(); return; }
     const m = renderMap(c, q, { id: `map-${c.id}-${q.rung}`, label: `Map for hearing ${sel + 1} of ${nL}: ${q.label}`, view: hearingView });
     const note = hearingNote(q, sel);
@@ -195,7 +197,7 @@ export function caseDocket(b, c, query = "") {
   const rulingNote = withheld ? "The regional ruling below is withheld. Changing the view changes what you see, never the ruling." : "The regional ruling below is final. Changing the view changes what you see, never the ruling.";
   const views = [
     { key: "record", label: "Regional record", title: "The regional record", ask: "What did the region's value do, year by year?", mount: mountRecord },
-    { key: "anomaly", label: "Values over time", title: "Values over time", ask: "What changed, and when? Every grid cell, year by year, on one fixed colour scale.", mount: mountAnomaly, frame: true },
+    { key: "anomaly", label: "Values over time", title: "Values over time", ask: "What changed, and when? Every grid cell, year by year, on one fixed color scale.", mount: mountAnomaly, frame: true },
     { key: "hearings", label: "Evidence by hearing", title: "Evidence by hearing", ask: withheld ? "Which cells pass each hearing? A description of the tests, not a basis for a verdict." : "Where do the tests flag evidence? Each hearing asks a different question of the same cells.", mount: mountHearings, frame: true },
     ...(WIT2 ? [{ key: "witness2", label: "Second witness", title: "Second witness", ask: WIT2.ask, mount: mountWitness2 }] : []),
     ...(c.id === "C-C" ? [{ key: "yearly3d", label: "Year by year (3D)", title: "Year by year (3D)", ask: "How did each month change over the years? Every month of every year, wound around the baseline; a descriptive view.", mount: mountYearly3d }] : []),
@@ -204,7 +206,7 @@ export function caseDocket(b, c, query = "") {
   ];
   views.sort((a, b) => (a.key === "witness") - (b.key === "witness"));
   const wanted = new URLSearchParams(query).get("view");   // ?view=witness or ?view=witness2 opens that exhibit view; anything not in this docket's list is ignored
-  const ex = exhibit({ views, initial: views.some(v => v.key === wanted) ? wanted : "record", rulingNote, tag: h("span", { class: "tag" }, withheld ? "Ruling withheld" : "Regional ruling: final") });
+  const ex = exhibit({ views, initial: views.some(v => v.key === wanted) ? wanted : "record", rulingNote, tag: h("span", { class: "tag" }, withheld ? "Withheld" : "Regional ruling: final") });
   const openStatistics = () => { statistics.open = true; statistics.scrollIntoView({ block: "start", behavior: "smooth" }); };
 
   // ---------------------------------------------------------------- collapsible detail: Statistics, Limits of this finding, Provenance
@@ -219,13 +221,13 @@ export function caseDocket(b, c, query = "") {
     h("p", {}, h("b", {}, v.headline), " ", v.sentences.join(" ")),
     h("div", { class: "statgrid" },
       stat("Sen slope per decade", `${signed(r.sen.slope_per_decade, 2)} ${u}`, iv ? `${iv.label}: ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : `Interval: ${NOT_SHOWN.toLowerCase()}`),
-      t ? stat(t.title, `p = ${fmtPx(t.p)}`, `${sigLabel(t.p)}. A pattern this strong would be rare if there were no trend.`) : stat("Regional test", withheld ? "Withheld" : "Not shown", withheld ? (c.id === "C-E1" ? "No test was validated for this much year-to-year memory at 21 years, so no significance statement is made." : "No test kept its false-alarm rate near 5% on records like this one, so no significance statement is made.") : "It did not pass its calibration check, so no significance statement is made."),
-      c.phi_hat != null ? stat("Persistence (lag-1)", signed(c.phi_hat, 2), `Year-to-year memory, ${persistenceText(c)}. ${c.phi_hat < -0.1 ? "Negative: a high year tends to be followed by a lower one." : c.phi_hat > 0.1 ? "Positive: a high year tends to be followed by another high one." : "Near zero: neighbouring years barely resemble each other."}`) : null,
-      t ? stat("Variance factor", fac(t), "Above 1.00 means neighbouring years resemble each other, and the test widens to allow for it") : null),
+      t ? stat(t.title, `p = ${fmtPx(t.p)}`, t.p < (t.alpha || 0.05) ? `${sigLabel(t.p)}. A pattern this strong would be rare if there were no trend.` : `${sigLabel(t.p)}. This result is not significant under the stated test.`) : stat("Regional test", withheld ? "Withheld" : "Not shown", withheld ? (c.id === "C-E1" ? "No test was validated for this much year-to-year memory at 21 years, so no significance statement is made." : "No test kept its false-alarm rate near 5% on records like this one, so no significance statement is made.") : "It did not pass its calibration check, so no significance statement is made."),
+      c.phi_hat != null ? stat("Persistence (lag-1)", signed(c.phi_hat, 2), `Year-to-year memory, ${persistenceText(c)}. ${c.phi_hat < -0.1 ? "Negative: a high year tends to be followed by a lower one." : c.phi_hat > 0.1 ? "Positive: a high year tends to be followed by another high one." : "Near zero: neighboring years barely resemble each other."}`) : null,
+      t ? stat("Variance factor", fac(t), "Above 1.00 means neighboring years resemble each other, and the test widens to allow for it") : null),
     h("div", { class: "baseline" }, h("h3", {}, "Pooled distribution by period"),
-      h("p", { class: "muted small" }, "Every grid cell in every year of each period, each against its own baseline, unweighted. It describes the data; it is not a test."),
+      h("p", { class: "muted small" }, "Every grid cell in every year of each period, each against its own baseline, unweighted. One cell-year is one grid cell in one year, and every cell-year counts equally. It describes the data; it is not a test."),
       distTable, h("p", { style: "margin:8px 0 0" }, h("button", { class: "btn-text", type: "button", onclick: () => ex.select("distribution", { scroll: true }) }, "Inspect distribution"))),
-    t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? "No autocorrelation correction was chosen here: in our simulations, which include negative persistence, this test kept false alarms nearest 5% for series with persistence near this one's " + (persistenceText(c) || "") + ". " : /^boot_mk/.test(t.method) ? "The p-value comes from a moving-block bootstrap, which keeps the year-to-year memory of this record (" + (persistenceText(c) || "") + ") instead of assuming a correction. " : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
+    t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? "No autocorrelation correction was chosen here: in our simulations, which include negative persistence, this test kept false alarms nearest 5% for series with year-to-year memory similar to this record's " + (persistenceText(c) || "") + ". " : /^boot_mk/.test(t.method) ? "The p-value comes from a moving-block bootstrap, which keeps the year-to-year memory of this record (" + (persistenceText(c) || "") + ") instead of assuming a correction. " : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
     h("p", { class: "small muted" }, iv ? `${iv.label}. How often such intervals contain the true slope was measured on synthetic series; it is not a range for individual years. ${calLines(c, withheld).join(". ")}${calLines(c, withheld).length ? ". " : ""}` : `Interval: ${NOT_SHOWN} `, r.band_lo ? r.band_meaning : `Band: ${NOT_SHOWN}`),
     ctxRows.length ? h("div", { class: "baseline" }, h("h3", {}, "Context, not the ruling"), ctxRows.map(x => h("p", { class: "muted small", style: "margin:0 0 4px" }, x))) : null,
     h("div", { class: "baseline" }, h("h3", {}, "The familiar baseline: least squares and t-test"), h("p", { class: "muted small" }, "Context only. The ruling rests on the Sen slope and the regional test above."),
@@ -242,11 +244,12 @@ export function caseDocket(b, c, query = "") {
     hasNote(c) ? no2Limits(c) : null,
     c.gate.adaptive_notes && c.gate.adaptive_notes.length ? c.gate.adaptive_notes.map(x => h("p", { class: "muted small" }, h("b", {}, "Calibration note. "), x)) : null,
     !iv && !withheld && c.gate.reasons_interval && c.gate.reasons_interval.length ? h("p", { class: "muted small" }, h("b", {}, "Why no interval. "), c.gate.reasons_interval.join(" ")) : null,
-    f.scope_text ? h("p", {}, h("b", {}, "This number is for. "), f.scope_text) : null,
+    f.scope_text ? h("p", {}, h("b", {}, "What this number describes. "), f.scope_text) : null,
     f.not_supported ? [h("p", {}, h("b", {}, "What the evidence does not support")), h("ul", {}, f.not_supported.map(x => h("li", {}, x)))] : null,
     c.conservative && c.conservative.length ? h("p", {}, h("b", {}, "The test is conservative here. "), c.conservative.join(" ")) : null,
     withheld ? null : h("p", {}, h("b", {}, "How to read the ruling. "), `The map and the regional series come from the same data, so they are not independent evidence. The ${pct(th.breadth, 0)} and ${pct(th.local, 0)} area thresholds that separate "supported" from "partly supported" are conventions we chose before seeing results, not a calibrated scale. Flagged-area percentages are shares of the tested area, not the chance that the claim is true. "Partly supported" can mean that the regional average changed significantly while few cells did: it combines two questions, whether the average moved and how widespread the change is across the map.`),
-    h("p", {}, h("b", {}, "The views of the map and the distribution. "), "Values over time: each square is one grid cell against its own baseline, with no smoothing in space; colours blend between years only while playing. Distribution: pools every cell in every year of a 10-year period (the last period can be shorter), unweighted, so its mean differs from the area-weighted regional record; neighbouring cells and years are correlated, so these curves describe the data and are not independent observations, and a small share of extreme values can fall outside the drawn range (the figure says how many). None of these views is a test, and none changes the ruling."),
+    h("p", {}, h("b", {}, "Values over time. "), "Each square is one grid cell against its own baseline, with no smoothing in space. Colors blend between years only while the animation plays."),
+    h("p", {}, h("b", {}, "Distribution. "), "This view pools every cell in every year of a 10-year period (the last period can be shorter), unweighted, so its mean differs from the area-weighted regional record. Neighboring cells and years are correlated, so these curves describe the data and are not independent observations. A small share of extreme values can fall outside the drawn range (the figure says how many). None of these views is a test, and none changes the ruling."),
     c.id === "C-A" ? h("p", {}, h("b", {}, "The satellite's overpass time drifted. "), "Terra's daytime overpass has been getting earlier since NASA stopped adjusting its orbit in 2020 (", h("a", { href: "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/", target: "_blank", rel: "noopener" }, "NASA Science, 2025"), "), so its readings now come from earlier in the morning. The Witness check finds that the satellite's daytime readings track overpass time closely (the correlation is given there), which is consistent with an earlier pass reading cooler. It does not prove that the drift is the cause, and it is an exploratory check, not the registered test.") : null,
     c.id === "C-D" ? h("p", {}, h("b", {}, "The satellite's overpass time drifted. "), "Aqua's orbit has drifted to later afternoon overpasses since 2021 (", h("a", { href: "https://nsidc.org/data/user-resources/data-announcements/ongoing-changes-terra-and-aqua-orbits-impacting-modis-snow-and-sea-ice-products", target: "_blank", rel: "noopener" }, "NSIDC, 2021"), ").") : null,
     h("p", {}, h("b", {}, "Cell share and area share. "), "The cell share counts every grid cell once. The area share weights each cell by the cosine of its latitude, because cells near the pole cover less ground. Neither is the chance that the claim is true, and neither says which single cell is right."),

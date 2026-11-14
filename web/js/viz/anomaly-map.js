@@ -1,7 +1,7 @@
-// Anomaly map ("Values over time"): the case region on a flat map, one frame per year, fixed symmetric colour range.
+// Anomaly map ("Values over time"): the case region on a flat map, one frame per year, fixed symmetric color range.
 // Question it answers: WHAT CHANGED WHEN? (the hearing map answers WHERE the tests flag evidence; the ruling never changes with this view)
-// Every square is one grid cell coloured by its own value for the year shown. There is no spatial smoothing. While playing, colours blend
-// between two years; paused, each cell shows that year exactly. Cells with no value that year stay visible as hatched grey.
+// Every square is one grid cell colored by its own value for the year shown. There is no spatial smoothing. While playing, colors blend
+// between two years; paused, each cell shows that year exactly. Cells with no value that year stay visible as hatched gray.
 // render(container, data, options) -> {destroy, play, pause, seek, el, timeline}.
 // Options: year (start index), onYear(i), view (a basemap.js view: the docket passes one so this map and the hearing map share one frame),
 //          width (plot width when no view is given), autoplay (never used by the site).
@@ -41,7 +41,7 @@ export async function render(container, data, options = {}) {
   const summary = el("p", { class: "viz-summary", id: summaryId, "aria-live": "polite" });
   const tl = timeline({ n: nY, stepMs: 900, start: curT, onFrame: (tv) => { curT = tv; schedule(); }, onState, onIndex: () => { ctl.sync(); updateReadout(); } });
   const ctl = controls(tl, { n: nY, labelFn: (i) => String(data.years[i]), name: "year", showYear: false });
-  const note = el("p", { class: "viz-note" }, `${data.product_label}. Each square is one grid cell (${data.grid.dlat}° × ${data.grid.dlon}°) coloured by its own difference from its own baseline; nothing is smoothed in space. While playing, colours blend from one year to the next; paused, each cell shows that year exactly. Hatched grey: no value that year.`);
+  const note = el("p", { class: "viz-note" }, `${data.product_label}. Each square is one grid cell (${data.grid.dlat}° × ${data.grid.dlon}°) colored by its own difference from its own baseline; nothing is smoothed in space. While playing, colors blend from one year to the next; paused, each cell shows that year exactly. Hatched gray: no value that year.`);
   const lg = () => legend(data, scale);
   let legendEl = lg();
   const colA = el("div", { class: "viz-col-a" }, plot, legendEl);
@@ -119,7 +119,7 @@ export async function render(container, data, options = {}) {
   function onState() {
     ctl.sync();
     const yi = tl.index;
-    summary.textContent = `${caseLine(data)}. ${data.years[yi]}: regional average ${regionalMeanText(data, yi)}. The colour range is the same in every year (±${data.scale.max} ${U}; ${ends.lo} to ${ends.hi}), so years can be compared directly.`;
+    summary.textContent = `${caseLine(data)}. ${data.years[yi]}: regional average ${regionalMeanText(data, yi)}. The color range is the same in every year (±${data.scale.max} ${U}; ${ends.lo} to ${ends.hi}), so years can be compared directly.`;
     updateReadout();
     options.onYear && options.onYear(yi);
   }

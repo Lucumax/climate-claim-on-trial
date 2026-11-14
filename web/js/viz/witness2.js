@@ -31,7 +31,7 @@ function addStation(A, d, extra) {
   A.words.push(
     `Station air temperature and the ESA record both lean up (${signed(k.sen_per_decade, 2)} and ${signed(esa.sen_per_decade, 2)} ${u} per decade; ${sigWord}) while MODIS Terra leans down (${signed(mod.sen_per_decade, 2)}). The gap between MODIS and the air temperature grows through the record (station minus MODIS: ${signed(gap.sen_per_decade, 2)} ${u} per decade)` +
     (ry.length ? `, and most of all in the early 2020s: the registered MODIS series sits colder than its ${res.fit_years[0]}\u2013${res.fit_years[1]} relation to air temperature predicts, by ${plain(Math.abs(res.residuals_later_years[ry[0]]), 2)} ${u} in ${ry[0]} and ${plain(Math.abs(res.residuals_later_years[ry[ry.length - 1]]), 2)} ${u} in ${ry[ry.length - 1]}. ` : ". ") +
-    "Nothing here supports the MODIS cooling.");
+    "The comparison records do not show the same cooling trend.");
   A.kind3 = "The third line is station-based 2 m air temperature (CRU TS 4.10 daily maximum, via KNMI Climate Explorer), not land surface skin temperature, so compare changes, not levels. Station records share no input with MODIS or ESA. It is a cross-check, not ground truth, and it does not show which satellite series is right.";
   A.links.push(["CRU TS station data on KNMI Climate Explorer", extra.witness.page_url]);
 }
@@ -82,9 +82,9 @@ function adaptKnmi(d) {
     r: ag.pearson_r, n: ag.n_years, band: null, mark: null,
     kind: `CRU TS 4.10, a ${rain ? "rain-gauge" : "weather-station"} record gridded at 0.5 degrees and served by KNMI Climate Explorer. It is a different kind of measurement from the ${rain ? "satellite" : "reanalysis model"}, but it is not ground truth.`,
     words: [
-      `The station-based record shows ${signed(ws.sen_per_decade, 2)} ${u} per decade over ${first}–${last} (p ${fp(pick(ws))}), ${dir} the case series' ${signed(cs.sen_per_decade, 2)} (p ${fp(pick(cs))}). The two series track each other year by year (r ${r2(ag.pearson_r)}).`,
+      `The station-based record shows ${signed(ws.sen_per_decade, 2)} ${u} per decade over ${first}–${last} (p ${fp(pick(ws))}), in ${dir} the case series' ${signed(cs.sen_per_decade, 2)} (p ${fp(pick(cs))}). The two series track each other year by year (r ${r2(ag.pearson_r)}).`,
       rain ? `It agrees on direction; its interval ${ws.sen_ci95_per_decade[0] < 0 ? "reaches below zero" : "stays above zero"}, so it does not settle the claim by itself. The ruling below is unchanged.`
-        : `It confirms the warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The ruling below is unchanged.`,
+        : `It also shows warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The ruling below is unchanged.`,
     ],
     caveat: d.caveat,
     links: [["Data on KNMI Climate Explorer", d.witness.page_url], ["CRU TS 4.10 (Harris et al. 2020)", "https://doi.org/10.1038/s41597-020-0453-3"]],
@@ -116,7 +116,7 @@ export async function render(container, data, opts = {}) {
     el("li", {}, `Correlation between ${C.short} and ${Wt.short}: r ${r2(A.r)} (${A.n} years)` + (T3 ? `. Station air temperature with ${C.short}: r ${r2(A.r3.modis)}; with ${Wt.short}: r ${r2(A.r3.esa)}.` : "")));
   const words = el("div", { class: "viz-w2-text" }, ...(preview ? A.words.slice(0, 1) : A.words).map((t) => el("p", {}, t)),
     el("p", { class: "viz-note" }, "What the second record is. ", A.kind, " ", A.caveat, T3 ? " " + A.kind3 : ""),
-    preview ? null : el("p", { class: "viz-note" }, "Dashed lines are each record's Sen trend. Each series is shown as the difference from their own average over the same years, so only the changes are compared, not the levels."));
+    preview ? null : el("p", { class: "viz-note" }, "Dashed lines are each record's Sen trend. Each series is shown as the difference from its own average over the same years, so only the changes are compared, not the levels."));
   const links = el("p", { class: "viz-note" }, A.prov, " Links: ", ...A.links.flatMap(([t, u], i) => [i ? " · " : "", el("a", { href: u, target: "_blank", rel: "noopener" }, t)]));
   const rows = Y.map((y, i) => [String(y), plain(C.v[i], 2), plain(Wt.v[i], 2), plain(Wt.v[i] - C.v[i], 2), ...(T3 ? [plain(T3.v[i], 2)] : [])]);
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Values by year (table)"),

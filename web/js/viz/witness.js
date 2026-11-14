@@ -23,7 +23,7 @@ export async function render(container, data, opts = {}) {
   const svgC = sv("svg", { role: "img", "aria-labelledby": summaryId, focusable: "false", style: "display:block;max-width:100%" });
   const readout = el("p", { class: "viz-readout viz-num", "aria-live": "polite" });
   const wrap = el("div", { class: "viz-wit", tabindex: "0", role: "group", "aria-describedby": summaryId, "aria-label": "Witness check charts. Left and right arrow keys move between years." },
-    el("div", {}, el("h3", {}, "(a) When Terra looked"), el("p", {}, "Local solar time of the daytime overpass, summer average, by year"), svgA),
+    el("div", {}, el("h3", {}, "(a) When Terra looked"), el("p", {}, "The time the satellite passed over the region (daytime, local solar time), summer average, by year"), svgA),
     ...(preview ? [] : [el("div", {}, el("h3", {}, "(b) What it read, against a second NASA record"), el("p", {}, "Daytime land surface temperature, summer average, with NASA POWER skin and air temperature (a second NASA record, model-based, not fully independent)"), svgB,
       el("h3", { style: "margin-top:16px" }, "The gap: satellite minus POWER skin temperature"), svgC)]));
   const link = el("a", { href: SOURCE, target: "_blank", rel: "noopener" }, "NASA Science, “Terra: The End of An Era”, 2025");

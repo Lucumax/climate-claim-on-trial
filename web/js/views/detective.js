@@ -31,8 +31,8 @@ const STEPS = [
   { n: 4, name: "Examine the series", short: "Series", target: "result-record" },
   { n: 5, name: "Test significance", short: "Test", target: "result-trial" },
 ];
-// How each measurement reads inside the question "Has ___ over ___ changed?"
-const PHRASE = { t2m: "air temperature", t2m_max: "the daily high temperature", t2m_min: "the daily low temperature", precip: "rainfall", solar: "sunlight reaching the ground", cloud: "cloud cover", rh: "humidity", wind: "wind speed", soil_root: "root-zone soil wetness", soil_top: "surface soil wetness", frost: "the number of frost days", snow: "snow depth", airs_tair: "surface air temperature (satellite)", airs_h2o: "water vapour in the air", soil_gldas: "soil moisture (model)", et_gldas: "evapotranspiration (model)",
+// How each measurement reads inside the question "Did ___ over ___ change?"
+const PHRASE = { t2m: "air temperature", t2m_max: "the daily high temperature", t2m_min: "the daily low temperature", precip: "rainfall", solar: "sunlight reaching the ground", cloud: "cloud cover", rh: "humidity", wind: "wind speed", soil_root: "root-zone soil wetness", soil_top: "surface soil wetness", frost: "the number of frost days", snow: "snow depth", airs_tair: "surface air temperature (satellite)", airs_h2o: "water vapor in the air", soil_gldas: "soil moisture (model)", et_gldas: "evapotranspiration (model)",
   precip_imerg: "rainfall and snow (satellite)", tws_grace: "water stored on land", lst_day_myd11: "land surface temperature", snow_mod10cm: "snow cover", aod_myd08: "smoke and haze" };
 const GROUP_ORDER = [["Temperature", "Temperature"], ["Water", "Water, snow and ice"], ["Sun and sky", "Sun and sky"], ["Wind", "Wind"], ["Air", "Air"]];
 const PLACE = { world: "the whole world", amazon: "the Amazon basin", sus: "the Southeastern United States" };
@@ -107,7 +107,7 @@ export function detective(cat, bundle, query = "") {
     head.replaceChildren(
       h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Computed live in your browser")),
       h("h1", { id: "page-title", tabindex: "-1" }, "Investigate a question"),
-      h("p", { class: "question" }, "Has ", slot(PHRASE[v.key] || v.name.toLowerCase()), " over ", slot(placeName()), " changed from ", slot(String(state.y0)), " to ", slot(String(state.y1)), se.key === "all" ? "" : [", ", slot(seasonShort(se)), " only"], "?"));
+      h("p", { class: "question" }, "Did ", slot(PHRASE[v.key] || v.name.toLowerCase()), " over ", slot(placeName()), " change from ", slot(String(state.y0)), " to ", slot(String(state.y1)), se.key === "all" ? "" : [", ", slot(seasonShort(se)), " only"], "?"));
     document.title = "Investigate a question · Climate Claim on Trial";
   }
 
@@ -190,7 +190,7 @@ export function detective(cat, bundle, query = "") {
     if (validateBox(state.box).length) { planNote.replaceChildren(); return; }
     if (lib) {
       const pl = libraryPlan(v, state.box);
-      planNote.replaceChildren(h("p", { class: pl.empty ? "callout" : "muted", style: "margin:0" }, pl.whole ? `Whole world: reads all ${pl.tiles} tiles of the library (about ${Math.round(pl.mb)} MB) the first time; later changes are quick.` : pl.empty ? "This box has no data for this measurement (it may cover land only, or lie over open ocean)." : `Reads ${pl.tiles} library tile${pl.tiles === 1 ? "" : "s"} (about ${Math.max(0.1, Math.round(pl.mb * 10) / 10)} MB) holding ${pl.cells} one-degree cells.${pl.fallback ? " The box is smaller than one cell, so the cell at its centre is used." : ""}`));
+      planNote.replaceChildren(h("p", { class: pl.empty ? "callout" : "muted", style: "margin:0" }, pl.whole ? `Whole world: reads all ${pl.tiles} tiles of the library (about ${Math.round(pl.mb)} MB) the first time; later changes are quick.` : pl.empty ? "This box has no data for this measurement (it may cover land only, or lie over open ocean)." : `Reads ${pl.tiles} library tile${pl.tiles === 1 ? "" : "s"} (about ${Math.max(0.1, Math.round(pl.mb * 10) / 10)} MB) holding ${pl.cells} one-degree cells.${pl.fallback ? " The box is smaller than one cell, so the cell at its center is used." : ""}`));
     } else {
       const pl = planBox(state.box); planNote.replaceChildren(h("p", { class: pl.kind === "regional" ? "muted" : "callout", style: "margin:0" }, pl.message));
       if (pl.kind === "too_big") planNote.append(h("div", { class: "actions", style: "margin-top:8px" }, h("button", { class: "btn-quiet", type: "button", onclick: () => setBox({ ...pl.alt }) }, `Use the largest allowed box (${boxStr(pl.alt)})`)));
@@ -229,7 +229,7 @@ export function detective(cat, bundle, query = "") {
       const n = state.y1 - state.y0 + 1;
       readout.replaceChildren(h("span", { class: "num" }, `${state.y0}–${state.y1}`), h("span", { class: "range-n" }, ` ${n} years`));
       state.keepFlagged = pastQuality(v, state.y1);
-      qNote.hidden = !state.keepFlagged; qNote.replaceChildren(...(state.keepFlagged ? [h("b", {}, "Flagged months included. "), `This window reaches past ${v.qualityEndText} (${v.qualityLabel}). The result is marked uncalibrated and no verdict is given.`] : []));
+      qNote.hidden = !state.keepFlagged; qNote.replaceChildren(...(state.keepFlagged ? [h("b", {}, "Flagged months included. "), `This window reaches past ${v.qualityEndText} (${v.qualityLabel}). The result is marked uncalibrated and withheld.`] : []));
       warn.textContent = n < 10 ? `That is ${n} years. Short records make trend tests weak.` : n < 25 ? "Twenty-five years or more is a better start." : "";
       warn.hidden = !warn.textContent;
     };
@@ -266,7 +266,7 @@ export function detective(cat, bundle, query = "") {
   }
 
   // ======================================================== running the fetch and the tests
-  // Guided examples try NASA POWER live first; if that fails or takes too long, they use a saved copy of the same request (data/demo_cache/), clearly labelled.
+  // Guided examples try NASA POWER live first; if that fails or takes too long, they use a saved copy of the same request (data/demo_cache/), clearly labeled.
   const CACHES = [{ key: "t2m", preset: "wisconsin", cache: "wi" }, { key: "precip", preset: "sahel", cache: "sahel" }];
   async function fetchOrCache(args) {
     // The two saved requests (Wisconsin air temperature, Sahel rainfall; both 1981-2025) back up the live request for guided examples and for the default view.
@@ -369,7 +369,7 @@ export function detective(cat, bundle, query = "") {
 
   function rulingLabel(L) {
     const { W, rungs } = L, pRaw = rungs[0].p, pFin = rungs[2].p, sig = pFin < ALPHA, weak = pRaw < ALPHA && !sig;
-    if (L.R.flagged) return { label: "No verdict given", tone: "warn", sig: false, weak: false, noVerdict: true, pRaw, pFin, W };
+    if (L.R.flagged) return { label: "Withheld", tone: "warn", sig: false, weak: false, noVerdict: true, pRaw, pFin, W };
     return { label: sig ? "Significant at 0.05" : weak ? "Weakened by the trial" : "Not significant at 0.05", tone: sig ? "ok" : weak ? "warn" : "", sig, weak, pRaw, pFin, W };
   }
   // The ruling is a compact aside. The word comes from the same rule as before; the longer reading notes are in a disclosure.
@@ -378,7 +378,7 @@ export function detective(cat, bundle, query = "") {
     if (g.noVerdict) return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
       h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Not calibrated")),
       h("h3", { class: "ruling-h" }, g.label),
-      h("p", { class: "callout", role: "note" }, h("b", {}, "No verdict. "), gate.caveat, " Shorten the period to end in ", String(R.v.goodLast), " to get a ruling."),
+      h("p", { class: "callout", role: "note" }, h("b", {}, "Withheld. "), gate.caveat, " Shorten the period to end in ", String(R.v.goodLast), " to exclude the flagged months. The revised record will be checked again."),
       h("p", { class: "muted" }, `Described only: the Sen slope is ${signed(slope, 3)} ${u} per decade. It is not a basis for a conclusion.`));
     const lines = [h("p", {}, fixVerdict(A.verdict.text))];
     if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the trial it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until the record is asked different questions.`));
@@ -389,10 +389,10 @@ export function detective(cat, bundle, query = "") {
     if (!sig) lines.push(h("p", { class: "muted small" }, "Inconclusive is a result too. Next: try a longer period or a larger region, and keep a note of every try."));
     lines.push(h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u)));
     return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
-      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final, after hearing 3"), gate ? h("span", { class: "chip" }, gate.calibrated ? "Test calibrated for this record" : "Not calibrated") : null),
+      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), gate ? h("span", { class: "chip" }, gate.calibrated ? "Test calibrated for this record" : "Not calibrated") : null),
       h("h3", { class: "ruling-h" }, g.label), h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip " + g.tone }, `p ${fmtP(pFin)}`)), ...lines,
       gate && !gate.calibrated ? h("p", { class: "callout", role: "note" }, h("b", {}, "Not calibrated for this record. "), gate.caveat) : h("p", { class: "muted small calib" }, gate ? gate.caveat : PERSISTENCE_CAVEAT),
-      disc("How to read this", h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
+      disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
         h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),
         h("p", { class: "muted small" }, (gate ? gate.label : "Your own exploration, not pre-registered") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
   }
@@ -408,7 +408,7 @@ export function detective(cat, bundle, query = "") {
       lines: [{ label: "Sen trend", cls: "sen", lbl: "lbl-sen", y: senLine }, { label: "Least squares", cls: "olsl", lbl: "lbl-ols", y: olsLine }],
       yLabel: (showAn ? "Anomaly: " : "") + `${R.v.name} (${u})`, pointWord: showAn ? "anomaly" : "season mean",
       describe: `${R.v.name}, ${isWorld(R.box) ? "whole world" : boxStr(R.box)}, ${season.name}, one value per year, ${R.y0} to ${R.y1}. Sen trend ${signed(A.sen.slopePerDecade, 3)} ${u} per decade.`,
-      keyItems: [["k-pt", "Season average for one year"], ["k-sen", "Sen trend (robust line)"], ["k-ols", "Least squares line"]],
+      keyItems: [["k-pt", "Season average for one year"], ["k-sen", "Sen trend"], ["k-ols", "Least squares line"]],
     });
     const cyc = season.key === "all" ? monthlyData(R.data.rows, { y0: R.y0, y1: R.y1, name: R.v.name, units: R.v.units, unitsLabel: u, place: isWorld(R.box) ? "the whole world" : boxStr(R.box), source: R.v.source }) : null;
     const cycle = !!cyc && state.chart === "cycle";
@@ -488,7 +488,7 @@ export function detective(cat, bundle, query = "") {
   function outcome(L) { // the sentence about the trial, written from the numbers actually computed
     const g = rulingLabel(L), a = fmtP(g.pRaw), b = fmtP(g.pFin);
     let t;
-    if (g.noVerdict) return "No verdict is given: this window includes months the data product flags as unreliable.";
+    if (g.noVerdict) return "Withheld: this window includes months the data product flags as unreliable.";
     if (g.sig && Math.max(g.pRaw, g.pFin) < 0.001) t = `It holds, clearly: p is below 0.001 at the start and still below 0.001 after the correction.`;
     else if (g.sig && Math.abs(g.pFin - g.pRaw) < 0.0005) t = `It holds, and the trial changes nothing: all three hearings give p ${b}.`;
     else if (g.sig && g.pFin > g.pRaw * 1.5) t = `It holds, but less strongly: p goes from ${a} to ${b}.`;
@@ -512,11 +512,11 @@ export function detective(cat, bundle, query = "") {
   }
   const DEMOS = [
     { id: "wi", title: "Wisconsin summer air temperature", tag: "Model, NASA POWER", src: "power", key: "t2m", preset: "wisconsin", y0: 1981, y1: 2025, season: "jja", cache: "wi",
-      s1: "A familiar question: how warm is the air in summer? This is the temperature a weather station reads, about 2 metres up. It comes from a NASA model that blends many measurements, so it is labelled model-based, not a direct measurement.",
+      s1: "A familiar question: how warm is the air in summer? This is the temperature a weather station reads, about 2 meters up. It comes from a NASA model that blends many measurements, so it is labeled model-based, not a direct measurement.",
       s2: "Wisconsin is a good size: big enough to average out one hot town, small enough that a single summer still shows. The box is a rectangle around the state.",
       s3: "1981 to 2025 is 45 summers. We keep June, July and August so that winter does not drown out the summer signal. Longer records make a real trend easier to see." },
     { id: "sahel", title: "Sahel wet-season rainfall", tag: "Model, NASA POWER", src: "power", key: "precip", preset: "sahel", y0: 1981, y1: 2025, season: "jjas", cache: "sahel",
-      s1: "Next, rainfall. This is NASA POWER's corrected precipitation (PRECTOTCORR), in millimetres per day. It blends satellite and rain-gauge information in a model, so it is labelled model-based, not a direct measurement.",
+      s1: "Next, rainfall. This is NASA POWER's corrected precipitation (PRECTOTCORR), in millimeters per day. It blends satellite and rain-gauge information in a model, so it is labeled model-based, not a direct measurement.",
       s2: "The Sahel is the dry belt south of the Sahara. Its rain falls in one season, so the box is wide: 42 degrees of longitude, averaged cell by cell and weighted by area.",
       s3: "We keep June to September, the wet season, for 1981 to 2025: 45 wet seasons. Rain swings a lot from year to year, so a long record matters here.",
       after: () => h("span", {}, " The satellite rainfall record (IMERG, 2001 to 2025) is a different, shorter record of the same region. It is examined in ", h("a", { href: "#/case/C-B" }, "Case file C-B"), ".") },
@@ -531,7 +531,7 @@ export function detective(cat, bundle, query = "") {
       const ok = DEMOS.filter(d => d.src === "power" || M.some(v => v.src === "library" && v.key === d.key));
       demoHost.replaceChildren();
       launchHost.replaceChildren(h("details", { class: "quiet guided", id: "demo" }, h("summary", {}, "Try a guided example"),
-        h("p", { class: "muted small", style: "margin:8px 0 0;max-width:62ch" }, "Three real questions with different outcomes. Each one fills in the five steps and runs the real computation: nothing is scripted. If NASA POWER cannot be reached, a clearly labelled saved copy from Nov 14 is used for the two POWER examples."),
+        h("p", { class: "muted small", style: "margin:8px 0 0;max-width:62ch" }, "Three real questions with different outcomes. Each one fills in the five steps and runs the real computation. The results are computed from the selected data rather than supplied in advance. If NASA POWER cannot be reached, a clearly labeled saved copy from Nov 14 is used for the two POWER examples."),
         h("div", { class: "btns" }, ok.map(d => h("button", { class: "btn-quiet", type: "button", onclick: () => startDemo(d) }, d.title, h("span", { class: "btn-tag" }, d.tag))))));
       return;
     }
@@ -568,7 +568,7 @@ export function detective(cat, bundle, query = "") {
     let t;
     if (busy) t = `${base} \u00b7 Updating\u2026`;
     else if (state.status === "error") t = `${base} \u00b7 Could not run`;
-    else if (L && !L.W.tooShort && state.status === "ready") t = `${signed(L.W.A_an.sen.slopePerDecade, 2)} ${U(L.R.v.units)}/decade \u00b7 Exploratory${count}`;
+    else if (L && !L.W.tooShort && state.status === "ready") t = `${signed(L.W.A_an.sen.slopePerDecade, 2)} ${U(L.R.v.units)} per decade \u00b7 Exploratory${count}`;
     else if (L && L.W.tooShort) t = `${base} \u00b7 Too few years to test`;
     else t = `${base} \u00b7 Updating\u2026`;
     stripText.textContent = t;

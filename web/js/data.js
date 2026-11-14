@@ -48,14 +48,14 @@ function seasonName(m) {
   const named = { "1,2,3,4,5,6,7,8,9,10,11,12": "Annual mean", "12,1,2": "Winter (December to February)", "3,4,5": "Spring (March to May)", "6,7,8": "Summer (June to August)", "9,10,11": "Autumn (September to November)", "6,7,8,9": "Wet season (June to September)" }[key];
   return named || (m.length === 1 ? MONTHS[m[0] - 1] : `${MONTHS[m[0] - 1]} to ${MONTHS[m[m.length - 1] - 1]}`);
 }
-const BRANCH = { supported: ["Supported", "ok"], partly_supported: ["Partly supported", "warn"], not_supported: ["Not supported", "neutral"], contradicted: ["Contradicted", "bad"], withheld: ["No verdict given", "warn"] };
+const BRANCH = { supported: ["Supported", "ok"], partly_supported: ["Partly supported", "warn"], not_supported: ["Not supported", "neutral"], contradicted: ["Contradicted", "bad"], withheld: ["Withheld", "warn"] };
 // Short names for the regional and cell tests the validation gate can choose (stats/SCHEMA.md, addendum 2).
 export const METHOD_NAME = { mk_independent: "Mann-Kendall, years treated as independent", hr_registered: "Hamed-Rao (as registered)", hr_all_lags: "Hamed-Rao, all lags", yue_wang: "Yue-Wang", tfpw: "TFPW (trend-free pre-whitening)", boot_mk_L3: "block-bootstrap Mann-Kendall (3-year blocks)", boot_mk_L5: "block-bootstrap Mann-Kendall (5-year blocks)" };
 const testTitle = m => m === "mk_independent" ? "Mann-Kendall (years treated as independent)" : /^boot_mk/.test(m) ? `Mann-Kendall with a moving-block bootstrap p-value (${(METHOD_NAME[m] || "").replace(/^.*\(|\)$/g, "") || "blocks"})` : `Mann-Kendall with ${METHOD_NAME[m] || m} correction`;
 const COV_NOTE = "; passed a 90% coverage check in simulations";
 const INTERVAL_WORD = { analytic_hr: "Sen slope, analytic", bootstrap: "Sen slope, moving-block bootstrap" };
 export const BAND_MEANING = "The shaded band is the Sen line tilted between the lower and upper ends of the 95% slope interval, pivoting at the middle year. It shows how steep the trend could plausibly be. It does not show uncertainty about the level, and it is not a range for individual years.";
-export const REG_SHORT = "Registered before data download (10:29 AM ET), with two dated method amendments made on simulated data before results, and one disclosed cell-rule correction.";
+export const REG_SHORT = "Question registered before data download (10:29 AM ET; the NO₂ pair at 1:15 PM ET). Later changes, all disclosed: two method amendments made on simulated data before results, one cell-rule correction, and one validation-rule change made after the results (Addendum 4).";
 
 // The ONE place that decides which test, interval and band a case shows. Everything downstream reads r.test / r.interval / r.band / r.ctx.
 function pickRegional(reg, T, gate, val) {

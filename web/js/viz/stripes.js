@@ -1,4 +1,4 @@
-// Regional stripes (idea: Ed Hawkins' warming stripes, CC BY 4.0 design credit): one stripe per year, colour = the regional average
+// Regional stripes (idea: Ed Hawkins' warming stripes, CC BY 4.0 design credit): one stripe per year, color = the regional average
 // difference from baseline, symmetric diverging scale printed under the band. Slim by design: a header strip for a case page.
 // Question it answers: what does the regional average look like, year after year?
 // render(container, data, options) -> {destroy, el}. Options: height (default 72).
@@ -16,7 +16,7 @@ export async function render(container, data, options = {}) {
   const svg = sv("svg", { role: "img", "aria-labelledby": summaryId, focusable: "false", style: "display:block;max-width:100%" });
   const readout = el("p", { class: "viz-readout viz-num" }, "Point at a stripe to read its year.");
   const have = vals.filter((v) => v != null);
-  const summary = el("p", { class: "viz-summary", id: summaryId }, `Regional ${data.measure.toLowerCase()} over ${data.region_name}, ${yrs[0]}–${yrs[n - 1]}: one stripe per year, from ${signed(Math.min(...have), 2)} to ${signed(Math.max(...have), 2)} ${U} against the ${data.baseline.years[0]}–${data.baseline.years[1]} average. Colour range ±${RM} ${U}.`);
+  const summary = el("p", { class: "viz-summary", id: summaryId }, `Regional ${data.measure.toLowerCase()} over ${data.region_name}, ${yrs[0]}–${yrs[n - 1]}: one stripe per year, from ${signed(Math.min(...have), 2)} to ${signed(Math.max(...have), 2)} ${U} against the ${data.baseline.years[0]}–${data.baseline.years[1]} average. Color range ±${RM} ${U}.`);
   const root = el("figure", { class: "viz viz-stripes" }, svg, readout, summary, regionalDetails(data, "Regional values by year (table)", "stripes"),
     el("p", { class: "viz-note" }, "Stripes design: Ed Hawkins, ShowYourStripes (CC BY 4.0). Regional values are area-weighted averages on the case grid."));
   container.append(root);
@@ -38,7 +38,7 @@ export async function render(container, data, options = {}) {
       const x = ML + (i + 0.5) * sw, edge = i === 0 ? "start" : i === n - 1 ? "end" : "middle";
       if (!narrow || i === 0 || i === n - 1 || yrs[i] % 10 === 0) svg.append(sv("line", { x1: x, x2: x, y1: y1, y2: y1 + 4, stroke: tok("edge", "#7D7868") }), sv("text", { x: i === 0 ? Math.max(x - sw / 2, 0) : i === n - 1 ? Math.min(x + sw / 2, W) : x, y: y1 + 18, "text-anchor": edge, "font-size": 12, class: "t-muted num" }, String(yrs[i])));
     }
-    // colour key: 5 labelled ticks under the band, left aligned
+    // color key: 5 labeled ticks under the band, left aligned
     const kw = Math.min(260, W - 2), kx = 0, ky = y1 + 32;
     const defs = sv("defs"), gid = "stripe-grad-" + nextId("g");
     const grad = sv("linearGradient", { id: gid, x1: 0, x2: 1, y1: 0, y2: 0 });

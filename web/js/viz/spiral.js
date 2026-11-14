@@ -1,5 +1,5 @@
-// Climate spiral of a case region (idea: Ed Hawkins' climate spirals; this version is animated, colour-coded by difference from baseline
-// and drawn in the app's type). One loop per year, one point per month, distance from the centre = difference from the baseline ring.
+// Climate spiral of a case region (idea: Ed Hawkins' climate spirals; this version is animated, color-coded by difference from baseline
+// and drawn in the app's type). One loop per year, one point per month, distance from the center = difference from the baseline ring.
 // Question it answers: HOW did each season change over time?
 // Seasonal cases (for example June to September) loop through their own months only: the clock has one spoke per month in the record.
 // render(container, data, options) -> {destroy, play, pause, seek, el, timeline}. Options: year (start index), onYear(i).
@@ -144,7 +144,7 @@ export async function render(container, data, options = {}) {
   function onState() {
     ctl.sync();
     const yi = tl.index, m = mean(yi), first = mean(0);
-    summary.textContent = `Climate spiral for ${data.measure.toLowerCase()} over ${data.region_name}, ${M.years[0]}–${M.years[nY - 1]}, ${nM === 12 ? "all twelve months" : data.season_text}. Distance from the centre shows each month's difference from its own ${data.baseline.years[0]}–${data.baseline.years[1]} average; the thick ring is zero. ${M.years[yi]}: average ${m == null ? "n/a" : signed(m, 2) + " " + U}${yi > 0 && m != null && first != null ? ` (${M.years[0]}: ${signed(first, 2)} ${U})` : ""}. Range on the rings: ±${RM} ${U}.`;
+    summary.textContent = `Climate spiral for ${data.measure.toLowerCase()} over ${data.region_name}, ${M.years[0]}–${M.years[nY - 1]}, ${nM === 12 ? "all twelve months" : data.season_text}. Distance from the center shows each month's difference from its own ${data.baseline.years[0]}–${data.baseline.years[1]} average; the thick ring is zero. ${M.years[yi]}: average ${m == null ? "n/a" : signed(m, 2) + " " + U}${yi > 0 && m != null && first != null ? ` (${M.years[0]}: ${signed(first, 2)} ${U})` : ""}. Range on the rings: ±${RM} ${U}.`;
     options.onYear && options.onYear(yi);
   }
 

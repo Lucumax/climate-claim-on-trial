@@ -53,7 +53,7 @@ export function signed(v, d = 2) {
 }
 export const plain = (v, d = 2) => (v == null || Number.isNaN(v) ? "n/a" : minus(v.toFixed(d)));
 export const unitText = (data) => String(data.units_label || data.units || "").replace(/^1 \(unitless\)$/, "AOD (unitless)");
-/** Semantic ends of the colour scale, from what is measured: "cooler / warmer", "drier / wetter", "lower / higher aerosol". */
+/** Semantic ends of the color scale, from what is measured: "cooler / warmer", "drier / wetter", "lower / higher aerosol". */
 export function endpoints(data) {
   const m = String(data.measure || data.variable_plain || "").toLowerCase();
   if (/temperature/.test(m)) return { lo: "cooler than baseline", hi: "warmer than baseline" };
@@ -69,7 +69,7 @@ export const tickDecimals = (data) => {
   return 2;
 };
 
-// ------------------------------------------------------------------------------------------------ colour (OKLab mixing)
+// ------------------------------------------------------------------------------------------------ color (OKLab mixing)
 function hexRgb(hex) {
   const h = String(hex).trim().replace("#", "");
   const v = parseInt(h.length === 3 ? h.split("").map((c) => c + c).join("") : h.slice(0, 6), 16);
@@ -127,12 +127,12 @@ export function legend(data, scale, { caption = true } = {}) {
   const ticks = [-m, -m / 2, 0, m / 2, m];
   const box = el("div", { class: "viz-legend" });
   box.append(
-    el("div", { class: "viz-legend__bar", role: "img", "aria-label": `Colour scale from ${signed(-m, d)} (${e.lo}) to ${signed(m, d)} (${e.hi}) ${u}, neutral at zero`, style: `background:${scale.gradient()}` }),
+    el("div", { class: "viz-legend__bar", role: "img", "aria-label": `Color scale from ${signed(-m, d)} (${e.lo}) to ${signed(m, d)} (${e.hi}) ${u}, neutral at zero`, style: `background:${scale.gradient()}` }),
     el("div", { class: "viz-legend__ticks viz-num", "aria-hidden": "true" }, ticks.map((v) => el("span", { class: v === 0 ? "viz-legend__zero" : "" }, v === 0 ? "0" : signed(v, d)))),
     el("div", { class: "viz-legend__ends", "aria-hidden": "true" }, el("span", {}, "← " + e.lo), el("span", {}, e.hi + " →")),
   );
   if (typeof caption === "string") box.append(el("div", { class: "viz-legend__cap" }, caption));
-  else if (caption) box.append(el("div", { class: "viz-legend__cap" }, `${data.measure ? data.measure + ". " : ""}Difference from baseline, in ${u}. Baseline: ${data.baseline.text}. Values beyond ±${m} ${u} use the end colour.`));
+  else if (caption) box.append(el("div", { class: "viz-legend__cap" }, `${data.measure ? data.measure + ". " : ""}Difference from baseline, in ${u}. Baseline: ${data.baseline.text}. Values beyond ±${m} ${u} use the end color.`));
   return box;
 }
 

@@ -1,7 +1,7 @@
 // Climate "tornado": a 3D stack of yearly loops, one loop per year, oldest at the bottom, drawn on a floor disc and turning slowly.
 // Design idea: Ed Hawkins' climate spiral (2016). Inspiration only: this is our own Canvas 2D implementation (own 3D projection) on our own data.
 // Radius of a loop at a month = baseline radius + monthly difference from baseline x a constant (so a loop widens when the months run warmer).
-// Colour = year, on a viridis-style ramp (perceptually even, colour-blind safe). The newest drawn year is brighter and thicker.
+// Color = year, on a viridis-style ramp (perceptually even, color-blind safe). The newest drawn year is brighter and thicker.
 // Only a 12-month case makes full rings. A seasonal case (for example June to August) draws short arcs at the real calendar angles; nothing is stretched.
 // Descriptive only: no trend, test or verdict is computed. No year is called a record.
 // render(container, data, options) -> {destroy, play, pause, seek, rotate, el, stats}. Options: year (start index), autoplay (grow from the first year), rotate (false = no auto-turn), onYear(i).
@@ -98,7 +98,7 @@ export async function render(container, data, options = {}) {
   function summaryText() {
     const a = avg(...firstRange), b = avg(...lastRange);
     const what = full ? "Each ring is one year of twelve months" : `Each arc is one year of ${data.season_text} (only these months are in this case, so no full ring can be drawn)`;
-    let s = `Climate tornado for ${String(data.measure || "").toLowerCase()} over ${data.region_name}, ${M.years[0]}–${M.years[nY - 1]}. ${what}, oldest at the bottom, newest at the top. Distance from the centre is the month's difference from its own ${data.baseline.years[0]}–${data.baseline.years[1]} average, added to a constant offset, so the bright ring at the floor marks zero and a wider loop means ${E.hi}.`;
+    let s = `Climate tornado for ${String(data.measure || "").toLowerCase()} over ${data.region_name}, ${M.years[0]}–${M.years[nY - 1]}. ${what}, oldest at the bottom, newest at the top. Distance from the center is the month's difference from its own ${data.baseline.years[0]}–${data.baseline.years[1]} average, added to a constant offset, so the bright ring at the floor marks zero and a wider loop means ${E.hi}.`;
     if (a != null && b != null) {
       const d = b - a, how = Math.abs(d) < 0.02 * (vMax - vMin) ? "stay about the same" : d > 0 ? "widen" : "narrow";
       s += ` The loops ${how}: averaged over the months, ${yr(firstRange)} sits ${signed(a, 2)} ${U} from the baseline ring and ${yr(lastRange)} sits ${signed(b, 2)} ${U}.`;
@@ -116,7 +116,7 @@ export async function render(container, data, options = {}) {
   const stops = []; for (let i = 0; i <= 10; i++) stops.push(`${rgb(viridis(i / 10))} ${i * 10}%`);
   const legendNode = el("div", { class: "tor-legend" },
     el("div", { class: "tor-legend__bar", "aria-hidden": "true", style: `background:linear-gradient(90deg, ${stops.join(", ")})` }),
-    el("div", { class: "tor-legend__ends viz-num" }, el("span", {}, `${M.years[0]} (bottom)`), el("span", { class: "tor-legend__mid" }, "Colour = year"), el("span", {}, `${M.years[nY - 1]} (top)`)));
+    el("div", { class: "tor-legend__ends viz-num" }, el("span", {}, `${M.years[0]} (bottom)`), el("span", { class: "tor-legend__mid" }, "Color = year"), el("span", {}, `${M.years[nY - 1]} (top)`)));
   const playBtn = el("button", { type: "button", class: "viz-btn viz-btn--primary", onclick: () => onPlayClick() }, reduce ? "Show next year" : `Play from ${M.years[0]}`);
   const rotBtn = el("button", { type: "button", class: "viz-btn", onclick: () => api.rotate(!autoRot) }, "Pause turning");
   const scrubId = nextId("tor-scrub");
@@ -124,7 +124,7 @@ export async function render(container, data, options = {}) {
   const rangeOut = el("output", { class: "viz-year viz-num", for: scrubId });
   const controls = el("div", { class: "viz-controls tor-controls" }, playBtn, reduce ? null : rotBtn, el("div", { class: "viz-scrub" }, range, rangeOut));
   const note = el("p", { class: "viz-note" },
-    `Design idea: Ed Hawkins' climate spiral (2016). Our own drawing and data. Each month is compared with the same month's ${data.baseline.years[0]}–${data.baseline.years[1]} average (the bright baseline ring, 0), and a constant offset keeps every loop clear of the centre. ${full ? "" : "Seasonal case: arcs sit at their real calendar angles and are never stretched into a ring; a full ring needs a 12-month record. "}${data.product_label}. Drag to turn it.`);
+    `Design idea: Ed Hawkins' climate spiral (2016). Our own drawing and data. Each month is compared with the same month's ${data.baseline.years[0]}–${data.baseline.years[1]} average (the bright baseline ring, 0), and a constant offset keeps every loop clear of the center. ${full ? "" : "Seasonal case: arcs sit at their real calendar angles and are never stretched into a ring; a full ring needs a 12-month record. "}${data.product_label}. Drag to turn it.`);
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Monthly values (table)"), dataTable(["Year"].concat(M.labels.map((l) => `${l} (${U})`)), rows, `Monthly regional difference from baseline in ${U}`));
   const root = el("figure", { class: "viz viz-tornado" }, yearOut, stage, legendNode, controls, summary, note, details);
   container.append(root);

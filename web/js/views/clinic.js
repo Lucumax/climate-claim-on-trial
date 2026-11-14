@@ -37,7 +37,7 @@ export function supports(c, info) {
   const share = c.gate.cells && last ? `${pctWhole(last.flagged_fraction_claimed)} of the mapped area is flagged in the claimed direction` : null;
   const dataset = (c.product && c.product.name.replace(/\s*\(.*$/, "").replace(/,.*$/, "")) || "this dataset";
   const lead = txt => h("span", {}, h("b", {}, (v.scoped || v.label) + ". "), txt);
-  if (v.branch === "withheld") return h("span", {}, h("b", {}, "This record cannot settle it. "), `Here is what it shows descriptively: ${s0} moved ${slope}, ${per}, with no significance statement. It is a description, not a verdict.`);
+  if (v.branch === "withheld") return h("span", {}, h("b", {}, "Withheld. "), `The record cannot settle it. Here is what it shows descriptively: ${s0} moved ${slope}, ${per}, with no significance statement. It is a description, not a verdict.`);
   if (v.id === "supported") return lead(`${S} changed by ${slope}, ${per}${interval}, and ${share || "the regional test is significant"}. This is a ${c.period.n}-year trend in one dataset. It does not explain any single year or event, or why it changed.`);
   if (v.id === "partly_supported") return lead(`${S} changed by ${slope}, ${per}${interval}, but ${share ? "only " + share : "the map does not clearly agree"}. A regional average moved; the rest of the map did not clearly show it. It does not describe any single event.`);
   if (v.id === "contradicted") return lead(`${S} moved the other way: ${slope}, ${per}${interval}. This is what ${dataset} shows for this box and period.`);

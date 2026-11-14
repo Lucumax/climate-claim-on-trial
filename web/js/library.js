@@ -1,4 +1,4 @@
-// NASA data library for Investigate (satellite observations and NASA model output, labelled by the manifest "kind"): precomputed 1-degree monthly grids, read straight from the page (no server).
+// NASA data library for Investigate (satellite observations and NASA model output, labeled by the manifest "kind"): precomputed 1-degree monthly grids, read straight from the page (no server).
 // Format (data/library/manifest.json): 30 x 30 degree tiles, each gunzipped to [all high bytes][all low bytes] of int16 values,
 // layout [month][30 rows north to south][30 columns west to east], value = int16 * scale + offset, -32768 = no data.
 // Tiles that are entirely no-data are not written. We load only the tiles that intersect the box and keep them for the visit.
@@ -23,7 +23,7 @@ const PICK = {
   precip_imerg: { name: "Rainfall and snow", group: "Water" },
   tws_grace: { name: "Water stored on land", group: "Water" },
   airs_tair: { name: "Surface air temperature", group: "Temperature" },
-  airs_h2o: { name: "Water vapour in the air", group: "Water" },
+  airs_h2o: { name: "Water vapor in the air", group: "Water" },
   soil_gldas: { name: "Soil moisture, top 10 cm", group: "Water" },
   et_gldas: { name: "Evapotranspiration", group: "Water" },
   lst_day_myd11: { name: "Land surface temperature", group: "Temperature" },
@@ -45,12 +45,12 @@ export const pastQuality = (v, y1) => !!(v && v.goodLast != null && y1 > v.goodL
 
 // One visible line on what each product cannot see, so the type of evidence is clear before any result (the full notes stay in the manifest caveats).
 const LIMITS = {
-  lst_day_myd11: "Clear-sky retrieval: cloudy days are not sampled, and this is skin temperature, not air temperature.",
-  snow_mod10cm: "Clear-sky retrieval: clouds hide the ground, and polar night has no data.",
-  airs_tair: "Retrieval, not a station reading: very cloudy scenes are under-sampled.",
-  airs_h2o: "Retrieval: very cloudy scenes are under-sampled.",
+  lst_day_myd11: "Clear-sky satellite estimate: cloudy days are not sampled, and this is skin temperature, not air temperature.",
+  snow_mod10cm: "Clear-sky satellite estimate: clouds hide the ground, and polar night has no data.",
+  airs_tair: "Satellite estimate, not a station reading: very cloudy scenes are under-sampled.",
+  airs_h2o: "Satellite estimate: very cloudy scenes are under-sampled.",
   tws_grace: "Gravity sensing at about 300 km resolution: total water, not groundwater alone.",
-  precip_imerg: "Gauge-calibrated satellite estimate: weaker at high latitudes, over snow and in steep terrain.",
+  precip_imerg: "Satellite estimate adjusted using rain-gauge measurements: weaker at high latitudes, over snow and in steep terrain.",
   soil_gldas: "Model output: it follows the model's weather inputs, which changed over time.",
   et_gldas: "Model output: it follows the model's weather inputs, which changed over time.",
 };
@@ -108,7 +108,7 @@ async function getTile(v, r, c, signal) {
   return p;
 }
 
-// Which 1-degree cells have their centre inside the box, grouped by tile. A box that holds no cell centre uses the one cell that holds its centre.
+// Which 1-degree cells have their center inside the box, grouped by tile. A box that holds no cell center uses the one cell that holds its center.
 function cellsIn(v, box) {
   const list = []; let fallback = false;
   const scan = b => {
@@ -179,7 +179,7 @@ export async function libraryRegional({ variable: v, box, y0, y1, onProgress, si
     rows.push({ year: yr[m], month: cal[m] + 1, value: +(CW[cal[m]] / CWt[cal[m]] + A[m] / WA[m]).toFixed(5) });
   }
   if (!rows.length) throw new Error("The library returned no values for this measurement and place.");
-  const note = (whole ? `Every 1-degree cell in the library (${nCells.toLocaleString("en-US")} with data)` : `${nCells} one-degree cells inside the box`) + `, each compared with its own monthly average over ${y0}–${y1}, then averaged with weight proportional to area (cosine of latitude). That way a cell that drops out of view cannot fake a trend. A month counts only if at least 80% of the usable area has a value` + (dropped ? `; ${dropped} month${dropped === 1 ? " was" : "s were"} dropped for that reason` : "") + (fallback ? ". The box is smaller than one cell, so the cell that holds its centre is used" : "") + ".";
+  const note = (whole ? `Every 1-degree cell in the library (${nCells.toLocaleString("en-US")} with data)` : `${nCells} one-degree cells inside the box`) + `, each compared with its own monthly average over ${y0}–${y1}, then averaged with weight proportional to area (cosine of latitude). That way a cell that drops out of view cannot fake a trend. A month counts only if at least 80% of the usable area has a value` + (dropped ? `; ${dropped} month${dropped === 1 ? " was" : "s were"} dropped for that reason` : "") + (fallback ? ". The box is smaller than one cell, so the cell that holds its center is used" : "") + ".";
   return { stub: false, library: true, source: v.source, units: v.units, rows, note, method: whole ? "world" : "regional", n_tiles: nTiles, n_cells: nCells, first_year: rows[0].year, last_year: rows[rows.length - 1].year, whole, fallback, dropped };
 }
 

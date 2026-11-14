@@ -1,5 +1,5 @@
 // Exhibit A: per-cell map. Each cell is drawn at its true latitude/longitude over a real basemap (see basemap.js).
-// Categories (colour AND shape, so colour is never the only cue): flagged rising (+), flagged falling (v), not flagged (dot), no data (hatch).
+// Categories (color AND shape, so color is never the only cue): flagged rising (+), flagged falling (v), not flagged (dot), no data (hatch).
 import { h, s, pct, latStr, lonStr, signed, U } from "./util.js";
 import { categoryCounts } from "./data.js";
 import { makeView, basemapLayers, frameLayer } from "./basemap.js";

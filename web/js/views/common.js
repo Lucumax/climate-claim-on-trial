@@ -46,12 +46,12 @@ export function copyButton(label, getText, filename, what = "Finding") {
 // Placeholder for the Headline clinic strip (another worker fills it). Empty slots are hidden by CSS (.clinic-slot:empty).
 export const clinicSlot = (caseId) => h("div", { class: "clinic-slot", id: "clinic-slot", "data-case": caseId });
 
-// Neutral provenance chips: what kind of data this is, never a warning colour.
+// Neutral provenance chips: what kind of data this is, never a warning color.
 export const kindChip = kind => h("span", { class: "chip" }, kind === "model_reanalysis" ? "Model-based data" : "Satellite observation");
 
 export const disc = (title, ...kids) => h("details", { class: "disc" }, h("summary", {}, title), h("div", { class: "disc-body" }, ...kids));
 
-// Short dataset name for one-line scopes: the product behind a case, without the catalogue boilerplate.
+// Short dataset name for one-line scopes: the product behind a case, without the catalog boilerplate.
 export function datasetName(c) {
   const n = (c.product && c.product.name) || "";
   if (/MERRA-2/.test(n)) return "MERRA-2 (NASA POWER)";

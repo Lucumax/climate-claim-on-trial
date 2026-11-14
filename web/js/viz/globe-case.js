@@ -1,4 +1,4 @@
-// Globe of a case: the real cells of the case, coloured by their yearly difference from baseline, on a muted NASA Blue Marble.
+// Globe of a case: the real cells of the case, colored by their yearly difference from baseline, on a muted NASA Blue Marble.
 // Question it answers: WHERE is it changing?
 // render(container, data, options) -> {destroy, play, pause, seek, setFlat, el}.
 // Rendering: globe.gl (vendored, MIT) with the cells painted into the globe texture (one canvas, smooth year-to-year blend);

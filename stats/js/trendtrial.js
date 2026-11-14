@@ -205,7 +205,7 @@ export const LADDER_STEPS = [
   { id: "raw", name: "Raw Mann-Kendall",
     note: "The trend test on the raw seasonal values, treating every year as an independent draw." },
   { id: "anomaly", name: "Seasonal anomalies",
-    note: "Each month is compared with its own average first, so a changing mix of months cannot fake a trend." },
+    note: "Each month is compared with its own average first. That reduces the effect of a changing mix of months; it does not remove every sampling bias." },
   { id: "autocorr", name: "Autocorrelation correction",
     note: "Neighbouring years are not independent, so the test is made more cautious. The method used is named on the result (correctionName)." },
 ];

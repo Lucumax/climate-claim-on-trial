@@ -1,5 +1,5 @@
 """Shared helpers for the NASA satellite library (A5). Token comes from the environment via data/scripts/_token.py; never printed or stored."""
-import json, hashlib, re, sys, time, datetime as dt, importlib.util
+import json, hashlib, os, re, sys, time, datetime as dt, importlib.util
 from pathlib import Path
 import numpy as np, requests
 
@@ -92,7 +92,8 @@ def wmean(cube, mask=None, row0=0):
 import gzip
 TILE = 30
 SENT = -32768
-SCRATCH = Path(r"<local-temp>")
+# Staging folder for the intermediate arrays. Set CCOT_SCRATCH to put it elsewhere (for example on a larger disk); the default is scratch/stage under the repository root.
+SCRATCH = Path(os.environ.get("CCOT_SCRATCH") or (ROOT / "scratch" / "stage"))
 
 def month_axis(y0, m0, n):
     return [((y0 * 12 + m0 - 1 + i) // 12, (y0 * 12 + m0 - 1 + i) % 12 + 1) for i in range(n)]

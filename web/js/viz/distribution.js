@@ -45,7 +45,7 @@ export async function render(container, data, options = {}) {
 
   if (options.tableOnly) {            // the docket's Statistics section owns the numbers: same stats, no chart
     const rowsT = stats.map((s) => [s.label + (s.partial ? " (partial)" : ""), String(s.nYears), num(s.n), signed(s.mean, 2), plain(s.sd, 2), signed(s.p10, 2), signed(s.p90, 2)]);
-    const node = dataTable(["Period", "Years", "Cell-years", `Mean (${U})`, `Spread, SD (${U})`, "10th percentile", "90th percentile"], rowsT, "Distribution summary by period; pooled cell-year anomalies, unweighted");
+    const node = dataTable(["Period", "Years", "Cell-years", `Mean, ${U}`, `Spread (SD), ${U}`, "10th percentile", "90th percentile"], rowsT, "Distribution summary by period; pooled cell-year anomalies, unweighted");
     return { el: node, destroy() { node.remove(); } };
   }
   let scale = makeScale(data), destroyed = false, S = 0, G = null, cur = clamp(options.year != null ? options.year : nG - 1, 0, nG - 1), fT = cur;
@@ -58,7 +58,7 @@ export async function render(container, data, options = {}) {
   const ctl = controls(tl, { n: nG, labelFn: (i) => stats[i].label + (stats[i].partial ? " (partial)" : ""), name: "period", wide: true, play: false });
   const rows = stats.map((s) => [s.label + (s.partial ? " (partial)" : ""), String(s.nYears), num(s.n), signed(s.mean, 2), plain(s.sd, 2), signed(s.p10, 2), signed(s.p90, 2)]);
   const details = options.table === false ? null : el("details", { class: "viz-details" }, el("summary", {}, "Summary numbers by period (table)"),
-    dataTable(["Period", "Years", "Cell-years", `Mean (${U})`, `Spread, SD (${U})`, "10th percentile", "90th percentile"], rows, "Distribution summary by period; pooled cell-year anomalies, unweighted"));
+    dataTable(["Period", "Years", "Cell-years", `Mean, ${U}`, `Spread (SD), ${U}`, "10th percentile", "90th percentile"], rows, "Distribution summary by period; pooled cell-year anomalies, unweighted"));
   const note = el("p", { class: "viz-note" }, `Population: pooled cell-year anomalies, unweighted. Every grid cell counts once for every year, each against its own ${data.baseline.years[0]}–${data.baseline.years[1]} baseline, so a period's mean here differs from the area-weighted regional record. Neighbouring cells and the years in a period are correlated, so the curves describe the data and are not independent observations; no test is run on them. ${outside ? `The horizontal range is ±${D} ${U}; ${num(outside)} of ${num(pooled.length)} values (${(100 * outside / pooled.length).toFixed(2)}%) lie beyond it and are not drawn.` : `The horizontal range is ±${D} ${U} and holds every value.`} Curves use one shared smoothing width of ${bw.toFixed(2)} ${U}. ${data.product_label}.`);
   const root = el("figure", { class: "viz viz-distribution" }, line, stage, ctl.node, summary, details, note);
   container.append(root);

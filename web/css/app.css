@@ -491,7 +491,7 @@ footer.foot .links { display: flex; gap: var(--sp-5); flex-wrap: wrap; }
 .fa-view .case-meta .chip { margin: var(--sp-2) var(--sp-2) 0 0; }
 .fa-view .workspace { display: grid; grid-template-columns: 17rem minmax(0, 1fr) 19rem; gap: var(--sp-5); align-items: start; }
 .fa-view .workspace > * { min-width: 0; }
-.fa-view .hearings { background: var(--rail); color: var(--rail-text); border-radius: var(--radius); overflow: hidden; }
+.fa-view .hearings { position: sticky; top: var(--sp-4); align-self: start; background: var(--rail); color: var(--rail-text); border-radius: var(--radius); overflow: hidden; }
 .fa-view .hearings-head { padding: var(--sp-4) var(--sp-5) var(--sp-3); border-bottom: 1px solid var(--rail-line); }
 .fa-view .hearings-head .eyebrow { color: var(--rail-muted); }
 .fa-view .hearings-head h2 { margin: var(--sp-1) 0 0; font-size: 1.5rem; }

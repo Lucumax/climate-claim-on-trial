@@ -24,6 +24,9 @@ function plainReason(c) {
     : "The checks that a verdict depends on did not pass for this record.";
   return lead + " A ruling here would not be honest, so we withhold it.";
 }
+// Persistence is always said the same way: the bundle's lag-1 autocorrelation is computed after removing the linear trend; the raw one is shown beside it.
+const lag1 = y => { const a = y.slice(0, -1), b = y.slice(1), m = x => x.reduce((p, q) => p + q, 0) / x.length, ma = m(a), mb = m(b); let n = 0, da = 0, db = 0; a.forEach((v, i) => { n += (v - ma) * (b[i] - mb); da += (v - ma) ** 2; db += (b[i] - mb) ** 2; }); return n / Math.sqrt(da * db); };
+export const persistenceText = c => c.phi_hat == null ? null : `after removing the linear trend (${signed(c.phi_hat, 2)}; raw ${signed(lag1(c.regional.anomaly.filter(v => v != null)), 2)})`;
 const scopeLine = c => [cap(c.region.name), c.season.toLowerCase(), range(c.period.start, c.period.end), datasetName(c)].join(" · ");
 
 export function caseList(b) {
@@ -182,11 +185,12 @@ export function caseDocket(b, c) {
     h("div", { class: "statgrid" },
       stat("Sen slope per decade", `${signed(r.sen.slope_per_decade, 2)} ${u}`, iv ? `${iv.label}: ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : `95% interval: ${NOT_SHOWN.toLowerCase()}`),
       t ? stat(t.title, `p = ${fmtPx(t.p)}`, `${sigLabel(t.p)}. A pattern this strong would be rare if there were no trend.`) : stat("Regional test", withheld ? "Withheld" : "Not shown", withheld ? "No test kept its false-alarm rate near 5% on records like this one, so no significance statement is made." : "It did not pass its calibration check, so no significance statement is made."),
+      c.phi_hat != null ? stat("Persistence (lag-1)", signed(c.phi_hat, 2), `Year-to-year memory, ${persistenceText(c)}. ${c.phi_hat < -0.1 ? "Negative: a high year tends to be followed by a lower one." : c.phi_hat > 0.1 ? "Positive: a high year tends to be followed by another high one." : "Near zero: neighbouring years barely resemble each other."}`) : null,
       t ? stat("Variance factor", fac(t), "Above 1.00 means neighbouring years resemble each other, and the test widens to allow for it") : null),
     h("div", { class: "baseline" }, h("h3", {}, "Pooled distribution by period"),
       h("p", { class: "muted small" }, "Every grid cell in every year of each period, each against its own baseline, unweighted. It describes the data; it is not a test."),
       distTable, h("p", { style: "margin:8px 0 0" }, h("button", { class: "btn-text", type: "button", onclick: () => ex.select("distribution", { scroll: true }) }, "Inspect distribution"))),
-    t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? "No autocorrelation correction was chosen here: simulations on synthetic series with this series' persistence showed this test keeps false alarms near 5%. " : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
+    t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? "No autocorrelation correction was chosen here: simulations on synthetic series with this series' persistence " + (persistenceText(c) || "") + " showed this test keeps false alarms near 5%. " : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
     h("p", { class: "small muted" }, iv ? `${iv.label}. How often such intervals contain the true slope was measured on synthetic series. It is not a range for individual years. ` : `Interval: ${NOT_SHOWN} `, r.band_lo ? r.band_meaning : `Band: ${NOT_SHOWN}`),
     ctxRows.length ? h("div", { class: "baseline" }, h("h3", {}, "Context, not the ruling"), ctxRows.map(x => h("p", { class: "muted small", style: "margin:0 0 4px" }, x))) : null,
     h("div", { class: "baseline" }, h("h3", {}, "The familiar baseline: least squares and t-test"), h("p", { class: "muted small" }, "Context only. The ruling rests on the Sen slope and the regional test above."),

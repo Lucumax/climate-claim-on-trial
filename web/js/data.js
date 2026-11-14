@@ -126,10 +126,11 @@ function fromReal(r) {
     season: seasonName(cl.season_months), period: { start: cl.period[0], end: cl.period[1], n: cl.period[1] - cl.period[0] + 1 },
     data_kind: cl.is_model_data ? "model_reanalysis" : "satellite_observation",
     grid: { lat: g.lat, lon: g.lon, n_lat: g.ny, n_lon: g.nx, dlat: g.lat.length > 1 ? g.lat[1] - g.lat[0] : 1, dlon: g.lon.length > 1 ? g.lon[1] - g.lon[0] : 1 },
+    phi_hat: val.claim_phi_hat != null ? val.claim_phi_hat : null,
     cell_slope_per_decade: F.slope_per_decade.map((x, i) => F.valid[i] ? x : null),
     ladder, cell_test_name: cellTest, cell_test_key: cells.cell_test, cells_mode: cells.cells_mode || "bh_flags", bh_q: r.params.bh_q, alpha: r.params.alpha, thresholds: { breadth: r.params.breadth_min, local: r.params.local_min },
     regional: {
-      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${String(reg.units).replace("degC", "°C")}`,
+      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${String(reg.units).replace("degC", "°C").replace(/^1 \(unitless\)$/, "AOD (unitless)")}`,
       sen_line: reg.sen_line, test: R_.test, interval: iv, ctx: R_.ctx,
       sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },

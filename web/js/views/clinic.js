@@ -31,7 +31,7 @@ const pctWhole = f => pct(f, 0);
 
 // Fixed templates, one per verdict branch. Every number comes from the bundle (regional.sen, regional.interval, last hearing, period).
 export function supports(c, info) {
-  const r = c.regional, u = /unitless/.test(r.units) ? "" : U(r.units), v = c.verdict, ivl = r.interval, last = c.ladder[c.ladder.length - 1];
+  const r = c.regional, u = U(r.units), v = c.verdict, ivl = r.interval, last = c.ladder[c.ladder.length - 1];
   const noun = (info && info.noun) || c.finding.variable.replace(/\s*\(.*?\)/g, ""), S = `${cap(noun)} in ${c.region.name}`, s0 = `${noun} in ${c.region.name}`, per = range(c.period.start, c.period.end);
   const slope = `${signed(r.sen.slope_per_decade, 2)}${u ? " " + u : ""} per decade`, interval = ivl ? ` (95% interval ${signed(ivl.lo, 2)} to ${signed(ivl.hi, 2)})` : "";
   const share = c.gate.cells && last ? `${pctWhole(last.flagged_fraction_claimed)} of the mapped area is flagged in the claimed direction` : null;

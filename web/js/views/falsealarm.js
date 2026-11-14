@@ -220,8 +220,7 @@ export function falseAlarm() {
 
   const node = h("div", { class: "fa-view fa-pending" },
     h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Exhibit 0"), heading,
-    h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit), rulingColumn),
-    sameTrap());
+    h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit, sameTrap()), rulingColumn));
 
   // stylesheet: load it with the view, show the page when it is ready
   const css = document.querySelector('link[data-fa-css]') || Object.assign(document.createElement("link"), { rel: "stylesheet", href: "css/falsealarm.css" });

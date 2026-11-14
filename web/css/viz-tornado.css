@@ -1,0 +1,23 @@
+/* Climate tornado (web/js/viz/tornado.js). Design idea: Ed Hawkins' climate spiral (2016); our own drawing and data.
+   The panel is dark in both themes (it is a night-sky style view, like the original idea); the tokens below set it per theme.
+   Label colours on the panel keep at least 7:1 contrast. Loops use a viridis-style ramp (colour-blind safe), set in JS. */
+:root {
+  --tor-bg: #172636;  --tor-floor: #20344A;  --tor-floor-line: #6F879A;  --tor-grid: #4A6177;  --tor-base: #FFFFFF;
+  --tor-text: #F4EDDE; --tor-muted: #C8D2D8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --tor-bg: #0A141D; --tor-floor: #15222E; --tor-floor-line: #5B7183; --tor-grid: #3A4E5F; --tor-base: #F4EDDE; --tor-text: #F4EDDE; --tor-muted: #BEC9CE; }
+}
+:root[data-theme="dark"] { --tor-bg: #0A141D; --tor-floor: #15222E; --tor-floor-line: #5B7183; --tor-grid: #3A4E5F; --tor-base: #F4EDDE; --tor-text: #F4EDDE; --tor-muted: #BEC9CE; }
+
+.viz-tornado .tor-stage { background: var(--tor-bg); border: 1px solid var(--line, #C9C3B5); max-width: 900px; margin-inline: auto; }
+.viz-tornado .tor-canvas { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.viz-tornado .tor-canvas.is-dragging { cursor: grabbing; }
+.viz-tornado .tor-year { max-width: 900px; margin-inline: auto; }
+.viz-tornado .tor-legend, .viz-tornado .tor-controls, .viz-tornado .viz-summary, .viz-tornado .viz-note, .viz-tornado .viz-details { max-width: 900px; margin-inline: auto; }
+.viz-tornado .tor-legend { padding-top: var(--sp-3, 12px); max-width: 420px; }
+.viz-tornado .tor-legend__bar { height: 10px; border-radius: 2px; border: 1px solid var(--edge, #7D7868); }
+.viz-tornado .tor-legend__ends { display: flex; justify-content: space-between; gap: var(--sp-2, 8px); font-size: 14px; line-height: 20px; color: var(--muted, #56616A); padding-top: 2px; }
+.viz-tornado .tor-legend__mid { color: var(--ink, #192D40); }
+@media (max-width: 480px) { .viz-tornado .tor-legend { max-width: none; } .viz-tornado .tor-controls .viz-btn { flex: 1 1 140px; } }
+@media (prefers-reduced-motion: reduce) { .viz-tornado .tor-canvas { cursor: grab; } }

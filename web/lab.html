@@ -7,6 +7,7 @@
 <title>Visual modules lab</title>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/viz.css">
+<link rel="stylesheet" href="css/viz-tornado.css">
 <script src="js/theme.js"></script>
 </head>
 <body class="lab">
@@ -47,7 +48,39 @@
     <p class="lab-q"><b>What does the regional average look like, year after year?</b> One stripe per year; optional header strip.</p>
     <div id="m-stripes"></div>
   </section>
+  <section class="lab-section" aria-labelledby="h-tornado">
+    <h2 id="h-tornado">Tornado</h2>
+    <p class="lab-q"><b>How did the whole year change, loop on loop?</b> One ring per year, stacked with the oldest at the bottom; a wider ring means warmer months. Needs a full 12-month record for rings; seasonal cases show short arcs at their real calendar angles.</p>
+    <div id="m-tornado"></div>
+  </section>
 </main>
 <script type="module" src="js/viz/lab.js"></script>
+<script type="module">
+// Tornado section driver (own loader so it does not depend on lab.js): follows the Case selector.
+import { el } from "./js/viz/common.js";
+const host = document.getElementById("m-tornado"), sel = document.getElementById("case"), params = new URLSearchParams(location.search);
+let handle = null, token = 0;
+window.__labHandles = window.__labHandles || {};
+async function mount(id) {
+  const my = ++token;
+  if (handle) { try { handle.destroy(); } catch (e) { /* ignore */ } handle = null; }
+  host.replaceChildren();
+  if (params.has("only") && params.get("only") !== "tornado") return;
+  try {
+    const data = await (await fetch(`data/viz/${id}.json`)).json();
+    if (my !== token) return;
+    const mod = await import("./js/viz/tornado.js");
+    handle = await mod.render(host, data, { year: params.has("year") ? +params.get("year") : undefined, autoplay: params.get("tornado") === "play" });
+    window.__labHandles.tornado = handle;
+  } catch (e) {
+    host.append(el("p", { class: "viz-fallback" }, "This view could not start (tornado): " + (e && e.message)));
+    console.error("tornado", e);
+  }
+}
+const start = () => mount(sel.value || "C-C");
+sel.addEventListener("change", () => mount(sel.value));
+// the selector is filled by lab.js; wait until it has options
+(function wait(n) { if (sel.options.length || n > 50) start(); else setTimeout(() => wait(n + 1), 60); })(0);
+</script>
 </body>
 </html>

@@ -14,3 +14,7 @@ File: globe.gl.min.js. Version 2.46.2, https://github.com/vasturiano/globe.gl, v
 ## Blue Marble texture (visual modules, lab page)
 
 File: blue-marble-4096.webp (4096 x 2048, WebP quality 66, re-encoded from the 4096 x 2048 JPEG distributed in the three-globe example images, https://github.com/vasturiano/three-globe/tree/master/example/img). Credit: NASA Earth Observatory / Blue Marble: Next Generation (https://visibleearth.nasa.gov/collection/1484/blue-marble). NASA imagery is in the public domain (https://www.nasa.gov/nasa-brand-center/images-and-media/); no endorsement by NASA is implied. It is desaturated and darkened in the browser so that data colours stand out. Used only by web/js/viz/globe-case.js (lab page).
+
+## Climate tornado (visual modules, lab page): design idea credit
+
+File: web/js/viz/tornado.js (with web/css/viz-tornado.css). Design idea: Ed Hawkins' climate spiral (2016), the stacked "tornado" version of the climate spiral, https://www.climate-lab-book.ac.uk/spirals/. Inspiration only: our own Canvas 2D drawing code and 3D projection, our own data (web/data/viz/<case>.json); no code, image or data from the original was copied or downloaded. The year colour ramp is the viridis map (CC0, Stefan van der Walt and Nathaniel Smith), re-typed as ten colour stops. The caption on the view carries the credit "Design idea: Ed Hawkins' climate spiral (2016)".

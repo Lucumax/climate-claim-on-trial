@@ -1,0 +1,193 @@
+{
+ "label": "POST-RESULT EXPLORATORY check (round-3 science judge, STATS_LOG 18:06 ET entry). Not the registered test, not a gate; no verdict, bundle or registered number depends on it.",
+ "cell_size_in_trendless_simulated_cells_by_memory": {
+  "note": "share of cells flagged by the per-cell p < 0.05 rule in trendless simulated C-B fields (nominal 0.05), and whether the Benjamini-Hochberg map check B2 passed, by true memory; read from validation_results.json",
+  "by_phi": {
+   "0.0": {
+    "hr_all_lags": {
+     "cell_size": 0.04606026785714286,
+     "B2_passed": true
+    },
+    "tfpw": {
+     "cell_size": 0.049229910714285716,
+     "B2_passed": true
+    }
+   },
+   "0.1": {
+    "hr_all_lags": {
+     "cell_size": 0.06214657738095238,
+     "B2_passed": true
+    },
+    "tfpw": {
+     "cell_size": 0.06734002976190476,
+     "B2_passed": true
+    }
+   },
+   "0.2": {
+    "hr_all_lags": {
+     "cell_size": 0.0874516369047619,
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": 0.09702752976190476,
+     "B2_passed": false
+    }
+   },
+   "0.3": {
+    "hr_all_lags": {
+     "cell_size": 0.11971726190476191,
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": 0.13623511904761904,
+     "B2_passed": false
+    }
+   },
+   "0.45": {
+    "hr_all_lags": {
+     "cell_size": 0.17526041666666667,
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": 0.22227306547619047,
+     "B2_passed": false
+    }
+   },
+   "0.6": {
+    "hr_all_lags": {
+     "cell_size": 0.2413095238095238,
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": 0.33703125,
+     "B2_passed": false
+    }
+   },
+   "-0.3": {
+    "hr_all_lags": {
+     "cell_size": 0.012652529761904762,
+     "B2_passed": true
+    },
+    "tfpw": {
+     "cell_size": 0.017745535714285714,
+     "B2_passed": true
+    }
+   },
+   "-0.5": {
+    "hr_all_lags": {
+     "cell_size": 0.0035602678571428573,
+     "B2_passed": true
+    },
+    "tfpw": {
+     "cell_size": 0.009620535714285715,
+     "B2_passed": true
+    }
+   },
+   "-0.7": {
+    "hr_all_lags": {
+     "cell_size": 0.0007142857142857143,
+     "B2_passed": true
+    },
+    "tfpw": {
+     "cell_size": 0.006915922619047619,
+     "B2_passed": true
+    }
+   }
+  }
+ },
+ "round3_tfpw_recomputed": {
+  "flagged_cells": 300,
+  "flagged_area_frac": 0.22299445016440853,
+  "flagged_in_direction_cells": 293,
+  "flagged_in_direction_area_frac": 0.2177231652535776,
+  "unadjusted_p05_area_frac": 0.31307684146205234
+ },
+ "round2_hr_all_lags_recomputed": {
+  "flagged_cells": 210,
+  "flagged_area_frac": 0.15583519800691983,
+  "flagged_in_direction_cells": 203,
+  "flagged_in_direction_area_frac": 0.15056391309608885,
+  "unadjusted_p05_area_frac": 0.27344458174034353
+ },
+ "round3_in_bundle": {
+  "flagged_cells": 300,
+  "flagged_area_frac": 0.22299,
+  "flagged_in_direction_area_frac": 0.21772
+ },
+ "round2_in_log": "210 cells, 15.6% of area (STATS_LOG 12:20 ET entry); round2_reference.json has in-direction 15.06%",
+ "map_power_at_25_seasons_from_validation_results": {
+  "note": "share of truly changing cells found (bh_power) in the simulated C-B cell family (n 25); read from stats/out/validation/validation_results.json (round-3 file), no new simulation. positive = 30% of cells carry 0.3 to 0.6 SD per decade; mixed = mixed-sign truth.",
+  "scenarios": {
+   "CF-CB-mixed-phi0.0": {
+    "hr_registered": 0.036848635235732015,
+    "hr_all_lags": 0.03741935483870967,
+    "yue_wang": 0.024367245657568235,
+    "tfpw": 0.03449131513647642,
+    "n": 25
+   },
+   "CF-CB-positive-phi0.0": {
+    "hr_registered": 0.0334863523573201,
+    "hr_all_lags": 0.034528535980148885,
+    "yue_wang": 0.022022332506203474,
+    "tfpw": 0.032754342431761785,
+    "n": 25
+   },
+   "CF-CB-mixed-het-0.7": {
+    "hr_registered": 0.0020843672456575687,
+    "hr_all_lags": 0.0021339950372208437,
+    "yue_wang": 0.0021339950372208437,
+    "tfpw": 0.23887096774193545,
+    "n": 25
+   },
+   "CF-CB-mixed-phi-0.3": {
+    "hr_registered": 0.004491315136476427,
+    "hr_all_lags": 0.004888337468982631,
+    "yue_wang": 0.004367245657568238,
+    "tfpw": 0.011563275434243176,
+    "n": 25
+   },
+   "CF-CB-mixed-phi-0.5": {
+    "hr_registered": 0.0021588089330024816,
+    "hr_all_lags": 0.0022580645161290325,
+    "yue_wang": 0.002022332506203474,
+    "tfpw": 0.012518610421836227,
+    "n": 25
+   },
+   "CF-CB-mixed-phi-0.7": {
+    "hr_registered": 0.0013523573200992555,
+    "hr_all_lags": 0.0016129032258064516,
+    "yue_wang": 0.001588089330024814,
+    "tfpw": 0.11008684863523573,
+    "n": 25
+   },
+   "CF-CB-positive-het-0.7": {
+    "hr_registered": 0.0021464019851116624,
+    "hr_all_lags": 0.00228287841191067,
+    "yue_wang": 0.00228287841191067,
+    "tfpw": 0.1688833746898263,
+    "n": 25
+   },
+   "CF-CB-positive-phi-0.3": {
+    "hr_registered": 0.003076923076923077,
+    "hr_all_lags": 0.0031389578163771715,
+    "yue_wang": 0.0028287841191066997,
+    "tfpw": 0.006947890818858561,
+    "n": 25
+   },
+   "CF-CB-positive-phi-0.5": {
+    "hr_registered": 0.0015756823821339951,
+    "hr_all_lags": 0.0017245657568238212,
+    "yue_wang": 0.0016749379652605462,
+    "tfpw": 0.009727047146401985,
+    "n": 25
+   },
+   "CF-CB-positive-phi-0.7": {
+    "hr_registered": 0.0025806451612903226,
+    "hr_all_lags": 0.002593052109181141,
+    "yue_wang": 0.0026054590570719605,
+    "tfpw": 0.09168734491315135,
+    "n": 25
+   }
+  }
+ }
+}

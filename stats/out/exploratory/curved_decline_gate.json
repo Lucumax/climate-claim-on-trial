@@ -1,0 +1,101 @@
+{
+ "label": "POST-RESULT EXPLORATORY check (round-3 science judge, STATS_LOG 18:06 ET entry). Not the registered test, not a gate; no verdict, bundle or registered number depends on it.",
+ "method": "fit c + a*exp(-t/tau) to the regional series; simulate that curve plus independent Gaussian noise (no memory) at the residual SD of the fit (ddof 3, three fitted parameters) x k; for each simulated series take the straight-line-residual lag-1 (pipeline definition) and ask the real gate (gate_for_claim, validation_results_n21.json, n 21, no gaps) whether it would release a regional verdict. R = 2000 per noise level, seed 20261114.",
+ "R": 2000,
+ "cases": {
+  "C-E1": {
+   "n": 21,
+   "fit": {
+    "a": 1.8175463293516019,
+    "tau_years": 4.130867422497141,
+    "offset": -0.4043495832164071
+   },
+   "residual_sd_ddof0": 0.13609401544744443,
+   "residual_sd_ddof3": 0.14699833745333352,
+   "real_series_lag1": 0.6980366097723406,
+   "fit_r2": 0.9309802074748024,
+   "by_noise": {
+    "noise_x1": {
+     "lag1_median": 0.519,
+     "lag1_p5": 0.351,
+     "lag1_p95": 0.664,
+     "share_lag1_le_0p1": 0.0,
+     "share_lag1_gt_0p6": 0.189,
+     "gate_released": 0,
+     "gate_released_share": 0.0,
+     "gate_released_se": 0.0,
+     "text": "the real gate released a verdict in 0 of 2000 simulated curved-decline series (Monte Carlo SE 0.000)"
+    },
+    "noise_x2": {
+     "lag1_median": 0.265,
+     "lag1_p5": -0.055,
+     "lag1_p95": 0.532,
+     "share_lag1_le_0p1": 0.187,
+     "share_lag1_gt_0p6": 0.0125,
+     "gate_released": 261,
+     "gate_released_share": 0.1305,
+     "gate_released_se": 0.0075,
+     "text": "the real gate released a verdict in 261 of 2000 simulated curved-decline series (Monte Carlo SE 0.008)"
+    },
+    "noise_x4": {
+     "lag1_median": 0.037,
+     "lag1_p5": -0.313,
+     "lag1_p95": 0.365,
+     "share_lag1_le_0p1": 0.63,
+     "share_lag1_gt_0p6": 0.001,
+     "gate_released": 1188,
+     "gate_released_share": 0.594,
+     "gate_released_se": 0.011,
+     "text": "the real gate released a verdict in 1188 of 2000 simulated curved-decline series (Monte Carlo SE 0.011)"
+    }
+   }
+  },
+  "C-E2": {
+   "n": 21,
+   "fit": {
+    "a": -0.891903645970775,
+    "tau_years": 12.703599542642973,
+    "offset": 0.45534986512718595
+   },
+   "residual_sd_ddof0": 0.10936849193828964,
+   "residual_sd_ddof3": 0.11813147280466094,
+   "real_series_lag1": 0.3905766206873932,
+   "fit_r2": 0.7890010918852404,
+   "by_noise": {
+    "noise_x1": {
+     "lag1_median": 0.002,
+     "lag1_p5": -0.338,
+     "lag1_p95": 0.343,
+     "share_lag1_le_0p1": 0.687,
+     "share_lag1_gt_0p6": 0.001,
+     "gate_released": 1353,
+     "gate_released_share": 0.6765,
+     "gate_released_se": 0.0105,
+     "text": "the real gate released a verdict in 1353 of 2000 simulated curved-decline series (Monte Carlo SE 0.010)"
+    },
+    "noise_x2": {
+     "lag1_median": -0.066,
+     "lag1_p5": -0.423,
+     "lag1_p95": 0.285,
+     "share_lag1_le_0p1": 0.785,
+     "share_lag1_gt_0p6": 0.0,
+     "gate_released": 1551,
+     "gate_released_share": 0.7755,
+     "gate_released_se": 0.0093,
+     "text": "the real gate released a verdict in 1551 of 2000 simulated curved-decline series (Monte Carlo SE 0.009)"
+    },
+    "noise_x4": {
+     "lag1_median": -0.093,
+     "lag1_p5": -0.419,
+     "lag1_p95": 0.256,
+     "share_lag1_le_0p1": 0.826,
+     "share_lag1_gt_0p6": 0.0005,
+     "gate_released": 1629,
+     "gate_released_share": 0.8145,
+     "gate_released_se": 0.0087,
+     "text": "the real gate released a verdict in 1629 of 2000 simulated curved-decline series (Monte Carlo SE 0.009)"
+    }
+   }
+  }
+ }
+}

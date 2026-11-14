@@ -1,0 +1,530 @@
+{
+ "label": "POST-RESULT EXPLORATORY check (round-3 science judge, STATS_LOG 18:06 ET entry). Not the registered test, not a gate; no verdict, bundle or registered number depends on it.",
+ "note": "Compact copy of stats/out/exploratory/*.json for the site. Every number here is exploratory and post-result; the six verdicts are unchanged and none of this is a registered test.",
+ "shadow": {
+  "C-A": {
+   "n": 25,
+   "registered_p": 0.272343,
+   "sen_per_decade": -0.350337,
+   "shipped": null,
+   "verdict": "withheld",
+   "ols_per_decade": -0.263103,
+   "units": "degC"
+  },
+  "C-B": {
+   "n": 25,
+   "registered_p": 0.0298548,
+   "sen_per_decade": 0.206775,
+   "shipped": {
+    "method": "boot_mk_L3",
+    "p": 0.004
+   },
+   "verdict": "partly_supported",
+   "ols_per_decade": 0.228934,
+   "units": "mm/day",
+   "round2_shipped": {
+    "method": "mk_independent",
+    "p": 0.0298548
+   }
+  },
+  "C-C": {
+   "n": 45,
+   "registered_p": 0.000850632,
+   "sen_per_decade": 0.442849,
+   "shipped": {
+    "method": "yue_wang",
+    "p": 0.00147113
+   },
+   "verdict": "supported",
+   "ols_per_decade": 0.388462,
+   "units": "degC"
+  },
+  "C-D": {
+   "n": 23,
+   "registered_p": 0.224411,
+   "sen_per_decade": 0.029555,
+   "shipped": {
+    "method": "boot_mk_L3",
+    "p": 0.114
+   },
+   "verdict": "not_supported",
+   "ols_per_decade": 0.0435844,
+   "units": "1 (unitless)"
+  },
+  "C-E1": {
+   "n": 21,
+   "registered_p": 0.00132488,
+   "sen_per_decade": -0.610946,
+   "shipped": null,
+   "verdict": "withheld",
+   "ols_per_decade": -0.698674,
+   "units": "1e15 molecules/cm2"
+  },
+  "C-E2": {
+   "n": 21,
+   "registered_p": 9.3941e-05,
+   "sen_per_decade": 0.356786,
+   "shipped": null,
+   "verdict": "withheld",
+   "ols_per_decade": 0.34311,
+   "units": "1e15 molecules/cm2"
+  }
+ },
+ "holm_released_cases": {
+  "note": "Holm-Bonferroni across the three released cases; plain arithmetic on the shipped p-values; exploratory, no verdict uses it",
+  "p": {
+   "C-C": 0.00147113,
+   "C-B": 0.004,
+   "C-D": 0.114
+  },
+  "holm_adjusted": {
+   "C-C": 0.00441339,
+   "C-B": 0.008,
+   "C-D": 0.114
+  },
+  "with_round2_C_B_p": {
+   "p": {
+    "C-C": 0.00147113,
+    "C-B": 0.0298548,
+    "C-D": 0.114
+   },
+   "holm_adjusted": {
+    "C-C": 0.00441339,
+    "C-B": 0.0597096,
+    "C-D": 0.114
+   }
+  }
+ },
+ "calibrated_p": {
+  "R": 4000,
+  "method": "observed Mann-Kendall S of the shipped regional series vs |S| of 4000 simulated trendless Gaussian AR(1) series of the same length at each memory level phi; two-sided p = (count(|S_sim| >= |S_obs|) + 1) / (R + 1)",
+  "cases": {
+   "C-A": {
+    "n": 25,
+    "abs_S": 48.0,
+    "p": {
+     "-0.7": 0.03924,
+     "-0.5": 0.09548,
+     "-0.3": 0.16146,
+     "0": 0.27893,
+     "0.1": 0.32217,
+     "0.2": 0.36591,
+     "0.3": 0.4169,
+     "0.45": 0.48313,
+     "0.6": 0.55386,
+     "0.7": 0.6151,
+     "0.8": 0.68633,
+     "0.9": 0.77031
+    }
+   },
+   "C-B": {
+    "n": 25,
+    "abs_S": 94.0,
+    "p": {
+     "-0.7": 0.0005,
+     "-0.5": 0.00175,
+     "-0.3": 0.006,
+     "0": 0.02849,
+     "0.1": 0.04124,
+     "0.2": 0.07173,
+     "0.3": 0.08298,
+     "0.45": 0.14071,
+     "0.6": 0.23369,
+     "0.7": 0.31967,
+     "0.8": 0.4119,
+     "0.9": 0.53862
+    }
+   },
+   "C-C": {
+    "n": 45,
+    "abs_S": 342.0,
+    "p": {
+     "-0.7": 0.00025,
+     "-0.5": 0.00025,
+     "-0.3": 0.00025,
+     "0": 0.0005,
+     "0.1": 0.00225,
+     "0.2": 0.0035,
+     "0.3": 0.009,
+     "0.45": 0.02249,
+     "0.6": 0.07273,
+     "0.7": 0.12822,
+     "0.8": 0.2117,
+     "0.9": 0.37866
+    }
+   },
+   "C-D": {
+    "n": 23,
+    "abs_S": 47.0,
+    "p": {
+     "-0.7": 0.02724,
+     "-0.5": 0.06748,
+     "-0.3": 0.12897,
+     "0": 0.22594,
+     "0.1": 0.26993,
+     "0.2": 0.30967,
+     "0.3": 0.35316,
+     "0.45": 0.44639,
+     "0.6": 0.52962,
+     "0.7": 0.57561,
+     "0.8": 0.65734,
+     "0.9": 0.73332
+    }
+   },
+   "C-E1": {
+    "n": 21,
+    "abs_S": 150.0,
+    "p": {
+     "-0.7": 0.00025,
+     "-0.5": 0.00025,
+     "-0.3": 0.00025,
+     "0": 0.00025,
+     "0.1": 0.00025,
+     "0.2": 0.00025,
+     "0.3": 0.00025,
+     "0.45": 0.0005,
+     "0.6": 0.001,
+     "0.7": 0.00725,
+     "0.8": 0.01525,
+     "0.9": 0.05474
+    }
+   },
+   "C-E2": {
+    "n": 21,
+    "abs_S": 152.0,
+    "p": {
+     "-0.7": 0.00025,
+     "-0.5": 0.00025,
+     "-0.3": 0.00025,
+     "0": 0.00025,
+     "0.1": 0.00025,
+     "0.2": 0.00025,
+     "0.3": 0.00025,
+     "0.45": 0.0005,
+     "0.6": 0.00175,
+     "0.7": 0.00475,
+     "0.8": 0.01475,
+     "0.9": 0.05374
+    }
+   }
+  }
+ },
+ "curved_decline_gate": {
+  "R": 2000,
+  "cases": {
+   "C-E1": {
+    "n": 21,
+    "fit": {
+     "a": 1.8175463293516019,
+     "tau_years": 4.130867422497141,
+     "offset": -0.4043495832164071
+    },
+    "residual_sd_ddof0": 0.13609401544744443,
+    "real_series_lag1": 0.6980366097723406,
+    "by_noise": {
+     "noise_x1": {
+      "lag1_median": 0.519,
+      "share_lag1_le_0p1": 0.0,
+      "gate_released": 0,
+      "gate_released_share": 0.0,
+      "gate_released_se": 0.0
+     },
+     "noise_x2": {
+      "lag1_median": 0.265,
+      "share_lag1_le_0p1": 0.187,
+      "gate_released": 261,
+      "gate_released_share": 0.1305,
+      "gate_released_se": 0.0075
+     },
+     "noise_x4": {
+      "lag1_median": 0.037,
+      "share_lag1_le_0p1": 0.63,
+      "gate_released": 1188,
+      "gate_released_share": 0.594,
+      "gate_released_se": 0.011
+     }
+    }
+   },
+   "C-E2": {
+    "n": 21,
+    "fit": {
+     "a": -0.891903645970775,
+     "tau_years": 12.703599542642973,
+     "offset": 0.45534986512718595
+    },
+    "residual_sd_ddof0": 0.10936849193828964,
+    "real_series_lag1": 0.3905766206873932,
+    "by_noise": {
+     "noise_x1": {
+      "lag1_median": 0.002,
+      "share_lag1_le_0p1": 0.687,
+      "gate_released": 1353,
+      "gate_released_share": 0.6765,
+      "gate_released_se": 0.0105
+     },
+     "noise_x2": {
+      "lag1_median": -0.066,
+      "share_lag1_le_0p1": 0.785,
+      "gate_released": 1551,
+      "gate_released_share": 0.7755,
+      "gate_released_se": 0.0093
+     },
+     "noise_x4": {
+      "lag1_median": -0.093,
+      "share_lag1_le_0p1": 0.826,
+      "gate_released": 1629,
+      "gate_released_share": 0.8145,
+      "gate_released_se": 0.0087
+     }
+    }
+   }
+  }
+ },
+ "cell_memory": {
+  "C-A": {
+   "n_cells": 1264,
+   "regional_phi_hat": 0.198088,
+   "governing_buckets": [
+    0.2
+   ],
+   "cell_lag1": {
+    "median": 0.118,
+    "p5": -0.155,
+    "p25": -0.011,
+    "p75": 0.23,
+    "p95": 0.34,
+    "share_positive": 0.726,
+    "share_above_minus0p3": 1.0
+   },
+   "closest_simulated_true_memory": 0.2,
+   "median_far_from_buckets": false
+  },
+  "C-B": {
+   "n_cells": 1344,
+   "regional_phi_hat": -0.667597,
+   "governing_buckets": [
+    -0.7,
+    -0.5
+   ],
+   "cell_lag1": {
+    "median": -0.156,
+    "p5": -0.483,
+    "p25": -0.293,
+    "p75": -0.028,
+    "p95": 0.173,
+    "share_positive": 0.202,
+    "share_above_minus0p3": 0.759
+   },
+   "closest_simulated_true_memory": 0.0,
+   "median_far_from_buckets": true
+  },
+  "C-C": {
+   "n_cells": 861,
+   "regional_phi_hat": 0.0481008,
+   "governing_buckets": [
+    0.1
+   ],
+   "cell_lag1": {
+    "median": 0.042,
+    "p5": -0.042,
+    "p25": 0.003,
+    "p75": 0.092,
+    "p95": 0.192,
+    "share_positive": 0.764,
+    "share_above_minus0p3": 1.0
+   },
+   "closest_simulated_true_memory": 0.1,
+   "median_far_from_buckets": false
+  },
+  "C-D": {
+   "n_cells": 42,
+   "regional_phi_hat": -0.483398,
+   "governing_buckets": [
+    -0.5,
+    -0.3
+   ],
+   "cell_lag1": {
+    "median": -0.433,
+    "p5": -0.567,
+    "p25": -0.499,
+    "p75": -0.416,
+    "p95": -0.327,
+    "share_positive": 0.0,
+    "share_above_minus0p3": 0.024
+   },
+   "closest_simulated_true_memory": -0.5,
+   "median_far_from_buckets": false
+  },
+  "C-E1": {
+   "n_cells": 3200,
+   "regional_phi_hat": 0.698037,
+   "governing_buckets": [],
+   "cell_lag1": {
+    "median": 0.52,
+    "p5": 0.232,
+    "p25": 0.411,
+    "p75": 0.599,
+    "p95": 0.674,
+    "share_positive": 0.996,
+    "share_above_minus0p3": 1.0
+   },
+   "closest_simulated_true_memory": 0.6,
+   "median_far_from_buckets": null
+  },
+  "C-E2": {
+   "n_cells": 1664,
+   "regional_phi_hat": 0.390576,
+   "governing_buckets": [
+    0.45
+   ],
+   "cell_lag1": {
+    "median": 0.244,
+    "p5": -0.242,
+    "p25": 0.095,
+    "p75": 0.367,
+    "p95": 0.531,
+    "share_positive": 0.835,
+    "share_above_minus0p3": 0.968
+   },
+   "closest_simulated_true_memory": 0.45,
+   "median_far_from_buckets": true
+  }
+ },
+ "sahel_map": {
+  "round3_tfpw": {
+   "flagged_cells": 300,
+   "flagged_area_frac": 0.22299445016440853,
+   "flagged_in_direction_cells": 293,
+   "flagged_in_direction_area_frac": 0.2177231652535776,
+   "unadjusted_p05_area_frac": 0.31307684146205234
+  },
+  "round2_hr_all_lags": {
+   "flagged_cells": 210,
+   "flagged_area_frac": 0.15583519800691983,
+   "flagged_in_direction_cells": 203,
+   "flagged_in_direction_area_frac": 0.15056391309608885,
+   "unadjusted_p05_area_frac": 0.27344458174034353
+  },
+  "round3_in_bundle": {
+   "flagged_cells": 300,
+   "flagged_area_frac": 0.22299,
+   "flagged_in_direction_area_frac": 0.21772
+  },
+  "map_power": {
+   "CF-CB-mixed-phi0.0": {
+    "hr_registered": 0.036848635235732015,
+    "hr_all_lags": 0.03741935483870967,
+    "yue_wang": 0.024367245657568235,
+    "tfpw": 0.03449131513647642,
+    "n": 25
+   },
+   "CF-CB-positive-phi0.0": {
+    "hr_registered": 0.0334863523573201,
+    "hr_all_lags": 0.034528535980148885,
+    "yue_wang": 0.022022332506203474,
+    "tfpw": 0.032754342431761785,
+    "n": 25
+   },
+   "CF-CB-mixed-het-0.7": {
+    "hr_registered": 0.0020843672456575687,
+    "hr_all_lags": 0.0021339950372208437,
+    "yue_wang": 0.0021339950372208437,
+    "tfpw": 0.23887096774193545,
+    "n": 25
+   },
+   "CF-CB-mixed-phi-0.3": {
+    "hr_registered": 0.004491315136476427,
+    "hr_all_lags": 0.004888337468982631,
+    "yue_wang": 0.004367245657568238,
+    "tfpw": 0.011563275434243176,
+    "n": 25
+   },
+   "CF-CB-mixed-phi-0.5": {
+    "hr_registered": 0.0021588089330024816,
+    "hr_all_lags": 0.0022580645161290325,
+    "yue_wang": 0.002022332506203474,
+    "tfpw": 0.012518610421836227,
+    "n": 25
+   },
+   "CF-CB-mixed-phi-0.7": {
+    "hr_registered": 0.0013523573200992555,
+    "hr_all_lags": 0.0016129032258064516,
+    "yue_wang": 0.001588089330024814,
+    "tfpw": 0.11008684863523573,
+    "n": 25
+   },
+   "CF-CB-positive-het-0.7": {
+    "hr_registered": 0.0021464019851116624,
+    "hr_all_lags": 0.00228287841191067,
+    "yue_wang": 0.00228287841191067,
+    "tfpw": 0.1688833746898263,
+    "n": 25
+   },
+   "CF-CB-positive-phi-0.3": {
+    "hr_registered": 0.003076923076923077,
+    "hr_all_lags": 0.0031389578163771715,
+    "yue_wang": 0.0028287841191066997,
+    "tfpw": 0.006947890818858561,
+    "n": 25
+   },
+   "CF-CB-positive-phi-0.5": {
+    "hr_registered": 0.0015756823821339951,
+    "hr_all_lags": 0.0017245657568238212,
+    "yue_wang": 0.0016749379652605462,
+    "tfpw": 0.009727047146401985,
+    "n": 25
+   },
+   "CF-CB-positive-phi-0.7": {
+    "hr_registered": 0.0025806451612903226,
+    "hr_all_lags": 0.002593052109181141,
+    "yue_wang": 0.0026054590570719605,
+    "tfpw": 0.09168734491315135,
+    "n": 25
+   }
+  }
+ },
+ "witness_differences": {
+  "label": "POST-RESULT EXPLORATORY check (round-3 science judge, STATS_LOG 18:06 ET entry). Not the registered test, not a gate; no verdict, bundle or registered number depends on it. Read from the existing witness files; nothing recomputed.",
+  "C_A_station_minus_MODIS_Terra": {
+   "source": "web/data/witness/C-A_knmi.json (CRU TS 4.10 tmx station-based JJA maximum air temperature minus MODIS Terra LST anomaly)",
+   "period_2001_2020": {
+    "n": 20,
+    "sen_per_decade": 0.529641,
+    "ci95": [
+     0.237128,
+     0.90221
+    ],
+    "p_mk": 0.00255,
+    "p_hamed_rao": 0.00255,
+    "p_yue_wang": 0.003587,
+    "ols_per_decade": 0.533019,
+    "ols_p": 0.001163
+   },
+   "period_2001_2025": {
+    "n": 25,
+    "sen_per_decade": 0.623675,
+    "ci95": [
+     0.388282,
+     0.867871
+    ],
+    "p_hamed_rao": 1e-05,
+    "p_yue_wang": 7.3e-05
+   },
+   "reading": "station air temperature rises about 0.5 degC per decade faster than MODIS skin temperature already over 2001-2020, before the 2021 drift years"
+  },
+  "C_C_station_minus_MERRA2": {
+   "source": "web/data/witness/C-C_knmi.json (CRU TS 4.10 annual mean temperature, land points, minus our MERRA-2 regional series)",
+   "period": "1981-2025",
+   "n": 45,
+   "sen_per_decade": -0.061089128654970834,
+   "ci95": [
+    -0.10596090782518516,
+    -0.013234974404141469
+   ],
+   "p_mk_hamed_rao": 0.018396519702051473,
+   "ols_per_decade": -0.06450040181159418,
+   "ols_p": 0.0076445759984618,
+   "reading": "MERRA-2 warms about 0.06 degC per decade faster than the station record (station minus MERRA-2 is negative); the MERRA-2 box includes sea cells, CRU is land only"
+  }
+ }
+}

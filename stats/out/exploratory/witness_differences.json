@@ -1,0 +1,44 @@
+{
+ "label": "POST-RESULT EXPLORATORY check (round-3 science judge, STATS_LOG 18:06 ET entry). Not the registered test, not a gate; no verdict, bundle or registered number depends on it. Read from the existing witness files; nothing recomputed.",
+ "C_A_station_minus_MODIS_Terra": {
+  "source": "web/data/witness/C-A_knmi.json (CRU TS 4.10 tmx station-based JJA maximum air temperature minus MODIS Terra LST anomaly)",
+  "period_2001_2020": {
+   "n": 20,
+   "sen_per_decade": 0.529641,
+   "ci95": [
+    0.237128,
+    0.90221
+   ],
+   "p_mk": 0.00255,
+   "p_hamed_rao": 0.00255,
+   "p_yue_wang": 0.003587,
+   "ols_per_decade": 0.533019,
+   "ols_p": 0.001163
+  },
+  "period_2001_2025": {
+   "n": 25,
+   "sen_per_decade": 0.623675,
+   "ci95": [
+    0.388282,
+    0.867871
+   ],
+   "p_hamed_rao": 1e-05,
+   "p_yue_wang": 7.3e-05
+  },
+  "reading": "station air temperature rises about 0.5 degC per decade faster than MODIS skin temperature already over 2001-2020, before the 2021 drift years"
+ },
+ "C_C_station_minus_MERRA2": {
+  "source": "web/data/witness/C-C_knmi.json (CRU TS 4.10 annual mean temperature, land points, minus our MERRA-2 regional series)",
+  "period": "1981-2025",
+  "n": 45,
+  "sen_per_decade": -0.061089128654970834,
+  "ci95": [
+   -0.10596090782518516,
+   -0.013234974404141469
+  ],
+  "p_mk_hamed_rao": 0.018396519702051473,
+  "ols_per_decade": -0.06450040181159418,
+  "ols_p": 0.0076445759984618,
+  "reading": "MERRA-2 warms about 0.06 degC per decade faster than the station record (station minus MERRA-2 is negative); the MERRA-2 box includes sea cells, CRU is land only"
+ }
+}

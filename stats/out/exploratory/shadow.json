@@ -1,0 +1,170 @@
+{
+ "label": "POST-RESULT EXPLORATORY check (round-3 science judge, STATS_LOG 18:06 ET entry). Not the registered test, not a gate; no verdict, bundle or registered number depends on it.",
+ "what": "the originally registered regional method alone (Mann-Kendall with the Hamed-Rao correction, no gate), read from regional.tests.mk_hr and regional.tests.sen of each bundle",
+ "cases": {
+  "C-A": {
+   "claim": "Summer daytime land surface temperature over the Southeastern United States has risen",
+   "direction": "increase",
+   "n": 25,
+   "registered_mk_hr": {
+    "p": 0.272343,
+    "tau": -0.16,
+    "s": -48.0,
+    "hr_factor": 1.0,
+    "hr_factor_raw": 0.683425
+   },
+   "registered_mk_independent_p": 0.272343,
+   "sen_per_decade": -0.350337,
+   "ols_per_decade": -0.263103,
+   "ols_p": 0.306068,
+   "shipped": null,
+   "verdict": "withheld",
+   "verdict_branch": "withheld",
+   "claim_phi_hat": 0.198088,
+   "units": "degC"
+  },
+  "C-B": {
+   "claim": "Wet-season rainfall over the central Sahel has increased",
+   "direction": "increase",
+   "n": 25,
+   "registered_mk_hr": {
+    "p": 0.0298548,
+    "tau": 0.313333,
+    "s": 94.0,
+    "hr_factor": 1.0,
+    "hr_factor_raw": 0.470646
+   },
+   "registered_mk_independent_p": 0.0298548,
+   "sen_per_decade": 0.206775,
+   "ols_per_decade": 0.228934,
+   "ols_p": 0.0198473,
+   "shipped": {
+    "method": "boot_mk_L3",
+    "p": 0.004
+   },
+   "verdict": "partly_supported",
+   "verdict_branch": "partly_regional_narrow",
+   "claim_phi_hat": -0.667597,
+   "units": "mm/day",
+   "round2_shipped": {
+    "method": "mk_independent",
+    "p": 0.0298548
+   }
+  },
+  "C-C": {
+   "claim": "Near-surface air temperature over interior and western Alaska has risen",
+   "direction": "increase",
+   "n": 45,
+   "registered_mk_hr": {
+    "p": 0.000850632,
+    "tau": 0.345455,
+    "s": 342.0,
+    "hr_factor": 1.0,
+    "hr_factor_raw": 0.752787
+   },
+   "registered_mk_independent_p": 0.000850632,
+   "sen_per_decade": 0.442849,
+   "ols_per_decade": 0.388462,
+   "ols_p": 0.00071431,
+   "shipped": {
+    "method": "yue_wang",
+    "p": 0.00147113
+   },
+   "verdict": "supported",
+   "verdict_branch": "supported",
+   "claim_phi_hat": 0.0481008,
+   "units": "degC"
+  },
+  "C-D": {
+   "claim": "Summer aerosol optical depth over Wisconsin has increased",
+   "direction": "increase",
+   "n": 23,
+   "registered_mk_hr": {
+    "p": 0.224411,
+    "tau": 0.185771,
+    "s": 47.0,
+    "hr_factor": 1.0,
+    "hr_factor_raw": 1.0
+   },
+   "registered_mk_independent_p": 0.224411,
+   "sen_per_decade": 0.029555,
+   "ols_per_decade": 0.0435844,
+   "ols_p": 0.0404364,
+   "shipped": {
+    "method": "boot_mk_L3",
+    "p": 0.114
+   },
+   "verdict": "not_supported",
+   "verdict_branch": "not_supported",
+   "claim_phi_hat": -0.483398,
+   "units": "1 (unitless)"
+  },
+  "C-E1": {
+   "claim": "Tropospheric nitrogen dioxide over the eastern United States has fallen",
+   "direction": "decrease",
+   "n": 21,
+   "registered_mk_hr": {
+    "p": 0.00132488,
+    "tau": -0.714286,
+    "s": -150.0,
+    "hr_factor": 1.96401,
+    "hr_factor_raw": 1.96401
+   },
+   "registered_mk_independent_p": 6.81643e-06,
+   "sen_per_decade": -0.610946,
+   "ols_per_decade": -0.698674,
+   "ols_p": 6.28603e-06,
+   "shipped": null,
+   "verdict": "withheld",
+   "verdict_branch": "withheld",
+   "claim_phi_hat": 0.698037,
+   "units": "1e15 molecules/cm2"
+  },
+  "C-E2": {
+   "claim": "Tropospheric nitrogen dioxide over the Indo-Gangetic Plain (northern India) has risen",
+   "direction": "increase",
+   "n": 21,
+   "registered_mk_hr": {
+    "p": 9.3941e-05,
+    "tau": 0.72381,
+    "s": 152.0,
+    "hr_factor": 1.36293,
+    "hr_factor_raw": 1.36293
+   },
+   "registered_mk_independent_p": 5.12182e-06,
+   "sen_per_decade": 0.356786,
+   "ols_per_decade": 0.34311,
+   "ols_p": 2.4945e-07,
+   "shipped": null,
+   "verdict": "withheld",
+   "verdict_branch": "withheld",
+   "claim_phi_hat": 0.390576,
+   "units": "1e15 molecules/cm2"
+  }
+ },
+ "holm_released_cases": {
+  "note": "Holm-Bonferroni across the three released cases; plain arithmetic on the shipped p-values; exploratory, no verdict uses it",
+  "p": {
+   "C-C": 0.00147113,
+   "C-B": 0.004,
+   "C-D": 0.114
+  },
+  "holm_adjusted": {
+   "C-C": 0.00441339,
+   "C-B": 0.008,
+   "C-D": 0.114
+  },
+  "with_round2_C_B_p": {
+   "p": {
+    "C-C": 0.00147113,
+    "C-B": 0.0298548,
+    "C-D": 0.114
+   },
+   "holm_adjusted": {
+    "C-C": 0.00441339,
+    "C-B": 0.0597096,
+    "C-D": 0.114
+   }
+  }
+ }
+}

@@ -134,18 +134,18 @@ NO2 units are 10^15 molecules/cm². Sources: `web/data/bundle_C-A.json` to `bund
 
 ## References
 
-Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society B.
+Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society: Series B (Methodological) 57(1), 289-300. doi:10.1111/j.2517-6161.1995.tb02031.x
 
-Hamed, K. H. and Rao, A. R. (1998). A modified Mann-Kendall trend test for autocorrelated data. Journal of Hydrology.
+Hamed, K. H. and Rao, A. R. (1998). A modified Mann-Kendall trend test for autocorrelated data. Journal of Hydrology 204(1-4), 182-196. doi:10.1016/S0022-1694(97)00125-X
 
-Kendall, M. G. (1975). Rank Correlation Methods. Griffin.
+Kendall, M. G. (1975). Rank Correlation Methods, 4th edition. London: Charles Griffin.
 
-Mann, H. B. (1945). Nonparametric tests against trend. Econometrica.
+Mann, H. B. (1945). Nonparametric tests against trend. Econometrica 13(3), 245-259. doi:10.2307/1907187
 
-Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. Journal of the American Statistical Association.
+Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. Journal of the American Statistical Association 63(324), 1379-1389. doi:10.1080/01621459.1968.10480934
 
-Wilks, D. S. (2016). "The stippling shows statistically significant grid points": how research results are routinely overstated and overinterpreted, and what to do about it. Bulletin of the American Meteorological Society 97, 2263 to 2273.
+Wilks, D. S. (2016). "The stippling shows statistically significant grid points": how research results are routinely overstated and overinterpreted, and what to do about it. Bulletin of the American Meteorological Society 97(12), 2263-2273. doi:10.1175/BAMS-D-15-00267.1
 
-Yue, S. and Wang, C. Y. (2004). The Mann-Kendall test modified by effective sample size to detect trend in serially correlated hydrological series. Water Resources Management.
+Yue, S. and Wang, C. Y. (2004). The Mann-Kendall test modified by effective sample size to detect trend in serially correlated hydrological series. Water Resources Management 18(3), 201-218. doi:10.1023/B:WARM.0000043140.61082.60
 
-Yue, S., Pilon, P., Phinney, B. and Cavadias, G. (2002). The influence of autocorrelation on the ability to detect trend in hydrological series. Hydrological Processes.
+Yue, S., Pilon, P., Phinney, B. and Cavadias, G. (2002). The influence of autocorrelation on the ability to detect trend in hydrological series. Hydrological Processes 16(9), 1807-1829. doi:10.1002/hyp.1095

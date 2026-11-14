@@ -5,7 +5,7 @@ import { worldMap } from "../worldmap.js";
 import { fetchMonthly, validateBox, planBox } from "../live.js";
 import { analyzeRows, stepInfo, detectiveVerdict, STATS_VERSION } from "../stats.js";
 import { trendChart } from "../chart.js";
-import { disc } from "./common.js";
+import { disc, copyButton } from "./common.js";
 import { groupVariables } from "./pages.js";
 import { pWords, trendWords, stepWords, sigClass, sigLabel, ALPHA, fixVerdict, PERSISTENCE_CAVEAT, INTERVAL_EXPLORATORY } from "../words.js";
 
@@ -21,9 +21,25 @@ const STEPS = [
 ];
 // How each variable reads inside the question "Has ___ over ___ changed?"
 const PHRASE = { t2m: "air temperature", t2m_max: "the daily high temperature", t2m_min: "the daily low temperature", precip: "rainfall", solar: "sunlight reaching the ground", cloud: "cloud cover", rh: "humidity", wind: "wind speed", soil_root: "root-zone soil wetness", soil_top: "surface soil wetness", frost: "the number of frost days", snow: "snow depth" };
+// Replay links: #/investigate?v=T2M&b=south,north,west,east&y=1981-2025&s=JJA  (variable = NASA POWER parameter, season = key in data/variables.json).
+// The counter of questions tried lives in sessionStorage only: it is per tab, per visit, and never leaves the browser.
+const TRIES_KEY = "ccot.tries";
+const store = { get() { try { return JSON.parse(sessionStorage.getItem(TRIES_KEY) || "[]"); } catch (e) { return []; } }, set(v) { try { sessionStorage.setItem(TRIES_KEY, JSON.stringify(v)); } catch (e) { /* storage blocked: the counter just stays at what it was */ } } };
+const triesNow = () => store.get().length;
+function noteTry(R) { // a question is one variable + box + years + season; running the same one again is not a new question
+  const key = shareQuery(R), seen = store.get();
+  if (!seen.includes(key)) store.set([...seen, key]);
+}
+const shareQuery = R => `v=${R.v.power_param}&b=${[R.box.s, R.box.n, R.box.w, R.box.e].join(",")}&y=${R.y0}-${R.y1}&s=${R.season.key.toUpperCase()}`;
+const shareHash = R => "#/investigate?" + shareQuery(R);
+const shareUrl = R => location.origin + location.pathname + location.search + shareHash(R);
+function syncUrl(hash) { try { if (location.hash.startsWith("#/investigate") && location.hash !== hash) history.replaceState(null, "", hash); } catch (e) { /* ignore */ } }
+const triesLine = () => { const n = triesNow(); if (!n) return null;
+  return h("p", { class: "tries", id: "tries" }, h("b", {}, `You have tested ${n} question${n === 1 ? "" : "s"} this visit; about 1 in 20 can look significant by chance.`), n > 1 ? ` If nothing real were going on, the chance that at least one of ${n} looks significant is about ${Math.round((1 - Math.pow(0.95, n)) * 100)}%.` : ""); };
+
 const PLACE = { world: "the whole world", amazon: "the Amazon basin", sus: "the Southeastern United States" };
 
-export function detective(cat, bundle) {
+export function detective(cat, bundle, query = "") {
   const caseIds = new Set(((bundle && bundle.claims) || []).map(c => c.id));
   const V = cat.variables, P = cat.presets, S = cat.seasons;
   if (!state.box) state.box = { ...P.find(p => p.key === state.presetKey).box };
@@ -32,6 +48,23 @@ export function detective(cat, bundle) {
   const curSeason = () => S.find(x => x.key === state.season);
   const placeName = () => { const p = P.find(q => q.key === state.presetKey && JSON.stringify(q.box) === JSON.stringify(state.box)); return p ? (PLACE[p.key] || p.name.replace(/\s*\(.*\)$/, "")) : "the box " + boxStr(state.box); };
   let runId = 0, prog = null, demo = null, stepsOpen = false; // demo: { d, k }
+
+  // ======================================================== replay link: restore the choices from the URL, then rerun
+  function parseReplay(q) {
+    const p = new URLSearchParams(q);
+    if (!["v", "b", "y", "s"].some(k => p.has(k))) return null;
+    const bad = [], out = {};
+    const v = V.find(x => x.live !== false && [x.power_param, x.key].some(k => k && k.toLowerCase() === (p.get("v") || "").toLowerCase()));
+    if (v) out.v = v; else bad.push("measurement");
+    const e = (p.get("b") || "").split(",").map(Number);
+    if (e.length === 4 && e.every(Number.isFinite) && !validateBox({ s: e[0], n: e[1], w: e[2], e: e[3] }).length) out.box = { s: e[0], n: e[1], w: e[2], e: e[3] }; else bad.push("place");
+    const y = /^(\d{4})-(\d{4})$/.exec(p.get("y") || "");
+    if (y && +y[1] <= +y[2] && +y[2] <= LAST_YEAR && (!v || +y[1] >= v.since)) { out.y0 = +y[1]; out.y1 = +y[2]; } else bad.push("years");
+    const se = S.find(x => x.key.toUpperCase() === (p.get("s") || "").toUpperCase());
+    if (se) out.season = se.key; else bad.push("season");
+    return { out, bad };
+  }
+  const replay = parseReplay(query);
 
   // ======================================================== header: the question, filling in as choices are made
   const slot = txt => h("span", { class: "slot" }, txt);
@@ -92,7 +125,7 @@ export function detective(cat, bundle) {
         h("span", { class: "pr" }, h("span", { class: "pr-name" }, v.name), h("span", { class: "pr-unit" }, U(v.units)))))));
     return h("div", { class: "pick" }, h("div", {}, ...groups, aod ? h("p", { class: "other-case" }, `${aod.name} is a registered case, not a live measurement. `, h("a", { href: aod.case_link }, "Open case " + aod.case_id)) : null), defPanel);
   }
-  function invalidate() { runId++; state.visited.delete(4); state.visited.delete(5); state.result = null; state.last = null; state.status = "idle"; refresh(); }
+  function invalidate() { runId++; state.visited.delete(4); state.visited.delete(5); state.result = null; state.last = null; state.status = "idle"; syncUrl("#/investigate"); refresh(); }
 
   // ======================================================== step 2: region picker (built once, re-attached)
   const presetPills = h("div", { class: "pills", role: "radiogroup", "aria-label": "Preset regions" });
@@ -166,6 +199,7 @@ export function detective(cat, bundle) {
       if (rows.length < 8) { state.status = "error"; state.err = "Too few values to test. Choose a longer period or more months."; return false; }
       const R = { v, season, data, rows, box: { ...state.box }, y0: state.y0, y1: state.y1 };
       state.result = R; state.last = analyze(R); state.status = "ready";
+      if (!demo && !state.last.W.tooShort) { noteTry(R); syncUrl(shareHash(R)); }
       announce("Results ready. " + (state.last.W.tooShort ? "Too few years to test." : "Interim ruling: " + (state.last.rungs[0].p < ALPHA ? "significant at 0.05." : "not significant at 0.05.")));
       return true;
     } catch (e) {
@@ -234,6 +268,8 @@ export function detective(cat, bundle) {
   function withRuling(main, L) { return h("div", { class: "result-grid" }, h("div", { class: "result-main" }, ...main), rulingLite(L)); }
   const csvBtn = (W, R) => h("button", { class: "btn-quiet", type: "button", onclick: () => download(`investigate_${R.v.key}_${R.y0}-${R.y1}.csv`, "year,season_mean,anomaly\n" + W.years.map((yr, i) => `${yr},${W.raw[i].toFixed(5)},${W.anomaly[i].toFixed(5)}`).join("\n"), "text/csv") }, "Download series (CSV)");
 
+  const linkBtn = R => demo ? null : copyButton("Copy link to this investigation", () => shareUrl(R), null, "Link");
+
   function drawRecord() {
     const L = state.last, { W, R } = L, season = R.season, u = U(R.v.units), R_ = W.A_raw;
     const showAn = state.view === "anom" && season.key !== "all", y = showAn ? W.anomaly : W.raw, A = showAn ? W.A_an : W.A_raw, ols0 = showAn ? W.olsInterceptAn : W.olsIntercept;
@@ -258,7 +294,7 @@ export function detective(cat, bundle) {
         h("p", { class: "small", style: "margin:12px 0 0" }, pWords(R_.mkIndependent.p)),
         h("p", { class: "muted small" }, "Mann-Kendall asks whether later values tend to be higher or lower than earlier ones, with no straight-line assumption. The t-test is the version most people learn first. They can differ a little. That is normal."),
         h("p", { class: "muted small", style: "margin:0" }, `Statistics: trendtrial ${STATS_VERSION}, checked against the Python reference.`))], L),
-      bar(back(3), next(5), csvBtn(W, R)));
+      bar(back(3), next(5), csvBtn(W, R), linkBtn(R)));
   }
 
   function drawTrial() {
@@ -273,7 +309,8 @@ export function detective(cat, bundle) {
         h("p", { class: "small", style: "margin:8px 0 0" }, h("b", {}, "What this step did. "), stepWords(rungs[i - 1], r), ` Sen slope ${signed(r.slope, 2)} ${u} per decade.`));
     }));
     panel.replaceChildren(taskHead(5), withRuling([cachedBadge(R), list, h("p", { class: "note" }, "The short bar marks the 0.05 line: left of it is significant."), h("p", { class: "muted small", style: "margin:0" }, `Statistics: trendtrial ${STATS_VERSION}, checked against the Python reference.`)], L),
-      bar(back(4), h("button", { class: "btn", type: "button", onclick: () => { demo = null; drawDemoCard(); goStep(1); } }, "Change a setting and rerun"), csvBtn(W, R),
+      bar(back(4), h("button", { class: "btn", type: "button", onclick: () => { demo = null; drawDemoCard(); goStep(1); } }, "Change a setting and rerun"), csvBtn(W, R), linkBtn(R)),
+      h("div", { class: "trial-foot" }, triesLine(),
         h("p", { class: "caution" }, "Every new window, place or season you try is another chance to find a trend by luck. Report every try, not only the one that looks best. ", h("a", { href: "#/cases" }, "See a registered case"))));
   }
 
@@ -347,9 +384,19 @@ export function detective(cat, bundle) {
   }
   function exitDemo() { demo = null; document.querySelectorAll(".demo-focus").forEach(e => e.classList.remove("demo-focus")); drawDemoCard(); document.getElementById("demo")?.querySelector("summary")?.focus(); }
 
-  root.append(head, demoHost, h("div", { class: "inv" }, rail, panel));
+  const replayNote = h("div", { hidden: true });
+  root.append(head, replayNote, demoHost, h("div", { class: "inv" }, rail, panel));
+  let replayOk = false;
+  if (replay) { // a replay link wins over whatever this tab was doing: apply the valid parts, rerun only when all four are valid
+    const o = replay.out;
+    if (o.v) state.varKey = o.v.key; if (o.y0) { state.y0 = o.y0; state.y1 = o.y1; } if (o.season) state.season = o.season; if (o.box) state.box = { ...o.box };
+    state.last = null; state.result = null; state.status = "idle"; state.visited = new Set([1, 2, 3]); state.step = 3; runId++;
+    replayOk = !replay.bad.length;
+    if (!replayOk) { replayNote.hidden = false; replayNote.replaceChildren(h("p", { class: "callout", role: "note" }, h("b", {}, "This link could not be fully read. "), `The ${(replay.bad.length > 1 ? replay.bad.slice(0, -1).join(", ") + " and " + replay.bad[replay.bad.length - 1] : replay.bad[0])} in it could not be used, so we kept your earlier choice there. Check the settings and continue.`)); state.step = 1; state.visited = new Set([1]); }
+  }
   setBox(state.box, false, true); drawDemoCard();
   if (state.step >= 4 && !state.last) state.step = 3;
   drawPanel(); refresh();
+  if (replayOk) goStep(4, true);
   return { node: root, title: "Investigate a question" };
 }

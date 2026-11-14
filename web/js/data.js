@@ -135,7 +135,7 @@ function fromReal(r) {
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },
     },
     gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [], reasons_interval: gate.reasons_interval || [], adaptive_notes: gate.adaptive_notes || [] },
-    verdict: { branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
+    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
     finding, method_notes: r.method_notes, sensitivity: r.sensitivity, coverage: r.coverage,
   };
 }

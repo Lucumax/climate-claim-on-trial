@@ -25,7 +25,7 @@ function example(b) {
 
 const ds = c => /MERRA-2/.test(c.product.name) ? "NASA MERRA-2" : c.product.name;
 const place = c => c.region.name.charAt(0).toLowerCase() + c.region.name.slice(1);
-const headline = (c, slope) => slope < 0 ? `NASA data: ${place(c)} is cooling` : `NASA data: ${place(c)} is warming fast`;
+const headline = (c, slope) => { const p = c.region.name.charAt(0).toUpperCase() + c.region.name.slice(1); return slope < 0 ? `${p} is cooling` : `${p} is warming fast`; };
 
 export function landing(b) {
   const ex = example(b);

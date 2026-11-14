@@ -6,6 +6,7 @@ import { renderMap } from "../map.js";
 import { seriesChart } from "../chart.js";
 import { KIND, withheldNote, regionThumb, copyButton, clinicSlot, disc, datasetName, kindChip } from "./common.js";
 import { sigClass, sigLabel } from "../words.js";
+import { clinicStrip, whoActs } from "./clinic.js";
 
 const NA = () => h("span", { class: "muted" }, "Not in this bundle yet.");
 const NOT_SHOWN = "Not shown: failed its coverage check.";
@@ -62,7 +63,9 @@ export function caseDocket(b, c) {
       iv ? h("p", { class: "verdict-iv" }, `95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
       h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => { const x = document.getElementById("exhibit-map"); if (x) { x.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); x.focus({ preventScroll: true }); } } }, withheld ? "See the map by hearing" : "Explore the hearings"),
         copyButton("Copy finding", text, `finding_${c.id}.txt`))),
-    h("p", { class: "verdict-caveat" }, h("b", {}, "Essential caveat. "), essential));
+    h("div", { class: "verdict-notes" },
+      whoActs(c) ? h("p", { class: "verdict-who" }, h("b", {}, "Who acts on this? "), whoActs(c)) : null,
+      h("p", { class: "verdict-caveat" }, h("b", {}, "Essential caveat. "), essential)));
 
   // ---------------------------------------------------------------- Exhibit A: the regional record
   const chartHost = h("div", {});
@@ -173,6 +176,6 @@ export function caseDocket(b, c) {
     h("header", { class: "case-head" },
       h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id) + " · the registered claim"), h("h1", { id: "page-title", tabindex: "-1" }, "“" + c.claim_text + "”"),
       h("p", { class: "definition" }, h("b", {}, c.variable.name + ": "), c.variable.plain)),
-    clinicSlot(c.id), ruling,
+    (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(), ruling,
     h("div", { class: "docket-grid" }, exRecord, exMap, h("div", { class: "docket-more" }, statistics, limits, provenance))) };
 }

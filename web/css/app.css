@@ -314,7 +314,7 @@ progress { accent-color: var(--accent); width: 100%; height: 12px; }
 /* ---------- Case docket ---------- */
 .case-head { margin-bottom: var(--sp-5); }
 .case-head h1 { font-size: 2.25rem; max-width: 30ch; margin: 0 0 var(--sp-2); }
-.case-head .definition { color: var(--muted); font-size: 1rem; max-width: 64ch; margin: 0 0 var(--sp-3); }
+.case-head .definition { overflow-wrap: anywhere; color: var(--muted); font-size: 1rem; max-width: 64ch; margin: 0 0 var(--sp-3); }
 .case-head .definition b { color: var(--ink); }
 .case-head .meta-line { font-size: .875rem; color: var(--muted); margin: 0 0 var(--sp-3); }
 .clinic-slot { margin-bottom: var(--sp-5); }
@@ -331,6 +331,41 @@ progress { accent-color: var(--accent); width: 100%; height: 12px; }
 .verdict-num small { font: 400 .9375rem var(--font-ui); color: var(--muted); }
 .verdict-iv { margin: var(--sp-1) 0 var(--sp-3); font-size: .9375rem; }
 .verdict .actions { margin-top: var(--sp-3); gap: var(--sp-3); }
+.verdict-notes { grid-column: 1 / -1; padding-top: var(--sp-3); border-top: 1px solid var(--line); display: grid; gap: var(--sp-2); }
+.verdict-notes p { margin: 0; font-size: .9375rem; color: var(--muted); }
+.verdict-notes b { color: var(--ink); }
+.verdict-notes .verdict-caveat { padding: 0; border: 0; }
+
+/* Strip: one compact row of cells under an eyebrow each (Headline clinic; Same trap, other fields). Stacks on phones. */
+.strip { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--edge); border-radius: var(--radius); box-shadow: var(--shadow-1); min-width: 0; }
+.strip-cell { position: relative; padding: var(--sp-4) var(--sp-5); min-width: 0; }
+.strip-cell + .strip-cell { border-left: 1px solid var(--line); }
+.strip-cell .eyebrow { margin-bottom: var(--sp-2); }
+.strip-text { margin: 0; font-size: .9375rem; line-height: 1.5; }
+.strip-text b { font-weight: 700; }
+.strip-quote { margin: 0 0 var(--sp-2); font: 400 1.125rem/1.35 var(--font-serif); overflow-wrap: anywhere; }
+.strip-src { margin: 0 0 var(--sp-3); font-size: .875rem; }
+.strip-src a { overflow-wrap: anywhere; }
+.strip-note { grid-column: 1 / -1; margin: 0; padding: var(--sp-2) var(--sp-5); border-top: 1px solid var(--line); font-size: .8125rem; color: var(--muted); }
+.strip.flow .strip-cell + .strip-cell::before { content: ""; position: absolute; left: -6px; top: 22px; width: 10px; height: 10px; background: var(--surface); border-top: 1px solid var(--edge); border-right: 1px solid var(--edge); transform: rotate(45deg); }
+.fields-strip { margin-top: var(--sp-6); }
+.fields-strip h2 { font-size: 1.25rem; line-height: 1.3; margin: 0 0 var(--sp-3); }
+.fields-strip .strip { border-top-color: var(--line); }
+
+/* Standards of proof (Method): a short analogy table */
+.analogy { margin: var(--sp-4) 0 var(--sp-3); }
+table.analogy-table { border-collapse: collapse; width: 100%; font-size: .9375rem; }
+.analogy-table caption { text-align: left; font: 700 .75rem/1.33 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-bottom: var(--sp-2); }
+.analogy-table th, .analogy-table td { text-align: left; vertical-align: top; padding: var(--sp-3) var(--sp-3) var(--sp-3) 0; border-bottom: 1px solid var(--line); }
+.analogy-table thead th { font: 700 .75rem/1.33 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.analogy-table tbody th { font-weight: 700; width: 34%; }
+.analogy-table td b { font-weight: 700; }
+
+/* Investigate: repeated-tries counter and share link */
+.tries { font-size: .875rem; color: var(--muted); margin: 0; flex: 1 1 100%; }
+.tries b { color: var(--ink); }
+.trial-foot { display: grid; gap: var(--sp-3); margin-top: var(--sp-4); }
+.trial-foot .tries, .trial-foot .caution { flex: none; }
 .docket-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "rec map" "more map"; grid-template-rows: auto 1fr; gap: var(--sp-5); align-items: start; margin-bottom: var(--sp-5); }
 .docket-grid > * { min-width: 0; }
 .docket-grid > .rec { grid-area: rec; } .docket-grid > .map-ex { grid-area: map; } .docket-grid > .docket-more { grid-area: more; }
@@ -492,8 +527,14 @@ footer.foot .links { display: flex; gap: var(--sp-5); flex-wrap: wrap; }
   .verdict { grid-template-columns: minmax(0, 1fr); }
   .docket-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "rec" "map" "more"; }
 }
+@media (max-width: 48rem) {
+  .strip { grid-template-columns: minmax(0, 1fr); }
+  .strip-cell + .strip-cell { border-left: 0; border-top: 1px solid var(--line); }
+  .strip.flow .strip-cell + .strip-cell::before { left: 24px; top: -6px; transform: rotate(135deg); }
+}
 @media (max-width: 40rem) {
   :root { --pad: 16px; }
+  .strip-cell { padding: var(--sp-4); } .strip-note { padding: var(--sp-2) var(--sp-4); }
   .wrap { padding: 0 var(--sp-4); }
   main { padding-top: var(--sp-5); }
   h1, .page-head h1, .case-head h1 { font-size: 2rem; line-height: 1.1875; }

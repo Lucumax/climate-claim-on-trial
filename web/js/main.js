@@ -35,10 +35,11 @@ async function boot() {
 function notFound() { return { title: "Not found", node: h("div", { class: "err" }, h("h1", { id: "page-title", tabindex: "-1" }, "Page not found"), h("p", {}, h("a", { href: "#/" }, "Back to the start"))) }; }
 
 function resolve(hash) {
-  const parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  const [path, query = ""] = hash.split("?"); // a query after the path (replay links) is read by the view, not the router
+  const parts = path.replace(/^#\/?/, "").split("/").filter(Boolean);
   const [a, id] = parts;
   if (!a) return { nav: "home", v: landing(bundle, catalog) };
-  if (a === "investigate") return { nav: "investigate", v: detective(catalog, bundle) };
+  if (a === "investigate") return { nav: "investigate", v: detective(catalog, bundle, query) };
   if (a === "cases") return { nav: "cases", v: caseList(bundle) };
   if (a === "case") {
     const c = claimById(bundle, id); if (!c) return { nav: "cases", v: notFound() };

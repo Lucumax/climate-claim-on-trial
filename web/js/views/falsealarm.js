@@ -73,6 +73,16 @@ function publishedFor(val, phi, n) {
 }
 
 // ------------------------------------------------------------------------------------------ the view
+// "Same trap, other fields": one compact strip below the ruling. Plain statements of well-known practice; no data and no logos.
+function sameTrap() {
+  const cell = (field, text) => h("div", { class: "strip-cell" }, h("p", { class: "eyebrow" }, field), h("p", { class: "strip-text" }, text));
+  return h("section", { class: "fields-strip", "aria-labelledby": "fa-trap-h" }, h("h2", { id: "fa-trap-h" }, "Same trap, other fields"),
+    h("div", { class: "strip" },
+      cell("Finance", "Try enough trading strategies on the same past prices and one will look like a winner, by luck alone."),
+      cell("Medicine", "A trial that checks 20 outcomes can show one that looks significant by chance alone."),
+      cell("Tech", "An A/B test stopped the moment it looks good will “win” more often than 1 time in 20 when nothing changed.")));
+}
+
 export function falseAlarm() {
   const reduced = reducedMotion();
   const webgl = hasWebGL();
@@ -210,7 +220,8 @@ export function falseAlarm() {
 
   const node = h("div", { class: "fa-view fa-pending" },
     h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Exhibit 0"), heading,
-    h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit), rulingColumn));
+    h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit), rulingColumn),
+    sameTrap());
 
   // stylesheet: load it with the view, show the page when it is ready
   const css = document.querySelector('link[data-fa-css]') || Object.assign(document.createElement("link"), { rel: "stylesheet", href: "css/falsealarm.css" });

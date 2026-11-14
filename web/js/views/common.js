@@ -28,14 +28,17 @@ export function tone(v) {
 // Shared by the case docket and Investigate so both rulings look the same.
 export const gavelIcon = () => s("svg", { class: "gavel", viewBox: "0 0 48 48", "aria-hidden": "true", fill: "none", stroke: "currentColor", "stroke-width": "2" }, s("g", { transform: "rotate(-38 24 21)" }, s("rect", { x: 11, y: 9, width: 23, height: 12, rx: 2 }), s("path", { d: "M15 9v12m15-12v12M21 21v17h5V21" })), s("path", { d: "M27 40h15v4H27z" }));
 
-// Copy button with a visible and a spoken confirmation. Falls back to a text download when the clipboard is blocked.
-export function copyButton(label, getText, filename) {
+// Copy button with a visible and a spoken confirmation. Falls back to a text download when the clipboard is blocked (no filename: a hint instead).
+export function copyButton(label, getText, filename, what = "Finding") {
   const msg = h("span", { class: "copied", role: "status", "aria-live": "polite" });
   const btn = h("button", { class: "btn-quiet", type: "button", onclick: () => {
     const text = getText();
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(
-      () => { msg.textContent = "Copied to the clipboard."; announce("Finding copied to the clipboard."); setTimeout(() => { msg.textContent = ""; }, 3000); },
-      () => { download(filename, text, "text/plain"); msg.textContent = "Clipboard blocked, so the finding was downloaded as a text file."; });
+      () => { msg.textContent = "Copied to the clipboard."; announce(`${what} copied to the clipboard.`); setTimeout(() => { msg.textContent = ""; }, 3000); },
+      () => {
+        if (filename) { download(filename, text, "text/plain"); msg.textContent = `Clipboard blocked, so the ${what.toLowerCase()} was downloaded as a text file.`; }
+        else msg.textContent = `Clipboard blocked. Copy the ${what.toLowerCase()} from the address bar instead.`;
+      });
   } }, label);
   return h("span", { class: "chips" }, btn, msg);
 }

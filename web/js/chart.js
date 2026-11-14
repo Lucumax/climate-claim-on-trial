@@ -97,7 +97,7 @@ export function trendChart(o) {
   const key = h("div", { class: "chartkey", "aria-hidden": "true" }, o.keyItems.map(([c, t]) => h("span", { class: c }, t)));
   const f3 = v => fmtNum(v, 3);
   const table = h("details", { class: "disc" }, h("summary", {}, "Show the numbers as a table"),
-    h("div", { class: "scroll disc-body" }, h("table", { class: "data" },
+    h("div", { class: "scroll disc-body", tabindex: "0", role: "region", "aria-label": "Chart values as a table (scrolls)" }, h("table", { class: "data" },
       h("thead", {}, h("tr", {}, ["Time", `Value (${o.units})`, ...(o.band ? ["Band low", "Band high"] : []), ...o.lines.map(l => l.label)].map(t => h("th", { scope: "col" }, t)))),
       h("tbody", {}, yrs.map((yr, i) => h("tr", {}, h("td", {}, fx(yr)), [y[i], ...(o.band ? [o.band.lo[i], o.band.hi[i]] : []), ...o.lines.map(l => l.y[i])].map(v => h("td", {}, f3(v)))))))));
   return { node: h("div", {}, wrap, readout, key, table), summary: o.describe };

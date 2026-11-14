@@ -188,7 +188,7 @@ export function caseDocket(b, c, query = "") {
     const [mod, data] = await Promise.all([import("../viz/cycle.js"), getJson(`data/viz/${c.id}.json`)]);
     return mod.renderCycle(body, data, {});
   }
-  const rulingNote = withheld ? "The regional ruling above is withheld. Changing the view changes what you see, never the ruling." : "The regional ruling above is final. Changing the view changes what you see, never the ruling.";
+  const rulingNote = withheld ? "The regional ruling below is withheld. Changing the view changes what you see, never the ruling." : "The regional ruling below is final. Changing the view changes what you see, never the ruling.";
   const views = [
     { key: "record", label: "Regional record", title: "The regional record", ask: "What did the region's value do, year by year?", mount: mountRecord },
     { key: "anomaly", label: "Values over time", title: "Values over time", ask: "What changed, and when? Every grid cell, year by year, on one fixed colour scale.", mount: mountAnomaly, frame: true },
@@ -264,7 +264,8 @@ export function caseDocket(b, c, query = "") {
     h("header", { class: "case-head" },
       h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id) + " · the registered claim"), h("h1", { id: "page-title", tabindex: "-1" }, "“" + c.claim_text + "”"),
       h("p", { class: "definition" }, h("b", {}, c.variable.name + ": "), c.variable.plain)),
-    (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(), ruling, ruleNote,
-    ex.node, h("div", { class: "docket-more" }, statistics, limits, provenance)),
+    ex.node, ruling, ruleNote,
+    (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(),
+    h("div", { class: "docket-more" }, statistics, limits, provenance)),
     afterMount: () => ex.start(), dispose: () => ex.dispose() };
 }

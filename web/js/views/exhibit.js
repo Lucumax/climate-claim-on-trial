@@ -39,7 +39,7 @@ export function exhibit({ views, initial, tag, rulingNote, onView }) {
     if (!views.some(v => v.key === key)) return;
     const changed = key !== cur; cur = key;
     seg.querySelectorAll("input").forEach(i => { i.checked = i.value === key; });
-    if (changed) { mountCurrent(); announce(`${views.find(v => v.key === key).title}. The ruling above is unchanged.`); onView && onView(key); }
+    if (changed) { mountCurrent(); announce(`${views.find(v => v.key === key).title}. The ruling is unchanged.`); onView && onView(key); }
     if (opts.scroll) { root.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); root.focus({ preventScroll: true }); }
     if (opts.focus) { const i = seg.querySelector(`input[value="${key}"]`); if (i) i.focus(); }
   }

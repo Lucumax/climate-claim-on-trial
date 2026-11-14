@@ -54,8 +54,8 @@ function adapt(d) {
     kind: `CRU TS 4.10, a ${rain ? "rain-gauge" : "weather-station"} record gridded at 0.5 degrees and served by KNMI Climate Explorer. It is a different kind of measurement from the ${rain ? "satellite" : "reanalysis model"}, but it is not ground truth.`,
     words: [
       `The station-based record shows ${signed(ws.sen_per_decade, 2)} ${u} per decade over ${first}–${last} (p ${fp(pick(ws))}), ${dir} the case series' ${signed(cs.sen_per_decade, 2)} (p ${fp(pick(cs))}). The two series track each other year by year (r ${r2(ag.pearson_r)}).`,
-      rain ? `It agrees on direction; its interval ${ws.sen_ci95_per_decade[0] < 0 ? "reaches below zero" : "stays above zero"}, so it does not settle the claim by itself. The ruling above is unchanged.`
-        : `It confirms the warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The ruling above is unchanged.`,
+      rain ? `It agrees on direction; its interval ${ws.sen_ci95_per_decade[0] < 0 ? "reaches below zero" : "stays above zero"}, so it does not settle the claim by itself. The ruling below is unchanged.`
+        : `It confirms the warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The ruling below is unchanged.`,
     ],
     caveat: d.caveat,
     links: [["Data on KNMI Climate Explorer", d.witness.page_url], ["CRU TS 4.10 (Harris et al. 2020)", "https://doi.org/10.1038/s41597-020-0453-3"]],

@@ -2,6 +2,10 @@
 import { signed, fmtP } from "./util.js";
 
 export const ALPHA = 0.05;
+export const PERSISTENCE_CAVEAT = "P-values from series whose years resemble each other tend to be too small, which is why step 5 applies a correction.";
+export const INTERVAL_EXPLORATORY = "95% interval (Sen slope, analytic; exploratory, not checked for your series)";
+// The statistics module's fixed sentence says a significant trend is "unlikely to be chance alone". That invites an inverse-probability reading, so we show the careful version.
+export const fixVerdict = t => String(t).replace(/the (rise|fall) is unlikely to be chance alone/, "a pattern this strong would be rare if there were no trend (p < 0.05)");
 
 export function pWords(p) {
   if (p < ALPHA) return `The p-value is ${fmtP(p)}, which is below 0.05. By the usual rule, that is called a statistically significant trend: a pattern this clear would be unusual if there were no real trend.`;

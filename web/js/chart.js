@@ -1,5 +1,5 @@
 // Regional anomaly chart: points, uncertainty band, Sen trend, and the ordinary least squares baseline. Hand SVG.
-import { h, s, signed } from "./util.js";
+import { h, s, signed, fmtPx } from "./util.js";
 
 function niceTicks(lo, hi, n = 5) {
   const span = hi - lo, raw = span / n, mag = 10 ** Math.floor(Math.log10(raw));
@@ -20,13 +20,15 @@ export function seriesFits(claim) {
 }
 
 export function seriesChart(claim) {
-  const r = claim.regional, fit = seriesFits(claim);
+  const r = claim.regional, fit = seriesFits(claim), iv = r.interval, t = r.test, band = r.band_lo && r.band_hi ? { lo: r.band_lo, hi: r.band_hi } : null;
+  const ivWord = iv ? `${iv.label} ${signed(iv.lo)} to ${signed(iv.hi)}` : "interval not shown: failed its coverage check";
+  const tWord = t ? ` Regional test: ${t.title}, p = ${fmtPx(t.p)}, variance factor ${t.factor != null ? t.factor.toFixed(2) : "n/a"}.` : " Regional test not shown: it did not pass its calibration check.";
   return trendChart({
-    x: r.years, y: r.anomaly, units: r.units, band: { lo: r.band_lo, hi: r.band_hi }, fmtX: v => String(v), ptR: 3.6, xTickStep: r.years.length > 30 ? 10 : 5,
+    x: r.years, y: r.anomaly, units: r.units, band, fmtX: v => String(v), ptR: 3.6, xTickStep: r.years.length > 30 ? 10 : 5,
     lines: [{ label: "Sen trend", cls: "sen", lbl: "lbl-sen", y: fit.sen }, { label: "Least squares", cls: "olsl", lbl: "lbl-ols", y: fit.ols }],
-    describe: `Regional anomaly series for ${claim.region.name}, ${r.years[0]} to ${r.years[r.years.length - 1]}. Sen trend ${signed(r.sen.slope_per_decade)} ${r.units} per decade, 95% interval ${signed(r.sen.ci_lo)} to ${signed(r.sen.ci_hi)}. Least squares baseline ${signed(r.ols.slope_per_decade)} per decade.`,
+    describe: `Regional anomaly series for ${claim.region.name}, ${r.years[0]} to ${r.years[r.years.length - 1]}. Sen trend ${signed(r.sen.slope_per_decade)} ${r.units} per decade; ${ivWord}.${tWord} Least squares baseline ${signed(r.ols.slope_per_decade)} per decade.${band ? " The shaded band is the slope range of the interval, pivoted at the middle year." : ""}`,
     yLabel: `Anomaly (${r.units})`, pointWord: "anomaly",
-    keyItems: [["k-pt", "Yearly regional anomaly"], ["k-band", "Uncertainty band"], ["k-sen", "Sen trend (the verdict's estimate)"], ["k-ols", "Ordinary least squares (familiar baseline)"]],
+    keyItems: [["k-pt", "Yearly regional anomaly"], ...(band ? [["k-band", "Slope-range band (95% slope interval)"]] : []), ["k-sen", "Sen trend (the verdict's estimate)"], ["k-ols", "Ordinary least squares (familiar baseline)"]],
   });
 }
 

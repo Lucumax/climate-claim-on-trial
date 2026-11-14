@@ -7,9 +7,9 @@ import { fetchMonthly, validateBox, planBox } from "../live.js";
 import { analyzeRows, stepInfo, detectiveVerdict, STATS_VERSION } from "../stats.js";
 import { trendChart } from "../chart.js";
 import { tip, gavelIcon, honestNull } from "./common.js";
-import { pWords, trendWords, stepWords, sigClass, sigLabel, ALPHA } from "../words.js";
+import { pWords, trendWords, stepWords, sigClass, sigLabel, ALPHA, fixVerdict, PERSISTENCE_CAVEAT, INTERVAL_EXPLORATORY } from "../words.js";
 
-const LAST_YEAR = 2025;
+const LAST_YEAR = 2025, DEMO_TIMEOUT_MS = 25000;
 const state = { varKey: "t2m", presetKey: "wisconsin", box: null, y0: 1981, y1: 2025, season: "all", view: "values", step: 1, visited: new Set([1]), status: "idle", err: "", result: null, last: null };
 
 // Steps are the author's five (challenge video). short = label in the phone stepper.
@@ -18,7 +18,7 @@ const STEPS = [
   { n: 2, name: "Name the place", short: "Place", why: "Draw a box on the map, or start from a preset region." },
   { n: 3, name: "Set the period", short: "Period", why: "Years, and a season if you want one." },
   { n: 4, name: "Examine the record", short: "Record", why: "Plot one value per year and test the trend." },
-  { n: 5, name: "Put it on trial", short: "Trial", why: "Three tougher tests, one change each." },
+  { n: 5, name: "Put it on trial", short: "Trial", why: "Three checks, one change each." },
 ];
 const TIPS = [
   null,
@@ -32,7 +32,8 @@ const TIPS = [
 const PHRASE = { t2m: "air temperature", t2m_max: "the daily high temperature", t2m_min: "the daily low temperature", precip: "rainfall", solar: "sunlight reaching the ground", cloud: "cloud cover", rh: "humidity", wind: "wind speed", soil_root: "root-zone soil wetness", soil_top: "surface soil wetness", frost: "the number of frost days", snow: "snow depth" };
 const PLACE = { world: "the whole world", amazon: "the Amazon basin", sus: "the Southeastern United States" };
 
-export function detective(cat) {
+export function detective(cat, bundle) {
+  const caseIds = new Set(((bundle && bundle.claims) || []).map(c => c.id));
   const V = cat.variables, P = cat.presets, S = cat.seasons;
   if (!state.box) state.box = { ...P.find(p => p.key === state.presetKey).box };
   const root = h("div", {});
@@ -91,7 +92,7 @@ export function detective(cat) {
   function invalidate() { runId++; state.visited.delete(4); state.visited.delete(5); state.result = null; state.last = null; state.status = "idle"; refresh(); }
   function drawVars() {
     varBox.replaceChildren(h("legend", { class: "sr-only" }, "Variable"), ...V.map(v => v.live === false
-      ? h("div", {}, h("div", { class: "off" }, h("strong", {}, v.name), h("span", { class: "muted small", style: "display:block;margin:2px 0 6px" }, v.one_line), h("span", { class: "chip neutral" }, "Case files only"), h("span", { class: "small", style: "display:block;margin-top:6px" }, v.not_live_note + " ", h("a", { href: v.case_link }, "Open case C-D"))))
+      ? h("div", {}, h("div", { class: "off" }, h("strong", {}, v.name), h("span", { class: "muted small", style: "display:block;margin:2px 0 6px" }, v.one_line), h("span", { class: "chip neutral" }, caseIds.has(v.case_id) ? "Case files only" : "Case pending"), h("span", { class: "small", style: "display:block;margin-top:6px" }, caseIds.has(v.case_id) ? [v.not_live_note + " ", h("a", { href: v.case_link }, "Open case " + v.case_id)] : "Not available live: NASA POWER does not carry it. Case pending: data being processed.")))
       : h("label", {}, h("input", { type: "radio", name: "variable", value: v.key, checked: v.key === state.varKey, onchange: () => { state.varKey = v.key; clampYears(); invalidate(); } }),
         h("span", { class: "opt" }, h("strong", {}, v.name), h("span", { class: "muted small", style: "display:block;margin:2px 0 6px" }, v.one_line), h("span", { class: "chip " + (v.kind === "model_reanalysis" ? "warn" : "neutral") }, v.kind === "model_reanalysis" ? "Model-based" : "Satellite observation"), h("span", { class: "muted small", style: "display:block;margin-top:6px" }, `Unit: ${v.units}. Record starts ${v.since}`)))));
   }
@@ -107,7 +108,9 @@ export function detective(cat) {
   const boxLabel = h("p", { class: "muted small" }), planNote = h("div", { class: "small", "aria-live": "polite" });
   function drawPresets() {
     const match = P.find(p => JSON.stringify(p.box) === JSON.stringify(state.box));
-    presetPills.replaceChildren(...P.map(p => h("label", {}, h("input", { type: "radio", name: "preset", value: p.key, checked: !!match && match.key === p.key, onchange: () => { state.presetKey = p.key; setBox({ ...p.box }); } }), h("span", {}, p.name.replace(/\s*\(.*\)$/, "")))));
+    presetPills.replaceChildren(...P.map(p => p.key === "world"
+      ? h("label", { class: "pill-off" }, h("input", { type: "radio", name: "preset", value: p.key, disabled: true }), h("span", {}, "Whole world (not supported live)"))
+      : h("label", {}, h("input", { type: "radio", name: "preset", value: p.key, checked: !!match && match.key === p.key, onchange: () => { state.presetKey = p.key; setBox({ ...p.box }); } }), h("span", {}, p.name.replace(/\s*\(.*\)$/, "")))));
   }
   function setBox(b, fromInput, quiet) {
     const errs = validateBox(b); err.textContent = errs.join(" ");
@@ -139,6 +142,20 @@ export function detective(cat) {
   }
 
   // ======================================================== running the fetch and the tests
+  // Guided demos try NASA POWER live first; if that fails or takes too long, they use a saved copy of the same request (data/demo_cache/), clearly labelled.
+  async function fetchOrCache(args) {
+    if (!demo) return fetchMonthly(args);
+    const d = demo.d, preset = P.find(q => q.key === d.preset), same = args.variable.key === d.varKey && preset && JSON.stringify(preset.box) === JSON.stringify(args.box) && args.startYear === 1981 && args.endYear === 2025;
+    try { return await Promise.race([fetchMonthly(args), new Promise((_, rej) => setTimeout(() => rej(new Error("NASA POWER took too long.")), DEMO_TIMEOUT_MS))]); }
+    catch (e) {
+      if (!same) throw e;
+      let c; try { const r = await fetch(`data/demo_cache/${d.id}.json`); if (!r.ok) throw new Error("no cache"); c = await r.json(); } catch (e2) { throw e; }
+      if (args.onProgress) args.onProgress({ done: 1, total: 1 });
+      const rows = c.rows.map(([year, month, value]) => ({ year, month, value }));
+      return { stub: false, source: args.variable.source, units: c.units, rows, note: c.note, method: c.method, n_tiles: c.n_tiles, n_cells: c.n_cells, first_year: c.first_year, last_year: c.last_year, cached: true, cachedLabel: `The live NASA POWER request did not work just now, so this demo shows the identical request, saved on ${c.fetched_label}, 2026. Live data is tried first every time.` };
+    }
+  }
+  const cachedBadge = R => R && R.data && R.data.cached ? h("p", { class: "callout", role: "note" }, h("b", {}, "Cached copy from Nov 14. "), R.data.cachedLabel) : null;
   async function run() {
     const errs = validateBox(state.box);
     if (errs.length) { state.status = "error"; state.err = errs.join(" "); return false; }
@@ -148,7 +165,7 @@ export function detective(cat) {
     const bar = h("progress", { max: 1, value: 0, style: "width:100%;height:14px", "aria-label": "Download progress" }), cap = h("p", { class: "muted small" }, "Contacting NASA POWER.");
     prog = { bar, cap, name: v.name.toLowerCase() }; drawPanel();
     try {
-      const data = await fetchMonthly({ variable: v, box: state.box, startYear: state.y0, endYear: state.y1, onProgress: ({ done, total }) => { if (my !== runId) return; bar.value = total ? done / total : 0; cap.textContent = `${done} of ${total} request${total === 1 ? "" : "s"} done.`; } });
+      const data = await fetchOrCache({ variable: v, box: state.box, startYear: state.y0, endYear: state.y1, onProgress: ({ done, total }) => { if (my !== runId) return; bar.value = total ? done / total : 0; cap.textContent = `${done} of ${total} request${total === 1 ? "" : "s"} done.`; } });
       if (my !== runId) return false; // the user changed a choice while the data was coming
       const rows = data.rows.filter(r => season.months.includes(r.month));
       if (rows.length < 8) { state.status = "error"; state.err = "Too few values to test. Choose a longer period or more months."; return false; }
@@ -186,11 +203,11 @@ export function detective(cat) {
     if (n === 1) panel.replaceChildren(head("Exhibit A", "Choose the evidence", "Step 1 of 5"), h("p", { class: "muted" }, "Each clue is a NASA Earth measurement. Pick one."), varBox, nav(next(2, "Next: name the place")));
     else if (n === 2) panel.replaceChildren(head("Exhibit A", "Name the place", "Step 2 of 5"), h("p", { class: "muted", style: "margin-top:0" }, "Start from a preset, drag a box on the map, or type the edges."),
       h("p", { class: "eyebrow", style: "margin:0 0 8px" }, "Preset regions"), presetPills, h("div", { style: "margin-top:12px" }, wm.node),
-      h("p", { class: "muted small", style: "margin:6px 0 0" }, "Drag on the map to draw a box. Boxes are rectangles of latitude and longitude. On a phone, typing the four edges is easier than dragging."), boxRow, err, boxLabel, planNote, nav(back(1), next(3, "Next: set the period")));
+      h("p", { class: "muted small", style: "margin:6px 0 0" }, "Drag on the map to draw a box. Boxes are rectangles of latitude and longitude. On a phone, typing the four edges is easier than dragging. A whole-world view is not supported here: live requests to NASA POWER are limited to regional boxes of about 40 by 50 degrees."), boxRow, err, boxLabel, planNote, nav(back(1), next(3, "Next: set the period")));
     else if (n === 3) panel.replaceChildren(head("Exhibit A", "Set the period", "Step 3 of 5"), ...periodBody(), nav(back(2), next(4, "Examine the record")));
     else if (state.status === "loading") panel.replaceChildren(head(n === 4 ? "Exhibit B" : "Order of hearings", n === 4 ? "The record" : "Put it on trial", `Step ${n} of 5`), h("p", {}, h("b", {}, "Getting " + prog.name + " from NASA POWER.")), prog.bar, prog.cap);
     else if (state.status === "error" || !L) panel.replaceChildren(head(n === 4 ? "Exhibit B" : "Order of hearings", n === 4 ? "The record" : "Put it on trial", `Step ${n} of 5`), h("p", { class: "callout", role: "alert" }, state.err || "No series yet."), nav(back(3), h("button", { class: "btn", type: "button", onclick: () => goStep(n) }, "Try again")));
-    else if (L.W.tooShort) panel.replaceChildren(head("Exhibit B", "The record", `Step ${n} of 5`), h("p", { class: "callout" }, L.W.verdict.text), nav(back(3)));
+    else if (L.W.tooShort) panel.replaceChildren(head("Exhibit B", "The record", `Step ${n} of 5`), h("p", { class: "callout" }, fixVerdict(L.W.verdict.text)), nav(back(3)));
     else if (n === 4) drawRecord(); else drawTrial();
   }
 
@@ -210,10 +227,10 @@ export function detective(cat) {
         h("label", {}, h("input", { type: "radio", name: "view", value: k, checked: (state.view === "anom") === (k === "anom"), onchange: () => { state.view = k; drawPanel(); document.getElementById("view-" + k)?.focus(); } }), h("span", { id: "view-" + k }, l))));
     const csv = () => download(`detective_${R.v.key}_${R.y0}-${R.y1}.csv`, "year,season_mean,anomaly\n" + W.years.map((yr, i) => `${yr},${W.raw[i].toFixed(5)},${W.anomaly[i].toFixed(5)}`).join("\n"), "text/csv");
     panel.replaceChildren(head("Exhibit B", "The record", "One value per year"),
-      h("p", { class: demo ? "muted small" : "muted small", style: "margin:0 0 8px" }, h("b", {}, "About this data. "), R.data.note),
+      cachedBadge(R), h("p", { class: "muted small", style: "margin:0 0 8px" }, h("b", {}, "About this data. "), R.data.note),
       h("div", { class: "map-summary" }, h("span", {}, `${W.n} years with a value, ${R.y0} to ${R.y1}, ${season.name}`), h("strong", {}, signed(R_.sen.slopePerDecade, 2), " ", h("span", {}, `${u} per decade (Sen)`))),
       toggle, h("div", { style: "margin-top:12px", id: "det-chart" }, chart.node),
-      h("p", { class: "slope-label", style: "margin:10px 0 0" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)}`),
+      h("p", { class: "slope-label", style: "margin:10px 0 0" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade; ${INTERVAL_EXPLORATORY} ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)}`),
       h("div", { id: "det-test", style: "margin-top:22px" }, h("h3", {}, "Is the trend significant?"), h("p", { class: "muted small", style: "margin-top:-.3em" }, "A p-value is the chance of seeing a pattern at least this clear if there were no real trend. Below 0.05 is called significant."),
         h("div", { class: "statgrid" },
           stat("Mann-Kendall test", `p ${fmtP(R_.mkIndependent.p)}`, `${sigLabel(R_.mkIndependent.p)}. Sen slope ${signed(R_.sen.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(R_.sen.intervalPerDecade[0], 2)} to ${signed(R_.sen.intervalPerDecade[1], 2)}`),
@@ -236,7 +253,7 @@ export function detective(cat) {
         h("p", { class: "small", style: "margin:8px 0 0" }, h("b", {}, "What this step did. "), stepWords(rungs[i - 1], r), ` Sen slope ${signed(r.slope, 2)} ${u} per decade.`));
     }));
     panel.replaceChildren(head("Order of hearings", "Put it on trial", "Step 5 of 5"),
-      h("p", { class: "muted", style: "margin-top:0" }, "Does the answer survive tougher questions? Each step changes one thing. We report what happened, whichever way the p-value moves. The short bar marks the 0.05 line: left of the line is significant."),
+      cachedBadge(R), h("p", { class: "muted", style: "margin-top:0" }, "Does the answer hold up when we change one thing at a time? Each step changes one thing. We report what happened, whichever way the p-value moves. The short bar marks the 0.05 line: left of the line is significant."),
       list,
       nav(back(4), h("button", { class: "btn-quiet", type: "button", onclick: csv }, "Download this series (CSV)"), h("button", { class: "btn-quiet", type: "button", onclick: () => { demo = null; drawDemoCard(); goStep(1); } }, "Open another case"), h("a", { class: "btn-quiet", href: "#/cases" }, "See a registered case file")),
       h("p", { class: "muted small", style: "margin:0" }, `Statistics: trendtrial ${STATS_VERSION}, checked against the Python reference.`));
@@ -251,14 +268,14 @@ export function detective(cat) {
     const headRow = h("div", { class: "ruling-head" }, h("p", { class: "eyebrow" }, "The ruling"), gavelIcon());
     if (!ready) {
       ruling.replaceChildren(headRow, h("h2", { id: "ruling-h" }, L && L.W.tooShort ? "Too few years" : "No ruling yet"), stamp,
-        h("p", {}, L && L.W.tooShort ? L.W.verdict.text : "The ruling appears when you have examined the record. It updates as soon as you put the trend on trial."),
+        h("p", {}, L && L.W.tooShort ? fixVerdict(L.W.verdict.text) : "The ruling appears when you have examined the record. It updates as soon as you put the trend on trial."),
         h("p", { class: "caveat" }, h("b", {}, "How to read it. "), "A p-value below 0.05 is called significant. A p-value above 0.05 does not mean there is no trend, and it does not mean the change is unimportant. A longer record can help."));
     } else {
       const { W, R, rungs } = L, A = W.A_an, pRaw = rungs[0].p, pFin = rungs[2].p, final = state.visited.has(5);
       const p = final ? pFin : pRaw, slope = final ? A.sen.slopePerDecade : W.A_raw.sen.slopePerDecade, ci = final ? A.sen.intervalPerDecade : W.A_raw.sen.intervalPerDecade;
       const sig = p < ALPHA, weak = final && pRaw < ALPHA && !sig;
       const label = sig ? "Significant at 0.05" : weak ? "Weakened by the trial" : "Not significant at 0.05", tone = sig ? "ok" : weak ? "warn" : "neutral";
-      const lines = [h("p", {}, h("b", {}, (final ? A.verdict : detectiveVerdict(pRaw, slope, W.n, R.v.units)).text))];
+      const lines = [h("p", {}, h("b", {}, fixVerdict((final ? A.verdict : detectiveVerdict(pRaw, slope, W.n, R.v.units)).text)))];
       if (!final) lines.push(h("p", {}, "This is the first look, before the trial. Put it on trial to see whether it holds up under tougher questions."));
       else if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the trial it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until tougher questions are asked.`));
       else if (sig && pFin > pRaw * 1.5) lines.push(h("p", {}, `It held up, but less strongly: p went from ${fmtP(pRaw)} to ${fmtP(pFin)} over the three hearings.`));
@@ -267,7 +284,7 @@ export function detective(cat) {
       lines.push(h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], R.v.units)));
       ruling.replaceChildren(headRow, h("h2", { id: "ruling-h" }, label), h("div", { class: "ruling-chips" }, h("span", { class: "chip " + tone }, `p ${fmtP(p)}`), h("span", { class: "chip neutral" }, final ? "Final, after hearing 3" : "Interim, before the trial")), stamp, ...lines,
         h("p", { class: "caveat" }, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.kind === "model_reanalysis" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
-        h("small", {}, "The 95% range is exploratory and has not been validated for this series."));
+        h("p", { class: "muted small" }, PERSISTENCE_CAVEAT), h("small", {}, "The interval is exploratory: it has not passed a coverage check for your series."));
     }
     const t = TIPS[state.step]; tipBox.replaceChildren(t ? tip(t) : "");
   }
@@ -305,17 +322,17 @@ export function detective(cat) {
     if (!demo) {
       demoBar.replaceChildren(h("div", { class: "demo-intro" }, h("p", { class: "eyebrow brass" }, "New here?"), h("h2", { id: "demo-h", tabindex: "-1" }, "Watch a demo")),
         h("div", { class: "flow-nav", style: "margin:0" }, DEMOS.map(d => h("button", { class: "btn-quiet", type: "button", onclick: () => startDemo(d) }, d.title))),
-        h("p", { class: "muted small demo-copy" }, "We fill in the five steps for you, one at a time, on real NASA POWER data, and explain each one in plain words."));
+        h("p", { class: "muted small demo-copy" }, "A guided walkthrough: we fill in the five steps for you on real NASA POWER data, and you press Next to move through each one. If NASA POWER cannot be reached, a clearly labelled saved copy from Nov 14 is used."));
       return;
     }
     const { d, k } = demo, R = state.result, L = state.last, ok = L && !L.W.tooShort;
     const captions = [null, d.s1, d.s2, d.s3,
       () => ok ? `We fetched the data and took the ${R.season.name.split(" (")[0].toLowerCase()} average for each year. Each dot is one year. The brown line is the Sen trend, a robust straight line through the dots: it ${L.W.A_raw.sen.slopePerDecade >= 0 ? "rises" : "falls"} by ${Math.abs(L.W.A_raw.sen.slopePerDecade).toFixed(2)} ${R.v.units} per decade. The dashed line is the ordinary least-squares line most people learn first. Do the dots follow the line, or do they scatter?` : "Fetching the data from NASA POWER.",
-      () => ok ? `Now the test. ${L.W.A_raw.verdict.text} The Mann-Kendall test gives p ${fmtP(L.W.A_raw.mkIndependent.p)} and the familiar t-test gives p ${fmtP(L.W.A_raw.ols.p)}. They can differ a little. That is normal.` : "",
+      () => ok ? `Now the test. ${fixVerdict(L.W.A_raw.verdict.text)} The Mann-Kendall test gives p ${fmtP(L.W.A_raw.mkIndependent.p)} and the familiar t-test gives p ${fmtP(L.W.A_raw.ols.p)}. They can differ a little. That is normal.` : "",
       () => ok ? `Finally we put the result on trial. Each step changes one thing: ${L.rungs.map(r => `step ${r.n} gives p ${fmtP(r.p)}`).join("; ")}. A step can make the result weaker, stronger or leave it alone. That is the whole detective loop. Now try your own clue and place.` : ""];
     const total = 6, cap = typeof captions[k] === "function" ? captions[k]() : captions[k];
     const titles = ["", "Step 1: choose the evidence", "Step 2: name the place", "Step 3: set the period", "Step 4: look at the series", "Step 4: test the trend", "Step 5: put it on trial"];
-    demoBar.replaceChildren(h("div", {}, h("p", { class: "eyebrow brass" }, `Demo: ${d.title}`), h("h2", { id: "demo-h", tabindex: "-1" }, `${titles[k]} (${k} of ${total})`), h("p", { id: "demo-cap", "aria-live": "polite", class: "demo-cap" }, cap)),
+    demoBar.replaceChildren(h("div", {}, h("p", { class: "eyebrow brass" }, `Demo: ${d.title}`, R && R.data && R.data.cached ? " · cached copy from Nov 14" : ""), h("h2", { id: "demo-h", tabindex: "-1" }, `${titles[k]} (${k} of ${total})`), h("p", { id: "demo-cap", "aria-live": "polite", class: "demo-cap" }, cap)),
       h("div", { class: "flow-nav demo-nav" }, h("button", { class: "btn-quiet", type: "button", disabled: k <= 1, onclick: () => goDemo(k - 1) }, "Back"), h("button", { class: "btn", type: "button", disabled: k >= total, onclick: () => goDemo(k + 1) }, k >= total ? "Done" : "Next"), h("button", { class: "btn-quiet", type: "button", onclick: exitDemo }, "Exit demo")));
   }
   function focusDemo(k) {

@@ -29,7 +29,7 @@ function normalizeAll(raws) {
   const claims = [];
   let meta = {};
   for (const raw of raws) {
-    if (raw.claims) { claims.push(...raw.claims.map(c => ({ gate: { regional: true, interval: true, cells: true, reasons: [] }, synthetic: true, ...c }))); meta = { ...meta, placeholder: !!raw.placeholder, synthetic: !!(raw.synthetic || raw.placeholder), notice: raw.notice, declared_q: raw.declared_q, alpha: raw.alpha, run_id: raw.run_id, schema_version: raw.schema_version }; }
+    if (raw.claims) { claims.push(...raw.claims.map(c => legacyAdapt({ gate: { regional: true, interval: true, cells: true, reasons: [] }, synthetic: true, ...c }))); meta = { ...meta, placeholder: !!raw.placeholder, synthetic: !!(raw.synthetic || raw.placeholder), notice: raw.notice, declared_q: raw.declared_q, alpha: raw.alpha, run_id: raw.run_id, schema_version: raw.schema_version }; }
     else {
       const c = fromReal(raw); claims.push(c);
       meta = { ...meta, synthetic: meta.synthetic || c.synthetic, notice: meta.notice || (c.synthetic ? "SYNTHETIC test data from the stats pipeline. Not NASA data and not a result." : ""), declared_q: raw.params.bh_q, alpha: raw.params.alpha, run_id: raw.run.run_id, schema_version: raw.schema_version };
@@ -44,58 +44,118 @@ function seasonName(m) {
   const named = { "1,2,3,4,5,6,7,8,9,10,11,12": "Annual mean", "12,1,2": "Winter (December to February)", "3,4,5": "Spring (March to May)", "6,7,8": "Summer (June to August)", "9,10,11": "Autumn (September to November)", "6,7,8,9": "Wet season (June to September)" }[key];
   return named || (m.length === 1 ? MONTHS[m[0] - 1] : `${MONTHS[m[0] - 1]} to ${MONTHS[m[m.length - 1] - 1]}`);
 }
-const BRANCH = { supported: ["Supported by this data", "ok"], partly_supported: ["Partly supported by this data", "warn"], not_supported: ["Not supported by this data", "neutral"], contradicted: ["Contradicted by this data", "bad"], withheld: ["No verdict given", "warn"] };
+const BRANCH = { supported: ["Supported", "ok"], partly_supported: ["Partly supported", "warn"], not_supported: ["Not supported", "neutral"], contradicted: ["Contradicted", "bad"], withheld: ["No verdict given", "warn"] };
+// Short names for the regional and cell tests the validation gate can choose (stats/SCHEMA.md, addendum 2).
+export const METHOD_NAME = { mk_independent: "Mann-Kendall, years treated as independent", hr_registered: "Hamed-Rao (as registered)", hr_all_lags: "Hamed-Rao, all lags", yue_wang: "Yue-Wang", tfpw: "TFPW (trend-free pre-whitening)", boot_mk_L3: "block-bootstrap Mann-Kendall (3-year blocks)", boot_mk_L5: "block-bootstrap Mann-Kendall (5-year blocks)" };
+const testTitle = m => m === "mk_independent" ? "Mann-Kendall (years treated as independent)" : `Mann-Kendall with ${METHOD_NAME[m] || m} correction`;
+const COV_NOTE = "; passed a 90% coverage check in simulations";
+const INTERVAL_WORD = { analytic_hr: "Sen slope, analytic", bootstrap: "Sen slope, moving-block bootstrap" };
+export const BAND_MEANING = "The shaded band is the Sen line tilted between the lower and upper ends of the 95% slope interval, pivoting at the middle year. It shows how steep the trend could plausibly be. It does not show uncertainty about the level, and it is not a range for individual years.";
+export const REG_SHORT = "Registered before data download (10:29 AM ET), with two dated method amendments made on simulated data before results, and one disclosed cell-rule correction.";
+
+// The ONE place that decides which test, interval and band a case shows. Everything downstream reads r.test / r.interval / r.band / r.ctx.
+function pickRegional(reg, T, gate, val) {
+  const sen = T.sen || {};
+  // shipped regional test (null if the gate disabled it; older bundles without addendum 2 fall back to the registered Hamed-Rao test)
+  let test = null;
+  if (T.shipped) {
+    const sh = T.shipped;
+    test = { method: sh.method, name: METHOD_NAME[sh.method] || sh.method, title: testTitle(sh.method), label: sh.label, p: sh.p, z: sh.z, factor: sh.variance_factor, significant: sh.significant, alpha: sh.alpha };
+  } else if (!("shipped" in T) && T.mk_hr && gate.regional_verdict_enabled !== false) {
+    test = { method: "hr_registered", name: "Hamed-Rao", title: "Mann-Kendall with Hamed-Rao correction", label: "Mann-Kendall with Hamed-Rao variance correction", p: T.mk_hr.p, z: T.mk_hr.z, factor: T.mk_hr.hr_factor, significant: T.mk_hr.significant, alpha: T.mk_hr.alpha };
+  }
+  // selected interval: only if the gate enabled it; endpoints follow the gate's chosen method, never a hard-coded field
+  let interval = null;
+  if (gate.interval_enabled !== false) {
+    const key = gate.interval_method || (/bootstrap/i.test(sen.interval_method || "") ? "bootstrap" : "analytic_hr");
+    const ends = "interval_used_per_decade" in sen ? sen.interval_used_per_decade : (key === "analytic_hr" ? sen.ci_analytic_hr_per_decade : sen.ci_bootstrap_per_decade);
+    if (Array.isArray(ends) && ends.length === 2 && ends.every(Number.isFinite)) {
+      const ran = val && val.status === "run";
+      interval = { lo: ends[0], hi: ends[1], level: (reg.band && reg.band.level) || 0.95, method: key, label: `95% interval (${INTERVAL_WORD[key] || key}${ran ? COV_NOTE : ""})` };
+    }
+  }
+  const band = interval && reg.band && Array.isArray(reg.band.lo) && Array.isArray(reg.band.hi) ? { lo: reg.band.lo, hi: reg.band.hi } : null;
+  const ctx = { hr: T.mk_hr ? { p: T.mk_hr.p, factor: T.mk_hr.hr_factor, factor_raw: T.mk_hr.hr_factor_raw } : null, raw: T.mk_independent ? { p: T.mk_independent.p } : null };
+  return { test, interval, band, ctx };
+}
 
 function fromReal(r) {
-  const cl = r.claim, reg = r.regional, T = reg.tests, cells = r.cells, F = cells.fields, g = cells.grid, val = r.validation, v = r.verdict;
+  const cl = r.claim, reg = r.regional, T = reg.tests, cells = r.cells, F = cells.fields, g = cells.grid, val = r.validation || {}, v = r.verdict;
+  const gate = val.gate || {};
   const sign = F.slope_per_decade.map(x => Math.sign(x));
   const mkFlags = k => F["flag_rung" + k].map((f, i) => F.valid[i] ? (f ? (sign[i] || 1) : 0) : null);
-  const nValid = cells.n_valid_cells;
-  const ladder = cells.rungs.map(R => ({
-    rung: R.rung, key: "rung" + R.rung, label: R.name, changes: R.what_changes, flags: mkFlags(R.rung), n_cells: nValid,
+  const nValid = cells.n_valid_cells, bhOn = cells.cells_mode !== "unadjusted_descriptive";
+  const cellTest = METHOD_NAME[cells.cell_test] || null;
+  const ladder = cells.rungs.filter(R => bhOn || R.rung < 4).map(R => ({
+    rung: R.rung, key: "rung" + R.rung, label: R.rung === 3 && cellTest ? `Autocorrelation correction: ${cellTest}` : R.name, changes: R.what_changes, flags: mkFlags(R.rung), n_cells: nValid,
     n_flagged_any: R.flagged_cells, n_flagged_claimed: R.flagged_in_direction_cells, flagged_fraction_any: R.flagged_area_frac, flagged_fraction_claimed: R.flagged_in_direction_area_frac,
+    cell_frac_any: nValid ? R.flagged_cells / nValid : 0, cell_frac_claimed: nValid ? R.flagged_in_direction_cells / nValid : 0,
     cells_changed: R.cells_changed_vs_previous, note: R.rung === 2 ? cells.rung2_note : null,
+    registered_hr: R.registered_hr_flagged_cells != null ? { cells: R.registered_hr_flagged_cells, area: R.registered_hr_flagged_area_frac } : null,
   }));
-  const [lbl, tone] = BRANCH[v.branch] || [v.branch, "neutral"];
+  const [lbl, tone] = BRANCH[v.id] || BRANCH[v.branch] || [v.branch, "neutral"];
   const sentences = v.text.split(/(?<=\.)\s+/);
-  const gate = val.gate || {};
+  const R_ = pickRegional(reg, T, gate, val);
+  const yearsOk = r.coverage.years_valid >= Math.max(r.params.min_valid_years_abs, r.params.min_valid_years_frac * r.coverage.years_total);
+  const synthetic = !!cl.synthetic;
   const checklist = [
     { text: val.results_run && val.results_run.placeholder ? "Validation checks passed (PLACEHOLDER results in this fixture)" : "Validation checks passed for the regional test", ok: !!gate.regional_verdict_enabled },
     { text: "Result is stable under the coverage and block-length checks (a sensitivity check, not independent validation)", ok: !!(r.sensitivity && r.sensitivity.stable) },
-    { text: `Enough valid years: ${r.coverage.years_valid} of ${r.coverage.years_total}`, ok: r.coverage.years_valid >= Math.max(r.params.min_valid_years_abs, r.params.min_valid_years_frac * r.coverage.years_total) },
-    { text: "The regional test was run once, as registered", ok: true },
+    { text: `Enough valid years: ${r.coverage.years_valid} of ${r.coverage.years_total}`, ok: yearsOk },
+    synthetic ? { text: "Synthetic test case: not registered", ok: false } : { text: REG_SHORT, ok: true, link: ["#/method/registration", "Read what changed and when"] },
     { text: "Map flags are counted in the claimed direction only", ok: true },
   ];
-  const lo = T.sen.ci_bootstrap_per_decade[0], hi = T.sen.ci_bootstrap_per_decade[1];
-  const Fd = r.finding || {};
+  const Fd = r.finding || {}, ch = Fd.change_per_decade || {};
   const periodText = `${seasonName(cl.season_months)}, ${cl.period[0]} to ${cl.period[1]}`;
+  const iv = R_.interval;
   const finding = {
     place: cl.region_name, variable: cl.variable, period: periodText,
     change_per_decade: { value: T.sen.slope_per_decade, unit: cl.units + " per decade", text: `${T.sen.slope_per_decade >= 0 ? "+" : "−"}${Math.abs(T.sen.slope_per_decade).toFixed(2)} ${cl.units} per decade (Sen slope)` },
-    interval: { lo, hi, level: reg.band.level, meaning: Fd.interval_meaning || (T.sen.interval_method + ". Not adjusted for the choice of headline.") },
-    product: cl.product, not_supported: Fd.not_supported || null, selection_disclosure: Fd.selection_disclosure || null, scope_text: Fd.scope_text || null,
+    interval: iv ? { lo: iv.lo, hi: iv.hi, level: iv.level, label: iv.label, meaning: ch.interval_meaning || "How often such intervals contain the true slope was measured on synthetic series. It is not an interval for individual years." } : null,
+    test: R_.test,
+    product: cl.product, not_supported: Fd.not_supported || null,
+    // The bundle's own sentence calls the headline "the one regional test registered", which is not accurate after the two method amendments. Show the accurate version.
+    selection_disclosure: synthetic ? (Fd.selection_disclosure || null) : REG_SHORT + " The region, season and period were fixed in the registration and not changed after looking at results. The regional test shown is the one chosen by simulation on synthetic data (see the Method page), not the Hamed-Rao test originally registered.",
+    scope_text: Fd.scope_text || null,
     run_id: r.run.run_id, ledger_ref: Fd.ledger_ref || null,
   };
+  const noMask = r.coverage.n_support_cells != null && r.coverage.n_support_cells === r.coverage.n_cells_grid;
+  const dataset = (/\(([^)]+)\)/.exec(cl.variable) || [null, cl.variable])[1].replace(/\s+via\s+.*$/i, "").split(",")[0];
+  const scoped = v.branch === "withheld" ? lbl : `${lbl} for ${dataset} in this box, ${cl.period[0]}–${cl.period[1]}`;
   return {
-    id: cl.claim_id, claim_text: cl.claim_text.replace(/\.$/, ""), direction: cl.direction, synthetic: !!cl.synthetic,
+    id: cl.claim_id, claim_text: cl.claim_text.replace(/\.$/, ""), direction: cl.direction, synthetic,
     variable: { key: cl.variable, name: cl.variable.charAt(0).toUpperCase() + cl.variable.slice(1), short: cl.variable, unit: cl.units, plain: cl.variable_plain },
-    product: cl.product, region: { name: cl.region_name, box: { s: cl.region_box.lat_min, n: cl.region_box.lat_max, w: cl.region_box.lon_min, e: cl.region_box.lon_max } },
+    product: cl.product, region: { name: cl.region_name, box: { s: cl.region_box.lat_min, n: cl.region_box.lat_max, w: cl.region_box.lon_min, e: cl.region_box.lon_max }, note: noMask ? "This region is a rectangle of latitude and longitude. It includes ocean and other water cells, and no land mask was applied." : null },
     season: seasonName(cl.season_months), period: { start: cl.period[0], end: cl.period[1], n: cl.period[1] - cl.period[0] + 1 },
     data_kind: cl.is_model_data ? "model_reanalysis" : "satellite_observation",
     grid: { lat: g.lat, lon: g.lon, n_lat: g.ny, n_lon: g.nx, dlat: g.lat.length > 1 ? g.lat[1] - g.lat[0] : 1, dlon: g.lon.length > 1 ? g.lon[1] - g.lon[0] : 1 },
     cell_slope_per_decade: F.slope_per_decade.map((x, i) => F.valid[i] ? x : null),
-    ladder,
+    ladder, cell_test_name: cellTest, cell_test_key: cells.cell_test, cells_mode: cells.cells_mode || "bh_flags", bh_q: r.params.bh_q, alpha: r.params.alpha, thresholds: { breadth: r.params.breadth_min, local: r.params.local_min },
     regional: {
-      years: reg.years, anomaly: reg.anomaly, band_lo: reg.band.lo, band_hi: reg.band.hi, band_method: `${reg.band.meaning}. ${T.sen.interval_method}.`, units: reg.units, baseline: `average of this series, ${reg.baseline_mean} ${reg.units}`,
-      sen_line: reg.sen_line,
-      sen: { slope_per_decade: T.sen.slope_per_decade, ci_lo: lo, ci_hi: hi, ci_level: reg.band.level, analytic_lo: T.sen.ci_analytic_hr_per_decade[0], analytic_hi: T.sen.ci_analytic_hr_per_decade[1] },
-      mk_hr: { tau: T.mk_hr.tau, z: T.mk_hr.z, p_hamed_rao: T.mk_hr.p, p_independent: T.mk_independent.p, vif: T.mk_hr.hr_factor },
+      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: BAND_MEANING, units: reg.units, baseline: `average of this series, ${reg.baseline_mean} ${reg.units}`,
+      sen_line: reg.sen_line, test: R_.test, interval: iv, ctx: R_.ctx,
+      sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },
     },
-    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [] },
-    verdict: { branch: v.branch, label: lbl, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
+    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [] },
+    verdict: { branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
     finding, method_notes: r.method_notes, sensitivity: r.sensitivity, coverage: r.coverage,
   };
+}
+
+// Placeholder claims (view shape already, older fields): fill the new fields so every view can read one shape.
+function legacyAdapt(c) {
+  const r = c.regional || {}, sen = r.sen || {}, hr = r.mk_hr || {};
+  if (!r.test) r.test = { method: "placeholder", name: "Hamed-Rao (placeholder)", title: "Mann-Kendall with Hamed-Rao correction (placeholder)", label: "PLACEHOLDER test", p: hr.p_hamed_rao, z: hr.z, factor: hr.vif, significant: hr.p_hamed_rao < 0.05, alpha: 0.05 };
+  if (!("interval" in r)) r.interval = Number.isFinite(sen.ci_lo) ? { lo: sen.ci_lo, hi: sen.ci_hi, level: sen.ci_level || 0.95, method: "placeholder", label: "95% interval (PLACEHOLDER)" } : null;
+  if (!r.ctx) r.ctx = { hr: { p: hr.p_hamed_rao, factor: hr.vif }, raw: { p: hr.p_independent } };
+  if (!r.band_meaning) r.band_meaning = r.band_method || BAND_MEANING;
+  if (c.finding && !("test" in c.finding)) c.finding.test = r.test;
+  if (c.finding && c.finding.interval && !c.finding.interval.label) c.finding.interval.label = "95% interval (PLACEHOLDER)";
+  if (c.verdict && !c.verdict.scoped) c.verdict.scoped = c.verdict.label;
+  for (const q of c.ladder || []) { if (q.cell_frac_claimed == null) { q.cell_frac_claimed = q.n_cells ? q.n_flagged_claimed / q.n_cells : 0; q.cell_frac_any = q.n_cells ? q.n_flagged_any / q.n_cells : 0; } }
+  c.cells_mode = c.cells_mode || "bh_flags"; c.bh_q = c.bh_q || 0.1; c.alpha = c.alpha || 0.05; c.thresholds = c.thresholds || { breadth: 0.25, local: 0.05 };
+  return c;
 }
 
 export const claimById = (b, id) => b.claims.find(c => c.id === id);

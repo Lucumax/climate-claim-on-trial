@@ -38,7 +38,7 @@ export function planBox(b) {
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
     const alt = { s: clamp(cy - h, -90, 90 - 2 * h), n: 0, w: clamp(cx - w, -180, 180 - 2 * w), e: 0 };
     alt.s = +alt.s.toFixed(2); alt.n = +(alt.s + 2 * h).toFixed(2); alt.w = +alt.w.toFixed(2); alt.e = +(alt.w + 2 * w).toFixed(2);
-    return { kind: "too_big", tiles, alt, message: (world ? "The whole world" : "This box") + ` would take about ${tiles} requests of roughly 3 MB each, which is too slow to run live in a browser. Live mode handles up to ${MAX_TILES} requests, roughly a ${MAX_LAT_DEG} by ${MAX_LON_DEG} degree box. Choose a smaller box, a preset region, or use the largest allowed box around the centre of your selection.` };
+    return { kind: "too_big", tiles, alt, message: (world ? "A whole-world view is not supported. " : "This box is too large. ") + `NASA POWER live requests are limited to regional boxes: this one would need about ${tiles} requests of roughly 3 MB each, too slow for a browser. Live mode handles up to ${MAX_TILES} requests, roughly a ${MAX_LAT_DEG} by ${MAX_LON_DEG} degree box. Choose a smaller box, a preset region, or use the largest allowed box around the centre of your selection.` };
   }
   const tiles = []; for (const la of split(b.s, b.n)) for (const lo of split(b.w, b.e)) tiles.push({ s: la[0], n: la[1], w: lo[0], e: lo[1] });
   return { kind: "regional", tiles, message: tiles.length === 1 ? "One request to NASA POWER." : `${tiles.length} requests to NASA POWER, up to ${CONCURRENCY} at a time.` };

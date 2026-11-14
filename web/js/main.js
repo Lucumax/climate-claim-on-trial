@@ -27,13 +27,13 @@ function resolve(hash) {
   const parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
   const [a, id, sub] = parts;
   if (!a) return { nav: "home", v: landing(bundle, catalog) };
-  if (a === "detective") return { nav: "detective", v: detective(catalog) };
+  if (a === "detective") return { nav: "detective", v: detective(catalog, bundle) };
   if (a === "cases") return { nav: "cases", v: caseList(bundle) };
   if (a === "case") {
     const c = claimById(bundle, id); if (!c) return { nav: "cases", v: notFound() };
     return { nav: "cases", v: caseDocket(bundle, c) }; // older sub-page links (/ladder, /series, /verdict) land on the same docket
   }
-  if (a === "method") return { nav: "method", v: method(bundle) };
+  if (a === "method") return { nav: "method", v: method(bundle), anchor: id };
   if (a === "evidence") return { nav: "evidence", v: evidence(bundle) };
   return { nav: "", v: notFound() };
 }
@@ -46,6 +46,7 @@ function route(moved) {
   document.title = r.v.title + " · Climate Claim on Trial";
   document.querySelectorAll("nav.main a").forEach(a => a.getAttribute("data-nav") === r.nav ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   window.scrollTo(0, 0);
-  if (moved) { const t = document.getElementById("page-title"); if (t) t.focus({ preventScroll: true }); announce(r.v.title); }
+  if (r.anchor) { const el = document.getElementById(r.anchor); if (el) { el.scrollIntoView({ block: "start" }); el.setAttribute("tabindex", "-1"); el.focus({ preventScroll: true }); } }
+  if (moved) { const t = document.getElementById("page-title"); if (t && !r.anchor) t.focus({ preventScroll: true }); announce(r.v.title); }
 }
 boot();

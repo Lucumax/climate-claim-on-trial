@@ -143,7 +143,7 @@
    "power_param": null,
    "since": 2002,
    "live": false,
-   "case_link": "#/case/C-D",
+   "case_link": "#/case/C-D", "case_id": "C-D",
    "not_live_note": "Not available live. NASA POWER does not carry it. See it in the case files (Wisconsin, MODIS Aqua)."
   }
  ],

@@ -20,6 +20,8 @@ export function s(tag, attrs, ...kids) {
 }
 export const pct = (f, d = 1) => (f * 100).toFixed(d) + "%";
 export const signed = (v, d = 2) => (v > 0 ? "+" : v < 0 ? "\u2212" : "") + Math.abs(v).toFixed(d);
+export const fmtPx = p => p == null ? "n/a" : p < 0.0001 ? "< 0.0001" : p < 0.01 ? p.toPrecision(3) : p.toFixed(3);
+export const ivText = (lo, hi, d = 2) => `${signed(lo, d)} to ${signed(hi, d)}`;
 export const fmtP = p => p == null ? "n/a" : p < 0.001 ? "< 0.001" : p.toFixed(3);
 export function latStr(v) { return Math.abs(v).toFixed(2).replace(/\.?0+$/, "") + (v >= 0 ? "N" : "S"); }
 export function lonStr(v) { return Math.abs(v).toFixed(2).replace(/\.?0+$/, "") + (v >= 0 ? "E" : "W"); }

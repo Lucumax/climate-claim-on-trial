@@ -3,12 +3,15 @@ import { makeView, basemapLayers } from "../basemap.js";
 
 export const KIND = { satellite_observation: "Satellite observation", model_reanalysis: "Model output (reanalysis), not a direct measurement" };
 
-// Small real-basemap thumbnail of a region (context only, no data).
+// Small real-basemap thumbnail: the region box outlined inside a wider view, so a reader can tell where on Earth it is.
 let thumbId = 0;
 export function regionThumb(box, label) {
-  const view = makeView(box, { width: 320, maxHeight: 190 }), id = "th" + (thumbId++), bm = basemapLayers(view, { states: true, id });
+  const dLat = box.n - box.s, dLon = box.e - box.w, padLat = Math.max(6, dLat * 0.9), padLon = Math.max(10, dLon * 0.9);
+  const wide = { s: Math.max(-85, box.s - padLat), n: Math.min(85, box.n + padLat), w: Math.max(-180, box.w - padLon), e: Math.min(180, box.e + padLon) };
+  const view = makeView(wide, { width: 300, maxHeight: 170 }), id = "th" + (thumbId++), bm = basemapLayers(view, { states: false, id });
   return s("svg", { class: "map thumb", viewBox: `0 0 ${view.W.toFixed(0)} ${view.H.toFixed(0)}`, role: "img", "aria-label": label },
-    s("defs", {}, bm.defs), bm.under, bm.over, s("g", { class: "bm-frame", "aria-hidden": "true" }, s("rect", { class: "bm-edge", x: view.ML, y: view.MT, width: view.pw, height: view.ph, fill: "none" })));
+    s("defs", {}, bm.defs), bm.under, bm.over, s("g", { class: "bm-frame", "aria-hidden": "true" }, s("rect", { class: "bm-edge", x: view.ML, y: view.MT, width: view.pw, height: view.ph, fill: "none" }),
+      s("rect", { class: "selbox", x: view.X(box.w), y: view.Y(box.n), width: view.X(box.e) - view.X(box.w), height: view.Y(box.s) - view.Y(box.n) })));
 }
 
 export function withheldNote(c) {

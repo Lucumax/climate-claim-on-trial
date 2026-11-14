@@ -1,0 +1,25 @@
+{
+ "_note": "Round-2 numbers, copied from the round-2 bundles as they stood before commit 3152f39 (superseded run ids). The site shows them next to the round-3 numbers read from the current bundles. Nothing here is used to compute a result.",
+ "source_commit": "3152f39^",
+ "C-B": {
+  "run_id": "run-ecf5f569af51",
+  "verdict": "partly_regional_narrow",
+  "verdict_id": "partly_supported",
+  "regional_test": "mk_independent",
+  "p": 0.0298548,
+  "interval": [
+   0.0233249,
+   0.489271
+  ],
+  "area_in_direction": 0.15056
+ },
+ "C-D": {
+  "run_id": "run-b80e1e70ad85",
+  "verdict": "withheld",
+  "verdict_id": "withheld",
+  "regional_test": null,
+  "reasons": [
+   "no candidate regional test kept its false-positive rate within 0.05 +/- 2 SE for this series: this series is strongly lopsided (skewness above 0.8), where every test was too liberal in simulation. Size at the persistence scenario: mk_independent 0.039, hr_registered 0.038, hr_all_lags 0.038, yue_wang 0.035, tfpw 0.049, boot_mk_L3 0.081, boot_mk_L5 0.117"
+  ]
+ }
+}

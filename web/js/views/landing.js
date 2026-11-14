@@ -7,13 +7,13 @@ import { windowsChart } from "../chart.js";
 // Home hero, right half: "where the trials are held". One Earth with all registered case regions, each drawn by its per-cell trend per decade;
 // withheld cases are hatched. It starts paused and never turns by itself. Phones and browsers without WebGL get a labelled static poster
 // (web/img/globe-trials-light.jpg and -dark.jpg, a screenshot of this same globe) with the same case list under it.
-const POSTER_ALT = "Earth seen from above North America, with four outlined case regions. Interior and western Alaska and the central Sahel are coloured by each cell's trend per decade; the Southeastern United States and Wisconsin are hatched because their rulings are withheld.";
+const POSTER_ALT = "Earth seen from above North America, with four outlined case regions. Interior and western Alaska and the central Sahel are coloured by each cell's trend per decade; the Southeastern United States is hatched because its ruling is withheld, and Wisconsin is shown with its trend colours and a not-supported ruling.";
 const hasWebGL = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } };
 function heroGlobe(claims) {
   const host = h("div", { class: "hero-globe-host" });
   const cap = h("figcaption", { class: "hero-cap" }, h("b", {}, "Where the trials are held."), " Four registered regions, each drawn by its per-cell trend per decade. Click a region or a case below to open it. Imagery: NASA Blue Marble, muted.");
   const poster = () => h("a", { href: "#/cases", class: "poster-link", "aria-label": "Open the case files" },
-    h("img", { class: "poster poster-light", src: "img/globe-trials-light.jpg", width: 1292, height: 973, alt: POSTER_ALT, loading: "lazy" }), h("img", { class: "poster poster-dark", src: "img/globe-trials-dark.jpg", width: 1292, height: 973, alt: POSTER_ALT, loading: "lazy" }));
+    h("img", { class: "poster poster-light", src: "img/globe-trials-light.jpg", width: 1288, height: 996, alt: POSTER_ALT, loading: "lazy" }), h("img", { class: "poster poster-dark", src: "img/globe-trials-dark.jpg", width: 1288, height: 996, alt: POSTER_ALT, loading: "lazy" }));
   const fig = h("figure", { class: "hero-globe" }, host);
   let handle = null, dead = false;
   async function start() {

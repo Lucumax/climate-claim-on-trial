@@ -292,15 +292,16 @@ export function detective(cat, bundle, query = "") {
   function analyze(R) {
     const W = analyzeRows(R.rows, { months: R.season.months, y0: R.y0, y1: R.y1, units: R.v.units });
     if (W.tooShort) return { W, R };
-    // Missing years must reach the calibration check: give it the series WITH its holes (null), never the compressed one.
-    const t0 = W.years[0], span = W.years[W.years.length - 1] - t0 + 1, full = new Array(span).fill(null);
-    W.years.forEach((yr, i) => { full[yr - t0] = W.anomaly[i]; });
-    try { W.gate = exploratoryGate(Array.from({ length: span }, (_, i) => t0 + i), full); } catch (e) { /* keep the module's own gate */ }
+    // Missing years must reach the calibration check: give it the whole requested period WITH its holes (null), never the compressed series.
+    const axis = []; for (let yr = R.y0; yr <= R.y1; yr++) axis.push(yr);
+    const have = new Map(W.years.map((yr, i) => [yr, W.anomaly[i]])), full = axis.map(yr => (have.has(yr) ? have.get(yr) : null));
+    const missList = axis.filter((yr, i) => full[i] === null);
+    try { W.gate = exploratoryGate(axis, full, { period: [R.y0, R.y1] }); } catch (e) { /* keep the module's own gate */ }
     // Notes that make a run uncalibrated: years missing from the series, and months a product flags as unreliable.
-    const g0 = W.gate, miss = g0 && Array.isArray(g0.missingYears) ? g0.missingYears : [], notes = [];
-    if (miss.length) notes.push(`${miss.length} year${miss.length === 1 ? "" : "s"} missing: ${miss.join(", ")}. A gap changes the spacing of the series, so the calibration check cannot vouch for it.`);
+    const g0 = W.gate, nMiss = g0 && Number.isFinite(g0.missingYears) ? g0.missingYears : missList.length, notes = [];
+    if (nMiss > 0 || missList.length) notes.push(`${nMiss || missList.length} year${(nMiss || missList.length) === 1 ? "" : "s"} missing${missList.length ? ": " + missList.join(", ") : ""}. The calibration check does not vouch for a series with gaps.`);
     if (R.flagged) notes.push(`This window includes months after ${R.v.qualityEndText} (${R.v.qualityLabel}). ${R.v.qualityReason}`);
-    if (notes.length) W.gate = { ...(g0 || {}), calibrated: false, caveat: notes.join(" ") + (g0 && g0.caveat && !miss.length ? " " + g0.caveat : ""), missingYears: miss };
+    if (notes.length) W.gate = { ...(g0 || {}), calibrated: false, caveat: notes.join(" ") + (g0 && g0.caveat && !nMiss && !missList.length ? " " + g0.caveat : ""), missingYears: nMiss, missList };
     const corr = stepInfo("autocorr", W.A_an.mk), corrBase = stepInfo("autocorr");
     const rungs = [
       { n: 1, ...stepInfo("raw"), p: W.A_raw.mkIndependent.p, slope: W.A_raw.sen.slopePerDecade },

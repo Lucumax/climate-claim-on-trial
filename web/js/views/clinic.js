@@ -41,7 +41,7 @@ export function supports(c, info) {
   if (v.id === "supported") return lead(`${S} changed by ${slope}, ${per}${interval}, and ${share || "the regional test is significant"}. This is a ${c.period.n}-year trend in one dataset. It does not explain any single year or event, or why it changed.`);
   if (v.id === "partly_supported") return lead(`${S} changed by ${slope}, ${per}${interval}, but ${share ? "only " + share : "the map does not clearly agree"}. A regional average moved; the rest of the map did not clearly show it. It does not describe any single event.`);
   if (v.id === "contradicted") return lead(`${S} moved the other way: ${slope}, ${per}${interval}. This is what ${dataset} shows for this box and period.`);
-  return lead(`${S} shows no significant change in the claimed direction, ${per} (${slope}). That is not proof of no change.`);
+  return lead(`${S} shows no significant change in the claimed direction, ${per} (${slope}). That means the record does not show the claimed change at the registered bar. ${c.conservative && c.conservative.length ? "The test is conservative for this record, so it is not evidence that the change did not happen." : "It is not proof of no change."}`);
 }
 
 export function clinicStrip(c) {

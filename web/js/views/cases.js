@@ -9,6 +9,7 @@ import { sigClass, sigLabel } from "../words.js";
 import { clinicStrip, whoActs } from "./clinic.js";
 import { exhibit } from "./exhibit.js";
 import { caseFrame } from "../viz/anomaly-map.js";
+import { METHOD_NAME } from "../data.js";
 
 const NA = () => h("span", { class: "muted" }, "Not in this bundle yet.");
 const NOT_SHOWN = "Not shown: failed its coverage check.";
@@ -53,7 +54,26 @@ export function caseDocket(b, c) {
 
   // ---------------------------------------------------------------- the ruling summary (final; the map selector never changes it)
   const why = withheld ? plainReason(c) : [t ? `The regional trend is ${t.p < (t.alpha || 0.05) ? "significant" : "not significant"} at ${t.alpha || 0.05} (p = ${fmtPx(t.p)}).` : "The regional test is not shown because it did not pass its calibration check.",
-    c.gate.cells ? `${pct(finalQ.flagged_fraction_claimed, 1)} of the mapped area is flagged in the claimed direction after hearing ${nL}.` : null].filter(Boolean).join(" ");
+    c.gate.cells ? `${pct(finalQ.flagged_fraction_claimed, 1)} of the mapped area is flagged in the claimed direction after hearing ${nL}.` : null,
+    v.id === "not_supported" ? "Not supported means the record does not show the claimed change at the registered bar." + (c.conservative && c.conservative.length ? " The test is conservative for this record, so this is not evidence that the change did not happen." : " It is not proof that nothing changed.") : null].filter(Boolean).join(" ");
+  // A round-3 rule change made after the results: show the round-2 numbers beside the current ones (round-2 numbers: data/round2_reference.json, matched to run.supersedes).
+  const ruleNote = h("section", { class: "callout rule-change", role: "note", hidden: true, "aria-label": "Rule change after the results" });
+  (async () => {
+    try {
+      const all = await fetch("data/round2_reference.json").then(r => (r.ok ? r.json() : null)), ref = all && all[c.id];
+      if (!ref || !(c.supersedes || []).some(x => x.run_id === ref.run_id)) return;
+      const area = f => `${(f * 100).toFixed(1)}%`;
+      const link = h("a", { href: "#/data/registration" }, "Addendum 4");
+      const lead = h("b", {}, "Rule change after the results. ");
+      if (ref.verdict_id === "withheld") {
+        ruleNote.append(lead, `Under the round 2 rules this case was withheld (run ${ref.run_id}). The round 3 rules, written after outside review and after the round 2 bundles had been seen, simulate negative persistence and match the noise shape to the record. Under them the court now gives a ruling: ${v.label.toLowerCase()}. Both runs stay on record. `, link, ".");
+      } else if (ref.p != null && t && iv) {
+        const before = ref.regional_test === "mk_independent" ? "plain Mann-Kendall, no correction" : (METHOD_NAME[ref.regional_test] || ref.regional_test);
+        ruleNote.append(lead, `Round 2 rule (${before}): p ${fmtPx(ref.p)}, interval ${signed(ref.interval[0], 2)} to ${signed(ref.interval[1], 2)} ${u} per decade, ${area(ref.area_in_direction)} of the area flagged in the claimed direction. Round 3 rule, after outside review, now simulates negative persistence (${t.title}): p ${fmtPx(t.p)}, interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}, ${area(finalQ.flagged_fraction_claimed)} flagged. The ruling is ${v.label.toLowerCase()} in both rounds. The result looks stronger, but only because a rule was changed after the results were seen, so read both. The round 2 numbers stay on record. `, link, ".");
+      } else return;
+      ruleNote.hidden = false;
+    } catch (e) { /* the note is an addition; the ruling stands without it */ }
+  })();
   const essential = withheld ? "The record and the map are shown below for reading. They are a description, not a basis for a verdict. The technical reasons are under Limits of this finding." :
     c.data_kind === "model_reanalysis" ? "This is model output, not a direct measurement, and a trend does not say why it changed." : (f.not_supported && f.not_supported[0]) || "A trend alone does not say why it changed or what comes next.";
   const text = () => [withheld ? "The court cannot rule on this evidence (ruling withheld). " + plainReason(c) : v.scoped, v.headline, ...v.sentences,
@@ -200,7 +220,7 @@ export function caseDocket(b, c) {
     h("div", { class: "baseline" }, h("h3", {}, "Pooled distribution by period"),
       h("p", { class: "muted small" }, "Every grid cell in every year of each period, each against its own baseline, unweighted. It describes the data; it is not a test."),
       distTable, h("p", { style: "margin:8px 0 0" }, h("button", { class: "btn-text", type: "button", onclick: () => ex.select("distribution", { scroll: true }) }, "Inspect distribution"))),
-    t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? (c.phi_hat != null && c.phi_hat < -0.1 ? "No autocorrelation correction was chosen here. This record's years alternate (lag-1 " + (persistenceText(c) || "") + "), and our checks did not simulate negative persistence, so the choice is not validated for a record like it; treat the test as a rough guide. " : "No autocorrelation correction was chosen here: in our simulations this test kept false alarms nearest 5% for series with persistence near this one's " + (persistenceText(c) || "") + ". ") : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
+    t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? "No autocorrelation correction was chosen here: in our simulations, which include negative persistence, this test kept false alarms nearest 5% for series with persistence near this one's " + (persistenceText(c) || "") + ". " : /^boot_mk/.test(t.method) ? "The p-value comes from a moving-block bootstrap, which keeps the year-to-year memory of this record (" + (persistenceText(c) || "") + ") instead of assuming a correction. " : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
     h("p", { class: "small muted" }, iv ? `${iv.label}. How often such intervals contain the true slope was measured on synthetic series; it is not a range for individual years. ${calLines(c, withheld).join(". ")}${calLines(c, withheld).length ? ". " : ""}` : `Interval: ${NOT_SHOWN} `, r.band_lo ? r.band_meaning : `Band: ${NOT_SHOWN}`),
     ctxRows.length ? h("div", { class: "baseline" }, h("h3", {}, "Context, not the ruling"), ctxRows.map(x => h("p", { class: "muted small", style: "margin:0 0 4px" }, x))) : null,
     h("div", { class: "baseline" }, h("h3", {}, "The familiar baseline: least squares and t-test"), h("p", { class: "muted small" }, "Context only. The ruling rests on the Sen slope and the regional test above."),
@@ -218,6 +238,7 @@ export function caseDocket(b, c) {
     !iv && !withheld && c.gate.reasons_interval && c.gate.reasons_interval.length ? h("p", { class: "muted small" }, h("b", {}, "Why no interval. "), c.gate.reasons_interval.join(" ")) : null,
     f.scope_text ? h("p", {}, h("b", {}, "This number is for. "), f.scope_text) : null,
     f.not_supported ? [h("p", {}, h("b", {}, "What the evidence does not support")), h("ul", {}, f.not_supported.map(x => h("li", {}, x)))] : null,
+    c.conservative && c.conservative.length ? h("p", {}, h("b", {}, "The test is conservative here. "), c.conservative.join(" ")) : null,
     withheld ? null : h("p", {}, h("b", {}, "How to read the ruling. "), `The map and the regional series come from the same data, so they are not independent evidence. The ${pct(th.breadth, 0)} and ${pct(th.local, 0)} area thresholds that separate "supported" from "partly supported" are conventions we chose before seeing results, not a calibrated scale. Flagged-area percentages are shares of the tested area, not the chance that the claim is true. "Partly supported" can mean that the regional average changed significantly while few cells did: it combines two questions, whether the average moved and how widespread the change is across the map.`),
     h("p", {}, h("b", {}, "The views of the map and the distribution. "), "Values over time: each square is one grid cell against its own baseline, with no smoothing in space; colours blend between years only while playing. Distribution: pools every cell in every year of a 10-year period (the last period can be shorter), unweighted, so its mean differs from the area-weighted regional record; neighbouring cells and years are correlated, so these curves describe the data and are not independent observations, and a small share of extreme values can fall outside the drawn range (the figure says how many). None of these views is a test, and none changes the ruling."),
     c.id === "C-A" ? h("p", {}, h("b", {}, "The satellite's overpass time drifted. "), "Terra's daytime overpass has been getting earlier since NASA stopped adjusting its orbit in 2020 (", h("a", { href: "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/", target: "_blank", rel: "noopener" }, "NASA Science, 2025"), "), so its readings now come from earlier in the morning. The Witness check finds that the satellite's daytime readings track overpass time closely (the correlation is given there), which is consistent with an earlier pass reading cooler. It does not prove that the drift is the cause, and it is an exploratory check, not the registered test.") : null,
@@ -242,7 +263,7 @@ export function caseDocket(b, c) {
     h("header", { class: "case-head" },
       h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id) + " · the registered claim"), h("h1", { id: "page-title", tabindex: "-1" }, "“" + c.claim_text + "”"),
       h("p", { class: "definition" }, h("b", {}, c.variable.name + ": "), c.variable.plain)),
-    (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(), ruling,
+    (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(), ruling, ruleNote,
     ex.node, h("div", { class: "docket-more" }, statistics, limits, provenance)),
     afterMount: () => ex.start(), dispose: () => ex.dispose() };
 }

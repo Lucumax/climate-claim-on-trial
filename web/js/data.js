@@ -47,7 +47,7 @@ function seasonName(m) {
 const BRANCH = { supported: ["Supported", "ok"], partly_supported: ["Partly supported", "warn"], not_supported: ["Not supported", "neutral"], contradicted: ["Contradicted", "bad"], withheld: ["No verdict given", "warn"] };
 // Short names for the regional and cell tests the validation gate can choose (stats/SCHEMA.md, addendum 2).
 export const METHOD_NAME = { mk_independent: "Mann-Kendall, years treated as independent", hr_registered: "Hamed-Rao (as registered)", hr_all_lags: "Hamed-Rao, all lags", yue_wang: "Yue-Wang", tfpw: "TFPW (trend-free pre-whitening)", boot_mk_L3: "block-bootstrap Mann-Kendall (3-year blocks)", boot_mk_L5: "block-bootstrap Mann-Kendall (5-year blocks)" };
-const testTitle = m => m === "mk_independent" ? "Mann-Kendall (years treated as independent)" : `Mann-Kendall with ${METHOD_NAME[m] || m} correction`;
+const testTitle = m => m === "mk_independent" ? "Mann-Kendall (years treated as independent)" : /^boot_mk/.test(m) ? `Mann-Kendall with a moving-block bootstrap p-value (${(METHOD_NAME[m] || "").replace(/^.*\(|\)$/g, "") || "blocks"})` : `Mann-Kendall with ${METHOD_NAME[m] || m} correction`;
 const COV_NOTE = "; passed a 90% coverage check in simulations";
 const INTERVAL_WORD = { analytic_hr: "Sen slope, analytic", bootstrap: "Sen slope, moving-block bootstrap" };
 export const BAND_MEANING = "The shaded band is the Sen line tilted between the lower and upper ends of the 95% slope interval, pivoting at the middle year. It shows how steep the trend could plausibly be. It does not show uncertainty about the level, and it is not a range for individual years.";
@@ -76,12 +76,6 @@ function pickRegional(reg, T, gate, val) {
   return { test, interval, band, ctx };
 }
 
-
-// A bundle may still say that skewness alone explains a failed calibration. The validation only shows that one joint scenario
-// (skewed noise with year-to-year persistence) failed, so the page words it that way whatever the bundle text says.
-const SKEW_ALONE = /this series is strongly lopsided \(skewness above ([\d.]+)\), where every test was too liberal in simulation\.?/;
-const softReason = x => String(x).replace(SKEW_ALONE, "in the simulated scenario closest to this series (skewed noise with year-to-year persistence, skewness above $1), every test was too liberal. The simulations cannot say whether skewness or persistence caused that, so we do not claim a cause.");
-const softReasons = a => (a || []).map(softReason);
 
 // Calibration lines shown next to the interval and next to a released verdict. The stats worker ships them as validation.display
 // (interval_text, false_positive_text); when absent they are built from validation.adaptive, and hidden when neither exists.
@@ -154,9 +148,9 @@ function fromReal(r) {
       sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },
     },
-    display: displayTexts(val, iv),
-    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: softReasons(gate.reasons_blocking_verdict || gate.reasons), reasons_interval: softReasons(gate.reasons_interval), adaptive_notes: gate.adaptive_notes || [] },
-    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: softReasons(v.withheld_reasons) },
+    display: displayTexts(val, iv), conservative: gate.conservative_flags || [], supersedes: (r.run && r.run.supersedes) || [],
+    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [], reasons_interval: gate.reasons_interval || [], adaptive_notes: gate.adaptive_notes || [] },
+    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
     finding, method_notes: r.method_notes, sensitivity: r.sensitivity, coverage: r.coverage,
   };
 }

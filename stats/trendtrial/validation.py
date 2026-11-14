@@ -393,7 +393,66 @@ def pick_cell_family(res, n_years, n_cells):
     return best[1] if best else None
 
 
-def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None, use_adaptive=True):
+def governing_buckets(phis, phi_hat):
+    """Round 3 (STATS_LOG R3-1). Governing persistence buckets for an estimated detrended lag-1 phi_hat, primary (nearest) first.
+    phi_hat >= 0, or a table without negative buckets: the smallest tested phi not below max(phi_hat, 0) (old rule).
+    phi_hat < 0 with negative buckets tested: the two tested values that bracket phi_hat (below the lowest only that one)."""
+    phis = sorted(phis)
+    if phi_hat >= 0 or not any(p < 0 for p in phis):
+        above = [p for p in phis if p >= max(phi_hat, 0.0) - 1e-12]
+        return [above[0]] if above else []
+    lower = [p for p in phis if p <= phi_hat + 1e-12]
+    upper = [p for p in phis if p >= phi_hat - 1e-12]
+    govs = sorted({x for x in ((max(lower) if lower else None), (min(upper) if upper else None)) if x is not None})
+    primary = min(govs, key=lambda p: (abs(p - phi_hat), abs(p)))
+    return [primary] + [g for g in govs if g != primary]
+
+
+def _scenario_label(sid):
+    """Plain-language label of a regional null scenario id."""
+    import re
+    m = re.match(r"R-null-(skewed-|gaps-)?n(\d+)-phi(-?[0-9.]+)$", sid)
+    if not m:
+        return sid
+    kind, n, phi = m.group(1), m.group(2), float(m.group(3))
+    noise = {"skewed-": "lopsided noise (skewness 2)", "gaps-": "12% of years missing"}.get(kind, "symmetric noise")
+    return f"{noise}, {n} seasons, persistence {phi:g}"
+
+
+def explain_no_passer(sc, ids_null, bar_cands):
+    """Round 3 (R3-2): the withheld reason, written from the scenarios that actually failed, never from a fixed sentence."""
+    ref = "yue_wang"
+    rows, bad_kinds, bad = [], set(), []
+    for i in ids_null:
+        ch = sc[i]["size_checks"]
+        n_bad = sum(1 for c in bar_cands if not ch[c]["passed"])
+        sz = sc[i]["candidates"][ref]["size"]
+        side = ch[ref]["side"]
+        rows.append(f"{_scenario_label(i)}: Yue-Wang {100 * sz['value']:.1f}% ({'too liberal' if side == 'liberal' else ('too conservative' if side == 'conservative' else 'within the bar')}; "
+                    f"{n_bad} of {len(bar_cands)} candidate tests too liberal)")
+        if n_bad:
+            bad.append(i)
+            bad_kinds.add("skew" if "-skewed-" in i else ("gaps" if "-gaps-" in i else "dependence"))
+    if not bad_kinds:
+        driver = "none"
+    elif bad_kinds == {"skew"}:
+        driver = "skew"
+    elif bad_kinds == {"gaps"}:
+        driver = "gaps"
+    elif "dependence" in bad_kinds and len(bad_kinds) == 1:
+        driver = "dependence"
+    else:
+        driver = "+".join(sorted(bad_kinds))
+    lead = {"skew": "The tests kept their size with symmetric noise at this length and persistence; they failed only where the noise was lopsided.",
+            "dependence": "The tests failed already with symmetric noise at this length and persistence, so the cause is the dependence between years (with this few years), not lopsidedness.",
+            "gaps": "The tests failed only in the scenario with missing years.",
+            "none": "Every scenario passed for at least one test, but no single test passed in all of them."}.get(driver, "More than one condition failed: " + ", ".join(sorted(bad_kinds)) + ".")
+    text = ("No candidate regional test kept its false-positive rate within 0.05 +/- 2 SE in every simulation matched to this series. " + lead +
+            " Sizes of Yue-Wang (the best-calibrated candidate; share of trendless synthetic series called significant, intended 5%): " + "; ".join(rows) + ".")
+    return text, driver
+
+
+def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None, use_adaptive=True, govs=None):
     """Turn validation results into browser-honoured flags and the shipped tests for one claim (rules: STATS_LOG
     addendum 2 and round 2: R2-2 adaptive-procedure bars, R2-3 cell families)."""
     sc = {s["id"]: s for s in res["scenarios"]}
@@ -401,21 +460,34 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
     phis = sorted({s["phi"] for s in res["scenarios"] if s["kind"] == "regional" and s["n"] == n_gov})
     reasons, gov, flags = [], [], []
     base = dict(status="run", results_run=res.get("run"), results_summary=res.get("summary"))
-    above = [p for p in phis if p >= max(phi_hat, 0.0) - 1e-12]
+    govs = list(govs) if govs else governing_buckets(phis, phi_hat)
     off = dict(regional_verdict_enabled=False, interval_enabled=False, interval_method=None, cells_enabled=False,
                cells_mode="off", regional_test=None, cell_test=None, reasons_blocking_verdict=reasons,
                conservative_flags=flags, governing=gov)
-    if not above:
+    if not govs:
         reasons.append(f"persistence in this series (lag-1 {phi_hat:.2f}) is above the tested range")
         return dict(base, gate=off)
-    phi_gov = above[0]
-    ids_null = [f"R-null-n{n_gov}-phi{phi_gov}"]
+    phi_gov = govs[0]
+    has_neg = any(p < 0 for p in phis)
+    bucket_rule = ("estimated lag-1 is negative: governed by the two tested values that bracket it (" + " and ".join(f"{g:g}" for g in govs) + ")"
+                   if phi_hat < 0 and has_neg and len(govs) > 1 else
+                   ("estimated lag-1 is negative: governed by the lowest tested value, " + f"{phi_gov:g}" if phi_hat < 0 and has_neg else
+                    ("estimated lag-1 is negative but this validation table has no negative buckets: rounded up to 0 (old rule)" if phi_hat < 0 else
+                     f"smallest tested persistence not below the estimate: {phi_gov:g}")))
+    ids_null = [f"R-null-n{n_gov}-phi{g}" for g in govs]
     if has_gaps:
         ids_null.append("R-null-gaps-n25-phi0.3")
+    skew_matched = False
     if skew is not None and abs(skew) > 0.8:
-        ids_null.append("R-null-skewed-n25-phi0.3")
-    tr_id = f"R-trend-n{n_gov}-phi{phi_gov}"
-    for sid in ids_null + [tr_id]:
+        matched = [f"R-null-skewed-n{n_gov}-phi{g}" for g in govs]
+        if all(i in sc for i in matched):
+            ids_null += matched
+            skew_matched = True
+        else:
+            ids_null.append("R-null-skewed-n25-phi0.3")
+    tr_ids = [f"R-trend-n{n_gov}-phi{g}" for g in govs]
+    tr_id = tr_ids[0]
+    for sid in ids_null + tr_ids:
         if sid not in sc:
             reasons.append(f"no validation scenario {sid}")
             return dict(base, gate=off)
@@ -429,7 +501,7 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
             if pw[c]["value"] >= best["value"] - 0.5 * best["se"]:
                 chosen = c
                 break
-    interval = [sc[i].get("interval") for i in ids_null + [tr_id]]
+    interval = [sc[i].get("interval") for i in ids_null + tr_ids]
     if any(v is None for v in interval):
         reasons.append("interval and Sen-bias results missing for a governing scenario")
         return dict(base, gate=off)
@@ -437,26 +509,32 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
     bias_ok = all(_b4_ok(v) for v in interval)
     int_ok = all(v["checks"]["B3"]["passed"] for v in interval)
     int_ok_a = all(v["checks"]["B3a"]["passed"] for v in interval)
+    reason_driver = None
     if chosen is None:
-        why = {"skewed": "this series is strongly lopsided (skewness above 0.8), where every test was too liberal in simulation",
-               "gaps": "this series has missing years, where every test was too liberal in simulation"}
-        extra = [why[k] for k, i in (("gaps", "R-null-gaps-n25-phi0.3"), ("skewed", "R-null-skewed-n25-phi0.3")) if i in ids_null]
-        reasons.append("no candidate regional test kept its false-positive rate within 0.05 +/- 2 SE for this series" +
-                       (": " + "; ".join(extra) if extra else " at its persistence") + ". Size at the persistence scenario: " +
-                       ", ".join(f"{c} {sc[ids_null[0]]['candidates'][c]['size']['value']:.3f}" for c in CAND_ORDER))
+        txt, reason_driver = explain_no_passer(sc, ids_null, CAND_ORDER)
+        reasons.append(txt)
     if not bias_ok:
         reasons.append("Sen slope biased in a governing scenario")
     for i in ids_null:
         v = sc[i]["size_checks"].get(chosen)
         if v and v["side"] == "conservative":
-            flags.append(f"regional test conservative in {i}")
+            sz = sc[i]["candidates"][chosen]["size"]["value"]
+            pw_ = sc[tr_id]["candidates"][chosen]["power"]["value"]
+            flags.append(f"the chosen test is conservative in simulations matched to this series ({_scenario_label(i)}): it called a trend in "
+                         f"{100 * sz:.1f}% of trendless synthetic series (intended 5%), and in the matching trend scenario it found a "
+                         f"0.3 SD per decade trend in {100 * pw_:.0f}% of series. A non-significant result carries little weight here.")
     interval_table = {
-        "bootstrap": dict(passed=bool(int_ok), coverage_by_scenario={i: sc[i]["interval"].get("coverage_bootstrap") for i in ids_null + [tr_id]}),
-        "analytic_hr": dict(passed=bool(int_ok_a), coverage_by_scenario={i: sc[i]["interval"].get("coverage_analytic_hr") for i in ids_null + [tr_id]}),
+        "bootstrap": dict(passed=bool(int_ok), coverage_by_scenario={i: sc[i]["interval"].get("coverage_bootstrap") for i in ids_null + tr_ids}),
+        "analytic_hr": dict(passed=bool(int_ok_a), coverage_by_scenario={i: sc[i]["interval"].get("coverage_analytic_hr") for i in ids_null + tr_ids}),
     }
     adaptive, adaptive_notes, ap_interval_ok = None, [], True
     have_ad = bool(use_adaptive and res.get("adaptive"))
-    ac = ((res.get("adaptive") or {}).get("cells") or {}).get(f"n{n_gov}-phi{phi_gov}") if have_ad else None
+    ad_cells = ((res.get("adaptive") or {}).get("cells") or {}) if have_ad else {}
+    ad_key = f"n{n_gov}-phi{phi_gov}"
+    skewed_claim = skew is not None and abs(skew) > 0.8
+    if skewed_claim and f"{ad_key}-skewed" in ad_cells:
+        ad_key += "-skewed"          # R3-4: the skewed-noise adaptive cell governs a lopsided claim
+    ac = ad_cells.get(ad_key) if have_ad else None
     if use_adaptive and not have_ad:
         adaptive = dict(status="not_run")
     ap1 = True
@@ -470,7 +548,7 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
         ap3 = None if not cov_vals else all(v >= COVERAGE_BAR for v in cov_vals)
         ap_interval_ok = ap3 is not False
         adaptive = dict(
-            status="run", cell=f"n{n_gov}-phi{phi_gov}", n=n_gov, true_phi=phi_gov,
+            status="run", cell=ad_key, n=n_gov, true_phi=phi_gov, noise=("skewed" if ad_key.endswith("-skewed") else "normal"),
             seed_family=res["adaptive"].get("seed_family"),
             size_unconditional=size, release_rate=nl["release_rate"], size_given_release=rg,
             power_unconditional=tr["positive_reject_unconditional"], power_given_release=tr["positive_reject_given_release"],
@@ -488,7 +566,7 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
                                   f"the procedure withholds the verdict for the most persistent series, which keeps the overall "
                                   f"false-positive rate at {100 * size['value']:.1f}%.")
     elif have_ad:
-        adaptive = dict(status="no_cell", cell=f"n{n_gov}-phi{phi_gov}")
+        adaptive = dict(status="no_cell", cell=ad_key)
         reasons.append("the adaptive procedure was not validated at this series length and persistence")
     reg_ok = chosen is not None and bias_ok and (not have_ad or (ac is not None and ap1))
     method = "bootstrap" if int_ok else ("analytic_hr" if int_ok_a else None)
@@ -502,23 +580,23 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
     fam = pick_cell_family(res, n_years, n_cells) if n_cells else None
     if fam:
         family = fam
-        homog = {k: f"CF-{fam}-{k}-phi{phi_gov}" for k in ("none", "positive", "mixed")}
-        het = {k: f"CF-{fam}-{k}-het{phi_gov}" for k in ("none", "positive", "mixed")}
-        allids = list(homog.values()) + list(het.values())
+        homog = {k: [f"CF-{fam}-{k}-phi{g}" for g in govs] for k in ("none", "positive", "mixed")}   # primary bucket first
+        het = {k: [f"CF-{fam}-{k}-het{g}" for g in govs] for k in ("none", "positive", "mixed")}
+        allids = [i for v in homog.values() for i in v] + [i for v in het.values() for i in v]
         if all(i in sc for i in allids):
             gov += allids
             floor = all(sc[i]["floor_ok"] for i in allids)
-            cell_table = {c: dict(homogeneous_passes=all(sc[i]["candidates"][c]["B2_passed"] for i in homog.values()),
-                                  heterogeneous_passes=all(sc[i]["candidates"][c]["B2_passed"] for i in het.values()),
-                                  bh_power=sc[homog["positive"]]["candidates"][c]["bh_power"]["value"]) for c in CELL_CANDS}
+            cell_table = {c: dict(homogeneous_passes=all(sc[i]["candidates"][c]["B2_passed"] for v in homog.values() for i in v),
+                                  heterogeneous_passes=all(sc[i]["candidates"][c]["B2_passed"] for v in het.values() for i in v),
+                                  bh_power=sc[homog["positive"][0]]["candidates"][c]["bh_power"]["value"]) for c in CELL_CANDS}
             ok_c = [c for c in CELL_CANDS if cell_table[c]["homogeneous_passes"] and cell_table[c]["heterogeneous_passes"] and floor]
             if ok_c:
                 cell_test = chosen if chosen in ok_c else max(ok_c, key=lambda c: cell_table[c]["bh_power"])
                 cells_mode = "bh_flags"
             else:
-                cell_test = min(CELL_CANDS, key=lambda c: abs(sc[homog["none"]]["candidates"][c]["cell_size"]["value"] - ALPHA))
+                cell_test = min(CELL_CANDS, key=lambda c: abs(sc[homog["none"][0]]["candidates"][c]["cell_size"]["value"] - ALPHA))
         else:
-            flags.append(f"no cell validation scenarios for family {fam} at persistence {phi_gov}")
+            flags.append(f"no cell validation scenarios for family {fam} at persistence {', '.join(f'{g:g}' for g in govs)}; the map is unadjusted and descriptive")
     else:
         cell_ids = {k: f"C-{k}-phi{phi_gov}" for k in ("none", "positive", "mixed")}
         if all(i in sc for i in cell_ids.values()):
@@ -536,7 +614,9 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None, n_cells=None
         interval_method=method if reg_ok else None, cells_enabled=cells_mode == "bh_flags", cells_mode=cells_mode,
         cell_test=cell_test, cell_family=family, cell_table=cell_table, reasons_blocking_verdict=reasons,
         reasons_interval=reasons_interval, interval_table=interval_table, adaptive_notes=adaptive_notes, conservative_flags=flags, governing=gov,
-        governing_n=n_gov, governing_phi=phi_gov, adaptive=adaptive,
+        governing_n=n_gov, governing_phi=phi_gov, governing_buckets=govs, bucket_rule=bucket_rule,
+        skew_scenarios=("matched to the claim's own length and persistence" if skew_matched else ("legacy single scenario (n 25, phi 0.3)" if skewed_claim else None)),
+        withheld_driver=reason_driver, adaptive=adaptive,
         candidate_table={c: dict(size=sc[ids_null[0]]["candidates"][c]["size"]["value"],
                                  power=sc[tr_id]["candidates"][c]["power"]["value"],
                                  passes=c in passers) for c in CAND_ORDER}))

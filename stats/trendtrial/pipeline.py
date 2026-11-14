@@ -50,6 +50,65 @@ def sha256_file(path):
     return h.hexdigest()
 
 
+def code_fingerprint():
+    """Round 3 (STATS_LOG R3-7): sha256 over the sorted (relative posix path, sha256 of content, CRLF normalised to LF) of every
+    .py and .json file of the trendtrial package, so a changed source file changes the run id even if the version string does not."""
+    pkg = Path(__file__).resolve().parent
+    files = []
+    for f in sorted(pkg.rglob("*")):
+        if f.is_file() and f.suffix in (".py", ".json") and "__pycache__" not in f.parts:
+            data = f.read_bytes().replace(b"\r\n", b"\n")
+            files.append((f.relative_to(pkg).as_posix(), hashlib.sha256(data).hexdigest()))
+    files.sort()
+    total = hashlib.sha256(json.dumps(files).encode()).hexdigest()
+    return total, files
+
+
+def _history(claim_id):
+    """Superseded run ids of this claim, from stats/run_id_history.json (outside the hashed package)."""
+    f = Path(__file__).resolve().parent.parent / "run_id_history.json"
+    try:
+        return json.loads(f.read_text(encoding="utf-8")).get(claim_id, [])
+    except (OSError, ValueError):
+        return []
+
+
+def build_display(gate, interval_selected):
+    """Round 3 (R3-6): the measured adaptive-procedure numbers the UI must show next to the result."""
+    ad = gate.get("adaptive") or {}
+    if ad.get("status") != "run":
+        return dict(status="not_available", interval_text=None, false_positive_text=None,
+                    note="the adaptive procedure was not validated at this setting")
+    pc = lambda v: f"{100 * v:.1f}%"
+    n, phi = ad.get("n"), ad.get("true_phi")
+    lop = ad.get("noise") == "skewed"
+    setting = f"{n} seasons, year-to-year persistence about {phi:g}" + (", lopsided noise" if lop else "")
+    cn, ct = ad.get("interval_coverage_null") or {}, ad.get("interval_coverage_trend") or {}
+    out = dict(status="run", setting_text=setting, adaptive_cell=ad.get("cell"), noise=ad.get("noise", "normal"))
+    if interval_selected and cn.get("value") is not None and ct.get("value") is not None:
+        pts = lambda v: f"{100 * v['se']:.1f}"
+        out["interval_text"] = (f"nominal 95% interval; measured coverage {pc(cn['value'])} (null) / {pc(ct['value'])} (trend) "
+                                f"at this claim's setting ({setting}). Monte Carlo SE {pts(cn)} / {pts(ct)} points, "
+                                f"{cn['R']:,} / {ct['R']:,} synthetic series with an interval shown")
+        out["interval_coverage_null"], out["interval_coverage_trend"] = cn, ct
+    else:
+        out["interval_text"] = None
+        out["interval_note"] = "no interval is shown for this claim, so no coverage is quoted"
+    z, w, rr = ad.get("size_given_release") or {}, ad.get("size_unconditional") or {}, ad.get("release_rate") or {}
+    if z.get("value") is not None and w.get("value") is not None:
+        out["false_positive_text"] = (f"false-positive rate among released verdicts at this setting: {pc(z['value'])} "
+                                      f"(overall {pc(w['value'])}) ({setting}). Monte Carlo SE {100 * z['se']:.1f} / {100 * w['se']:.1f} points; "
+                                      f"{z['R']:,} released of {w['R']:,} trendless synthetic series")
+        out["false_positive_released"], out["false_positive_overall"], out["release_rate"] = z, w, rr
+        out["false_positive_definition"] = ("share of trendless synthetic series called significant: among those for which a verdict was "
+                                            "released, and among all of them (withheld series count as no call); intended 5%")
+    else:
+        out["false_positive_text"] = None
+        out["false_positive_note"] = "no verdict is released at this setting in simulation"
+    out["applies_to_this_claim_verdict"] = bool(gate.get("regional_verdict_enabled"))
+    return out
+
+
 def clean(o, sig=6):
     """Make JSON safe: numpy -> python, NaN/inf -> None, floats to sig significant digits."""
     if isinstance(o, dict):
@@ -174,8 +233,14 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         from .validation import gate_for_claim
         vres = json.loads(Path(validation_path).read_text(encoding="utf-8"))
         validation = gate_for_claim(vres, n_years=len(years), phi_hat=phi_hat,
-                                    has_gaps=bool(np.isnan(series).any()), q=P["bh_q"], skew=skew,
+                                    has_gaps=bool(np.isnan(series).any() or len(sv) < len(years)), q=P["bh_q"], skew=skew,
                                     n_cells=int(ny_c * nx_c))
+        n_missing = int(len(years) - len(sv))
+        if n_missing and validation["gate"].get("reasons_blocking_verdict"):
+            validation["gate"]["reasons_blocking_verdict"].insert(0, (
+                f"{n_missing} of the {len(years)} seasons in the requested period have no valid regional value (missing years: "
+                + ", ".join(str(years[i]) for i in range(len(years)) if not np.isfinite(series[i])) + "). No simulation with missing years "
+                "kept the false-positive rate near 5%, so a claim verdict is not released for a series with gaps (STATS_LOG R3-3)."))
         validation["claim_phi_hat"] = phi_hat
         validation["adaptive"] = validation["gate"].get("adaptive")
         validation["claim_skewness"] = skew
@@ -197,11 +262,12 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     denom = support[None] & np.isfinite(clim)
     n_support = int(denom.any(axis=0).sum())
     years_dropped = [years[i] for i in range(len(years)) if not np.isfinite(series[i])]
+    years_absent = [years[i] for i in range(len(years)) if not np.isfinite(cube[i]).any()]   # no value in any month of the season (R3-3)
     coverage = dict(
         n_cells_grid=int(ny * nx), n_native_cells=int(ny * nx), cell_agg_k=cell_k, n_support_cells=int(support.sum()), n_cells_with_climatology=n_support,
         cov_threshold=P["cov_threshold"], months_total=int(len(years) * len(months)),
         months_dropped=int(sum(1 for m in monthly_cov if not m["region_month_valid"])),
-        years_total=len(years), years_valid=n_valid_years, years_dropped=years_dropped,
+        years_total=len(years), years_valid=n_valid_years, years_dropped=years_dropped, years_absent=years_absent,
         mean_valid_cell_frac=float(frac.mean()), min_valid_cell_frac=float(frac.min()),
         monthly=monthly_cov,
     )
@@ -477,12 +543,15 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                                local_min=P["local_min"]),
                    branches=["withheld", "contradicted", "supported", "partly_supported", "not_supported"])
 
+    validation["display"] = build_display(validation["gate"], interval["selected"] if interval else None)
+
     # ---------- finding card (spec 3.8) ----------
     finding = build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid_years, len(years), interval)
 
     # ---------- run identity ----------
     h_claim, h_npz = sha256_file(cj), sha256_file(nz)
-    canon = json.dumps(dict(code=__version__, claim=h_claim, data=h_npz,
+    code_sha, code_files = code_fingerprint()
+    canon = json.dumps(dict(code=code_sha, claim=h_claim, data=h_npz,
                             params={k: (list(v) if isinstance(v, tuple) else v) for k, v in P.items()},
                             validation=validation.get("source_sha256")), sort_keys=True)
     run_id = "run-" + hashlib.sha256(canon.encode()).hexdigest()[:12]
@@ -491,7 +560,9 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     bundle = dict(
         schema_version=SCHEMA_VERSION,
         run=dict(run_id=run_id, generated_at=dt.datetime.now().astimezone().isoformat(timespec="seconds"),
-                 code_version=__version__, seed=P["seed"], elapsed_seconds=round(time.time() - t0, 2),
+                 code_version=__version__, code_sha256=code_sha, code_files=[dict(path=a, sha256=b) for a, b in code_files],
+                 id_rule="sha256 over sorted (path, content hash) of stats/trendtrial *.py and *.json, plus input hashes, params and the validation file hash; first 12 hex",
+                 supersedes=_history(claim["claim_id"]), seed=P["seed"], elapsed_seconds=round(time.time() - t0, 2),
                  input_sha256=dict(claim_json=h_claim, monthly_npz=h_npz),
                  software=dict(python=platform.python_version(), numpy=np.__version__, scipy=scipy.__version__)),
         claim=claim, params={k: (list(v) if isinstance(v, tuple) else v) for k, v in P.items()},

@@ -26,7 +26,7 @@ from .bootstrap import residual_block_bootstrap
 from .synth import ar1_series
 from .trend import BATCHED_METHODS, REGIONAL_METHODS, benjamini_hochberg, boot_mk_p, mk_core, sen_ci_analytic
 from .validation import (ALPHA, COVERAGE_BAR, PHIS, Q, TREND_SD_PER_DECADE, CELL_CANDS, gate_for_claim,
-                         regional_scenario, _se_prop)
+                         governing_buckets, regional_scenario, _se_prop)
 
 # family: n, ny, nx, sigma (cells), fields
 FAMILIES = {
@@ -34,9 +34,12 @@ FAMILIES = {
     "CA": dict(n=25, ny=28, nx=58, sigma=4.0, fields=200, note="C-A, MODIS LST 0.25 deg, 1,624 cells"),
     "CB": dict(n=25, ny=16, nx=84, sigma=2.0, fields=200, note="C-B, IMERG aggregated to 0.5 deg (k = 5), 1,344 cells"),
     "CD": dict(n=23, ny=5, nx=6, sigma=1.0, fields=600, note="C-D provisional, Wisconsin 1 deg, 30 cells"),
+    # round 3 (STATS_LOG R3-5): the real C-D grid, 6 x 7 = 42 cells
+    "CD2": dict(n=23, ny=6, nx=7, sigma=1.0, fields=600, note="C-D real grid, Wisconsin 1 deg, 42 cells"),
 }
 HET_SD = 0.10
 HET_RANGE = (-0.1, 0.6)
+HET_RANGE_NEG = (-0.9, 0.6)   # round 3 (R3-5): heterogeneous fields around a negative g
 HET_SIGMA = 4.0
 TRUTHS = ("none", "positive", "mixed")
 CELL_FUNCS = ["mk_independent"] + CELL_CANDS
@@ -66,7 +69,7 @@ def phi_map_for(g, hetero, ny, nx, rng):
         return np.full((ny, nx), float(g))
     z = gaussian_filter(rng.standard_normal((ny, nx)), HET_SIGMA, mode="wrap")
     z = (z - z.mean()) / z.std()
-    return np.clip(g + HET_SD * z, *HET_RANGE)
+    return np.clip(g + HET_SD * z, *(HET_RANGE_NEG if g < 0 else HET_RANGE))
 
 
 def cell_family_scenario(spec):
@@ -198,8 +201,10 @@ class GateMemo:
         self.phis = sorted({s["phi"] for s in res["scenarios"] if s["kind"] == "regional" and s.get("n") == _nearest(res, n)})
 
     def bucket(self, phi_hat):
-        above = [p for p in self.phis if p >= max(phi_hat, 0.0) - 1e-12]
-        return above[0] if above else None
+        """Round 3 (R3-1): the same bucket rule as the gate (negative estimates are bracketed, not rounded up to 0).
+        A single bucket is returned as a float (old keys), two as a tuple, primary first."""
+        g = governing_buckets(self.phis, phi_hat)
+        return None if not g else (g[0] if len(g) == 1 else tuple(g))
 
     def decide(self, bucket, skew_flag):
         key = (bucket, skew_flag)
@@ -208,8 +213,9 @@ class GateMemo:
                 self.cache[key] = dict(regional_verdict_enabled=False, regional_test=None, interval_enabled=False,
                                        interval_method=None, reasons=["persistence above tested range"])
             else:
-                g = gate_for_claim(self.res, self.n, bucket, False, skew=(1.0 if skew_flag else 0.0),
-                                   use_adaptive=False)["gate"]
+                govs = list(bucket) if isinstance(bucket, tuple) else [bucket]
+                g = gate_for_claim(self.res, self.n, govs[0], False, skew=(1.0 if skew_flag else 0.0),
+                                   use_adaptive=False, govs=govs)["gate"]
                 self.cache[key] = g
         return self.cache[key]
 
@@ -220,10 +226,11 @@ def _nearest(res, n):
 
 
 def adaptive_cell(args):
-    res, n, phi, trend, seed, R, Rcov = args
+    res, n, phi, trend, seed, R, Rcov = args[:7]
+    noise = args[7] if len(args) > 7 else "normal"
     rng = np.random.default_rng(seed)
     t = np.arange(n, dtype=float)
-    X = ar1_series(R, n, phi, rng, "normal") + (trend / 10.0) * t[None, :]
+    X = ar1_series(R, n, phi, rng, noise) + (trend / 10.0) * t[None, :]
     slope_true = trend / 10.0
     phi_hat = lag1_batch(X)
     skew = stats.skew(X, axis=1)
@@ -275,7 +282,7 @@ def adaptive_cell(args):
         v = k / N if N else None
         return dict(value=None if v is None else float(v), se=_se_prop(v, N) if N else None, R=int(N))
     nrel = int(released.sum())
-    out = dict(n=n, true_phi=phi, trend_sd_per_decade=trend, R=R, R_cov=int(min(R, Rcov)),
+    out = dict(n=n, true_phi=phi, noise=noise, trend_sd_per_decade=trend, R=R, R_cov=int(min(R, Rcov)),
                release_rate=prop(nrel, R),
                reject_unconditional=prop(int(reject.sum()), R),
                reject_given_release=prop(int(reject.sum()), nrel),

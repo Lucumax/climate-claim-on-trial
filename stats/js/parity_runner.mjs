@@ -14,6 +14,6 @@ for (const c of cases.series) {
   out.series.push({ ols, mk, mk0, ci, alt });
 }
 for (const c of cases.seasonal) out.seasonal.push(seasonalSeries(c.rows, c.opts));
-for (const c of cases.gate || []) out.gate.push(exploratoryGate(c.t, c.y));
+for (const c of cases.gate || []) out.gate.push(exploratoryGate(c.t, c.y, c.opts || {}));
 for (const c of cases.verdict) out.verdict.push(detectiveVerdict(c.p, c.slope, c.n, c.units));
 process.stdout.write(JSON.stringify(out, (k, v) => (typeof v === "number" && !Number.isFinite(v) ? null : v)));

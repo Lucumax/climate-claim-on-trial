@@ -17,18 +17,23 @@ res = json.loads(Path(a.res).read_text(encoding="utf-8"))
 ad = json.loads(Path(a.adaptive).read_text(encoding="utf-8"))["cells"] if a.adaptive else res["adaptive"]["cells"]
 sc = {s["id"]: s for s in res["scenarios"]}
 rows = []
+PHIS = sorted({s["phi"] for s in res["scenarios"] if s["kind"] == "regional" and s["id"].startswith("R-null-n")})   # round 3: includes -0.7, -0.5, -0.3
 for n in (23, 25, 45):
-    for phi in (0.0, 0.1, 0.2, 0.3, 0.45, 0.6):
+    for phi in PHIS:
         yw = sc[f"R-null-n{n}-phi{phi}"]["candidates"]["yue_wang"]["size"]
         p = sc[f"R-trend-n{n}-phi{phi}"]["candidates"]["yue_wang"]["power"]
         an = ad[f"n{n}-phi{phi}"]["null"]
+        sk = sc.get(f"R-null-skewed-n{n}-phi{phi}")
+        sky = sk["candidates"]["yue_wang"]["size"] if sk else None
         rows.append(dict(n=n, phi=phi, size=round(yw["value"], 4), se=round(yw["se"], 4),
                          passes=bool(yw["value"] <= 0.05 + 2 * yw["se"]), power=round(p["value"], 3),
+                         skewed_size=round(sky["value"], 4) if sky else None, skewed_se=round(sky["se"], 4) if sky else None,
+                         skewed_passes=bool(sky["value"] <= 0.05 + 2 * sky["se"]) if sky else None,
                          adaptive_size=round(an["reject_unconditional"]["value"], 4),
                          adaptive_release=round(an["release_rate"]["value"], 3),
                          adaptive_size_given_release=round(an["reject_given_release"]["value"], 4)))
 table = dict(
-    source="synthetic validation, STATS_LOG run B (Yue-Wang size, 4000 series per row) and round 2 (adaptive procedure, seed family 2026)",
+    source="synthetic validation, STATS_LOG run B and round 3 (Yue-Wang size, 4000 series per row; adaptive procedure, seed family 2027, round-3 gate)",
     correction="yw", correction_name="Mann-Kendall with Yue-Wang effective-sample-size correction",
     nominal_size=0.05, rows=rows,
     gaps=dict(n=25, phi=0.3, size=round(sc["R-null-gaps-n25-phi0.3"]["candidates"]["yue_wang"]["size"]["value"], 4)),
@@ -44,4 +49,7 @@ if "// BEGIN GATE_TABLE" in s:
 else:
     s = s.replace("// ------------------------------------------------------------------ convenience", block + "\n\n// ------------------------------------------------------------------ convenience", 1)
 js.write_text(s, encoding="utf-8")
+vendor = ROOT.parent / "web/js/vendor/trendtrial.js"      # the browser copy is the same file
+if vendor.parent.exists():
+    vendor.write_text(s, encoding="utf-8")
 print("gate table written:", len(rows), "rows")

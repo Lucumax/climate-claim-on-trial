@@ -1,9 +1,51 @@
 {
- "source": "synthetic validation, STATS_LOG run B (Yue-Wang size, 4000 series per row) and round 2 (adaptive procedure, seed family 2026)",
+ "source": "synthetic validation, STATS_LOG run B and round 3 (Yue-Wang size, 4000 series per row; adaptive procedure, seed family 2027, round-3 gate)",
  "correction": "yw",
  "correction_name": "Mann-Kendall with Yue-Wang effective-sample-size correction",
  "nominal_size": 0.05,
  "rows": [
+  {
+   "n": 23,
+   "phi": -0.7,
+   "size": 0.0005,
+   "se": 0.0004,
+   "passes": true,
+   "power": 0.033,
+   "skewed_size": 0.0005,
+   "skewed_se": 0.0004,
+   "skewed_passes": true,
+   "adaptive_size": 0.026,
+   "adaptive_release": 1.0,
+   "adaptive_size_given_release": 0.026
+  },
+  {
+   "n": 23,
+   "phi": -0.5,
+   "size": 0.0035,
+   "se": 0.0009,
+   "passes": true,
+   "power": 0.053,
+   "skewed_size": 0.0022,
+   "skewed_se": 0.0007,
+   "skewed_passes": true,
+   "adaptive_size": 0.0365,
+   "adaptive_release": 0.999,
+   "adaptive_size_given_release": 0.0366
+  },
+  {
+   "n": 23,
+   "phi": -0.3,
+   "size": 0.009,
+   "se": 0.0015,
+   "passes": true,
+   "power": 0.076,
+   "skewed_size": 0.0063,
+   "skewed_se": 0.0012,
+   "skewed_passes": true,
+   "adaptive_size": 0.0462,
+   "adaptive_release": 0.984,
+   "adaptive_size_given_release": 0.047
+  },
   {
    "n": 23,
    "phi": 0.0,
@@ -11,9 +53,12 @@
    "se": 0.0029,
    "passes": true,
    "power": 0.116,
-   "adaptive_size": 0.04,
-   "adaptive_release": 0.768,
-   "adaptive_size_given_release": 0.052
+   "skewed_size": 0.0403,
+   "skewed_se": 0.0031,
+   "skewed_passes": true,
+   "adaptive_size": 0.0553,
+   "adaptive_release": 0.821,
+   "adaptive_size_given_release": 0.0673
   },
   {
    "n": 23,
@@ -22,9 +67,12 @@
    "se": 0.0031,
    "passes": true,
    "power": 0.13,
-   "adaptive_size": 0.0445,
-   "adaptive_release": 0.654,
-   "adaptive_size_given_release": 0.068
+   "skewed_size": 0.0587,
+   "skewed_se": 0.0037,
+   "skewed_passes": false,
+   "adaptive_size": 0.0555,
+   "adaptive_release": 0.691,
+   "adaptive_size_given_release": 0.0804
   },
   {
    "n": 23,
@@ -33,9 +81,12 @@
    "se": 0.0039,
    "passes": false,
    "power": 0.138,
-   "adaptive_size": 0.0525,
-   "adaptive_release": 0.521,
-   "adaptive_size_given_release": 0.1007
+   "skewed_size": 0.0835,
+   "skewed_se": 0.0044,
+   "skewed_passes": false,
+   "adaptive_size": 0.0605,
+   "adaptive_release": 0.542,
+   "adaptive_size_given_release": 0.1116
   },
   {
    "n": 23,
@@ -44,9 +95,12 @@
    "se": 0.0042,
    "passes": false,
    "power": 0.136,
-   "adaptive_size": 0.0542,
-   "adaptive_release": 0.371,
-   "adaptive_size_given_release": 0.1462
+   "skewed_size": 0.0882,
+   "skewed_se": 0.0045,
+   "skewed_passes": false,
+   "adaptive_size": 0.0673,
+   "adaptive_release": 0.386,
+   "adaptive_size_given_release": 0.1744
   },
   {
    "n": 23,
@@ -55,9 +109,12 @@
    "se": 0.0048,
    "passes": false,
    "power": 0.15,
-   "adaptive_size": 0.0498,
-   "adaptive_release": 0.196,
-   "adaptive_size_given_release": 0.2545
+   "skewed_size": 0.1143,
+   "skewed_se": 0.005,
+   "skewed_passes": false,
+   "adaptive_size": 0.0548,
+   "adaptive_release": 0.203,
+   "adaptive_size_given_release": 0.2704
   },
   {
    "n": 23,
@@ -66,9 +123,54 @@
    "se": 0.0052,
    "passes": false,
    "power": 0.161,
-   "adaptive_size": 0.0302,
-   "adaptive_release": 0.085,
-   "adaptive_size_given_release": 0.3569
+   "skewed_size": 0.1368,
+   "skewed_se": 0.0054,
+   "skewed_passes": false,
+   "adaptive_size": 0.0377,
+   "adaptive_release": 0.095,
+   "adaptive_size_given_release": 0.3963
+  },
+  {
+   "n": 25,
+   "phi": -0.7,
+   "size": 0.001,
+   "se": 0.0005,
+   "passes": true,
+   "power": 0.052,
+   "skewed_size": 0.0003,
+   "skewed_se": 0.0002,
+   "skewed_passes": true,
+   "adaptive_size": 0.0127,
+   "adaptive_release": 1.0,
+   "adaptive_size_given_release": 0.0128
+  },
+  {
+   "n": 25,
+   "phi": -0.5,
+   "size": 0.0045,
+   "se": 0.0011,
+   "passes": true,
+   "power": 0.076,
+   "skewed_size": 0.0045,
+   "skewed_se": 0.0011,
+   "skewed_passes": true,
+   "adaptive_size": 0.0293,
+   "adaptive_release": 0.998,
+   "adaptive_size_given_release": 0.0293
+  },
+  {
+   "n": 25,
+   "phi": -0.3,
+   "size": 0.0125,
+   "se": 0.0018,
+   "passes": true,
+   "power": 0.097,
+   "skewed_size": 0.0095,
+   "skewed_se": 0.0015,
+   "skewed_passes": true,
+   "adaptive_size": 0.0348,
+   "adaptive_release": 0.984,
+   "adaptive_size_given_release": 0.0353
   },
   {
    "n": 25,
@@ -77,9 +179,12 @@
    "se": 0.0031,
    "passes": true,
    "power": 0.15,
-   "adaptive_size": 0.0375,
-   "adaptive_release": 0.773,
-   "adaptive_size_given_release": 0.0485
+   "skewed_size": 0.035,
+   "skewed_se": 0.0029,
+   "skewed_passes": true,
+   "adaptive_size": 0.0445,
+   "adaptive_release": 0.807,
+   "adaptive_size_given_release": 0.0551
   },
   {
    "n": 25,
@@ -88,9 +193,12 @@
    "se": 0.0034,
    "passes": true,
    "power": 0.159,
-   "adaptive_size": 0.043,
-   "adaptive_release": 0.634,
-   "adaptive_size_given_release": 0.0678
+   "skewed_size": 0.064,
+   "skewed_se": 0.0039,
+   "skewed_passes": false,
+   "adaptive_size": 0.049,
+   "adaptive_release": 0.692,
+   "adaptive_size_given_release": 0.0708
   },
   {
    "n": 25,
@@ -99,9 +207,12 @@
    "se": 0.0039,
    "passes": false,
    "power": 0.161,
-   "adaptive_size": 0.053,
-   "adaptive_release": 0.494,
-   "adaptive_size_given_release": 0.1072
+   "skewed_size": 0.0767,
+   "skewed_se": 0.0042,
+   "skewed_passes": false,
+   "adaptive_size": 0.0522,
+   "adaptive_release": 0.511,
+   "adaptive_size_given_release": 0.1023
   },
   {
    "n": 25,
@@ -110,9 +221,12 @@
    "se": 0.0043,
    "passes": false,
    "power": 0.159,
-   "adaptive_size": 0.0447,
-   "adaptive_release": 0.346,
-   "adaptive_size_given_release": 0.1293
+   "skewed_size": 0.079,
+   "skewed_se": 0.0043,
+   "skewed_passes": false,
+   "adaptive_size": 0.0493,
+   "adaptive_release": 0.37,
+   "adaptive_size_given_release": 0.1332
   },
   {
    "n": 25,
@@ -121,9 +235,12 @@
    "se": 0.0048,
    "passes": false,
    "power": 0.166,
-   "adaptive_size": 0.039,
-   "adaptive_release": 0.17,
-   "adaptive_size_given_release": 0.2294
+   "skewed_size": 0.1065,
+   "skewed_se": 0.0049,
+   "skewed_passes": false,
+   "adaptive_size": 0.0398,
+   "adaptive_release": 0.173,
+   "adaptive_size_given_release": 0.2291
   },
   {
    "n": 25,
@@ -132,9 +249,54 @@
    "se": 0.0053,
    "passes": false,
    "power": 0.168,
-   "adaptive_size": 0.0253,
-   "adaptive_release": 0.07,
-   "adaptive_size_given_release": 0.3594
+   "skewed_size": 0.1447,
+   "skewed_se": 0.0056,
+   "skewed_passes": false,
+   "adaptive_size": 0.0293,
+   "adaptive_release": 0.074,
+   "adaptive_size_given_release": 0.3966
+  },
+  {
+   "n": 45,
+   "phi": -0.7,
+   "size": 0.0005,
+   "se": 0.0004,
+   "passes": true,
+   "power": 0.762,
+   "skewed_size": 0.0,
+   "skewed_se": 0.0,
+   "skewed_passes": true,
+   "adaptive_size": 0.0307,
+   "adaptive_release": 1.0,
+   "adaptive_size_given_release": 0.0307
+  },
+  {
+   "n": 45,
+   "phi": -0.5,
+   "size": 0.0018,
+   "se": 0.0007,
+   "passes": true,
+   "power": 0.764,
+   "skewed_size": 0.0008,
+   "skewed_se": 0.0004,
+   "skewed_passes": true,
+   "adaptive_size": 0.044,
+   "adaptive_release": 1.0,
+   "adaptive_size_given_release": 0.044
+  },
+  {
+   "n": 45,
+   "phi": -0.3,
+   "size": 0.0127,
+   "se": 0.0018,
+   "passes": true,
+   "power": 0.726,
+   "skewed_size": 0.0092,
+   "skewed_se": 0.0015,
+   "skewed_passes": true,
+   "adaptive_size": 0.041,
+   "adaptive_release": 0.997,
+   "adaptive_size_given_release": 0.0411
   },
   {
    "n": 45,
@@ -143,9 +305,12 @@
    "se": 0.0034,
    "passes": true,
    "power": 0.662,
-   "adaptive_size": 0.039,
-   "adaptive_release": 0.826,
-   "adaptive_size_given_release": 0.0472
+   "skewed_size": 0.0478,
+   "skewed_se": 0.0034,
+   "skewed_passes": true,
+   "adaptive_size": 0.0425,
+   "adaptive_release": 0.841,
+   "adaptive_size_given_release": 0.0505
   },
   {
    "n": 45,
@@ -154,9 +319,12 @@
    "se": 0.0036,
    "passes": true,
    "power": 0.627,
-   "adaptive_size": 0.0413,
-   "adaptive_release": 0.628,
-   "adaptive_size_given_release": 0.0657
+   "skewed_size": 0.0573,
+   "skewed_se": 0.0037,
+   "skewed_passes": true,
+   "adaptive_size": 0.0478,
+   "adaptive_release": 0.647,
+   "adaptive_size_given_release": 0.0738
   },
   {
    "n": 45,
@@ -165,9 +333,12 @@
    "se": 0.0039,
    "passes": false,
    "power": 0.543,
-   "adaptive_size": 0.039,
-   "adaptive_release": 0.389,
-   "adaptive_size_given_release": 0.1004
+   "skewed_size": 0.0752,
+   "skewed_se": 0.0042,
+   "skewed_passes": false,
+   "adaptive_size": 0.0403,
+   "adaptive_release": 0.402,
+   "adaptive_size_given_release": 0.1002
   },
   {
    "n": 45,
@@ -176,9 +347,12 @@
    "se": 0.004,
    "passes": false,
    "power": 0.482,
-   "adaptive_size": 0.0248,
-   "adaptive_release": 0.178,
-   "adaptive_size_given_release": 0.139
+   "skewed_size": 0.0825,
+   "skewed_se": 0.0044,
+   "skewed_passes": false,
+   "adaptive_size": 0.0283,
+   "adaptive_release": 0.196,
+   "adaptive_size_given_release": 0.1441
   },
   {
    "n": 45,
@@ -187,9 +361,12 @@
    "se": 0.0044,
    "passes": false,
    "power": 0.393,
-   "adaptive_size": 0.0085,
-   "adaptive_release": 0.038,
-   "adaptive_size_given_release": 0.2237
+   "skewed_size": 0.0867,
+   "skewed_se": 0.0045,
+   "skewed_passes": false,
+   "adaptive_size": 0.012,
+   "adaptive_release": 0.043,
+   "adaptive_size_given_release": 0.2791
   },
   {
    "n": 45,
@@ -198,9 +375,12 @@
    "se": 0.0048,
    "passes": false,
    "power": 0.308,
-   "adaptive_size": 0.003,
-   "adaptive_release": 0.005,
-   "adaptive_size_given_release": 0.5455
+   "skewed_size": 0.1008,
+   "skewed_se": 0.0048,
+   "skewed_passes": false,
+   "adaptive_size": 0.0025,
+   "adaptive_release": 0.006,
+   "adaptive_size_given_release": 0.3846
   }
  ],
  "gaps": {

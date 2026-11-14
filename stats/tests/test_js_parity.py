@@ -72,6 +72,31 @@ def make_gate_series(seed=77):
     return out
 
 
+def make_gate_year_cases(seed=78):
+    """R3-3: series on a real year axis with dropped years (rows removed or NaN placeholders), with and without the period given,
+    plus negative-persistence series (R3-1 bracketing)."""
+    from trendtrial.synth import ar1_series
+    rng = np.random.default_rng(seed)
+    full_t = list(range(1981, 2026))
+    full_y = [float(v) for v in ar1_series(1, 45, 0.0, rng)[0]]
+    cases = []
+    i2000 = full_t.index(2000)
+    cases.append(dict(t=full_t, y=full_y))                                               # complete
+    cases.append(dict(t=full_t[:i2000] + full_t[i2000 + 1:], y=full_y[:i2000] + full_y[i2000 + 1:]))      # 2000 dropped, no placeholder
+    y_nan = list(full_y)
+    y_nan[i2000] = None
+    cases.append(dict(t=full_t, y=y_nan))                                                # 2000 as NaN placeholder
+    cases.append(dict(t=full_t[1:-2], y=full_y[1:-2], opts=dict(period=[1981, 2025])))   # absent at both ends, period given
+    cases.append(dict(t=full_t[1:-2], y=full_y[1:-2]))                                   # same, period not given: no gap is visible
+    cases.append(dict(t=full_t, y=full_y, opts=dict(period=[1981, 2025])))               # period given, complete
+    cases.append(dict(t=[1990 + 0.5 * k for k in range(30)], y=[float(v) for v in ar1_series(1, 30, 0.0, rng)[0]]))   # half-year steps
+    for phi in (-0.7, -0.5, -0.3, -0.15):
+        for n in (23, 45):
+            y = ar1_series(1, n, phi, rng)[0]
+            cases.append(dict(t=list(range(2000, 2000 + n)), y=[float(v) for v in y]))
+    return cases
+
+
 def clean(a):
     return [None if not np.isfinite(v) else float(v) for v in a]
 
@@ -106,11 +131,12 @@ def js_results(tmp_path_factory):
                        (0.0499999, 100000.0, 40, "x"), (0.0501, -0.00123, 40, "x"), (1e-12, 0.0, 40, "x"), (0.04, 7.0, 8, "K")]:
         verdicts.append(dict(p=p, slope=s, n=n, units=u))
     gate_series = make_gate_series()
-    payload = dict(gate=[dict(t=list(range(len(y))), y=[None if np.isnan(v) else float(v) for v in y]) for y in gate_series],
+    gate_cases = [dict(t=list(range(len(y))), y=[None if np.isnan(v) else float(v) for v in y]) for y in gate_series] + make_gate_year_cases()
+    payload = dict(gate=gate_cases,
                    series=[dict(t=t.tolist(), y=[None if np.isnan(v) else float(v) for v in y]) for t, y in series],
                    seasonal=seasonal, verdict=verdicts)
     res = run_node(payload, tmp)
-    res["_gate_series"] = gate_series
+    res["_gate_cases"] = gate_cases
     return series, seasonal, verdicts, res
 
 
@@ -237,9 +263,11 @@ def test_exploratory_gate_parity(js_results):
     _, _, _, res = js_results
     assert res["gateTable"] == E.TABLE            # one table, shipped in both languages
     seen = set()
-    for y, g in zip(res["_gate_series"], res["gate"]):
-        py = E.exploratory_gate([None if np.isnan(v) else float(v) for v in y])
+    for c, g in zip(res["_gate_cases"], res["gate"]):
+        py = E.exploratory_gate([np.nan if v is None else float(v) for v in c["y"]], t=c["t"], period=c.get("opts", {}).get("period"))
         assert g["nValid"] == py["nValid"] and g["hasGaps"] == py["hasGaps"]
+        assert g["missingYears"] == py["missingYears"] and g["nExpected"] == py["nExpected"], (g, py)
+        assert g["phiBuckets"] == py["phiBuckets"]
         assert abs(g["phiHat"] - py["phiHat"]) < 1e-9 and abs(g["skew"] - py["skew"]) < 1e-9
         assert g["nGov"] == py["nGov"] and g["phiGov"] == py["phiGov"]
         assert g["reasons"] == py["reasons"] and g["calibrated"] == py["calibrated"]

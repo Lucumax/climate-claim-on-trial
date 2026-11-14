@@ -1,0 +1,57 @@
+{
+ "_note": "Superseded run ids (STATS_LOG R3-7). Earlier ids hashed a version string, not the code, so they cannot be recomputed; they are kept here and copied into each new bundle as run.supersedes.",
+ "C-A": [
+  {
+   "run_id": "run-e8371c27d38f",
+   "generated_at": "2026-11-14T12:09:19-05:00",
+   "round": 2,
+   "verdict": "withheld",
+   "status": "superseded",
+   "reason": "round 3: negative-persistence buckets, matched skew scenarios, missing-year rule, content-hash run id"
+  }
+ ],
+ "C-B": [
+  {
+   "run_id": "run-ecf5f569af51",
+   "generated_at": "2026-11-14T12:09:18-05:00",
+   "round": 2,
+   "verdict": "partly_supported",
+   "status": "superseded",
+   "reason": "round 3: negative-persistence buckets, matched skew scenarios, missing-year rule, content-hash run id"
+  }
+ ],
+ "C-C": [
+  {
+   "run_id": "run-4abfcdc2381a",
+   "generated_at": "2026-11-14T11:20:42-05:00",
+   "round": 2,
+   "status": "superseded",
+   "reason": "first round-2 run (cell test TFPW), replaced by the 11:21 bundle"
+  },
+  {
+   "run_id": "run-0c4651be63ac",
+   "generated_at": "2026-11-14T11:21:20-05:00",
+   "round": 2,
+   "status": "superseded",
+   "reason": "11:21 bundle (addendum 2 selection), replaced by the 12:20 round-2 bundle"
+  },
+  {
+   "run_id": "run-bdb2a144421d",
+   "generated_at": "2026-11-14T12:09:17-05:00",
+   "round": 2,
+   "verdict": "supported",
+   "status": "superseded",
+   "reason": "round 3: negative-persistence buckets, matched skew scenarios, missing-year rule, content-hash run id"
+  }
+ ],
+ "C-D": [
+  {
+   "run_id": "run-b80e1e70ad85",
+   "generated_at": "2026-11-14T12:09:20-05:00",
+   "round": 2,
+   "verdict": "withheld",
+   "status": "superseded",
+   "reason": "round 3: negative-persistence buckets, matched skew scenarios, missing-year rule, content-hash run id"
+  }
+ ]
+}

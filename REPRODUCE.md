@@ -1,8 +1,8 @@
 # Reproduce Climate Claim on Trial
 
-Three levels, from quick to slow. Level 1 needs no NASA account and takes about a minute. It rebuilds the four case files from the data subsets in `data/` and checks them against the shipped results.
+Three levels, from quick to slow. Level 1 needs no NASA account and takes about a minute. It rebuilds the six case files from the data subsets in `data/` and checks them against the shipped results.
 
-| Level | What it proves | Needs | Time |
+| Level | What it checks | Needs | Time |
 |---|---|---|---|
 | 1. Rebuild and test | The statistics turn the included data into exactly the shipped case files | Python 3.12, `uv`, Node 24 (for one test) | about 1 minute |
 | 2. Download again from NASA | The included data subsets come from the named NASA products with the stated processing | Free Earthdata account and your own token | about 25 minutes |
@@ -24,21 +24,25 @@ The two environments are separate on purpose. The statistics environment has Sci
 
 ## 1. Rebuild and test (no NASA login)
 
-Run the automated tests (103 tests, about 10 seconds):
+Run the automated tests (107 tests, about 10 seconds):
 
 ```
 cd stats
 .venv/bin/python -m pytest -q -p no:cacheprovider
 ```
 
-Expected: `103 passed`. These include comparisons with `pymannkendall` and SciPy, and a check that the browser statistics (`stats/js/trendtrial.js`) give the same numbers as the Python statistics (that one needs `node` on your path and is skipped without it).
+Expected: `107 passed`. These include comparisons with `pymannkendall` and SciPy, and a check that the browser statistics (`stats/js/trendtrial.js`) give the same numbers as the Python statistics (that one needs `node` on your path and is skipped without it).
 
-Rebuild the four case bundles into a scratch folder (still in `stats/`; each takes 1 to 2 seconds):
+Rebuild the six case bundles into a scratch folder (still in `stats/`; each takes 1 to 2 seconds). The NO2 pair uses its own validation file, which adds the 21-year simulations:
 
 ```
 for c in C-A C-B C-C C-D; do
   .venv/bin/python -m trendtrial.pipeline ../data/$c --out ../scratch/$c \
       --validation out/validation/validation_results.json
+done
+for c in C-E1 C-E2; do
+  .venv/bin/python -m trendtrial.pipeline ../data/$c --out ../scratch/$c \
+      --validation out/validation/validation_results_n21.json
 done
 ```
 
@@ -50,29 +54,34 @@ done
 
 | Case file | Run id | Verdict id | `claim.json` SHA-256 | `monthly.npz` SHA-256 |
 |---|---|---|---|---|
-| C-A (Southeastern US land surface temperature) | `run-9eb898b0cca9` | withheld | `c0ada91ac00168d0c1b24eb9fee5aa3a77773ce2e6bd7d5ffeead85d492e4df3` | `6b0c273d999b46c404dda083429a902335b2142c81f8bddadb400771855c250e` |
-| C-B (Sahel rainfall) | `run-3cf2b3a68c11` | partly_supported | `fa961a2438673b9850c26fed4935da8343f44256b68d5b3076cfdc1e43fbdbb9` | `ccd0548cfd33a7ab869249be889359b70152466e78df27c4c8a39b6a071c2adb` |
-| C-C (Alaska air temperature) | `run-1446adc1e9d2` | supported | `4e1c6eeb03ad28320d6aa54cdf71059d2134e70233a6627b8629bc00d054b67d` | `56767e7cfee30bdbead1f858131ac52098f49e51d5cad4d98f95bdaa54f100c8` |
-| C-D (Wisconsin aerosol) | `run-ad60891e0392` | not_supported | `18ed8fa2132c257c05c461dbfcbb3f5a6f3d727c101bb134a90c1b49211b9468` | `3ee4d5b50113dfa391f1af439c12446d8c14a7ed8594dc67db3634a9e93d9b92` |
+| C-A (Southeastern US land surface temperature) | `run-f3ffa786cb11` | withheld | `c0ada91ac00168d0c1b24eb9fee5aa3a77773ce2e6bd7d5ffeead85d492e4df3` | `6b0c273d999b46c404dda083429a902335b2142c81f8bddadb400771855c250e` |
+| C-B (Sahel rainfall) | `run-a30b73882250` | partly_supported | `fa961a2438673b9850c26fed4935da8343f44256b68d5b3076cfdc1e43fbdbb9` | `ccd0548cfd33a7ab869249be889359b70152466e78df27c4c8a39b6a071c2adb` |
+| C-C (Alaska air temperature) | `run-dcfb40038ae3` | supported | `4e1c6eeb03ad28320d6aa54cdf71059d2134e70233a6627b8629bc00d054b67d` | `56767e7cfee30bdbead1f858131ac52098f49e51d5cad4d98f95bdaa54f100c8` |
+| C-D (Wisconsin aerosol) | `run-676c5075998c` | not_supported | `18ed8fa2132c257c05c461dbfcbb3f5a6f3d727c101bb134a90c1b49211b9468` | `3ee4d5b50113dfa391f1af439c12446d8c14a7ed8594dc67db3634a9e93d9b92` |
+| C-E1 (eastern US nitrogen dioxide) | `run-491001888478` | withheld | `6ed6caec7c37089adc7ec97758b87a5eda6bd330d203cdc5b6f11f4be93803ed` | `2ab832a5941a54ce38da30abc89c6747256395ba3fdfe190d880626b83c43cf0` |
+| C-E2 (Indo-Gangetic Plain nitrogen dioxide) | `run-48f9b13b4209` | withheld | `a8154b211a8c8e2d17d32dbe1ed6a29f0eb7caf6ccbbd50882cdf57d4200314e` | `3dd70fab8eb3f3a113c18a142fc34710e17ed0d6661bed4cdbedb57ee57d7862` |
 
-The run id is a hash of the code, the two input hashes, the parameters and the validation file, so the same id means the same inputs and the same code. These are the round-3 ids; the earlier round-2 ids are kept in `stats/run_id_history.json` and each bundle lists them under `run.supersedes`. The input hashes are also stored in each bundle under `run.input_sha256`. Apart from `run.generated_at` and `run.elapsed_seconds`, a rebuilt `bundle.json` is identical to the shipped `web/data/bundle_<id>.json` (we checked all four again on Nov 14, 2026, after round 3). Compare the JSON, not the file hash, because the timestamp changes the file hash.
+The run id is a hash of the code, the two input hashes, the parameters and the validation file, so the same id means the same inputs and the same code. These are the current ids. They changed once on Nov 14, 2026 in a text-only regeneration (only the wording of some display sentences changed; every number, verdict and p-value is identical), so the earlier round-3 ids, for example `run-9eb898b0cca9` for C-A and `run-151e23606ddb` for C-E1, and the round-2 ids are kept in `stats/run_id_history.json`. Each bundle lists them under `run.supersedes`. The input hashes are also stored in each bundle under `run.input_sha256`. Apart from `run.generated_at` and `run.elapsed_seconds`, a rebuilt `bundle.json` is identical to the shipped `web/data/bundle_<id>.json` (we checked all six again on Nov 14, 2026, after the text-only regeneration). Compare the JSON, not the file hash, because the timestamp changes the file hash.
 
 Headline numbers you should see in the bundles:
 
 | Case | Sen slope per decade | Interval (95%) | Shipped test and p | Flagged area after false-discovery control |
 |---|---|---|---|---|
-| C-C | +0.4428 degC | 0.1905 to 0.6283 | Mann-Kendall, Yue-Wang correction, p = 0.00147 | 85.2% |
+| C-C | +0.4428 °C | 0.1905 to 0.6283 | Mann-Kendall, Yue-Wang correction, p = 0.00147 | 85.2% |
 | C-B | +0.2068 mm/day | 0.0964 to 0.3303 (bootstrap) | Mann-Kendall, moving-block bootstrap p-value (block 3), p = 0.004; plain Mann-Kendall gives 0.030 | 21.8% in the claimed direction |
-| C-A | -0.3503 degC | not shown | none (verdict withheld); raw Mann-Kendall p = 0.272 | 0.0% |
+| C-A | -0.3503 °C | not shown | none (verdict withheld); raw Mann-Kendall p = 0.272 | 0.0% |
 | C-D | +0.0296 (unitless) | -0.0127 to 0.0794 | Mann-Kendall, moving-block bootstrap p-value (block 3), p = 0.114; raw Mann-Kendall gives 0.224 | 0.0% (0 of 42 cells) |
+| C-E1 | -0.611 ×10^15 molecules/cm² | not shown | none (verdict withheld); registered Hamed-Rao p = 0.0013, for reading only | 88.0% in the claimed (falling) direction, descriptive only |
+| C-E2 | +0.357 ×10^15 molecules/cm² | not shown | none (verdict withheld); registered Hamed-Rao p = 0.000094, for reading only | 74.4% in the claimed (rising) direction, unadjusted and descriptive only |
 
-To publish a rebuilt bundle to the site folder instead of a scratch folder, use `stats/scripts/run_case.py` (it writes `web/data/bundle_<id>.json` and updates `web/data/index.json`):
+To publish a rebuilt bundle to the site folder instead of a scratch folder, use `stats/scripts/run_case.py` for C-A to C-D (it writes `web/data/bundle_<id>.json` and updates `web/data/index.json`), and `stats/scripts/run_no2.py` for the NO2 pair (it writes the bundle but leaves the index alone):
 
 ```
 stats/.venv/bin/python stats/scripts/run_case.py C-C
+(cd stats && .venv/bin/python scripts/run_no2.py run C-E1)
 ```
 
-Other generated files in the site folder, from the same data (both are deterministic):
+Other generated files in the site folder, produced deterministically from the same data:
 
 ```
 stats/.venv/bin/python -I web/tools/make_viz_data.py                # web/data/viz/*.json, descriptive anomalies for the lab page
@@ -82,7 +91,7 @@ sh web/tools/sync_stats.sh                                          # copies sta
 
 ## 2. Download again from NASA (optional)
 
-### 2.1 Get a token (Earthdata products: C-A, C-B, C-D)
+### 2.1 Get a token (Earthdata products: C-A, C-B, C-D, C-E1, C-E2)
 
 1. Create a free account at https://urs.earthdata.nasa.gov.
 2. For C-D, approve the LAADS Web application under Applications, Authorized Apps (MYD08_M3 is served by LAADS DAAC).
@@ -95,7 +104,7 @@ $env:EARTHDATA_TOKEN = "<paste your token>"          # Windows PowerShell, this 
 powershell -File data/scripts/set_earthdata_token.ps1   # Windows, saves it to your user environment (hidden prompt)
 ```
 
-If the token is missing the scripts stop with `TOKEN_MISSING`; if NASA refuses it they stop with `AUTH_FAIL` (exit code 3).
+If the token is missing, the scripts stop with `TOKEN_MISSING`; if NASA refuses it, they stop with `AUTH_FAIL` (exit code 3).
 
 ### 2.2 Alaska (no login, NASA POWER)
 
@@ -129,12 +138,23 @@ What a correct run looks like (from our logged runs on Nov 14, 2026):
 | Claim | Granules | Product | Grid written to `monthly.npz` | Notes | Time |
 |---|---|---|---|---|---|
 | C-B | 100 (Jun to Sep, 2001 to 2025) | GPM_3IMERGM V07 | 80 x 420 cells, 0.1 degree | all cells valid; mm/hr times 24 = mm/day | about 4.5 min |
-| C-A | 75 (Jun to Aug, 2001 to 2025) | MOD11C3 V061 | 28 x 58 cells, 0.25 degree (5 x 5 block mean, block valid if at least 50% of cells valid) | 1,264 land cells in the support mask; 99.98% valid inside it; scale 0.02, kelvin minus 273.15 = degC | about 5 min |
+| C-A | 75 (Jun to Aug, 2001 to 2025) | MOD11C3 V061 | 28 x 58 cells, 0.25 degree (5 x 5 block mean, block valid if at least 50% of cells valid) | 1,264 land cells in the support mask; 99.98% valid inside it; scale 0.02, kelvin minus 273.15 = °C | about 5 min |
 | C-D | 69 (Jun to Aug, 2003 to 2025) | MYD08_M3 V6.1 | 6 x 7 cells, 1 degree | all valid; scale 0.001 | about 8 min (parallel) |
 
 Each run writes `claim.json`, `monthly.npz`, `<claim>_qc.json` and `<claim>_provenance.json` into `data/<claim>/`. The provenance file lists the access route, the retrieval time, the granule list and a SHA-256 per output file. The raw NASA files are never kept.
 
 Then rebuild the case file as in level 1. If NASA has reprocessed a product since Nov 14, 2026, the arrays can change slightly and so can the hashes; compare values with `numpy.allclose` against the included `monthly.npz` and expect the same verdicts unless the change is large. The hashes in the table above refer to the files we used.
+
+### 2.3b Nitrogen dioxide pair, C-E1 and C-E2 (Earthdata login)
+
+Both cases use OMI/Aura OMNO2d V004, one daily file at a time (7,636 granules in our run, retrieved Nov 14, 2026). The first script reads the daily files and keeps the two case boxes in a scratch folder; the second writes `claim.json`, `monthly.npz`, the QC file and the provenance file into `data/C-E1/` and `data/C-E2/`. It computes no trend. Set `SCRATCH` in `data/library/scripts/libcommon.py` first, as in 2.6. The first step takes about 40 minutes.
+
+```
+data/.venv/bin/python -u -I data/library/scripts/build_no2.py
+data/.venv/bin/python -u -I data/library/scripts/make_no2_cases.py
+```
+
+Then rebuild the case files as in level 1, with the n = 21 validation file. Its SHA-256 is `969b5d88f7552611cbcbb6be6303166c8598fe70b5ae78a9d649d090ada7136b` (each NO2 bundle records it under `validation.source_sha256`). The simulations behind it are `stats/scripts/validate_no2.py` (rules in `event_record/STATS_LOG.md`, "C-E1 / C-E2 PRE-RUN ENTRY").
 
 ### 2.4 The Terra overpass witness panel (exploratory)
 
@@ -147,7 +167,7 @@ The scratch folder must be outside the repository. Expected: Sen slope per decad
 
 ### 2.5 The second witnesses (exploratory)
 
-These three scripts check a result against an independent record. They never change a ruling and never touch `data/C-*/claim.json` or `monthly.npz`. Each rewrites a file in `web/data/witness/`; compare numbers, because every file carries a build timestamp.
+These scripts check a result against another record. They never change a ruling and never touch `data/C-*/claim.json` or `monthly.npz`. Each rewrites a file in `web/data/witness/`; compare numbers, because every file carries a build timestamp.
 
 ESA Land Surface Temperature CCI for the Southeastern US (anonymous OPeNDAP subsets from the CEDA archive, no login; use a scratch folder outside the repository):
 
@@ -156,7 +176,7 @@ data/.venv/bin/python -I data/scripts/fetch_esa_lst.py <esa_scratch_dir>        
 stats/.venv/bin/python -I data/witness_esa/make_esa_witness.py <esa_scratch_dir>    # writes web/data/witness/C-A_esa.json
 ```
 
-Expected: 1,003 cells valid in every month; ESA multi-sensor Sen slope +0.37 degC per decade (interval -0.48 to +1.12) against -0.24 for MODIS Terra on the same cells; correlation of the two yearly series 0.905. ESA's record is Terra MODIS again in 2012 to 2018, so it is independent of Terra only in the other years. Notes: `review/data_qa/ESA_LST_WITNESS.md`.
+Expected: 1,003 cells valid in every month; ESA multi-sensor Sen slope +0.37 °C per decade (interval -0.48 to +1.12) against -0.24 for MODIS Terra on the same cells; correlation of the two yearly series 0.905. ESA's record is Terra MODIS again in 2012 to 2018, so it is independent of Terra only in the other years. Notes: `review/data_qa/ESA_LST_WITNESS.md`.
 
 KNMI Climate Explorer with CRU TS 4.10 for the Southeastern US, Sahel and Alaska. The inputs are the saved text copies in `data/witness_knmi/` (made with Climate Explorer's "Make average" over each case box; the settings are in the header of each file), so these run offline:
 
@@ -165,7 +185,7 @@ stats/.venv/bin/python -I data/witness_knmi/make_knmi_witness.py        # C-B an
 stats/.venv/bin/python -I data/witness_knmi/make_knmi_ca_witness.py     # C-A; needs web/data/witness/C-A_esa.json; writes C-A_knmi.json
 ```
 
-Expected Sen slopes per decade: Alaska +0.359 degC (interval 0.112 to 0.582), Sahel +0.183 mm/day (-0.008 to 0.411), Southeastern US maximum temperature 2001 to 2025 +0.301 degC (-0.132 to 0.852) against -0.350 for MODIS Terra. These scripts read the case bundles in `web/data/`, so they must be run after the bundles are final. Notes: `review/data_qa/WITNESS_ROUND2.md`.
+Expected Sen slopes per decade: Alaska +0.359 °C (interval 0.112 to 0.582), Sahel +0.183 mm/day (-0.008 to 0.411), Southeastern US maximum temperature 2001 to 2025 +0.301 °C (-0.132 to 0.852) against -0.350 for MODIS Terra. These scripts read the case bundles in `web/data/`, so they must be run after the bundles are final. Notes: `review/data_qa/WITNESS_ROUND2.md`.
 
 ### 2.6 The NASA satellite and model library (Investigate)
 
@@ -209,6 +229,11 @@ cd stats
 .venv/bin/python -m trendtrial.validation_r3 --part merge --res out/validation/validation_results_round2.json \
     --regional out/validation/r3_regional.json --cells out/validation/r3_cells.json --adaptive out/validation/r3_adaptive.json --out out/validation/validation_results.json
 .venv/bin/python scripts/make_gate_table.py        # rebuilds the gate lookup table in Python and in stats/js/trendtrial.js
+# n = 21 for the NO2 pair (rules in event_record/STATS_LOG.md, "C-E1 / C-E2 PRE-RUN ENTRY"); the base file is not touched
+.venv/bin/python scripts/validate_no2.py regional --out out/validation/n21_regional.json
+.venv/bin/python scripts/validate_no2.py adaptive --regional out/validation/n21_regional.json --out out/validation/n21_adaptive.json
+.venv/bin/python scripts/validate_no2.py cells --families CE2 --phis 0.45 --out out/validation/n21_cells_CE2.json   # only at C-E2's governing persistence bucket
+.venv/bin/python scripts/validate_no2.py merge --regional out/validation/n21_regional.json --adaptive out/validation/n21_adaptive.json --cells out/validation/n21_cells_CE2.json --out out/validation/validation_results_n21.json
 ```
 
 Seeds are fixed, but the runs used several processes and the final file was assembled by merging parts in the order logged in `event_record/STATS_LOG.md` (round 1 merged run A's interval results into run B; round 2 merged the cell, n = 23 and adaptive parts; round 3 merged its regional, cell and adaptive parts into the round-2 file, which is kept as `validation_results_round2.json`). If you rerun, expect the same findings; treat the included `validation_results.json` as the reference for the shipped verdicts.
@@ -216,26 +241,26 @@ Seeds are fixed, but the runs used several processes and the final file was asse
 ## 4. Other checks
 
 ```
-(cd web && python tools/check_contrast.py)  # text contrast, light and dark themes (104 colour pairs for the main pages at the last run)
+(cd web && python tools/check_contrast.py)  # text contrast, light and dark themes (104 color pairs for the main pages at the last run)
 sh web/tools/check_js.sh                    # syntax-check every JavaScript module
 ```
 
 The accessibility check used axe-core 4.10.2 from a local copy; it is not in this repository (see `NOTICE.md`). To repeat it, download axe-core 4.10.2 from npm and run it on each route in a browser, in both themes.
 
-## 5. The 30-second demo video (synthetic narration)
+## 5. The 30-second demo video (AI voice clone narration)
 
-The video is a recording of the working site with a synthetic voice (Kokoro text-to-speech, voice af_heart, Apache-2.0, run locally). It contains no generated images or video. No video file is stored in this repository. NASA Space Apps asks for AI-made audio to be marked in the file's own description too, so the encode step must write that into the MP4 metadata. After the video has been rendered (for example with the narration, screen clips and caption tool of our hackathon templates), write the final file like this, with `ffmpeg` on your path:
+The video is a recording of the working site. The narration is an AI voice clone of Walter Guevara (ElevenLabs), made with his consent. It contains no generated images or video. No video file is stored in this repository. NASA Space Apps asks for AI-made audio to be marked in the file's own description too, so the encode step must write that into the MP4 metadata. After the video has been rendered (for example with the narration, screen clips and caption tool of our hackathon templates), write the final file like this, with `ffmpeg` on your path:
 
 ```
 ffmpeg -i demo_raw.mp4 -c copy -movflags +faststart \
   -metadata title="Climate Claim on Trial: 30-second demo" \
   -metadata artist="Team Earth on the Stand" \
-  -metadata comment="Narration is a synthetic voice (Kokoro text-to-speech, voice af_heart). The screens are recordings of the working site, which was built with LLM assistance directed by the author. No AI-generated images or video. Not endorsed by NASA." \
+  -metadata comment="Narration is an AI voice clone of Walter Guevara (ElevenLabs), made with his consent. The screens are recordings of the working site, which was built with LLM assistance directed by the author. No AI-generated images or video. Not endorsed by NASA." \
   demo_30s.mp4
 ffprobe -v error -show_entries format_tags -of default=noprint_wrappers=1 demo_30s.mp4    # check that the three tags are there
 ```
 
-`-c copy` keeps the video and audio exactly as rendered; only the tags change. If you encode in one step instead, add the same three `-metadata` flags to that command. The last frame also carries the caption "Narration: synthetic voice", and the hosting page description should say the same.
+`-c copy` keeps the video and audio exactly as rendered; only the tags change. If you encode in one step instead, add the same three `-metadata` flags to that command. The last frame also carries the caption "Narration: AI voice clone of Walter Guevara (ElevenLabs), made with his consent", and the hosting page description should say the same.
 
 ## 6. Links to fill in before publishing
 

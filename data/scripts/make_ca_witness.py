@@ -199,7 +199,7 @@ def stage_build(scratch):
             reported_as="",
             east_west_check=dict(slope_hours_per_degree_longitude=round(float(slope_h_per_deg), 4), utc_expectation=round(-1 / 15, 4), local_solar_expectation=0.0,
                                  reading="A value near -0.067 h per degree means the field is hours UTC; near 0 would mean local solar time."),
-            local_solar_conversion="local solar = UTC + longitude/15, applied cell by cell, then averaged with the same weights. About 85 W: box centre %.2f W, area-weighted land centre %.2f W, so local solar is roughly UTC minus %.1f h." % (-box_centre_lon, -centre_lon, -centre_lon / 15),
+            local_solar_conversion="local solar = UTC + longitude/15, applied cell by cell, then averaged with the same weights. About 85 W: box center %.2f W, area-weighted land center %.2f W, so local solar is roughly UTC minus %.1f h." % (-box_centre_lon, -centre_lon, -centre_lon / 15),
             first_five_years_mean_utc=round(float(vt_utc_y[:5].mean()), 2), last_five_years_mean_utc=round(float(vt_utc_y[-5:].mean()), 2),
             mean_2001_2019_utc=round(float(vt_utc_y[pre].mean()), 2), mean_2020_2025_utc=round(float(vt_utc_y[post].mean()), 2),
             mean_2001_2019_local_solar=round(float(vt_loc_y[pre].mean()), 2), mean_2020_2025_local_solar=round(float(vt_loc_y[post].mean()), 2),

@@ -2,8 +2,8 @@
 import numpy as np
 import libcommon as L
 
-IMERG_CAV = ("Precipitation only (rain and snow water), not a measure of soil wetness or river flow. Final Run is calibrated to monthly rain-gauge analyses where gauges exist, so skill is best over land with many gauges "
-             "and weaker over high latitudes, ice and snow, and steep terrain. The record joins the older TRMM-era and the GPM-era satellite constellations, so small steps are possible. Ocean cells are included.")
+IMERG_CAV = ("Precipitation only (rain and snow water), not a measure of soil wetness or river flow. Final Run is calibrated to monthly rain-gauge analyses where gauges exist, so the estimates perform best over land with many gauges "
+             "and weaker over high latitudes, ice and snow, and steep terrain. The record joins the older TRMM-era and the GPM-era groups of satellites, so small steps are possible. Ocean cells are included.")
 AOD_CAV = ("Daytime, cloud-free views only: monthly means use only the days and places where the satellite could see the surface, and bright snow, ice and desert surfaces or persistent cloud give gaps. "
            "Aqua's afternoon overpass time has drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), so a small part of any change after 2021 can come from the changing view time and not from the air. "
            "Dark Target and Deep Blue retrievals are merged by NASA into one 550 nm value. "
@@ -12,12 +12,12 @@ TWS_CAV = ("Total water storage anomaly, not groundwater alone: it adds up snow,
            "The satellites measure gravity over areas of roughly 300 km (about 3 degrees), so small regions are blurred and a 1-degree cell is not an independent measurement. "
            "There is a gap between GRACE (ended Jun 2017) and GRACE-FO (began Jun 2018) and a few single missing months; those are left empty, not filled. Solid-earth effects (glacial rebound) are removed by NASA's model, not measured.")
 LST_CAV = ("Land surface temperature is the temperature of the ground and plant surface as seen from space (skin temperature), not the air temperature at weather stations, and it is only observed on clear-sky days, so cloudy places and seasons are under-sampled. "
-           "Aqua passes at about 1:30 PM local time, so this is a mid-afternoon temperature, and Aqua's overpass time has drifted later since July 2021 (NSIDC 2021) while Terra, which we did not use, drifts earlier. "
+           "Aqua passes at about 1:30 PM local time, so this is a mid-afternoon temperature, and Aqua's overpass time has drifted later since July 2021 (NSIDC 2021) while Terra, which we did not use for this library measurement, drifts earlier. "
            "Daytime only; ocean and water are not included; values are converted from kelvin to degrees Celsius once.")
 SNOW_CAV = ("Percent of the ground that the satellite saw covered by snow on clear-sky days in the month, not snow depth or water content. Clouds hide the ground, and in polar night no data are collected, so high-latitude winter is empty. "
             "Terra's overpass time has drifted earlier since 2020 (NSIDC 2021), which can change snow-cover estimates slightly after 2020. Land only.")
 
-NO2_CAV = ("A column is all the NO2 gas in the air above a spot, high up and low down, counted as molecules per square centimetre (here in units of 10^15); it is not the concentration you breathe at street level. "
+NO2_CAV = ("A tropospheric column is all the NO2 gas in the lower atmosphere above a spot, counted as molecules per square centimeter (here in units of 10^15); it is not the concentration you breathe at street level. "
            "Cloud-screened: only scenes with cloud fraction at most 30% are kept (NASA's own screening), so cloudy places and seasons are under-sampled, and winter at high latitudes has few or no data. "
            "Since 2007 part of the OMI swath has been blocked (the 'row anomaly'); the NASA Level-3 product already drops affected pixels using its own quality flags, so coverage per day is smaller after 2007-2011 and the averages rest on fewer pixels. "
            "OMI passes at about 1:45 PM local time, so this is a mid-afternoon value, and NO2 has a strong daily and seasonal cycle. Monthly values here are the average of the daily cloud-screened grids, kept where at least 5 days are valid.")
@@ -31,7 +31,7 @@ ET_CAV = ("MODEL OUTPUT, not a direct observation: the NASA GLDAS Noah land-surf
 
 PRODUCTS = {
  "precip_imerg": dict(name="Precipitation (rain and snow)", short="GPM IMERG Final monthly V07 (GPM_3IMERGM)", units="mm/day", scale=0.05, offset=0.0,
-    definition="How much rain and snow water reaches the ground, shown as the average amount per day over each month (millimetres of water per day).",
+    definition="How much rain and snow water reaches the ground, shown as the average amount per day over each month (millimeters of water per day).",
     caveats=IMERG_CAV, source_var="/Grid/precipitation (mm/hr x 24)", kind="satellite observation (multi-satellite, gauge-calibrated)", native="0.1 degree, block-averaged to 1 degree",
     cid="C2723754851-GES_DISC", agency="NASA GES DISC"),
  "aod_myd08": dict(name="Aerosol optical depth (haze)", short="MODIS Aqua MYD08_M3 v6.1", units="unitless", scale=0.002, offset=0.0,
@@ -41,7 +41,7 @@ PRODUCTS = {
     quality_end="2021-12", quality_label="Aqua overpass drift: view time moves later",
     quality_reason="Aqua's overpass time was steady until mid-2021 and then drifted later (NSIDC data announcement, 28 Oct 2021). A different view time and sun angle can shift the retrieved haze, so months after this date are flagged and left out by default. Our own check of Aqua view time (from the land surface temperature product, which shares the satellite) found no shift through 2021 and +0.05 h in 2022, growing to +0.9 h in 2025; the view time of this haze product itself is not in the monthly file.", native="1 degree (native)", cid="C1443775657-LAADS", agency="NASA LAADS DAAC"),
  "tws_grace": dict(name="Terrestrial water storage anomaly", short="GRACE and GRACE-FO JPL mascons RL06.3 v04 (CRI)", units="cm (equivalent water height)", scale=0.1, offset=0.0,
-    definition="How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimetres). Snow, ice, lakes, soil moisture and groundwater all count together.",
+    definition="How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimeters). Snow, ice, lakes, soil moisture and groundwater all count together.",
     caveats=TWS_CAV, source_var="lwe_thickness", kind="satellite observation (gravity)", native="0.5 degree grid (effective resolution about 3 degrees), block-averaged to 1 degree", cid="C3195527175-POCLOUD", agency="NASA PO.DAAC"),
  "lst_day_myd11": dict(name="Land surface temperature (day)", short="MODIS Aqua MYD11C3 v061", units="degC", scale=0.05, offset=0.0,
     definition="How hot the ground surface is in the early afternoon, as seen from space on clear days, averaged over the month (degrees Celsius). It is hotter than the air temperature in sun-baked places.",
@@ -51,20 +51,20 @@ PRODUCTS = {
     caveats=SNOW_CAV, source_var="Coverage of snow", kind="satellite observation", native="0.05 degree, block-averaged to 1 degree", cid="C3050353608-NSIDC_CPRD", agency="NASA NSIDC DAAC"),
 
  "no2_omi": dict(name="Tropospheric nitrogen dioxide column", short="OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, averaged to monthly)", units="1e15 molecules/cm2", scale=0.02, offset=0.0,
-    definition="How much nitrogen dioxide (NO2, a brown gas made when fuel burns in cars, power plants and industry, and by lightning and fires) sits in the lower atmosphere above a spot, counted as molecules above each square centimetre of ground, in units of one thousand million million (10^15). City and industrial areas are the high spots.",
+    definition="How much nitrogen dioxide (NO2, a brown gas made when fuel burns in cars, power plants and industry, and by lightning and fires) sits in the lower atmosphere above a spot, counted as molecules above each square centimeter of ground, in units of one thousand million million (10^15). City and industrial areas are the high spots.",
     caveats=NO2_CAV, source_var="ColumnAmountNO2TropCloudScreened", kind="satellite retrieval",
     limits="Column amount, not street-level NO2; cloud fraction at most 30% only; OMI row anomaly since 2007 shrinks daily coverage (affected pixels dropped by NASA's own quality flags); monthly cell kept only with at least 5 valid days; small negative values are retrieval noise and are kept, not clipped.", native="0.25 degree daily, averaged to monthly then block-averaged to 1 degree", cid="C3333493715-GES_DISC", agency="NASA GES DISC"),
  "airs_tair": dict(name="Surface air temperature (day and night mean)", short="AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)", units="degC", scale=0.1, offset=0.0,
     definition="The temperature of the air near the ground, as estimated by an infrared sounder on the Aqua satellite, averaged over the afternoon and night passes and over the month (degrees Celsius). It works over land and ocean.",
     caveats=AIRS_CAV, source_var="SurfAirTemp_A and SurfAirTemp_D (K, mean of the two minus 273.15)", kind="satellite observation (retrieval)", native="1 degree (native)", cid="C1701805662-GES_DISC", agency="NASA GES DISC"),
- "airs_h2o": dict(name="Total water vapour column", short="AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)", units="kg/m2 (= mm of water)", scale=0.1, offset=0.0,
-    definition="How much water vapour (the invisible gas form of water) is in the whole column of air above a spot, written as the depth of liquid water it would make if it all condensed (millimetres). Warm, humid places have high values, cold dry places low ones.",
+ "airs_h2o": dict(name="Total water vapor column", short="AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)", units="kg/m2 (= mm of water)", scale=0.1, offset=0.0,
+    definition="How much water vapor (the invisible gas form of water) is in the whole column of air above a spot, written as the depth of liquid water it would make if it all condensed (millimeters). Warm, humid places have high values; cold, dry places have low ones.",
     caveats=AIRS_CAV, source_var="TotH2OVap_A and TotH2OVap_D (kg/m2, mean of the two)", kind="satellite observation (retrieval)", native="1 degree (native)", cid="C1701805662-GES_DISC", agency="NASA GES DISC"),
  "soil_gldas": dict(name="Soil moisture, top 10 cm (model)", short="GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)", units="kg/m2 (= mm of water in the top 10 cm)", scale=0.05, offset=0.0,
-    definition="How much water the soil holds in its top 10 centimetres, written as millimetres of water (100 would be completely full). This is computed by a NASA land-surface model fed with satellite and ground weather data, not measured directly.",
+    definition="How much water the soil holds in its top 10 centimeters, written as millimeters of water (100 would be completely full). This is computed by a NASA land-surface model fed with satellite and ground weather data, not measured directly.",
     caveats=SOIL_CAV, source_var="SoilMoi0_10cm_inst", kind="model output (land-surface model driven by observations)", native="1 degree (native)", cid="C1288937542-GES_DISC", agency="NASA GES DISC"),
  "et_gldas": dict(name="Evapotranspiration (model)", short="GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)", units="mm/day", scale=0.02, offset=0.0,
-    definition="How much water leaves the land and goes into the air each day, by evaporating from soil, puddles and leaves and by plants releasing water vapour (millimetres of water per day, monthly average). Computed by a NASA land-surface model, not measured directly.",
+    definition="How much water leaves the land and goes into the air each day, by evaporating from soil, puddles and leaves and by plants releasing water vapor (millimeters of water per day, monthly average). Computed by a NASA land-surface model, not measured directly.",
     caveats=ET_CAV, source_var="Evap_tavg (kg/m2/s x 86400)", kind="model output (land-surface model driven by observations)", native="1 degree (native)", cid="C1288937542-GES_DISC", agency="NASA GES DISC"),
 }
 

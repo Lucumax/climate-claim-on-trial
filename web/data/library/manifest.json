@@ -15,7 +15,7 @@
   {
    "id": "precip_imerg",
    "name": "Precipitation (rain and snow)",
-   "definition": "How much rain and snow water reaches the ground, shown as the average amount per day over each month (millimetres of water per day).",
+   "definition": "How much rain and snow water reaches the ground, shown as the average amount per day over each month (millimeters of water per day).",
    "units": "mm/day",
    "product": "GPM IMERG Final monthly V07 (GPM_3IMERGM)",
    "version": "07",
@@ -40,7 +40,7 @@
    "scale": 0.05,
    "offset": 0.0,
    "nodata_int16": -32768,
-   "caveats": "Precipitation only (rain and snow water), not a measure of soil wetness or river flow. Final Run is calibrated to monthly rain-gauge analyses where gauges exist, so skill is best over land with many gauges and weaker over high latitudes, ice and snow, and steep terrain. The record joins the older TRMM-era and the GPM-era satellite constellations, so small steps are possible. Ocean cells are included.",
+   "caveats": "Precipitation only (rain and snow water), not a measure of soil wetness or river flow. Final Run is calibrated to monthly rain-gauge analyses where gauges exist, so the estimates perform best over land with many gauges and weaker over high latitudes, ice and snow, and steep terrain. The record joins the older TRMM-era and the GPM-era groups of satellites, so small steps are possible. Ocean cells are included.",
    "tiles": [
     [
      0,
@@ -669,7 +669,7 @@
   {
    "id": "tws_grace",
    "name": "Terrestrial water storage anomaly",
-   "definition": "How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimetres). Snow, ice, lakes, soil moisture and groundwater all count together.",
+   "definition": "How much more or less water is stored on and under the ground than the 2004-2009 average, written as the height of a layer of water spread over the area (centimeters). Snow, ice, lakes, soil moisture and groundwater all count together.",
    "units": "cm (equivalent water height)",
    "product": "GRACE and GRACE-FO JPL mascons RL06.3 v04 (CRI)",
    "version": "RL06.3Mv04",
@@ -1004,7 +1004,7 @@
    "scale": 0.05,
    "offset": 0.0,
    "nodata_int16": -32768,
-   "caveats": "Land surface temperature is the temperature of the ground and plant surface as seen from space (skin temperature), not the air temperature at weather stations, and it is only observed on clear-sky days, so cloudy places and seasons are under-sampled. Aqua passes at about 1:30 PM local time, so this is a mid-afternoon temperature, and Aqua's overpass time has drifted later since July 2021 (NSIDC 2021) while Terra, which we did not use, drifts earlier. Daytime only; ocean and water are not included; values are converted from kelvin to degrees Celsius once.",
+   "caveats": "Land surface temperature is the temperature of the ground and plant surface as seen from space (skin temperature), not the air temperature at weather stations, and it is only observed on clear-sky days, so cloudy places and seasons are under-sampled. Aqua passes at about 1:30 PM local time, so this is a mid-afternoon temperature, and Aqua's overpass time has drifted later since July 2021 (NSIDC 2021) while Terra, which we did not use for this library measurement, drifts earlier. Daytime only; ocean and water are not included; values are converted from kelvin to degrees Celsius once.",
    "tiles": [
     [
      0,
@@ -1543,7 +1543,7 @@
   {
    "id": "no2_omi",
    "name": "Tropospheric nitrogen dioxide column",
-   "definition": "How much nitrogen dioxide (NO2, a brown gas made when fuel burns in cars, power plants and industry, and by lightning and fires) sits in the lower atmosphere above a spot, counted as molecules above each square centimetre of ground, in units of one thousand million million (10^15). City and industrial areas are the high spots.",
+   "definition": "How much nitrogen dioxide (NO2, a brown gas made when fuel burns in cars, power plants and industry, and by lightning and fires) sits in the lower atmosphere above a spot, counted as molecules above each square centimeter of ground, in units of one thousand million million (10^15). City and industrial areas are the high spots.",
    "units": "1e15 molecules/cm2",
    "product": "OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, averaged to monthly)",
    "version": "004",
@@ -1568,7 +1568,7 @@
    "scale": 0.02,
    "offset": 0.0,
    "nodata_int16": -32768,
-   "caveats": "A column is all the NO2 gas in the air above a spot, high up and low down, counted as molecules per square centimetre (here in units of 10^15); it is not the concentration you breathe at street level. Cloud-screened: only scenes with cloud fraction at most 30% are kept (NASA's own screening), so cloudy places and seasons are under-sampled, and winter at high latitudes has few or no data. Since 2007 part of the OMI swath has been blocked (the 'row anomaly'); the NASA Level-3 product already drops affected pixels using its own quality flags, so coverage per day is smaller after 2007-2011 and the averages rest on fewer pixels. OMI passes at about 1:45 PM local time, so this is a mid-afternoon value, and NO2 has a strong daily and seasonal cycle. Monthly values here are the average of the daily cloud-screened grids, kept where at least 5 days are valid.",
+   "caveats": "A tropospheric column is all the NO2 gas in the lower atmosphere above a spot, counted as molecules per square centimeter (here in units of 10^15); it is not the concentration you breathe at street level. Cloud-screened: only scenes with cloud fraction at most 30% are kept (NASA's own screening), so cloudy places and seasons are under-sampled, and winter at high latitudes has few or no data. Since 2007 part of the OMI swath has been blocked (the 'row anomaly'); the NASA Level-3 product already drops affected pixels using its own quality flags, so coverage per day is smaller after 2007-2011 and the averages rest on fewer pixels. OMI passes at about 1:45 PM local time, so this is a mid-afternoon value, and NO2 has a strong daily and seasonal cycle. Monthly values here are the average of the daily cloud-screened grids, kept where at least 5 days are valid.",
    "tiles": [
     [
      0,
@@ -2193,8 +2193,8 @@
   },
   {
    "id": "airs_h2o",
-   "name": "Total water vapour column",
-   "definition": "How much water vapour (the invisible gas form of water) is in the whole column of air above a spot, written as the depth of liquid water it would make if it all condensed (millimetres). Warm, humid places have high values, cold dry places low ones.",
+   "name": "Total water vapor column",
+   "definition": "How much water vapor (the invisible gas form of water) is in the whole column of air above a spot, written as the depth of liquid water it would make if it all condensed (millimeters). Warm, humid places have high values; cold, dry places have low ones.",
    "units": "kg/m2 (= mm of water)",
    "product": "AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)",
    "version": "7.0",
@@ -2219,7 +2219,7 @@
    "scale": 0.1,
    "offset": 0.0,
    "nodata_int16": -32768,
-   "caveats": "Retrieved from the infrared sounder AIRS on Aqua together with microwave data, for scenes it can see through partly cloudy skies, so very cloudy places are under-sampled. The water vapour column here is the mean of the afternoon (about 1:30 PM) and night (about 1:30 AM) overpasses, and is a retrieved value, not a measurement from the ground. Aqua's overpass times have drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), which can shift both the day and night views a little after 2021. Version 7 replaces older versions, so do not splice with Version 6 values.",
+   "caveats": "Retrieved from the infrared sounder AIRS on Aqua together with microwave data, for scenes it can see through partly cloudy skies, so very cloudy places are under-sampled. The water vapor column here is the mean of the afternoon (about 1:30 PM) and night (about 1:30 AM) overpasses, and is a retrieved value, not a measurement from the ground. Aqua's overpass times have drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), which can shift both the day and night views a little after 2021. Version 7 replaces older versions, so do not splice with Version 6 values.",
    "tiles": [
     [
      0,
@@ -2519,7 +2519,7 @@
   {
    "id": "soil_gldas",
    "name": "Soil moisture, top 10 cm (model)",
-   "definition": "How much water the soil holds in its top 10 centimetres, written as millimetres of water (100 would be completely full). This is computed by a NASA land-surface model fed with satellite and ground weather data, not measured directly.",
+   "definition": "How much water the soil holds in its top 10 centimeters, written as millimeters of water (100 would be completely full). This is computed by a NASA land-surface model fed with satellite and ground weather data, not measured directly.",
    "units": "kg/m2 (= mm of water in the top 10 cm)",
    "product": "GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)",
    "version": "2.1",
@@ -2748,7 +2748,7 @@
   {
    "id": "et_gldas",
    "name": "Evapotranspiration (model)",
-   "definition": "How much water leaves the land and goes into the air each day, by evaporating from soil, puddles and leaves and by plants releasing water vapour (millimetres of water per day, monthly average). Computed by a NASA land-surface model, not measured directly.",
+   "definition": "How much water leaves the land and goes into the air each day, by evaporating from soil, puddles and leaves and by plants releasing water vapor (millimeters of water per day, monthly average). Computed by a NASA land-surface model, not measured directly.",
    "units": "mm/day",
    "product": "GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)",
    "version": "2.1",

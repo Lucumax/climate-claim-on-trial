@@ -4,7 +4,7 @@
   {
    "key": "t2m",
    "name": "Air temperature",
-   "one_line": "How warm the air is about 2 metres above the ground, the height of a weather station thermometer.",
+   "one_line": "How warm the air is about 2 meters above the ground, the height of a weather station thermometer.",
    "units": "degC",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -14,8 +14,8 @@
   },
   {
    "key": "t2m_max",
-   "name": "Hottest part of the day",
-   "one_line": "The monthly average of each day's highest air temperature, 2 metres up.",
+   "name": "Daily high air temperature",
+   "one_line": "The monthly average of each day's highest air temperature, 2 meters up.",
    "units": "degC",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -25,8 +25,8 @@
   },
   {
    "key": "t2m_min",
-   "name": "Coldest part of the day",
-   "one_line": "The monthly average of each day's lowest air temperature, 2 metres up.",
+   "name": "Daily low air temperature",
+   "one_line": "The monthly average of each day's lowest air temperature, 2 meters up.",
    "units": "degC",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -70,7 +70,7 @@
   {
    "key": "rh",
    "name": "Humidity",
-   "one_line": "How close the air is to being full of water vapour (relative humidity).",
+   "one_line": "How close the air is to being full of water vapor (relative humidity).",
    "units": "percent",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -81,7 +81,7 @@
   {
    "key": "wind",
    "name": "Wind speed",
-   "one_line": "How fast the air moves, about 10 metres above the ground.",
+   "one_line": "How fast the air moves, about 10 meters above the ground.",
    "units": "m per s",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -92,7 +92,7 @@
   {
    "key": "soil_root",
    "name": "Soil wetness, root zone",
-   "one_line": "How wet the soil is in the top metre where plant roots grow, from 0 (dry) to 1 (wet).",
+   "one_line": "How wet the soil is in the top meter where plant roots grow, from 0 (dry) to 1 (wet).",
    "units": "fraction 0 to 1",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -114,7 +114,7 @@
   {
    "key": "frost",
    "name": "Frost days",
-   "one_line": "The number of days in the month when the air reached frost.",
+   "one_line": "The number of days in the month that meet the dataset's frost criterion: the air at 2 m has both its temperature and its dew point below 0 degrees Celsius.",
    "units": "days per month",
    "kind": "model_reanalysis",
    "source": "NASA POWER (MERRA-2 and CERES model-based data)",
@@ -136,7 +136,7 @@
   {
    "key": "aod",
    "name": "Smoke and haze (aerosol optical depth)",
-   "one_line": "How much smoke, dust and haze blocks sunlight in the air column. Higher means hazier skies.",
+   "one_line": "How strongly smoke, dust and haze block sunlight in the air column. Higher means hazier skies.",
    "units": "unitless",
    "kind": "satellite_observation",
    "source": "MODIS Aqua aerosol optical depth (satellite)",

@@ -8,7 +8,7 @@ For each case with data/<claim>/monthly.npz it writes web/data/viz/<claim>.json 
   - cells: centre lat/lon of every cell kept, a land flag, and per-year season anomalies (flat per year, null = missing);
   - regional: area-weighted (cos latitude) season anomaly per year, on the native grid (for the stripes);
   - monthly: area-weighted regional anomaly for every month of the season (for the spiral);
-  - baseline, units, product label, a symmetric colour range and the palette orientation.
+  - baseline, units, product label, a symmetric color range and the palette orientation.
 It never changes any claim result: no trend or test is computed here, only descriptive anomalies.
 
 CHOICES (recorded in each file under "choices"):
@@ -222,7 +222,7 @@ def export(case):
             "aggregation": (f"Native {dlat0:g}° cells block-averaged by {k} (needs 50% valid sub-cells) to {dlat:g}° for display."
                             if k > 1 else f"No aggregation: cells shown at the case grid ({dlat:g}° × {dlon:g}°)."),
             "regional": "Area-weighted (cos latitude), native grid, season needs 80% of support cells valid; months 50%.",
-            "scale": "Symmetric about zero; 98th percentile of |cell anomaly| rounded up. Values beyond are drawn at the end colour.",
+            "scale": "Symmetric about zero; 98th percentile of |cell anomaly| rounded up. Values beyond are drawn at the end color.",
             "land_mask": ("support mask from the case data (land cells only)" if "support" in z.files
                           else "none: every cell of the case grid is drawn"),
             "claims": "Descriptive display only. No trend, test or verdict is computed or altered here.",

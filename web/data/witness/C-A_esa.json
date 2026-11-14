@@ -1,6 +1,6 @@
 {
  "claim_id": "C-A",
- "status": "independent multi-sensor witness, exploratory check, not the registered test; the C-A verdict (withheld) is unchanged",
+ "status": "additional multi-sensor comparison record, exploratory check, not the registered test; the C-A verdict (withheld) is unchanged",
  "title": "A second witness from space: the ESA LST CCI multi-sensor record (ATSR-2, AATSR, Terra MODIS, Sentinel-3B SLSTR)",
  "generated_utc": "2026-11-14T19:33:23+00:00",
  "witness": {
@@ -509,7 +509,7 @@
    }
   },
   "air_temperature_cross_check": {
-   "note": "NASA POWER T2M (regional JJA mean over the C-A land support, from the C-A witness file); anomalies re-centred on 2001-2024; footprint differs slightly from the fixed footprint",
+   "note": "NASA POWER T2M (regional JJA mean over the C-A land support, from the C-A witness file); anomalies re-centered on 2001-2024; footprint differs slightly from the fixed footprint",
    "esa": {
     "pearson_r": 0.899,
     "mean_gap_2021_2024": 0.1613,

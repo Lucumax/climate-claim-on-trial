@@ -1,4 +1,4 @@
-"""ESA LST CCI IRCDR (multi-sensor) witness for C-A: does an independent multi-sensor record agree with MODIS Terra?
+"""ESA LST CCI IRCDR (multi-sensor) witness for C-A: does an additional multi-sensor record agree with MODIS Terra?
 
 EXPLORATORY CHECK, NOT THE REGISTERED TEST. Nothing here changes data\\C-A\\* or the C-A verdict (withheld).
 
@@ -225,7 +225,7 @@ def main():
     t2m = np.array(w_power_t2m[:24], float)
     t2m_anom = t2m - t2m.mean()
     e_c, m_c = e - e.mean(), m_ - m_.mean()
-    air = dict(note="NASA POWER T2M (regional JJA mean over the C-A land support, from the C-A witness file); anomalies re-centred on 2001-2024; footprint differs slightly from the fixed footprint",
+    air = dict(note="NASA POWER T2M (regional JJA mean over the C-A land support, from the C-A witness file); anomalies re-centered on 2001-2024; footprint differs slightly from the fixed footprint",
                esa=dict(pearson_r=float(stats.pearsonr(e_c, t2m_anom)[0]), mean_gap_2021_2024=float((e_c - t2m_anom)[-4:].mean()), mean_gap_2001_2020=float((e_c - t2m_anom)[:20].mean())),
                modis=dict(pearson_r=float(stats.pearsonr(m_c, t2m_anom)[0]), mean_gap_2021_2024=float((m_c - t2m_anom)[-4:].mean()), mean_gap_2001_2020=float((m_c - t2m_anom)[:20].mean())),
                power_t2m_trend=trend_block(t2m_anom, t), esa_minus_t2m_trend=trend_block(e_c - t2m_anom, t), modis_minus_t2m_trend=trend_block(m_c - t2m_anom, t))
@@ -243,7 +243,7 @@ def main():
                 for i, k in enumerate(keys) if i == 0 or meta[k]["source"] != meta[keys[i - 1]]["source"]]
     result = dict(
         claim_id="C-A",
-        status="independent multi-sensor witness, exploratory check, not the registered test; the C-A verdict (withheld) is unchanged",
+        status="additional multi-sensor comparison record, exploratory check, not the registered test; the C-A verdict (withheld) is unchanged",
         title="A second witness from space: the ESA LST CCI multi-sensor record (ATSR-2, AATSR, Terra MODIS, Sentinel-3B SLSTR)",
         generated_utc=now,
         witness=dict(

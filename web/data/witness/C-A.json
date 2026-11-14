@@ -208,7 +208,7 @@
    "local_solar_expectation": 0.0,
    "reading": "A value near -0.067 h per degree means the field is hours UTC; near 0 would mean local solar time."
   },
-  "local_solar_conversion": "local solar = UTC + longitude/15, applied cell by cell, then averaged with the same weights. About 85 W: box centre 82.75 W, area-weighted land centre 84.07 W, so local solar is roughly UTC minus 5.6 h.",
+  "local_solar_conversion": "local solar = UTC + longitude/15, applied cell by cell, then averaged with the same weights. About 85 W: box center 82.75 W, area-weighted land center 84.07 W, so local solar is roughly UTC minus 5.6 h.",
   "first_five_years_mean_utc": 16.58,
   "last_five_years_mean_utc": 16.03,
   "mean_2001_2019_utc": 16.57,

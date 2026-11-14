@@ -269,3 +269,6 @@ footer.foot strong { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media print { .top, .skip, footer { display: none; } }
+
+.demo-focus { outline: 3px solid var(--accent); outline-offset: 4px; }
+#demo { border-top: 4px solid var(--accent); }

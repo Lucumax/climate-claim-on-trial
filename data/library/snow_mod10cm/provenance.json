@@ -1,0 +1,2232 @@
+{
+ "id": "snow_mod10cm",
+ "product": "MODIS Terra MOD10CM v061",
+ "collection": {
+  "concept_id": "C3050353608-NSIDC_CPRD",
+  "short_name": "MOD10CM",
+  "version": "61",
+  "doi": "10.5067/MODIS/MOD10CM.061",
+  "title": "MODIS/Terra Snow Cover Monthly L3 Global 0.05Deg CMG V061",
+  "temporal": [
+   {
+    "BeginningDateTime": "2000-03-01T00:00:00.000Z"
+   }
+  ]
+ },
+ "agency_archive": "NASA NSIDC DAAC",
+ "source_variable": "Coverage of snow",
+ "access": "Earthdata Login (environment token); NSIDC cloud HTTPS download of each monthly file (1-2 MB) to a scratch dir, read with pyhdf, deleted at once (no OPeNDAP route listed in CMR for this collection)",
+ "retrieved_utc": [
+  "2026-11-14T18:12:07.548286+00:00",
+  "2026-11-14T18:15:09.900792+00:00"
+ ],
+ "regrid": "mean of valid (0-100 percent) 0.05 degree cells in each 20 x 20 block (1 degree), kept if >= 200 of 400 valid",
+ "granules": [
+  {
+   "granule_ur": "MOD10CM.A2001001.061.2020059105205.hdf",
+   "year": 2001,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/01/01/MOD10CM.A2001001.061.2020059105205.hdf",
+   "sha256_download": "08927b05be5501e8a73397837ae8e02e7f63e06e42f8cd4001c8b68a6aac94f6"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001032.061.2020064203210.hdf",
+   "year": 2001,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/02/01/MOD10CM.A2001032.061.2020064203210.hdf",
+   "sha256_download": "703e2518884e7276b78fd25fab000a5c3f7035601969cb2bd0dedd6a825ccc3d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001060.061.2020061002721.hdf",
+   "year": 2001,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/03/01/MOD10CM.A2001060.061.2020061002721.hdf",
+   "sha256_download": "bc447b2218fac5c70df0c231ff365c2e0eaf9dca3ff02b3523ad0ac2c87bac1c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001091.061.2020061112806.hdf",
+   "year": 2001,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/04/01/MOD10CM.A2001091.061.2020061112806.hdf",
+   "sha256_download": "779550aa158067787cb220ac17ca847f694680f6db1671aca7385d4da2deef80"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001121.061.2020061220759.hdf",
+   "year": 2001,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/05/01/MOD10CM.A2001121.061.2020061220759.hdf",
+   "sha256_download": "918943a9ffbf34507998d2849f1107116120ecc8edc2d4505cbc3d7e0f58d124"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001184.061.2020063022808.hdf",
+   "year": 2001,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/07/03/MOD10CM.A2001184.061.2020063022808.hdf",
+   "sha256_download": "9c8b1cb8dcc825e78d97008abf77f08f45b0f4b621efc2cd7d238bc4731aedc7"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001213.061.2020063204441.hdf",
+   "year": 2001,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/08/01/MOD10CM.A2001213.061.2020063204441.hdf",
+   "sha256_download": "e87a83706679600f1d6f9f63bf5469b4a40cc0c3d5a9bcf6ad5bf8c4558f1fc9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001244.061.2020065060558.hdf",
+   "year": 2001,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/09/01/MOD10CM.A2001244.061.2020065060558.hdf",
+   "sha256_download": "f57feb0e893a8a1bb35557bc919556e9659058ac147e29ca37c909c444f28b02"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001274.061.2020066043451.hdf",
+   "year": 2001,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/10/01/MOD10CM.A2001274.061.2020066043451.hdf",
+   "sha256_download": "a76bad24015bea770d305713c895d06e2313842e7a43c50f4ecfec74fd3a2c82"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001305.061.2020066222703.hdf",
+   "year": 2001,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/11/01/MOD10CM.A2001305.061.2020066222703.hdf",
+   "sha256_download": "d651ae0e7157bebd34c65539bae82986c413b541fc88a5d60a839402eecf5f6b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2001335.061.2020068051410.hdf",
+   "year": 2001,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2001/12/01/MOD10CM.A2001335.061.2020068051410.hdf",
+   "sha256_download": "2866baa3b3e8122e001e7f1ee9408d8595010d6bad4a613014f2b3d5fc69e2e3"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002001.061.2020068154225.hdf",
+   "year": 2002,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/01/01/MOD10CM.A2002001.061.2020068154225.hdf",
+   "sha256_download": "588d23b835a86bb1d438c294c0c179abf597baa585b615cbb925a9971bcfc700"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002032.061.2020069063147.hdf",
+   "year": 2002,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/02/01/MOD10CM.A2002032.061.2020069063147.hdf",
+   "sha256_download": "4de30970253cf4e90d8d24d7cdf6cc26b625386ad22b7e03f77be7b37195ddbb"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002091.061.2020070130032.hdf",
+   "year": 2002,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/04/01/MOD10CM.A2002091.061.2020070130032.hdf",
+   "sha256_download": "8ecd0ac95a483f48c479ae24dc6297f272ea7c1282d1097a036f9c774fb15ceb"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002121.061.2020071073905.hdf",
+   "year": 2002,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/05/01/MOD10CM.A2002121.061.2020071073905.hdf",
+   "sha256_download": "fd808d412bf9e60ad39431b4be4cb140f9db928eeb38c89a9c968ff8a8efb4e4"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002152.061.2020072033803.hdf",
+   "year": 2002,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/06/01/MOD10CM.A2002152.061.2020072033803.hdf",
+   "sha256_download": "6e05f8ff7c79ef15edc532fb1e332ee35c571f95580de1c523c604f888b92e9d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002182.061.2020077171156.hdf",
+   "year": 2002,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/07/01/MOD10CM.A2002182.061.2020077171156.hdf",
+   "sha256_download": "c09363a6a48c262586d32f39c6fc08b8ff71ee6e52f245799ce151a65428b154"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002213.061.2020077173917.hdf",
+   "year": 2002,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/08/01/MOD10CM.A2002213.061.2020077173917.hdf",
+   "sha256_download": "cc753939657ac7062662d711eb95434774f8ff320377fce7dcea65a81d5e8755"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002244.061.2020077030823.hdf",
+   "year": 2002,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/09/01/MOD10CM.A2002244.061.2020077030823.hdf",
+   "sha256_download": "0a7f1794caafd151c5080d710884b36872c60d1dbe7c14091022d7d9b73de496"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002274.061.2020080082359.hdf",
+   "year": 2002,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/10/01/MOD10CM.A2002274.061.2020080082359.hdf",
+   "sha256_download": "791de4ad1a89a816d709218a151ce3a121f84c778d026cb43dd0d5ed966a78c9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002305.061.2020083021334.hdf",
+   "year": 2002,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/11/01/MOD10CM.A2002305.061.2020083021334.hdf",
+   "sha256_download": "89aa7b27aa54230f022155271a54004c5a94433abc61ef295d4e1d55c2780617"
+  },
+  {
+   "granule_ur": "MOD10CM.A2002335.061.2020084065656.hdf",
+   "year": 2002,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2002/12/01/MOD10CM.A2002335.061.2020084065656.hdf",
+   "sha256_download": "cc7c27e3e162aea063196647168bcec437c5a5d961bceb422dff76f05334ff15"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003001.061.2020085170119.hdf",
+   "year": 2003,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/01/01/MOD10CM.A2003001.061.2020085170119.hdf",
+   "sha256_download": "4abc3f6e085d5e32a1d7cbcb45b06c65456333b44ebea3915cbfe26259e57c95"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003032.061.2020090132938.hdf",
+   "year": 2003,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/02/01/MOD10CM.A2003032.061.2020090132938.hdf",
+   "sha256_download": "78d53ecd987f2f99796a5c5bb2f2d21f7ce737fcf5bab76d0b16010f5c2cfc3b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003060.061.2020090134733.hdf",
+   "year": 2003,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/03/01/MOD10CM.A2003060.061.2020090134733.hdf",
+   "sha256_download": "ce13050d4623b4d4fe8b30d73a1d7b13c383a3bf27c878523287077479c0c5ad"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003091.061.2020091020315.hdf",
+   "year": 2003,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/04/01/MOD10CM.A2003091.061.2020091020315.hdf",
+   "sha256_download": "11a39683d522fa44f55e63414a3361e5b505f4c927b4707c58093892c15513f3"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003121.061.2020094015748.hdf",
+   "year": 2003,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/05/01/MOD10CM.A2003121.061.2020094015748.hdf",
+   "sha256_download": "3ed511bd25c257fadfc6dfdf887c862353c03de1680e87ee2ec622c3d9cd8b2f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003152.061.2020096130624.hdf",
+   "year": 2003,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/06/01/MOD10CM.A2003152.061.2020096130624.hdf",
+   "sha256_download": "1caee16c7a22e382ddb28666247d9eca8b73eaf6e87c2720fae71b0ac6326240"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003182.061.2020106000621.hdf",
+   "year": 2003,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/07/01/MOD10CM.A2003182.061.2020106000621.hdf",
+   "sha256_download": "e3cbce516676e2102a76b145d7eb497bd6cc0b6b1331dd08c2d49c003972eae0"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003213.061.2020113203100.hdf",
+   "year": 2003,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/08/01/MOD10CM.A2003213.061.2020113203100.hdf",
+   "sha256_download": "6049af69552edc7de8958175b4522acc4c2d9153e3a4da15fb50876209a55759"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003244.061.2020109211919.hdf",
+   "year": 2003,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/09/01/MOD10CM.A2003244.061.2020109211919.hdf",
+   "sha256_download": "bce439878da0316aa871789b75db9882ff2a65dc2eb60a1c7be92e888a3eff53"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003274.061.2020111162132.hdf",
+   "year": 2003,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/10/01/MOD10CM.A2003274.061.2020111162132.hdf",
+   "sha256_download": "4b53923578ed5350febfb6835761ccc27f42fb04edbe5a8cf438dbb80599fc66"
+  },
+  {
+   "granule_ur": "MOD10CM.A2003305.061.2020113081126.hdf",
+   "year": 2003,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2003/11/01/MOD10CM.A2003305.061.2020113081126.hdf",
+   "sha256_download": "5149cca7e74da4ba7b862e5cfa1e56500c2d4b9a96410a56196b3f934e177f64"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004001.061.2020119142411.hdf",
+   "year": 2004,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/01/01/MOD10CM.A2004001.061.2020119142411.hdf",
+   "sha256_download": "492a9d4dfbb4b587e35c6becb452a1b9583f28b7ba9014e1f9d249814af83866"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004032.061.2020120083927.hdf",
+   "year": 2004,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/02/01/MOD10CM.A2004032.061.2020120083927.hdf",
+   "sha256_download": "a7a480e514610e0eafaa11fe4f863eda54da95698b30472893f86bee041d98ae"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004061.061.2020122011246.hdf",
+   "year": 2004,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/03/01/MOD10CM.A2004061.061.2020122011246.hdf",
+   "sha256_download": "3e8ddb49e6ab8bf0e5ca9b02d081d73b1458e0f85fe6b4122da2cb30b47b4240"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004092.061.2020123234510.hdf",
+   "year": 2004,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/04/01/MOD10CM.A2004092.061.2020123234510.hdf",
+   "sha256_download": "6ff19339a9d4330dea8d2b5020f79d41005f177b1b0d2061a85dfcb88ff75ae6"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004122.061.2020125061833.hdf",
+   "year": 2004,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/05/01/MOD10CM.A2004122.061.2020125061833.hdf",
+   "sha256_download": "94bba697b2faf16f9f62287c95aecc7c2cdcf9ac359482b5c79a13a91993a630"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004153.061.2020175000519.hdf",
+   "year": 2004,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/06/01/MOD10CM.A2004153.061.2020175000519.hdf",
+   "sha256_download": "180098e8c63959b3abe47dbda67adc3e2b8735bc763bb02691b3c9329e95432d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004183.061.2020196123535.hdf",
+   "year": 2004,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/07/01/MOD10CM.A2004183.061.2020196123535.hdf",
+   "sha256_download": "757894970dbe6d6fd85ba6a81f70276f861d670f1929ff97fd391136bee32abd"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004214.061.2020199122403.hdf",
+   "year": 2004,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/08/01/MOD10CM.A2004214.061.2020199122403.hdf",
+   "sha256_download": "1eed6b276d42699316b3245c00b1945a4beed0ded5f68a061c01eb267bda6d4f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004245.061.2020205194536.hdf",
+   "year": 2004,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/09/01/MOD10CM.A2004245.061.2020205194536.hdf",
+   "sha256_download": "ff5c228f3d52de1602883bef09e38121679e9c97dd13b3afe4581b82ff866ae5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004275.061.2020207031947.hdf",
+   "year": 2004,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/10/01/MOD10CM.A2004275.061.2020207031947.hdf",
+   "sha256_download": "5b72f9a2e157e26a1a8b662406a822cbc73a38af4628bf749b86d0596c9deef3"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004306.061.2020210151528.hdf",
+   "year": 2004,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/11/01/MOD10CM.A2004306.061.2020210151528.hdf",
+   "sha256_download": "9690a06ab3cfac89dd672a87f86f5524570dcbc15f17e8731b43f076fe350a83"
+  },
+  {
+   "granule_ur": "MOD10CM.A2004336.061.2020213110255.hdf",
+   "year": 2004,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2004/12/01/MOD10CM.A2004336.061.2020213110255.hdf",
+   "sha256_download": "69b10d0ce1f4e4a500d45997b96f37f85eebdc0a8d96c1585248ab183a05dff6"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005001.061.2020216191250.hdf",
+   "year": 2005,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/01/01/MOD10CM.A2005001.061.2020216191250.hdf",
+   "sha256_download": "dd4a69e3c0e8572530229f22415639f6f56e450d61dec958411cd4843104d0e5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005032.061.2020219030433.hdf",
+   "year": 2005,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/02/01/MOD10CM.A2005032.061.2020219030433.hdf",
+   "sha256_download": "332c7517fb3eb2afcb1abd311e4583e8a223551a4ca4f64b08e54be60939b95a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005060.061.2020229092013.hdf",
+   "year": 2005,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/03/01/MOD10CM.A2005060.061.2020229092013.hdf",
+   "sha256_download": "b998d2237e85cc312f8a8225218766dd92da0ca8d5ce60cea97057d0dc5f329e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005091.061.2020232070955.hdf",
+   "year": 2005,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/04/01/MOD10CM.A2005091.061.2020232070955.hdf",
+   "sha256_download": "75aa03f9e9618148e98fee3a5a38f452abb252e38206b635cf15ec72a0c34913"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005121.061.2020235072743.hdf",
+   "year": 2005,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/05/01/MOD10CM.A2005121.061.2020235072743.hdf",
+   "sha256_download": "9166963b55c1c50c1633c0eab34cb7ded6195c4cf4ef6bab2e65bb0cb88d415a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005152.061.2020236233948.hdf",
+   "year": 2005,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/06/01/MOD10CM.A2005152.061.2020236233948.hdf",
+   "sha256_download": "71794bf05d68cb29201e8216b7189835a3eb66c082ed33f159e1b50652e03078"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005182.061.2020241173545.hdf",
+   "year": 2005,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/07/01/MOD10CM.A2005182.061.2020241173545.hdf",
+   "sha256_download": "c31215eb459e4c229d0d2d6166bf48d29546e937fe7dcfc9d5595b0c4b9fc841"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005213.061.2020245000409.hdf",
+   "year": 2005,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/08/01/MOD10CM.A2005213.061.2020245000409.hdf",
+   "sha256_download": "dcf8f4197cadfb16890daacd64877030c03cbeeaaaa397e79d77048597dcd7c4"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005244.061.2020246234903.hdf",
+   "year": 2005,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/09/01/MOD10CM.A2005244.061.2020246234903.hdf",
+   "sha256_download": "1c9064fb29d76dc36d436bca184307f78c5ac0cd422ea2b7b98ec9a3f5537313"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005274.061.2020249115120.hdf",
+   "year": 2005,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/10/01/MOD10CM.A2005274.061.2020249115120.hdf",
+   "sha256_download": "0a328d916ed95071249c6bd90fb9fcd9d3885665bcc013b2d893b0fd729d553d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005305.061.2020251093905.hdf",
+   "year": 2005,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/11/01/MOD10CM.A2005305.061.2020251093905.hdf",
+   "sha256_download": "2a9d1476b56d0ef5676ef98aa1b88dda8597c95affbeafd4141ea20341fe3d45"
+  },
+  {
+   "granule_ur": "MOD10CM.A2005335.061.2020252200932.hdf",
+   "year": 2005,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2005/12/01/MOD10CM.A2005335.061.2020252200932.hdf",
+   "sha256_download": "e45037849227136c2877c26626fa750d84ccedb46de7a147a9ae088dabbaa476"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006001.061.2020255031152.hdf",
+   "year": 2006,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/01/01/MOD10CM.A2006001.061.2020255031152.hdf",
+   "sha256_download": "98a13a6134fa5bc37841df7e737c963b4008b072412b6c08c2cf73b1d214daa8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006032.061.2020257051937.hdf",
+   "year": 2006,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/02/01/MOD10CM.A2006032.061.2020257051937.hdf",
+   "sha256_download": "ee640403ac241d435ad97fd6f817d078816846b0d98fdc2095c9819dcce361fe"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006060.061.2020258135105.hdf",
+   "year": 2006,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/03/01/MOD10CM.A2006060.061.2020258135105.hdf",
+   "sha256_download": "ebc81fd83e7261e6c7cfa389683512b9efbba368427133eb5459cf6d124a9f64"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006091.061.2020261033833.hdf",
+   "year": 2006,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/04/01/MOD10CM.A2006091.061.2020261033833.hdf",
+   "sha256_download": "b508cbcc76f7522ef942d6b4d9be5511b5e9ed8e3cc028eb1e869e5671fe4723"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006121.061.2020263034744.hdf",
+   "year": 2006,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/05/01/MOD10CM.A2006121.061.2020263034744.hdf",
+   "sha256_download": "247bbf1887d484392f22119948bb7b2fd3ccd6a52db091e8bab65ebe4cee416d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006152.061.2020265133612.hdf",
+   "year": 2006,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/06/01/MOD10CM.A2006152.061.2020265133612.hdf",
+   "sha256_download": "da9027c402efdff02e1f59eb30072ea95da11a439e4607f787da7fead54a1177"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006182.061.2020268073119.hdf",
+   "year": 2006,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/07/01/MOD10CM.A2006182.061.2020268073119.hdf",
+   "sha256_download": "d5f60aacad142d6f09f5c54428ccf247d485e37477244a0c7d86d2daf8625782"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006213.061.2020273003257.hdf",
+   "year": 2006,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/08/01/MOD10CM.A2006213.061.2020273003257.hdf",
+   "sha256_download": "2dd7e9557b484437a73dc2edc4aac7a0b9aa7c5a4971c1c4bf5c978fc077f568"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006244.061.2020273085007.hdf",
+   "year": 2006,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/09/01/MOD10CM.A2006244.061.2020273085007.hdf",
+   "sha256_download": "c0aa28c3487f5f2954f5f10e177c2dfca69093af3e2cda3f6a84a5595fd33b97"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006274.061.2020275104729.hdf",
+   "year": 2006,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/10/01/MOD10CM.A2006274.061.2020275104729.hdf",
+   "sha256_download": "9a2ace0cdd2f7c57b4be9de6c95e1619379f19332ad2b1abf44bb11f3203476f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006305.061.2020277234222.hdf",
+   "year": 2006,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/11/01/MOD10CM.A2006305.061.2020277234222.hdf",
+   "sha256_download": "272a25a78097c66844fcd0df5d47f77314651252b263c979f61fb2996d069cd1"
+  },
+  {
+   "granule_ur": "MOD10CM.A2006335.061.2020279132145.hdf",
+   "year": 2006,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2006/12/01/MOD10CM.A2006335.061.2020279132145.hdf",
+   "sha256_download": "3f0ef6cab0605d7e4bfc15d43022d873286e118bf7de3dbdf467dd2dd8d4c6e9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007001.061.2021053021612.hdf",
+   "year": 2007,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/01/01/MOD10CM.A2007001.061.2021053021612.hdf",
+   "sha256_download": "7d93214a5a1a26d3557244d585c5000b484ee7de0cc0680069d1a44cf9b39b16"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007032.061.2021056105618.hdf",
+   "year": 2007,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/02/01/MOD10CM.A2007032.061.2021056105618.hdf",
+   "sha256_download": "4b0cd5692cf38b3db2e46e2ddbeaccb57b78e39e99103921e7a20b5bd6b1c643"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007060.061.2021059040350.hdf",
+   "year": 2007,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/03/01/MOD10CM.A2007060.061.2021059040350.hdf",
+   "sha256_download": "18a44221e38e4f30c4a6a5e411db8529144c557bcb751aa3d46d5162bd133244"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007091.061.2021060183511.hdf",
+   "year": 2007,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/04/01/MOD10CM.A2007091.061.2021060183511.hdf",
+   "sha256_download": "373d45f6d4a4d268eb5a12cd3779070c20ed6c1b857685cf34bc7fbfcc19c929"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007121.061.2021065020251.hdf",
+   "year": 2007,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/05/01/MOD10CM.A2007121.061.2021065020251.hdf",
+   "sha256_download": "9d4ce8b6a987911f7fc95241be8447c51fc7f73d0796dd273139a5030cbc0dac"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007152.061.2021066115213.hdf",
+   "year": 2007,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/06/01/MOD10CM.A2007152.061.2021066115213.hdf",
+   "sha256_download": "8f8869832cdb8ac762296333fccd2cbcf6d7bf3cf96ff63e6970a1c94f437c9c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007182.061.2021069064959.hdf",
+   "year": 2007,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/07/01/MOD10CM.A2007182.061.2021069064959.hdf",
+   "sha256_download": "20b9349d5af36afdea39264ef47bc50ed2b15de62c9b89feab88f49a0720a68c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007213.061.2021073074049.hdf",
+   "year": 2007,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/08/01/MOD10CM.A2007213.061.2021073074049.hdf",
+   "sha256_download": "eac763ee9504e1a534d4d6f981f70c8f904e90ccd0d5333ed995281ff574fa9b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007244.061.2021075052735.hdf",
+   "year": 2007,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/09/01/MOD10CM.A2007244.061.2021075052735.hdf",
+   "sha256_download": "8184f3d1b6205fdffca7423c81d23635a959e7f861835d1421c44f602ac29a1d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007274.061.2021077233738.hdf",
+   "year": 2007,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/10/01/MOD10CM.A2007274.061.2021077233738.hdf",
+   "sha256_download": "ec52028f1ab9b5f0d74eeeb131f1fe66b6fec2127d97535b55da799d9a128c36"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007305.061.2021079214350.hdf",
+   "year": 2007,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/11/01/MOD10CM.A2007305.061.2021079214350.hdf",
+   "sha256_download": "06ac991a59689b2ab675a970bafcdd78d7592b57519e7501ed4f6c1b807bbb64"
+  },
+  {
+   "granule_ur": "MOD10CM.A2007335.061.2021082024319.hdf",
+   "year": 2007,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2007/12/01/MOD10CM.A2007335.061.2021082024319.hdf",
+   "sha256_download": "769ab5cb6ac72f71648e5700cdaee2795916f09b2bd1a0f34dc2987b86230f6b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008001.061.2021085021847.hdf",
+   "year": 2008,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/01/01/MOD10CM.A2008001.061.2021085021847.hdf",
+   "sha256_download": "d5918325acbea1aab39a7a0f7f7b85ec1ff93673bbf0f2be622ba51387154217"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008032.061.2021087095152.hdf",
+   "year": 2008,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/02/01/MOD10CM.A2008032.061.2021087095152.hdf",
+   "sha256_download": "c55adb6e0aeed2de460be5cac7cb4ed4542bb3bf22b4be025cdfa342ed94dd9c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008061.061.2021089220942.hdf",
+   "year": 2008,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/03/01/MOD10CM.A2008061.061.2021089220942.hdf",
+   "sha256_download": "a88350f6cbe13e29b2a8dc3476f00b8203ed77dc68116dec6e897c9ec7d7cad9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008092.061.2021094082541.hdf",
+   "year": 2008,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/04/01/MOD10CM.A2008092.061.2021094082541.hdf",
+   "sha256_download": "973f69777625bbd4b97eb74502798b82e453e96e7c7ea55bbd58c6b80ae9c74c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008122.061.2021097191718.hdf",
+   "year": 2008,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/05/01/MOD10CM.A2008122.061.2021097191718.hdf",
+   "sha256_download": "884f7c30510930781125221dac90e3c03bc8ac8f53ff2cc8ae4b997332343a7b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008153.061.2021100014044.hdf",
+   "year": 2008,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/06/01/MOD10CM.A2008153.061.2021100014044.hdf",
+   "sha256_download": "88393da830fb1553811e52c14a55eded404395a7b78f8f6b14103bc28ddcfe3d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008183.061.2021103220111.hdf",
+   "year": 2008,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/07/01/MOD10CM.A2008183.061.2021103220111.hdf",
+   "sha256_download": "290243b665ba4320a24b6c1270357a43717d874fb69cb43502f51cba410dcc37"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008214.061.2021105163903.hdf",
+   "year": 2008,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/08/01/MOD10CM.A2008214.061.2021105163903.hdf",
+   "sha256_download": "70c6528c91deee2963222c3b6ca7547b11a613b35678c7584756a386da1a080b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008245.061.2021107220335.hdf",
+   "year": 2008,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/09/01/MOD10CM.A2008245.061.2021107220335.hdf",
+   "sha256_download": "8cddad775e5fa99c2dd4e3ba644cb9bf5fd821b52a168fb11397b8b2b79d124e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008275.061.2021112161445.hdf",
+   "year": 2008,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/10/01/MOD10CM.A2008275.061.2021112161445.hdf",
+   "sha256_download": "a378524dd158acf9fd9097c2be14ab38ec3d9b4e60d9db315aa7f4ff70245b42"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008306.061.2021112135423.hdf",
+   "year": 2008,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/11/01/MOD10CM.A2008306.061.2021112135423.hdf",
+   "sha256_download": "5bbac96876f7374ecdc82c9e2879d1129dd5b31a0a7346313132ee2ba289e998"
+  },
+  {
+   "granule_ur": "MOD10CM.A2008336.061.2021114020343.hdf",
+   "year": 2008,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2008/12/01/MOD10CM.A2008336.061.2021114020343.hdf",
+   "sha256_download": "16582e5e181098dcba0d538d209ec3f9342c068c6b9c3d2d43d2607a58d2ce8b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009001.061.2021126011739.hdf",
+   "year": 2009,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/01/01/MOD10CM.A2009001.061.2021126011739.hdf",
+   "sha256_download": "212321efa4703466b1d5d9ea2311cb8cc4fff3ff4a0b877aaedf4fd574f38eaf"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009032.061.2021132182430.hdf",
+   "year": 2009,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/02/01/MOD10CM.A2009032.061.2021132182430.hdf",
+   "sha256_download": "342983b6a313397f6a60b655d68141aef05e99f0aeb4b206188274116861c5de"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009060.061.2021133164210.hdf",
+   "year": 2009,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/03/01/MOD10CM.A2009060.061.2021133164210.hdf",
+   "sha256_download": "b51e035f373b3537c2a2c25b4ff7d553ac81764a2030896ff1d2683d0ef5bb20"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009091.061.2021133164657.hdf",
+   "year": 2009,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/04/01/MOD10CM.A2009091.061.2021133164657.hdf",
+   "sha256_download": "168dd5e4ef8034ede4e212fdac683028473bbea0bbb674172e6a416ea37e7b6c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009121.061.2021134104854.hdf",
+   "year": 2009,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/05/01/MOD10CM.A2009121.061.2021134104854.hdf",
+   "sha256_download": "355d32f1582f1025eeccccbc0c292e359b8270f34269ba43f046152b23f434b4"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009152.061.2021136015151.hdf",
+   "year": 2009,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/06/01/MOD10CM.A2009152.061.2021136015151.hdf",
+   "sha256_download": "bc2002ade28391b2099bba296395f9f19dae0732790178ee429e92d80c2f0340"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009182.061.2021138182045.hdf",
+   "year": 2009,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/07/01/MOD10CM.A2009182.061.2021138182045.hdf",
+   "sha256_download": "d773dc673b753f5a1f4e87586952d20000da73eb4b1822885732579752957b02"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009213.061.2021140141310.hdf",
+   "year": 2009,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/08/01/MOD10CM.A2009213.061.2021140141310.hdf",
+   "sha256_download": "50619a394548345e0056319dc4a606a6ce3b2a163d4a53916b8b2285a6f2cb35"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009244.061.2021142131947.hdf",
+   "year": 2009,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/09/01/MOD10CM.A2009244.061.2021142131947.hdf",
+   "sha256_download": "cf5ccc7ae710ebba2955a253af83bf404fad20f0c64e83e7cc1668806558b7db"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009274.061.2021144133042.hdf",
+   "year": 2009,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/10/01/MOD10CM.A2009274.061.2021144133042.hdf",
+   "sha256_download": "f761b175cfb4fdae8db5e7b68b42fcae9192582942a8731bce02c4c588f65dbb"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009305.061.2021146234556.hdf",
+   "year": 2009,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/11/01/MOD10CM.A2009305.061.2021146234556.hdf",
+   "sha256_download": "cb2c9c67bfd32cbab3b619b161e8f638635cf45cf159e5d2f92d79f490eefd8a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2009335.061.2021149093342.hdf",
+   "year": 2009,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2009/12/01/MOD10CM.A2009335.061.2021149093342.hdf",
+   "sha256_download": "2fbe91fc3e1209b93ef89c391bb617da82b3f508887de52949842b0865da48b8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010001.061.2021152214433.hdf",
+   "year": 2010,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/01/01/MOD10CM.A2010001.061.2021152214433.hdf",
+   "sha256_download": "544efb67eb22ee9915e007a3d7bb0f3c8966354fcd96c249da054699ba5b7b8d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010032.061.2021153143438.hdf",
+   "year": 2010,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/02/01/MOD10CM.A2010032.061.2021153143438.hdf",
+   "sha256_download": "d98a277a3d437c635fa927d1ca657f772661fb30b1e3beafd46cca212e45beb8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010060.061.2021156022746.hdf",
+   "year": 2010,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/03/01/MOD10CM.A2010060.061.2021156022746.hdf",
+   "sha256_download": "c3bee3d903fdaa46778012ff6033420780059bd64f22834f8516e8ad13cf1a59"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010091.061.2021159151618.hdf",
+   "year": 2010,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/04/01/MOD10CM.A2010091.061.2021159151618.hdf",
+   "sha256_download": "9241670656a511f8717336d44b1176d0d3db1f72df2acb68fe622f2beed5f73e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010121.061.2021161172355.hdf",
+   "year": 2010,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/05/01/MOD10CM.A2010121.061.2021161172355.hdf",
+   "sha256_download": "b18059d8b92bb510b5e29ca592bd3b17405ba9b5c4025000507dc952a899a054"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010152.061.2021168145846.hdf",
+   "year": 2010,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/06/01/MOD10CM.A2010152.061.2021168145846.hdf",
+   "sha256_download": "624bec05c5e6a7de44c3ae55e61ce6402bded8256563cebb504731c1401a3661"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010182.061.2021168182833.hdf",
+   "year": 2010,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/07/01/MOD10CM.A2010182.061.2021168182833.hdf",
+   "sha256_download": "d02ef78bee0f6826680e8d7732bb9700d997cd6d64191e62aed46e0904fe1e3a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010213.061.2021176063252.hdf",
+   "year": 2010,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/08/01/MOD10CM.A2010213.061.2021176063252.hdf",
+   "sha256_download": "4728ac25165da926531d7864085570910ccf7ce4d7e454c570248f29535e3fad"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010244.061.2021176062744.hdf",
+   "year": 2010,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/09/01/MOD10CM.A2010244.061.2021176062744.hdf",
+   "sha256_download": "e82665010dd91cc01927f6b516b6df24f05b8066a3fdbde02fe22b085f4b4e35"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010274.061.2021178031859.hdf",
+   "year": 2010,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/10/01/MOD10CM.A2010274.061.2021178031859.hdf",
+   "sha256_download": "cb8b0bfa22fcffcb12d79fa2927a757dbbfc6d97bcbb3a2a404d236ae5c5cf64"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010305.061.2021179024019.hdf",
+   "year": 2010,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/11/01/MOD10CM.A2010305.061.2021179024019.hdf",
+   "sha256_download": "6abfb2be4addd0bfa040812a4042b9f2bb32954c5fba1d8732e8cae4ed382566"
+  },
+  {
+   "granule_ur": "MOD10CM.A2010335.061.2021179211049.hdf",
+   "year": 2010,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2010/12/01/MOD10CM.A2010335.061.2021179211049.hdf",
+   "sha256_download": "ece90845633c9a27c15ba0647f230d58a2f8c0f82f09586d5bca6873a5c4d524"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011001.061.2021181151919.hdf",
+   "year": 2011,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/01/01/MOD10CM.A2011001.061.2021181151919.hdf",
+   "sha256_download": "82c175a6cfc3684d71d043f49beb8eee00295f6deb10bb1df99db1530f9ce344"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011032.061.2021183221927.hdf",
+   "year": 2011,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/02/01/MOD10CM.A2011032.061.2021183221927.hdf",
+   "sha256_download": "66b5eee97ef0ae33de5349f51d6812e512a36ed39ecced5eaf3487daba8d576c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011060.061.2021185173854.hdf",
+   "year": 2011,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/03/01/MOD10CM.A2011060.061.2021185173854.hdf",
+   "sha256_download": "c294a4a31e97ed1bfa420a04286f6b345abecda71cd79a8c1b79672df4f31108"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011091.061.2021190161404.hdf",
+   "year": 2011,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/04/01/MOD10CM.A2011091.061.2021190161404.hdf",
+   "sha256_download": "9f79bace5e2266a4e7794a9fc34282d76c9906cfdfa7fbf5be0a1d87baf22b65"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011121.061.2021190163547.hdf",
+   "year": 2011,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/05/01/MOD10CM.A2011121.061.2021190163547.hdf",
+   "sha256_download": "46e06f4f48b5c3583350628d67e238755f3c4b1c4417861548f11260af9212ed"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011152.061.2021192201907.hdf",
+   "year": 2011,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/06/01/MOD10CM.A2011152.061.2021192201907.hdf",
+   "sha256_download": "439f92ee6b9609d8b3c991f5c49e1258ddf89c5b9fae6d7a3549e9ee4a232b7e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011182.061.2021194032057.hdf",
+   "year": 2011,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/07/01/MOD10CM.A2011182.061.2021194032057.hdf",
+   "sha256_download": "4d2ecb90f2c17da0587c449720106d6d7effdae66328f42d6853b3ef9215f30f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011213.061.2021197022940.hdf",
+   "year": 2011,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/08/01/MOD10CM.A2011213.061.2021197022940.hdf",
+   "sha256_download": "2cdb82087f9ced1514920b501e16a73cc162959794cffc233b0aa591c928e1a0"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011244.061.2021197222358.hdf",
+   "year": 2011,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/09/01/MOD10CM.A2011244.061.2021197222358.hdf",
+   "sha256_download": "c64eeb47dd1f50ceb12a438b4a817a351bdbbb9a534631f0f323feca6d9cfa16"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011274.061.2021199183009.hdf",
+   "year": 2011,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/10/01/MOD10CM.A2011274.061.2021199183009.hdf",
+   "sha256_download": "9b5ff5954d45be04f0c7a7f343f4141d86df271b5edb43e00ab582926ec890e6"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011305.061.2021200190636.hdf",
+   "year": 2011,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/11/01/MOD10CM.A2011305.061.2021200190636.hdf",
+   "sha256_download": "757e6a1b82dee6b2ee8fadb3c3dd5a510da26268e31fe431bb93fe33e765d52c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2011335.061.2021201210544.hdf",
+   "year": 2011,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2011/12/01/MOD10CM.A2011335.061.2021201210544.hdf",
+   "sha256_download": "ba7652990381931d53b4420d80ed0b9ffdd4adeac6b0e8ebfe418f2afd2f5e53"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012001.061.2021203091659.hdf",
+   "year": 2012,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/01/01/MOD10CM.A2012001.061.2021203091659.hdf",
+   "sha256_download": "82f23c263b49d2d55b338aa2ac0a7e73aa3570ad5202839e06e78f56fe3782e2"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012032.061.2021205014610.hdf",
+   "year": 2012,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/02/01/MOD10CM.A2012032.061.2021205014610.hdf",
+   "sha256_download": "b42f666aeb0dff61c5595ac7580dd698306d8467d1d90c6472208f56c1d3cc06"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012061.061.2021206195016.hdf",
+   "year": 2012,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/03/01/MOD10CM.A2012061.061.2021206195016.hdf",
+   "sha256_download": "75ca3c17e635e0b6bd6bf614a0093b5a3b55beb787a0cf82eb9ba56c6fc1184b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012092.061.2021208014241.hdf",
+   "year": 2012,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/04/01/MOD10CM.A2012092.061.2021208014241.hdf",
+   "sha256_download": "8bd3117a905187ca2c8c7ad5ee540a5192b32fb37cdfe835169e4b58772d313f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012122.061.2021210011030.hdf",
+   "year": 2012,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/05/01/MOD10CM.A2012122.061.2021210011030.hdf",
+   "sha256_download": "d3a5321c1e56ba9ddcf69e182d923b92d4455954c8d6470877196d09cda9105f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012153.061.2021211094127.hdf",
+   "year": 2012,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/06/01/MOD10CM.A2012153.061.2021211094127.hdf",
+   "sha256_download": "d58238327ac51e56b4bf682a86da7aa79a7f065e0f93f076112bccdd74ea1a95"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012183.061.2021213023218.hdf",
+   "year": 2012,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/07/01/MOD10CM.A2012183.061.2021213023218.hdf",
+   "sha256_download": "0e67cefc7bb26d9f50b6576388a850d2b9a82817fec37764ec9a39439abba6f9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012214.061.2021215135906.hdf",
+   "year": 2012,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/08/01/MOD10CM.A2012214.061.2021215135906.hdf",
+   "sha256_download": "15d2504ea03c5e995e280bbfa3f540bcf85215e1ca124510b755405e1f007fab"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012245.061.2021216015703.hdf",
+   "year": 2012,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/09/01/MOD10CM.A2012245.061.2021216015703.hdf",
+   "sha256_download": "9d925ae60275c21e3b406ff9d5099d547968c7e28da2db21f34d59f2926ec619"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012275.061.2021219014324.hdf",
+   "year": 2012,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/10/01/MOD10CM.A2012275.061.2021219014324.hdf",
+   "sha256_download": "5bdd2460616c1be3397d0f044ec29f85ef329e806e8a1076b97492890e474b91"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012306.061.2021223031559.hdf",
+   "year": 2012,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/11/01/MOD10CM.A2012306.061.2021223031559.hdf",
+   "sha256_download": "52f9aca11e267478b8cbce6bc2a795682ea50d0d7c979ddf9d568104f7f45580"
+  },
+  {
+   "granule_ur": "MOD10CM.A2012336.061.2021223174901.hdf",
+   "year": 2012,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2012/12/01/MOD10CM.A2012336.061.2021223174901.hdf",
+   "sha256_download": "200839237aeca4a7681d2731f0562271a67d8fa55c895dd4c856efcf95eae29e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013001.061.2021226191009.hdf",
+   "year": 2013,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/01/01/MOD10CM.A2013001.061.2021226191009.hdf",
+   "sha256_download": "35c9941e792b744d8c61bb2c09b85c736731542306b712f6321735504d84e6aa"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013032.061.2021226211259.hdf",
+   "year": 2013,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/02/01/MOD10CM.A2013032.061.2021226211259.hdf",
+   "sha256_download": "bdd59be66bf541c54a51cab3875cd19b5ce65741eb5bcb5303548fb775afe02f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013060.061.2021228070440.hdf",
+   "year": 2013,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/03/01/MOD10CM.A2013060.061.2021228070440.hdf",
+   "sha256_download": "200c38dca647087af6cd817160c848fedb69c22623136110ef0e6b21dcccd3c3"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013091.061.2021229201528.hdf",
+   "year": 2013,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/04/01/MOD10CM.A2013091.061.2021229201528.hdf",
+   "sha256_download": "e6cd3be7a399dfb3b79f14e938a159c24e72966c85be7d638fceadef06861fc5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013121.061.2021231100316.hdf",
+   "year": 2013,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/05/01/MOD10CM.A2013121.061.2021231100316.hdf",
+   "sha256_download": "3f07d37def2512a2a251873ee373df07f39a1606b3a43fe3cc07b030a2156d11"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013152.061.2021233030939.hdf",
+   "year": 2013,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/06/01/MOD10CM.A2013152.061.2021233030939.hdf",
+   "sha256_download": "87cb17bbea196e1d8d9a760e934fc336103810ec2387961f55b0172103f9b927"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013182.061.2021234183212.hdf",
+   "year": 2013,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/07/01/MOD10CM.A2013182.061.2021234183212.hdf",
+   "sha256_download": "aa9ac43b4df0b10cda21cfe003977f35fe80962ed57901fb6571839e813301ec"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013213.061.2021238162342.hdf",
+   "year": 2013,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/08/01/MOD10CM.A2013213.061.2021238162342.hdf",
+   "sha256_download": "b8aae820c930179c9b25e8dd65114a2d49a4301299d88e3dd6d2268b43766b17"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013244.061.2021240082508.hdf",
+   "year": 2013,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/09/01/MOD10CM.A2013244.061.2021240082508.hdf",
+   "sha256_download": "e296bb2fcb5f989ae058254b559df901706393981f17fbe66c845a19f486efcc"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013274.061.2021243025826.hdf",
+   "year": 2013,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/10/01/MOD10CM.A2013274.061.2021243025826.hdf",
+   "sha256_download": "e20fd95c39a63f37987d565bbe40e242cd2f09772f9702abc8ef1e971114c5f5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013305.061.2021243212943.hdf",
+   "year": 2013,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/11/01/MOD10CM.A2013305.061.2021243212943.hdf",
+   "sha256_download": "79eb6a286642d480ab738844562fd5b5592bd02d19d83fce0fec8cc3809a8035"
+  },
+  {
+   "granule_ur": "MOD10CM.A2013335.061.2021245180243.hdf",
+   "year": 2013,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2013/12/01/MOD10CM.A2013335.061.2021245180243.hdf",
+   "sha256_download": "3fb1b8d734c989a80ecbeafb3f49a8ade72204116b7a530ebc6a275d355d8267"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014001.061.2021248113920.hdf",
+   "year": 2014,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/01/01/MOD10CM.A2014001.061.2021248113920.hdf",
+   "sha256_download": "70fed304a63c9fff3959ba33aebd4927707ab3a31a6046aaf1d954016138374f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014032.061.2021250021821.hdf",
+   "year": 2014,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/02/01/MOD10CM.A2014032.061.2021250021821.hdf",
+   "sha256_download": "9fc53c7a754b279c38a2969e885418eab3ab4e67eae58f5377e16c2a114be4f3"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014060.061.2021252200130.hdf",
+   "year": 2014,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/03/01/MOD10CM.A2014060.061.2021252200130.hdf",
+   "sha256_download": "b55be9f3f1719d428b9a414017966c953286d7dabd69c1be49d12da925693350"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014091.061.2021255161650.hdf",
+   "year": 2014,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/04/01/MOD10CM.A2014091.061.2021255161650.hdf",
+   "sha256_download": "1867c6468c09d110f0cc3e079a66b09138f2568ddf602848a99cff7b86b635db"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014121.061.2021255173356.hdf",
+   "year": 2014,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/05/01/MOD10CM.A2014121.061.2021255173356.hdf",
+   "sha256_download": "48d39c10df8bd30a0ffe6710305c3d947aa5cfebbe697e8b4bc56babbdaf1856"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014152.061.2021257205358.hdf",
+   "year": 2014,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/06/01/MOD10CM.A2014152.061.2021257205358.hdf",
+   "sha256_download": "bac6b25e408fef29cfdd1ca3c247c0e551f98a1bfdadb9980576dde73a571ee5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014182.061.2021259170554.hdf",
+   "year": 2014,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/07/01/MOD10CM.A2014182.061.2021259170554.hdf",
+   "sha256_download": "223dd9a41c87db930cdc82217638a4d368fbcaac777ccad8ba6e9fd0b0eb5bc5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014213.061.2021261121844.hdf",
+   "year": 2014,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/08/01/MOD10CM.A2014213.061.2021261121844.hdf",
+   "sha256_download": "bc5df39b666fbcf7a4099db177f903c5f8bc9a20a858e2bbe76257cb4a0cab46"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014244.061.2021309203405.hdf",
+   "year": 2014,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/09/01/MOD10CM.A2014244.061.2021309203405.hdf",
+   "sha256_download": "8b547307b48da44bcc1ee2000975b2fccedd6febb8559e94d1bdc6f8df99cdb2"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014274.061.2021311033958.hdf",
+   "year": 2014,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/10/01/MOD10CM.A2014274.061.2021311033958.hdf",
+   "sha256_download": "4a81bc77f980b1b7e1f49c2706762b344005d022ac36bc953ca520485579e70b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014305.061.2021311230737.hdf",
+   "year": 2014,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/11/01/MOD10CM.A2014305.061.2021311230737.hdf",
+   "sha256_download": "d1f86cbb3dbb93f7c56dbe04978c2c94d3a894cab81a4f4a127847eb8d2757a2"
+  },
+  {
+   "granule_ur": "MOD10CM.A2014335.061.2021316042717.hdf",
+   "year": 2014,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2014/12/01/MOD10CM.A2014335.061.2021316042717.hdf",
+   "sha256_download": "e28f06674ee27561d0d5664f14bdf4c3d41b68250ce9a3de1ab3436ebab3daa9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015001.061.2021320015828.hdf",
+   "year": 2015,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/01/01/MOD10CM.A2015001.061.2021320015828.hdf",
+   "sha256_download": "0e9342ddb627677d8b16b03a290d2d7b44183b1fb2cfe9c31e000238c2f74f43"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015032.061.2021320133712.hdf",
+   "year": 2015,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/02/01/MOD10CM.A2015032.061.2021320133712.hdf",
+   "sha256_download": "deb442443b1ea1052d0495061e29249b7412706b303649fb56eaa3df8930c4cb"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015060.061.2021323031743.hdf",
+   "year": 2015,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/03/01/MOD10CM.A2015060.061.2021323031743.hdf",
+   "sha256_download": "314d75ed2327e7a001458869638d7efb511ca0349985e97606e00f5bacb581c5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015091.061.2021323193224.hdf",
+   "year": 2015,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/04/01/MOD10CM.A2015091.061.2021323193224.hdf",
+   "sha256_download": "2852a6944af0f06a6129ad356eddfa9287ce5c0fd7557a87b1d6d8d8d6c6d00a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015121.061.2021326031531.hdf",
+   "year": 2015,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/05/01/MOD10CM.A2015121.061.2021326031531.hdf",
+   "sha256_download": "83390eda7ae1966d3edfb811ce55ca0f3ac91c0764b79ad458d19c4fbfc57aa0"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015152.061.2021326221044.hdf",
+   "year": 2015,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/06/01/MOD10CM.A2015152.061.2021326221044.hdf",
+   "sha256_download": "79334cff6f3b155fe609b2537992f8aa17f8ae08f3d458230d9b036a18565d0e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015182.061.2021329134557.hdf",
+   "year": 2015,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/07/01/MOD10CM.A2015182.061.2021329134557.hdf",
+   "sha256_download": "5eb3c4934bf8658203e814566c3359cf4358b5c28b8d064bbbb3de6b8ff187ed"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015213.061.2021331151208.hdf",
+   "year": 2015,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/08/01/MOD10CM.A2015213.061.2021331151208.hdf",
+   "sha256_download": "b6223a82610a34de7de8e06ef7f058d31ee14bbf3bc81eda60604d21057031cf"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015244.061.2021332194735.hdf",
+   "year": 2015,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/09/01/MOD10CM.A2015244.061.2021332194735.hdf",
+   "sha256_download": "daafaae5a28082ab9747f7c834875b4951b1131fe927524622b7a0814068081f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015274.061.2021334194237.hdf",
+   "year": 2015,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/10/01/MOD10CM.A2015274.061.2021334194237.hdf",
+   "sha256_download": "6564e258c006d54c07f961e7b52534ccf2a8201dcf0ef6153e78571df8c8fd01"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015305.061.2021337093843.hdf",
+   "year": 2015,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/11/01/MOD10CM.A2015305.061.2021337093843.hdf",
+   "sha256_download": "c197f5612123f188f047320241e0090ad30ef1e01592561ca856da1d0feaa898"
+  },
+  {
+   "granule_ur": "MOD10CM.A2015335.061.2021342125350.hdf",
+   "year": 2015,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2015/12/01/MOD10CM.A2015335.061.2021342125350.hdf",
+   "sha256_download": "2aa351f167225fb3569dfe97f434a878193496589d3a71f759996a3688784843"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016001.061.2021343161710.hdf",
+   "year": 2016,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/01/01/MOD10CM.A2016001.061.2021343161710.hdf",
+   "sha256_download": "ca53ef65a8f79624502007465d54be173088b4dce53b3b0888ce8ebc19e345aa"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016061.061.2021347020825.hdf",
+   "year": 2016,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/03/01/MOD10CM.A2016061.061.2021347020825.hdf",
+   "sha256_download": "75223b4e891f9a44657fc212dce383c78b5233f8322b65bd7351a7f4455ff368"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016092.061.2021349004607.hdf",
+   "year": 2016,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/04/01/MOD10CM.A2016092.061.2021349004607.hdf",
+   "sha256_download": "484886350f96cc7e1672c2dcec273f34102af437ed30354faecbe5147ab64508"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016122.061.2021350194636.hdf",
+   "year": 2016,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/05/01/MOD10CM.A2016122.061.2021350194636.hdf",
+   "sha256_download": "5aaf85cab7491c79e13398020e7c80e0d77cda7450f59e2b31e6f414831429e8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016153.061.2021353040655.hdf",
+   "year": 2016,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/06/01/MOD10CM.A2016153.061.2021353040655.hdf",
+   "sha256_download": "f9488f4d4f67d76dff2834d373f2b6b889a6e74ffb6c802fddb16e8a910a48b8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016183.061.2021354140248.hdf",
+   "year": 2016,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/07/01/MOD10CM.A2016183.061.2021354140248.hdf",
+   "sha256_download": "669eabc396274e3fe73ce432310c86e5934795aa56e99f782f2a0d6886271b48"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016214.061.2021356203941.hdf",
+   "year": 2016,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/08/01/MOD10CM.A2016214.061.2021356203941.hdf",
+   "sha256_download": "7d503d12b237f1bf8c076876a8265cecc8972db38436b5da7d70eca8ccc6ed0d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016245.061.2021358040203.hdf",
+   "year": 2016,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/09/01/MOD10CM.A2016245.061.2021358040203.hdf",
+   "sha256_download": "f25aa75111444f74d37e623211cf4a5c1e67e572581f1874ae1f82dd602faa7d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016275.061.2021359052941.hdf",
+   "year": 2016,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/10/01/MOD10CM.A2016275.061.2021359052941.hdf",
+   "sha256_download": "f2432d1702932e2a0aae740b67790481dd2415f042062392d4234e200e0e5dda"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016306.061.2021361234326.hdf",
+   "year": 2016,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/11/01/MOD10CM.A2016306.061.2021361234326.hdf",
+   "sha256_download": "0974f82330c3d2ddb5af42df767f6c6eaf2c35b67be41391d9dd3d7fe9156f5c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2016336.061.2021363193334.hdf",
+   "year": 2016,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2016/12/01/MOD10CM.A2016336.061.2021363193334.hdf",
+   "sha256_download": "31869916a2d368661ebcf805b68e44392ccef6bff84f4f96e3f7abc99b17710f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017001.061.2021259013336.hdf",
+   "year": 2017,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/01/01/MOD10CM.A2017001.061.2021259013336.hdf",
+   "sha256_download": "f358563e2fc6bb096eed90d3dde9c04a09ebdc522239c2689eabf142814bd553"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017032.061.2021267143427.hdf",
+   "year": 2017,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/02/01/MOD10CM.A2017032.061.2021267143427.hdf",
+   "sha256_download": "e6e1f56c24aa846735e1732679722f1d5ab0d607771db71ddfd8deabe264bf49"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017060.061.2021271115425.hdf",
+   "year": 2017,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/03/01/MOD10CM.A2017060.061.2021271115425.hdf",
+   "sha256_download": "a93da5a83ea414e130b5d41af054581be29cd07ab4877c2d35203a7520b9bf2e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017091.061.2021272091827.hdf",
+   "year": 2017,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/04/01/MOD10CM.A2017091.061.2021272091827.hdf",
+   "sha256_download": "2f33e5e91ead9bba574f5ec7a62f7f1b0885293c3f937c9611e38552aace547b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017121.061.2021276200940.hdf",
+   "year": 2017,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/05/01/MOD10CM.A2017121.061.2021276200940.hdf",
+   "sha256_download": "1328371f562194636b3e9efac5f14df0ed04d580b0df841a3ec44306de59e465"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017152.061.2021276201507.hdf",
+   "year": 2017,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/06/01/MOD10CM.A2017152.061.2021276201507.hdf",
+   "sha256_download": "20f3afc1a0a9e8951183a7d5f88ab46e5e5f291314ddfdc9dfd2b9d82c9c6c47"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017182.061.2021283133046.hdf",
+   "year": 2017,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/07/01/MOD10CM.A2017182.061.2021283133046.hdf",
+   "sha256_download": "a8b18652a403d599ef4d363ac81984370b59410b1e55de47d209a604f510af4e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017213.061.2021284224546.hdf",
+   "year": 2017,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/08/01/MOD10CM.A2017213.061.2021284224546.hdf",
+   "sha256_download": "708dcdbf5d0e84404d77465090cf15defcea091b4c391dec06e5a9c266ae29b9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017244.061.2021289043936.hdf",
+   "year": 2017,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/09/01/MOD10CM.A2017244.061.2021289043936.hdf",
+   "sha256_download": "451e323cda9510ffb5ddf0a010747111e1db80b360e40414803496294da43513"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017274.061.2021289043936.hdf",
+   "year": 2017,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/10/01/MOD10CM.A2017274.061.2021289043936.hdf",
+   "sha256_download": "a56a3f49b5d66f01ae6af6d1afa3217b79df8ac300a53f4174c44d26efb207a4"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017305.061.2021294004102.hdf",
+   "year": 2017,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/11/01/MOD10CM.A2017305.061.2021294004102.hdf",
+   "sha256_download": "329f57efb9c9d18fd3901960d32ff9f38e22fa923f183868fbf8f26a9d2ac4cb"
+  },
+  {
+   "granule_ur": "MOD10CM.A2017335.061.2021295111853.hdf",
+   "year": 2017,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2017/12/01/MOD10CM.A2017335.061.2021295111853.hdf",
+   "sha256_download": "6eeff55a78ab100a3dc05aae4d470473bdce28f36de647c43c658efdd29c3f4c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018001.061.2021317013529.hdf",
+   "year": 2018,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/01/01/MOD10CM.A2018001.061.2021317013529.hdf",
+   "sha256_download": "4c1ef3338fc9f3c59476a4973ec69ecf0c87a7c31aca54be6593593225b69786"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018032.061.2021324050504.hdf",
+   "year": 2018,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/02/01/MOD10CM.A2018032.061.2021324050504.hdf",
+   "sha256_download": "0c1e027f15e6822648d194b897df8ff5dd41849e7d1564c9b7c404e8d9332f3b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018060.061.2021324052122.hdf",
+   "year": 2018,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/03/01/MOD10CM.A2018060.061.2021324052122.hdf",
+   "sha256_download": "bddae63d74f70167f1b410831b38732157eb359c43f76c574531c0d66bb73920"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018091.061.2021331220056.hdf",
+   "year": 2018,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/04/01/MOD10CM.A2018091.061.2021331220056.hdf",
+   "sha256_download": "66623c54bb85c8a607b36dd4f7d638be92f3ba31dca6b0f50ec98f6a294d6292"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018121.061.2021347162042.hdf",
+   "year": 2018,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/05/01/MOD10CM.A2018121.061.2021347162042.hdf",
+   "sha256_download": "1ac471e2916b636095552e1961034d68b07a9d0e6c18682ae08db0fcd8463729"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018152.061.2021347162045.hdf",
+   "year": 2018,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/06/01/MOD10CM.A2018152.061.2021347162045.hdf",
+   "sha256_download": "e98bed530ac910f65e0564ded61b6780ce4adeb902908630c426281120b99e69"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018182.061.2021349081229.hdf",
+   "year": 2018,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/07/01/MOD10CM.A2018182.061.2021349081229.hdf",
+   "sha256_download": "aff6b9b2a6bb8e0d9b41afa30c617f4a62aebabe9d0303c0f956fc4b90353d80"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018213.061.2021349081228.hdf",
+   "year": 2018,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/08/01/MOD10CM.A2018213.061.2021349081228.hdf",
+   "sha256_download": "481157d74b60448ee754609c4fdc08862ebc4e1ce3b4cf2525e1722c8e5511ab"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018244.061.2021349081538.hdf",
+   "year": 2018,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/09/01/MOD10CM.A2018244.061.2021349081538.hdf",
+   "sha256_download": "6da350cfcf7eeff79a2ad6010f2569b55117f5ad616169aab6b8d96b6582b9fc"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018274.061.2021349081539.hdf",
+   "year": 2018,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/10/01/MOD10CM.A2018274.061.2021349081539.hdf",
+   "sha256_download": "0811d9a48cbb393b2bc470cf9c4bd797562645a3585abd87cd43ee6e6e5a28a9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018305.061.2021349081823.hdf",
+   "year": 2018,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/11/01/MOD10CM.A2018305.061.2021349081823.hdf",
+   "sha256_download": "94cd127a0f02e9cbd82d99ca965eaa38c5ea2d5290d96ecf88859cb26672a4e9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2018335.061.2021351101623.hdf",
+   "year": 2018,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2018/12/01/MOD10CM.A2018335.061.2021351101623.hdf",
+   "sha256_download": "180792d9eae4541c2531f26c726fbc010bec95c3c93d58691f78c4878af448ec"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019001.061.2020286144241.hdf",
+   "year": 2019,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/01/01/MOD10CM.A2019001.061.2020286144241.hdf",
+   "sha256_download": "77deeed18bbfec5354af46ea14c1e50974d48c1b85475ecb7ca4d40dd8b76901"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019032.061.2020288161134.hdf",
+   "year": 2019,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/02/01/MOD10CM.A2019032.061.2020288161134.hdf",
+   "sha256_download": "1487cbd8991fe8da45997bdf3f9ca377bff1469b3268408068660a23bfb85097"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019060.061.2020291094638.hdf",
+   "year": 2019,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/03/01/MOD10CM.A2019060.061.2020291094638.hdf",
+   "sha256_download": "4150c6cdcd3da9a78846641775ce7e504491f39580efc85dc114186b635c7c45"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019091.061.2020293063104.hdf",
+   "year": 2019,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/04/01/MOD10CM.A2019091.061.2020293063104.hdf",
+   "sha256_download": "99106922fae1bcb38aa540e94f3cb17b775c5b87e8f610dc86604095361fab1f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019121.061.2020297220235.hdf",
+   "year": 2019,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/05/01/MOD10CM.A2019121.061.2020297220235.hdf",
+   "sha256_download": "7ce9a00155753ded44077014b65eb4a508b157e5f6077833937c165907378646"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019152.061.2020299045751.hdf",
+   "year": 2019,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/06/01/MOD10CM.A2019152.061.2020299045751.hdf",
+   "sha256_download": "160df5ef3368321bc239643bf7436165645bcf1653c0ba99d5cdf4b02085d173"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019182.061.2020304090849.hdf",
+   "year": 2019,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/07/01/MOD10CM.A2019182.061.2020304090849.hdf",
+   "sha256_download": "b6c4569736b54e9014bc39aef41dae0feec7c590f00c2a1bd67e407034f72f84"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019213.061.2020307073048.hdf",
+   "year": 2019,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/08/01/MOD10CM.A2019213.061.2020307073048.hdf",
+   "sha256_download": "72d56022877d745f8bd2c033a1a5486198b36cce05df24743b6e58486a19b2e2"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019244.061.2020312193532.hdf",
+   "year": 2019,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/09/01/MOD10CM.A2019244.061.2020312193532.hdf",
+   "sha256_download": "573dcd8f4cb1146f069180a99890b791729032ec7e7bcc20e4f6b0d7105a8723"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019274.061.2020316075928.hdf",
+   "year": 2019,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/10/01/MOD10CM.A2019274.061.2020316075928.hdf",
+   "sha256_download": "72fd769d7c78410d22caa9b8c0bbe302f6bcab5b45ae94202c74c6db08621743"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019305.061.2020319040713.hdf",
+   "year": 2019,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/11/01/MOD10CM.A2019305.061.2020319040713.hdf",
+   "sha256_download": "be902737cfd309b716e8bc2188fed8fb273e7b05b94ddfe023de96002ce877b2"
+  },
+  {
+   "granule_ur": "MOD10CM.A2019335.061.2020323120342.hdf",
+   "year": 2019,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2019/12/01/MOD10CM.A2019335.061.2020323120342.hdf",
+   "sha256_download": "11169f6db5b64819681e4d94b888f5be222d31ca343c6bd33d78fb99fa205bc8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020001.061.2020328180918.hdf",
+   "year": 2020,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/01/01/MOD10CM.A2020001.061.2020328180918.hdf",
+   "sha256_download": "52520e2ff75b7acdec27d3edb793747b2951b9e2a6b07c7c02b63823efa9af79"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020032.061.2020335053349.hdf",
+   "year": 2020,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/02/01/MOD10CM.A2020032.061.2020335053349.hdf",
+   "sha256_download": "e698f8ba4e63564348c4b0b03533def14675cc4de04bfdd0a09a05bfd21b03fd"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020061.061.2020335073802.hdf",
+   "year": 2020,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/03/01/MOD10CM.A2020061.061.2020335073802.hdf",
+   "sha256_download": "4ffdebb41a34ece6fa56f0f05b3e9054fd2e3d2f1dc82dbbd88421a94c097fbf"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020092.061.2020335054638.hdf",
+   "year": 2020,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/04/01/MOD10CM.A2020092.061.2020335054638.hdf",
+   "sha256_download": "6e06f3381cb2989606bfbf97963b2289adbb80b2c506a5e9811dae234bf57913"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020122.061.2020335103032.hdf",
+   "year": 2020,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/05/01/MOD10CM.A2020122.061.2020335103032.hdf",
+   "sha256_download": "67cbad100f9ff2129a102ef2362001218d90d465d7612b79a61db8f7ff13b849"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020153.061.2020340130748.hdf",
+   "year": 2020,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/06/01/MOD10CM.A2020153.061.2020340130748.hdf",
+   "sha256_download": "010b173a389778eaeeae982897fd7df5c6f216dc77ed3b858111109799c938a8"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020183.061.2020341024339.hdf",
+   "year": 2020,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/07/01/MOD10CM.A2020183.061.2020341024339.hdf",
+   "sha256_download": "c59da319ced60f27179b17bdfe8e8f9768d8070ba53bec78cfeae552afd99dff"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020214.061.2020345112359.hdf",
+   "year": 2020,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/08/01/MOD10CM.A2020214.061.2020345112359.hdf",
+   "sha256_download": "4ad3df505b391effcda365db5b3f451f23b2c56f3d5c726b53e423df68d1696c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020245.061.2020347131154.hdf",
+   "year": 2020,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/09/01/MOD10CM.A2020245.061.2020347131154.hdf",
+   "sha256_download": "f1e9ea3d15c60a0695b5f30abc1f3b8a79ba827739e2ad120f68fe30e54332f0"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020275.061.2020353015747.hdf",
+   "year": 2020,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/10/01/MOD10CM.A2020275.061.2020353015747.hdf",
+   "sha256_download": "31396e624bd3faaa7ea09ed2b367b74e8fba3d3101c4aa3d997336229490b8f0"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020306.061.2020357123742.hdf",
+   "year": 2020,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/11/01/MOD10CM.A2020306.061.2020357123742.hdf",
+   "sha256_download": "a92677b8a4eca5bab5010ff87516e58ccbb4719d9435aadf9ece79a72cbfe4bf"
+  },
+  {
+   "granule_ur": "MOD10CM.A2020336.061.2021012055636.hdf",
+   "year": 2020,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2020/12/01/MOD10CM.A2020336.061.2021012055636.hdf",
+   "sha256_download": "d0f30c176b07be8b0f85c62c69d8867d065de33121a37eb9baed7aedaffffde6"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021001.061.2021043184922.hdf",
+   "year": 2021,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/01/01/MOD10CM.A2021001.061.2021043184922.hdf",
+   "sha256_download": "a764dd75063e42c05104d804c3fef7be50e409659029bbab6d636c53f61fdd58"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021032.061.2021062003748.hdf",
+   "year": 2021,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/02/01/MOD10CM.A2021032.061.2021062003748.hdf",
+   "sha256_download": "786edbe1072f75f77e57db806bedee081e1f9d945f8f82b07f54b7b2373a062a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021060.061.2021093000620.hdf",
+   "year": 2021,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/03/01/MOD10CM.A2021060.061.2021093000620.hdf",
+   "sha256_download": "94edcf95b4646585e7354ff2a059d42412e5670e1e53b7ef933bf375cf4975ab"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021091.061.2021123165948.hdf",
+   "year": 2021,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/04/01/MOD10CM.A2021091.061.2021123165948.hdf",
+   "sha256_download": "335bed92288aecbdbdf632bc86f77f7bb01afdcfd90fbff7f44ea2ac25992142"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021121.061.2021153054748.hdf",
+   "year": 2021,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/05/01/MOD10CM.A2021121.061.2021153054748.hdf",
+   "sha256_download": "8b829fa369b77ddc70c4018b0a054a43ed31aef2eece444477e3edf9c911d254"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021152.061.2021190161628.hdf",
+   "year": 2021,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/06/01/MOD10CM.A2021152.061.2021190161628.hdf",
+   "sha256_download": "de638ce77f55660c626f01ffb889c2a53cdeb31625bc10eaca39e76474db8411"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021182.061.2021214064943.hdf",
+   "year": 2021,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/07/01/MOD10CM.A2021182.061.2021214064943.hdf",
+   "sha256_download": "dec5aa93ad6c5d7bb4a4628db50dcff8049faf3050ddddad05a1b67a4ee2c805"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021213.061.2021245063032.hdf",
+   "year": 2021,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/08/01/MOD10CM.A2021213.061.2021245063032.hdf",
+   "sha256_download": "70658f348c8b1f664d3c696a81c5a2c05924c92e5edf0ede9ba8e7bf41afe374"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021244.061.2021320185431.hdf",
+   "year": 2021,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/09/01/MOD10CM.A2021244.061.2021320185431.hdf",
+   "sha256_download": "c38998f931dc7b6eb0113b3cc5f81e6bd1ac911c87f2a9a827e507f0d5316375"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021274.061.2022066154037.hdf",
+   "year": 2021,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/10/01/MOD10CM.A2021274.061.2022066154037.hdf",
+   "sha256_download": "360996c22fd9291d2507162de93fdf6a110194a48b76c31bf7ad388738977b8f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021305.061.2021336091321.hdf",
+   "year": 2021,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/11/01/MOD10CM.A2021305.061.2021336091321.hdf",
+   "sha256_download": "62ceae4be1b3130e52288523981ff8b56473e9af61c2e7388388ec18d7534a29"
+  },
+  {
+   "granule_ur": "MOD10CM.A2021335.061.2022002050044.hdf",
+   "year": 2021,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2021/12/01/MOD10CM.A2021335.061.2022002050044.hdf",
+   "sha256_download": "4d7a24a6ca074155aee16719a3505a9ea0caa485df3bcc89508e0151eb387101"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022001.061.2022034204409.hdf",
+   "year": 2022,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/01/01/MOD10CM.A2022001.061.2022034204409.hdf",
+   "sha256_download": "6965a5ee2ae2b2be79f6983f83f94e1024f0157afbda422e6aea6876fc91696d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022032.061.2022061052323.hdf",
+   "year": 2022,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/02/01/MOD10CM.A2022032.061.2022061052323.hdf",
+   "sha256_download": "d2fb0c820c0b2d73e0c687d871a3254bd5e80391b5c818794f86de591e935173"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022060.061.2022108234151.hdf",
+   "year": 2022,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/03/01/MOD10CM.A2022060.061.2022108234151.hdf",
+   "sha256_download": "b0b1c0f1e66aeec8d2606e5c9ea843b2ea0b06469c48ce7ec772d65e2e71b815"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022091.061.2022125143650.hdf",
+   "year": 2022,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/04/01/MOD10CM.A2022091.061.2022125143650.hdf",
+   "sha256_download": "d9339660f47e99701a050565f92aafc80b172640edcfccf783e4bb96793a93cd"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022121.061.2022158004333.hdf",
+   "year": 2022,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/05/01/MOD10CM.A2022121.061.2022158004333.hdf",
+   "sha256_download": "f5b3483307d7923e2850252c36c49638ddc260848625e687c01419b487c68bff"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022152.061.2022201163551.hdf",
+   "year": 2022,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/06/01/MOD10CM.A2022152.061.2022201163551.hdf",
+   "sha256_download": "ccbf61e91eb9b642976e32c03c651294f2c354a0f41e7e65e7c01ec4267014ed"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022182.061.2022227150539.hdf",
+   "year": 2022,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/07/01/MOD10CM.A2022182.061.2022227150539.hdf",
+   "sha256_download": "aade30fc3944f726a3833ac6d50759fd7bdfb3f5f803d3d0bf90487654647254"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022213.061.2022245073235.hdf",
+   "year": 2022,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/08/01/MOD10CM.A2022213.061.2022245073235.hdf",
+   "sha256_download": "79226113651313d757956757fab359666051b19deef77c863779d3c4a872b9bf"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022244.061.2022275051848.hdf",
+   "year": 2022,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/09/01/MOD10CM.A2022244.061.2022275051848.hdf",
+   "sha256_download": "9d762a6ed3c9234a515d8e9caffee280c6531a494ad1f25dbeb7e827476d781f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022305.061.2022336123428.hdf",
+   "year": 2022,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/11/01/MOD10CM.A2022305.061.2022336123428.hdf",
+   "sha256_download": "090c8a0aefcfc84a2f5e52ae5f3360b05dfe766a30db152d992a8b0918dca97d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2022335.061.2023003225149.hdf",
+   "year": 2022,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2022/12/01/MOD10CM.A2022335.061.2023003225149.hdf",
+   "sha256_download": "4b991d1f346959f2fdbdd5eeabc8f988c45adfecf05251fc6b23935d48f70436"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023001.061.2023033164010.hdf",
+   "year": 2023,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/01/01/MOD10CM.A2023001.061.2023033164010.hdf",
+   "sha256_download": "eeb2cbcbdce1dfadf439cb082ccc96c489d08c14522e06ad1b558b94bfb22fbe"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023032.061.2023061040707.hdf",
+   "year": 2023,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/02/01/MOD10CM.A2023032.061.2023061040707.hdf",
+   "sha256_download": "d5382001b056fa22188ebc39fb7d211fb8a4130d3d8f5c7df01bc8005733ffc2"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023060.061.2023093150512.hdf",
+   "year": 2023,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/03/01/MOD10CM.A2023060.061.2023093150512.hdf",
+   "sha256_download": "49c6702d6d1ed1871a110e2371879e3f13ea2987e74f9519e360828a64485663"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023091.061.2023122035148.hdf",
+   "year": 2023,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/04/01/MOD10CM.A2023091.061.2023122035148.hdf",
+   "sha256_download": "83a6a6a2137d4532e46b65400ac897a78d5661df23d5685d204cf00a0f0e80a1"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023121.061.2023153040235.hdf",
+   "year": 2023,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/05/01/MOD10CM.A2023121.061.2023153040235.hdf",
+   "sha256_download": "ed77405c07ced37551753540663e962a3b5d4b40fc4e7331c902bf7e8b0a24a6"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023152.061.2023193054424.hdf",
+   "year": 2023,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/06/01/MOD10CM.A2023152.061.2023193054424.hdf",
+   "sha256_download": "9ba5809260a794f8e5cbc038d67594358dd7501ba9c88a01681bc7cf67b9ee65"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023182.061.2023215192849.hdf",
+   "year": 2023,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/07/01/MOD10CM.A2023182.061.2023215192849.hdf",
+   "sha256_download": "5f8ec9754bf29f115f3e2b9ffb3176e436a5d1b749ab3538dfc5f8ec0d07e314"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023213.061.2023250152602.hdf",
+   "year": 2023,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/08/01/MOD10CM.A2023213.061.2023250152602.hdf",
+   "sha256_download": "f555ac12ea445f2178a51be28b4d938e8fc995ce032b8bfaf434cf8d6537db4a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023244.061.2023275041107.hdf",
+   "year": 2023,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/09/01/MOD10CM.A2023244.061.2023275041107.hdf",
+   "sha256_download": "338072a22121e63e014a75c1745812323ebc38929a9f0bb90a8b792772ef6e56"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023274.061.2023306041830.hdf",
+   "year": 2023,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/10/01/MOD10CM.A2023274.061.2023306041830.hdf",
+   "sha256_download": "f3ab57c4fbd6c7c495a10e49b7110fee88a2951175b1a6cbd46d2f7388551bb4"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023305.061.2023336214037.hdf",
+   "year": 2023,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/11/01/MOD10CM.A2023305.061.2023336214037.hdf",
+   "sha256_download": "c658a1f69508a67eab3f8558e889b2dfccd0272305109413466edaf4bdd22860"
+  },
+  {
+   "granule_ur": "MOD10CM.A2023335.061.2024006162752.hdf",
+   "year": 2023,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2023/12/01/MOD10CM.A2023335.061.2024006162752.hdf",
+   "sha256_download": "37785d352f57d23093ad5173879aa0ca2fc5d46d81e7405c932bfc49d4ad293a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024001.061.2024034084646.hdf",
+   "year": 2024,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/01/01/MOD10CM.A2024001.061.2024034084646.hdf",
+   "sha256_download": "56ba7580e7e38783b94fc9b5e08eb59dc8480e8b3c61a142ddf9ac1118b873f4"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024032.061.2024066092140.hdf",
+   "year": 2024,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/02/01/MOD10CM.A2024032.061.2024066092140.hdf",
+   "sha256_download": "20bd385b35b4b5e4096be7cb342229e978d7cf87b55cc405e65160c820803528"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024061.061.2024095000412.hdf",
+   "year": 2024,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/03/01/MOD10CM.A2024061.061.2024095000412.hdf",
+   "sha256_download": "01e0c09c3c1c568d80725986825565267f306b29b381776d0857d8384d8502ed"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024092.061.2024125052116.hdf",
+   "year": 2024,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/04/01/MOD10CM.A2024092.061.2024125052116.hdf",
+   "sha256_download": "b93c12f9e0118797f1c10b00981410db96d65f8a4eac05148cacc25fd6e7172e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024122.061.2024162161900.hdf",
+   "year": 2024,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/05/01/MOD10CM.A2024122.061.2024162161900.hdf",
+   "sha256_download": "36c517e3deabf7e988711b2bca6bcc7f44081d738397e8bd1c9b5e51aea13d11"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024153.061.2024187024104.hdf",
+   "year": 2024,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/06/01/MOD10CM.A2024153.061.2024187024104.hdf",
+   "sha256_download": "390f35e697422be215cf4edbe61612acaa3e649541b88e06ffac413ad80e5eb5"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024183.061.2024226150129.hdf",
+   "year": 2024,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/07/01/MOD10CM.A2024183.061.2024226150129.hdf",
+   "sha256_download": "fa9299a7fc4a5bf919fd45fbfeefd6da6dbc2870b034828e46fc5beb12c34b06"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024214.061.2024267185811.hdf",
+   "year": 2024,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/08/01/MOD10CM.A2024214.061.2024267185811.hdf",
+   "sha256_download": "3fdef7ec28199322c0647fc049d6422c344663ae4fd236025953e1b2c85c19dc"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024245.061.2024276044440.hdf",
+   "year": 2024,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/09/01/MOD10CM.A2024245.061.2024276044440.hdf",
+   "sha256_download": "38e6c17a2c70a6445e84ffc9c77b01323be86f8b4db6150c50a4bfcb6200e77d"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024275.061.2024310163333.hdf",
+   "year": 2024,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/10/01/MOD10CM.A2024275.061.2024310163333.hdf",
+   "sha256_download": "89701728d9515b40a36797dbcc43ff2a407f73df969a4d4111c834e5c7904668"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024306.061.2024337182832.hdf",
+   "year": 2024,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/11/01/MOD10CM.A2024306.061.2024337182832.hdf",
+   "sha256_download": "da7c3dad3c181d5fa6a6b233078c237da9442fe54deed8a18bdbaccfe4061eb9"
+  },
+  {
+   "granule_ur": "MOD10CM.A2024336.061.2025003201547.hdf",
+   "year": 2024,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2024/12/01/MOD10CM.A2024336.061.2025003201547.hdf",
+   "sha256_download": "a47caac0d1c9ca30d83a0c4ae2c8c590cd915615d1752c775fca9a189544db34"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025001.061.2025035215507.hdf",
+   "year": 2025,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/01/01/MOD10CM.A2025001.061.2025035215507.hdf",
+   "sha256_download": "088d18695117624e5c2987aa3c4ce06f3c48eb0d4c925c5ce998c8c5ff1832fd"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025032.061.2025063170126.hdf",
+   "year": 2025,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/02/01/MOD10CM.A2025032.061.2025063170126.hdf",
+   "sha256_download": "0539a5bbf82719b3a16b27fcd5dc13df645d747fc334fc062fbab528e77b1b92"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025060.061.2025092111717.hdf",
+   "year": 2025,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/03/01/MOD10CM.A2025060.061.2025092111717.hdf",
+   "sha256_download": "c012080de2ee337e4dc8dbf9bffdf0fc1980f1d9022620042c05f87f4568a41c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025091.061.2025125142119.hdf",
+   "year": 2025,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/04/01/MOD10CM.A2025091.061.2025125142119.hdf",
+   "sha256_download": "7dfc5d26e24b8df3a7de0243f823aa240106c91c775530ce2ab6dea27b5d170a"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025121.061.2025153163102.hdf",
+   "year": 2025,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/05/01/MOD10CM.A2025121.061.2025153163102.hdf",
+   "sha256_download": "31aa3e3dc8d9146eebabc2c9ee66160631c262fc3a2f2c67108e6a1df90e99b7"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025152.061.2025183101705.hdf",
+   "year": 2025,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/06/01/MOD10CM.A2025152.061.2025183101705.hdf",
+   "sha256_download": "dd29e15dc8f2c59bba324bdd25f0009afd0792422ac95e45bf3d252ceeab890c"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025182.061.2025214043939.hdf",
+   "year": 2025,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/07/01/MOD10CM.A2025182.061.2025214043939.hdf",
+   "sha256_download": "113030aeafe7164d7bde3b0fb4bac90d035dd601793055a8394510e89ab4f129"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025213.061.2025246014134.hdf",
+   "year": 2025,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/08/01/MOD10CM.A2025213.061.2025246014134.hdf",
+   "sha256_download": "868b8a1d1fff698404fc989524c3c7c0f52a1a75ad9821bd1f40ba2adda92c8f"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025244.061.2025275150025.hdf",
+   "year": 2025,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/09/01/MOD10CM.A2025244.061.2025275150025.hdf",
+   "sha256_download": "acd81397092ce711910cb708503a6122a24532dfb1b0a2b6059f6d5c9274fcae"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025274.061.2025306143443.hdf",
+   "year": 2025,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/10/01/MOD10CM.A2025274.061.2025306143443.hdf",
+   "sha256_download": "84fea74e422c619270cc20eff1b0089e43d8afe57296429cf72a956f1f188915"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025305.061.2025336060933.hdf",
+   "year": 2025,
+   "month": 11,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/11/01/MOD10CM.A2025305.061.2025336060933.hdf",
+   "sha256_download": "5010685014a2a39490a8bd10c161393739c88e527b4a88e42e57e12568598189"
+  },
+  {
+   "granule_ur": "MOD10CM.A2025335.061.2026006190334.hdf",
+   "year": 2025,
+   "month": 12,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2025/12/01/MOD10CM.A2025335.061.2026006190334.hdf",
+   "sha256_download": "225351e2ade600c5a069e51d3ec6db78d33c7db8bf803502cb4c527505f1a1a1"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026001.061.2026034042853.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 1,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/01/01/MOD10CM.A2026001.061.2026034042853.hdf",
+   "sha256_download": "fabd2c1cdeb98c1ee1f8651089ad11f582adf246525cd4f17d93edd8e63b1542"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026032.061.2026062153447.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 2,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/02/01/MOD10CM.A2026032.061.2026062153447.hdf",
+   "sha256_download": "7291d7249b1f732a4039d92c0cffd8b4964b5d1d975d46795c3d3b0405bbe5ab"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026060.061.2026092034952.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 3,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/03/01/MOD10CM.A2026060.061.2026092034952.hdf",
+   "sha256_download": "bb3afbd370e590b9d92859df7bb75463c9ce5a5085570809e28610adac00e124"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026091.061.2026126004105.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 4,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/04/01/MOD10CM.A2026091.061.2026126004105.hdf",
+   "sha256_download": "a84a9203866843c8edfd53777aa5ef4433a580852919ac543e7de867953af214"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026121.061.2026159180039.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 5,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/05/01/MOD10CM.A2026121.061.2026159180039.hdf",
+   "sha256_download": "4833e1fb762735ab1a60984c3fb2a268e73cfe256215161e759b4b39bc4ab528"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026152.061.2026188193607.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 6,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/06/01/MOD10CM.A2026152.061.2026188193607.hdf",
+   "sha256_download": "399ea1e25655b3ace6278ca18633e6bece5b74afaf3c317353cef5137249283b"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026182.061.2026216140139.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 7,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/07/01/MOD10CM.A2026182.061.2026216140139.hdf",
+   "sha256_download": "e384cbe150695618e94d259410803c8df8592bce8b79a89ce7d926c5319a8eaf"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026213.061.2026245040019.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 8,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/08/01/MOD10CM.A2026213.061.2026245040019.hdf",
+   "sha256_download": "75f17eded443f2b2ca16e461809e89d244ffedbca2a3c776c6645accc5ca3068"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026244.061.2026278020517.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 9,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/09/01/MOD10CM.A2026244.061.2026278020517.hdf",
+   "sha256_download": "bb83b4222f7a7a9f1282af9065d7dedaed1e76c45297936f0c1de7be24e3f43e"
+  },
+  {
+   "granule_ur": "MOD10CM.A2026274.061.2026307175302.hdf_AJhoZjdq",
+   "year": 2026,
+   "month": 10,
+   "url": "https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/MODIS/MOD10CM/61/2026/10/01/MOD10CM.A2026274.061.2026307175302.hdf",
+   "sha256_download": "cdb5dd2c2f0d4a6129e1b202dec382d2c616be2878dc94c6b7d0a7a2aa14bb59"
+  }
+ ],
+ "outputs_sha256": {
+  "global_series.json": "3b4842beaafeca709ecf3123611cff498836d5bf790ca166e46639cfb67b86fe",
+  "tile_0_0.bin.gz": "0febc9871a963263ea7d5da4fd8f1a2049058f9db007ac08546c1ecb0b336fe0",
+  "tile_0_1.bin.gz": "16d0570debc4bf13686b439994be3d55bf9600558a343a0040c00807a84a508c",
+  "tile_0_10.bin.gz": "79e41cc986ac30d67ef5825003558deff2ceec94a53ba8fc4458a2f803999c88",
+  "tile_0_11.bin.gz": "328259d84dfcce4178b2b416fab5a6417677b552a695bd9c43fa5262ecd19ca9",
+  "tile_0_2.bin.gz": "44b5cb2cb56826d6fd6b3477260bc2a41e8e46cd32ee22c6644cdd2515180ecc",
+  "tile_0_3.bin.gz": "c3e1c6b5f24a654a09c87f6c565ce8f0f2ed2789f5532a3a1b19b5b19ab50e7c",
+  "tile_0_4.bin.gz": "9032c055392cfb2e9858485b6be98b9a508104948044cab752c24ee4d06e1f8a",
+  "tile_0_5.bin.gz": "aa26cf9d5dff654b41094e7ed6b8596640288330e68f59af71c83eccfd3ee7a5",
+  "tile_0_6.bin.gz": "67bf65bc64b3b116baaef15ed3cbb3ca37550d16c4dad7925fa843e3f25784e1",
+  "tile_0_7.bin.gz": "1748dc61b566a37fd61dd7983bad234709bb47b6d53922499410ca9a39632058",
+  "tile_0_8.bin.gz": "d53710f33f6c12bf84ed1c08cca1e008f3e56246cdb275d383f9ace608e5ce96",
+  "tile_0_9.bin.gz": "e909b9a32c88579b8c5432bbb6ee4f61143073e6a32cfb0209fa7c81c91ff915",
+  "tile_1_0.bin.gz": "aa0ed5a327d782a05c8a792aea3923322448f44291c53508bfba92e74078e072",
+  "tile_1_1.bin.gz": "4a1bb6a4a5e22cb7eb1841374bb11675c5c2f923c91cf95ff85ac4bed3d8999f",
+  "tile_1_10.bin.gz": "b13c3f32fab1be37c4ce2f2e248ab30c9d5baa8415c93b6690cfb8eeef450e63",
+  "tile_1_11.bin.gz": "828aa89f30ad8a89babec8be647a3e434d0fe92605ae14bb34721baf10f9a966",
+  "tile_1_2.bin.gz": "79070d20516f1837debf5085c4ba37de7b6e3881d04ebc28705c6092780b6ff3",
+  "tile_1_3.bin.gz": "100d1343c377fb823179718a6cc66b88e563089f486ded772202ce5e7fccc088",
+  "tile_1_4.bin.gz": "b7bf23514cc655c51f52b4009a37562858894bfc8a5819dcde894f3a484984a3",
+  "tile_1_5.bin.gz": "12e276aac119bb20752c4fd8c5b12d61184ce2f08a868a28e22e292462a32e58",
+  "tile_1_6.bin.gz": "1c48be7640e07608a1d9533c6ff85fba992a0715d1f5f47bf0ec7011eda10bcd",
+  "tile_1_7.bin.gz": "b0b0e41abea77300e17e7ba50a76dbe468687687cb92c4077c5504818c3c48f1",
+  "tile_1_8.bin.gz": "def0f682c7b492330152f953f471109b417225dde6ee2204ad7000e6ed133a6f",
+  "tile_1_9.bin.gz": "267b73bc34d46c7ee298d4b4e56a958f4debf2618d031e91b81758d454d8adba",
+  "tile_2_0.bin.gz": "0a9c856e7563e16fc2dfce6c1a083967831c0ad2f38469e6c7ec89a145407703",
+  "tile_2_10.bin.gz": "a34992bef1ee091ac50eb9f1044722ed570b7d456c662fab713293e85da4f523",
+  "tile_2_2.bin.gz": "974d6ba3c0cf26d215cb47622665a12f03a9eaed08658d2aed3a60a9faa999fe",
+  "tile_2_3.bin.gz": "12a43126f7e9fc3a05971591d53e0e85ef9bc0b4e2817ad416d6cf8f6a0f9d8b",
+  "tile_2_4.bin.gz": "fc3308610e801f3f4174e031a70cafb69c25dba31c940116574ff113fd975584",
+  "tile_2_5.bin.gz": "5724df4aa5e0a4d45650ac293424178f6b7cc9ff7ae3ddc0131bbaa69cf47f76",
+  "tile_2_6.bin.gz": "8e3cfabc7e7e8d566e138a7b17e87799be20753c7795f2695cbb5ec8de34343d",
+  "tile_2_7.bin.gz": "c146c6528abb9483821a7b7e00d131455dc5a76b77078b00c25e8d416049bef7",
+  "tile_2_8.bin.gz": "06cd223617cde93295bd0b71930f64103a813abb452f9e73a9783475e54059dd",
+  "tile_2_9.bin.gz": "03ca60c5a4843839334d2a5d76597db1c12160ab664fb6b50bb0390f7ea9732e",
+  "tile_3_10.bin.gz": "715ff6c9e2c8c61ab33a1c340ac3b3d4cf2e17b0530a082d2885a67e7d69cc0b",
+  "tile_3_11.bin.gz": "e205dd5f2649ced48529dff1d93c9954f0119e01f7543d3e18902f6de3fce01f",
+  "tile_3_3.bin.gz": "c4d5a226574fda2fb8ab8cef72db6ea59ee49da3a403e8abe9f4fd9f50a6b4ef",
+  "tile_3_4.bin.gz": "142465fb5b66f2d6023581a04210b0483b63ebc0411d4564526f1f17dc19defd",
+  "tile_3_6.bin.gz": "1ded41cdd4caf4673a991eef58b4cb5c52efdcc6dc3c11d19bffb7de33b94867",
+  "tile_3_7.bin.gz": "ce7b8b8d510e812fe4dd0e64e23cfed83cc4f094fc98ca82866de68997d46162",
+  "tile_3_9.bin.gz": "7aaac066734dd3b42a53954c893616ee9e3c8f48619bf0f53c64d01d9e13e20b",
+  "tile_4_10.bin.gz": "26e0bf5288ee6a61b71c5c93674ace292e11923c28fa188a0cb8e8d14e80336f",
+  "tile_4_11.bin.gz": "ad177bf12e410f62b683e89c48d435f2aee838b4a71c1ddcfb4205454a1025d0",
+  "tile_4_3.bin.gz": "533eb856c59bddd2c1dbeba2538acae6aa4c163edd2973a09a0839e409a76f53",
+  "tile_4_4.bin.gz": "6cfded82f4357f7bd691f6d6b002c3720fadc75534001aa2e0907dd2289f5611",
+  "tile_4_6.bin.gz": "c56e69aaa813d6698825df0398bcbb0ec830813997c62a30a9a62ae808e76d5d",
+  "tile_4_7.bin.gz": "83ebebef44ccb869bbc70480fad30b0cfb7201076ac5e67c501ba6171790ef03",
+  "tile_4_9.bin.gz": "567fad17ac89e9a1177d189c3c5feb9f9e547883b530d2605c3e262f7c090bb1",
+  "tile_5_0.bin.gz": "0fdea4e5d0b7e2d0004ec0ddb53ccdbac72b85845b20551addb20e1632b6829a",
+  "tile_5_1.bin.gz": "8fe3392fa744d2ce10da4af434577c775f3107dc0ce3248a28135e15882bbb7b",
+  "tile_5_10.bin.gz": "b137e4a22a6c0bae10d4bc321ca7d4f1013e14fcb88dc83fc3c593ef06c15937",
+  "tile_5_11.bin.gz": "47c972a2cbe3770f02aa12f57c4689a94d388aabbf294f8d8dcc1f46e6bf560a",
+  "tile_5_2.bin.gz": "0868808be5673234d16c820c37eff66199d19907a0919bcdcf87854f638d8292",
+  "tile_5_3.bin.gz": "ba9472ae07606d15b73e491a46e8f968ee3888bd70e6279c2248b0e55453017b",
+  "tile_5_4.bin.gz": "e9b79faa1e845cd58e7ac44de702045a89441b12c930ad68d6cf50c97f034502",
+  "tile_5_5.bin.gz": "63382b03e1cba1b68757cd72d0952256de92d850ced2c8edfdd532e02936a81b",
+  "tile_5_6.bin.gz": "67124dd09434a124b025caa4c678c34a932de5fb39662f5b65cef7a14d9f50bf",
+  "tile_5_7.bin.gz": "97c26061dfa483d36421a938c99182e6f3e1e02160e979b008e558a2c59d60b2",
+  "tile_5_8.bin.gz": "d872314adacccc59fcba963bbc7b06c7316dae980b099efb1393542d1c0c7b93",
+  "tile_5_9.bin.gz": "b4782067ce9da9eafcbfe25db6281b1ef729a77c9f9635a3c70dfeb2108453c2",
+  "tile_means.json": "8c7fcc1abc6e897f1dca2f554e417337fc037dc74624626fae02ff9da3da6e53"
+ },
+ "builder_scripts": [
+  "data/library/scripts/libcommon.py",
+  "data/library/scripts/products.py",
+  "data/library/scripts/finalize.py",
+  "data/library/scripts/build_snow.py"
+ ],
+ "note": "Raw granules are not kept; only the 1-degree monthly derivative is shipped. No trend statistic is computed in the build."
+}

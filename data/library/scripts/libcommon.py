@@ -39,8 +39,9 @@ def list_granules(cid, y0, y1):
             u = it["umm"]; b = u["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]
             size = (u.get("DataGranule", {}).get("ArchiveAndDistributionInformation") or [{}])[0]
             urls = {r["Type"] + ("|s3" if r["URL"].startswith("s3") else ""): r["URL"] for r in u.get("RelatedUrls", []) if r["Type"] in ("GET DATA", "GET DATA VIA DIRECT ACCESS", "USE SERVICE API")}
+            data_urls = [r["URL"] for r in u.get("RelatedUrls", []) if r["Type"] == "GET DATA" and not r["URL"].lower().endswith((".xml", ".jpg", ".png", ".json", ".md5", ".txt", ".html", ".pdf"))]
             out.append(dict(begin=b, end=u["TemporalExtent"]["RangeDateTime"].get("EndingDateTime"), granule_ur=u["GranuleUR"], size_mb=size.get("Size"),
-                            https_url=urls.get("GET DATA"), opendap_url=urls.get("USE SERVICE API")))
+                            https_url=(data_urls[0] if data_urls else urls.get("GET DATA")), opendap_url=urls.get("USE SERVICE API")))
         page += 1
         if len(items) < 500: break
     return out

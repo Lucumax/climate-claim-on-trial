@@ -38,12 +38,15 @@ def dl(g):
             import time; time.sleep(4 * (attempt + 1))
 
 cube = np.full((len(times), 180, 360), np.nan, np.float32); prov = []; idx = {t: i for i, t in enumerate(times)}
-t0 = dt.datetime.now(dt.timezone.utc); attrs0 = None; codes = {}
+t0 = dt.datetime.now(dt.timezone.utc); attrs0 = None; codes = {}; unreadable = []
 with ThreadPoolExecutor(4) as ex:
     for k, (g, content) in enumerate(zip(gl, ex.map(dl, gl))):
         fp = raw_dir / f"m{k}.hdf"; fp.write_bytes(content)
-        sd = SD(str(fp), SDC.READ); ds = sd.select(VAR)
-        a = ds.attributes(); raw = ds[:]; ds.endaccess(); sd.end(); fp.unlink()
+        try:
+            sd = SD(str(fp), SDC.READ); ds = sd.select(VAR)
+            a = ds.attributes(); raw = ds[:]; ds.endaccess(); sd.end(); fp.unlink()
+        except Exception as e:
+            print("UNREADABLE", ym[k], g["https_url"], type(e).__name__, flush=True); unreadable.append(f"{ym[k][0]}-{ym[k][1]:02d}: {g['https_url']}"); fp.unlink(missing_ok=True); continue
         if attrs0 is None: attrs0 = {x: str(a[x])[:300] for x in ("long_name", "valid_range", "_FillValue", "Key") if x in a}; print(attrs0, flush=True)
         v = raw.astype(np.float64); u, c = np.unique(raw, return_counts=True)
         for uu, cc in zip(u, c): codes[int(uu)] = codes.get(int(uu), 0) + int(cc)
@@ -58,7 +61,7 @@ L.SCRATCH.mkdir(parents=True, exist_ok=True)
 np.save(L.SCRATCH / f"{PID}_cube.npy", cube)
 non_pct = {c: n for c, n in sorted(codes.items()) if c > 100}
 json.dump(dict(collection=col, granules=prov, t0=t0.isoformat(), t1=t1.isoformat(), times=times, script="data/library/scripts/build_snow.py",
-    qc_extra=dict(attrs_first_granule=attrs0, duplicate_months_resolved=dups, native_cell_counts_non_percent_codes_all_months=non_pct, note="codes 0-100 used; all others (night 211, cloud 250, water, Antarctica mask 252, fill 255...) are no data"),
+    qc_extra=dict(attrs_first_granule=attrs0, duplicate_months_resolved=dups, unreadable_files=unreadable, native_cell_counts_non_percent_codes_all_months=non_pct, note="codes 0-100 used; all others (night 211, cloud 250, water, Antarctica mask 252, fill 255...) are no data"),
     access="Earthdata Login (environment token); NSIDC cloud HTTPS download of each monthly file (1-2 MB) to a scratch dir, read with pyhdf, deleted at once (no OPeNDAP route listed in CMR for this collection)",
     regrid="mean of valid (0-100 percent) 0.05 degree cells in each 20 x 20 block (1 degree), kept if >= 200 of 400 valid"), open(L.SCRATCH / f"{PID}_prov.json", "w"))
 print("staged", cube.shape, "valid frac", float(np.isfinite(cube).mean()), "range", float(np.nanmin(cube)), float(np.nanmax(cube)), flush=True)

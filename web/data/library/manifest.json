@@ -924,6 +924,289 @@
     "tile_means": "lst_day_myd11/tile_means.json"
    },
    "build_date_utc": "2026-11-14"
+  },
+  {
+   "id": "snow_mod10cm",
+   "name": "Snow cover",
+   "definition": "The share of the ground (in percent) that the satellite saw covered by snow during the month, on days when it could see the ground.",
+   "units": "% of land area",
+   "product": "MODIS Terra MOD10CM v061",
+   "version": "61",
+   "short_name": "MOD10CM",
+   "concept_id": "C3050353608-NSIDC_CPRD",
+   "doi": "https://doi.org/10.5067/MODIS/MOD10CM.061",
+   "agency": "NASA NSIDC DAAC",
+   "kind": "satellite observation",
+   "source_variable": "Coverage of snow",
+   "period": {
+    "first_month": "2001-01",
+    "last_month": "2026-10",
+    "n_months_axis": 310,
+    "t0": [
+     2001,
+     1
+    ],
+    "months_all_missing": [
+     "2001-06",
+     "2002-03",
+     "2003-12",
+     "2016-02",
+     "2022-10"
+    ]
+   },
+   "native_resolution": "0.05 degree, block-averaged to 1 degree",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.1,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "Percent of the ground that the satellite saw covered by snow on clear-sky days in the month, not snow depth or water content. Clouds hide the ground, and in polar night no data are collected, so high-latitude winter is empty. Terra's overpass time has drifted earlier since 2020 (NSIDC 2021), which can change snow-cover estimates slightly after 2020. Land only.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "snow_mod10cm/global_series.json",
+    "tile_means": "snow_mod10cm/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
   }
  ]
 }

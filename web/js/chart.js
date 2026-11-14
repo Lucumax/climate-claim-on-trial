@@ -41,7 +41,7 @@ export function trendChart(o) {
   const svg = s("svg", { class: "chart", viewBox: `0 0 ${W} ${H}`, "aria-hidden": "true" });
   for (const t of ticks) svg.append(s("line", { class: "grid", x1: m.l, x2: W - m.r, y1: ys(t), y2: ys(t) }), s("text", { x: m.l - 8, y: ys(t) + 4, "text-anchor": "end" }, String(+t.toPrecision(4))));
   const x0 = Math.ceil(yrs[0]), x1 = Math.floor(yrs[n - 1]), step = o.xTickStep || (x1 - x0 > 30 ? 10 : x1 - x0 > 12 ? 5 : 2);
-  for (let yr = x0; yr <= x1; yr++) if (yr % step === 0 || yr === x0) svg.append(s("text", { x: xs(yr), y: H - m.b + 20, "text-anchor": "middle" }, String(yr)), s("line", { class: "axis", x1: xs(yr), x2: xs(yr), y1: H - m.b, y2: H - m.b + 4 }));
+  for (let yr = x0; yr <= x1; yr++) if (yr % step === 0 || (yr === x0 && (step - (x0 % step)) >= step / 2)) svg.append(s("text", { x: xs(yr), y: H - m.b + 20, "text-anchor": "middle" }, String(yr)), s("line", { class: "axis", x1: xs(yr), x2: xs(yr), y1: H - m.b, y2: H - m.b + 4 }));
   svg.append(s("line", { class: "axis", x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b }));
   if (lo < 0 && hi > 0) svg.append(s("line", { class: "zero", x1: m.l, x2: W - m.r, y1: ys(0), y2: ys(0) }));
   svg.append(s("text", { x: 14, y: (m.t + H - m.b) / 2, transform: `rotate(-90 14 ${(m.t + H - m.b) / 2})`, "text-anchor": "middle" }, o.yLabel));

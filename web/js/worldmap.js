@@ -13,7 +13,11 @@ async function getLandPath() {
   let d = "";
   for (const g of topo.objects.land.geometries) {
     const polys = g.type === "MultiPolygon" ? g.arcs : [g.arcs];
-    for (const poly of polys) for (const r of poly) { const p = ring(r); d += "M" + p.map(q => X(q[0]) + " " + Y(q[1])).join("L") + "Z"; }
+    for (const poly of polys) for (const r of poly) {
+      const p = ring(r); const u = [p[0]]; // unwrap longitudes so rings that cross the antimeridian stay continuous
+      for (let i = 1; i < p.length; i++) { let dl = p[i][0] - p[i - 1][0]; if (dl > 180) dl -= 360; else if (dl < -180) dl += 360; u.push([u[i - 1][0] + dl, p[i][1]]); }
+      for (const off of [-360, 0, 360]) d += "M" + u.map(q => X(q[0] + off) + " " + Y(q[1])).join("L") + "Z";
+    }
   }
   return (landPath = d);
 }

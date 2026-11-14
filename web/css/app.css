@@ -328,7 +328,8 @@ button.btn-text { background: none; border: 0; padding: 0; font: inherit; cursor
 .quicks { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
 .btn-quiet.quick { min-height: 36px; font-size: .8125rem; padding: 0 var(--sp-3); }
 .season-pills span { min-height: 36px; padding: 0 var(--sp-3); font-size: .875rem; }
-.see-bar { display: none; }
+.status-strip { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-2) var(--sp-4); padding: var(--sp-2) var(--sp-3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); font-size: .9375rem; }
+.status-strip .strip-text { font-variant-numeric: tabular-nums; }
 /* the result */
 .result { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); box-shadow: var(--shadow-1); min-width: 0; scroll-margin-top: 80px; }
 .result-head { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3) var(--sp-4); flex-wrap: wrap; margin-bottom: var(--sp-5); }
@@ -641,8 +642,7 @@ footer.foot .links { display: flex; gap: var(--sp-5); flex-wrap: wrap; }
   .prog-sum { display: none; }
   .prog-short { display: inline; }
   .prog-name { font-size: .75rem; }
-  .see-bar { display: block; position: sticky; bottom: 0; z-index: 10; background: var(--bg); padding: var(--sp-2) 0 var(--sp-3); box-shadow: 0 -6px 10px -6px rgba(0, 0, 0, .15); }
-  .see-bar .btn { width: 100%; }
+  .status-strip { position: sticky; bottom: 0; z-index: 10; box-shadow: 0 -6px 10px -6px rgba(0, 0, 0, .15); }
   .result { padding: var(--sp-4); }
   .result-head h2 { font-size: 1.5rem; }
   .demo-card .actions { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }

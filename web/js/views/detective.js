@@ -41,18 +41,25 @@ const POWER_WORLD_NOTE = "Whole world is for the precomputed library measurement
 // Replay links: #/investigate?src=library|power&v=<id or POWER parameter>&b=south,north,west,east&y=2001-2025&s=JJAS  (season = key in data/variables.json).
 // The counter of questions tried lives in sessionStorage only: it is per tab, per visit, and never leaves the browser.
 const TRIES_KEY = "ccot.tries";
-const store = { get() { try { return JSON.parse(sessionStorage.getItem(TRIES_KEY) || "[]"); } catch (e) { return []; } }, set(v) { try { sessionStorage.setItem(TRIES_KEY, JSON.stringify(v)); } catch (e) { /* storage blocked: the counter just stays at what it was */ } } };
+let memTries = [];   // used when session storage is blocked, so the count still works for the life of the page
+const store = {
+  get() { try { const v = JSON.parse(sessionStorage.getItem(TRIES_KEY) || "[]"); if (Array.isArray(v)) { if (v.length >= memTries.length) memTries = v; return memTries; } } catch (e) { /* blocked */ } return memTries; },
+  set(v) { memTries = v; try { sessionStorage.setItem(TRIES_KEY, JSON.stringify(v)); } catch (e) { /* storage blocked: the in-memory list keeps counting */ } },
+};
 const triesNow = () => store.get().length;
-const shareQuery = R => `src=${R.v.src}&v=${R.v.src === "power" ? R.v.power_param : R.v.key}&b=${[R.box.s, R.box.n, R.box.w, R.box.e].join(",")}&y=${R.y0}-${R.y1}&s=${R.season.key.toUpperCase()}`;
-function noteTry(R) { // a question is one source + variable + box + years + season; running the same one again is not a new question
+const num4 = x => (Number.isFinite(+x) ? (+x).toFixed(4).replace(/\.?0+$/, "") : String(x));
+// One question = one source + variable + numeric box + years + season. Running the same one again (a retry, a revisit, a replay link) is not a new question.
+const shareQuery = R => `src=${R.v.src}&v=${R.v.src === "power" ? R.v.power_param : R.v.key}&b=${[R.box.s, R.box.n, R.box.w, R.box.e].map(num4).join(",")}&y=${R.y0}-${R.y1}&s=${R.season.key.toUpperCase()}`;
+function noteTry(R) {
   const key = shareQuery(R), seen = store.get();
   if (!seen.includes(key)) store.set([...seen, key]);
 }
 const shareHash = R => "#/investigate?" + shareQuery(R);
 const shareUrl = R => location.origin + location.pathname + location.search + shareHash(R);
 function syncUrl(hash) { try { if (location.hash.startsWith("#/investigate") && location.hash !== hash) history.replaceState(null, "", hash); } catch (e) { /* ignore */ } }
+const triesText = () => { const n = triesNow(); return `You have tested ${n} distinct question${n === 1 ? "" : "s"} this visit. More tries create more opportunities for false alarms. These questions overlap, so ${n} does not determine an exact false-alarm probability. Keep every attempt, not just the striking one.`; };
 const triesLine = () => { const n = triesNow(); if (!n) return null;
-  return h("p", { class: "tries", id: "tries" }, h("b", {}, `You have tested ${n} question${n === 1 ? "" : "s"} this visit.`), " Each extra question gives another chance for something to look significant by luck. The questions here overlap (nearby periods, boxes and variables share data), so we cannot put an exact number on that chance. Keep every attempt in view, not just the striking one, and treat a single striking result as a lead, not a finding."); };
+  return h("p", { class: "tries", id: "tries" }, triesText()); };
 
 let libVars = null; // the manifest's variables, once read
 
@@ -60,7 +67,8 @@ export function detective(cat, bundle, query = "") {
   const caseIds = new Set(((bundle && bundle.claims) || []).map(c => c.id));
   const P = cat.presets, S = cat.seasons;
   const root = h("div", {});
-  let M = [], runId = 0, prog = null, demo = null, timer = null, pending = false, countNext = false, built = false;
+  let M = [], runId = 0, prog = null, demo = null, timer = null, pending = false, countNext = false, built = false, ctl = null, holding = false;
+  const dataCache = new Map();   // the last downloaded series per measurement and box, so season changes and contained year windows need no new request
 
   // ======================================================== measurements: the two sources in one list
   function buildMeasures() {
@@ -226,8 +234,18 @@ export function detective(cat, bundle, query = "") {
       warn.hidden = !warn.textContent;
     };
     const apply = (a, b, now) => { state.y0 = a; state.y1 = b; paint(); changed(now); };
+    // One continuous drag (or one held arrow key) publishes one question, on release, however long the pause in the middle.
+    const release = () => { if (!holding) return; holding = false; if (pending) { clearTimeout(timer); timer = setTimeout(() => run(), DEBOUNCE_MS); } };
+    for (const el of [lo, hi]) {
+      el.addEventListener("pointerdown", () => { holding = true; const up = () => { window.removeEventListener("pointerup", up); window.removeEventListener("pointercancel", up); release(); }; window.addEventListener("pointerup", up); window.addEventListener("pointercancel", up); });
+      el.addEventListener("keydown", e => { if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End", "PageUp", "PageDown"].includes(e.key)) holding = true; });
+      el.addEventListener("keyup", () => release());
+      el.addEventListener("blur", () => release());
+    }
     lo.addEventListener("input", () => apply(Math.min(+lo.value, state.y1 - 1), state.y1));
     hi.addEventListener("input", () => apply(state.y0, Math.max(+hi.value, state.y0 + 1)));
+    const typed = () => { const a = +y0n.value, b2 = +y1n.value; if (Number.isInteger(a) && Number.isInteger(b2) && String(y0n.value).length === 4 && String(y1n.value).length === 4 && a >= v.since && b2 <= v.last && a < b2) apply(a, b2, false); };
+    y0n.addEventListener("input", typed); y1n.addEventListener("input", typed);
     y0n.addEventListener("change", () => apply(Math.max(v.since, Math.min(+y0n.value || v.since, state.y1 - 1)), state.y1, true));
     y1n.addEventListener("change", () => apply(state.y0, Math.min(v.last, Math.max(+y1n.value || v.last, state.y0 + 1)), true));
     const seasons = h("div", { class: "pills season-pills", role: "radiogroup", "aria-label": "Season" }, S.map(x => h("label", {}, h("input", { type: "radio", name: "season", value: x.key, checked: x.key === state.season, onchange: () => { state.season = x.key; seasonNote.textContent = seasonText(x); changed(); } }),
@@ -254,9 +272,14 @@ export function detective(cat, bundle, query = "") {
     // The two saved requests (Wisconsin air temperature, Sahel rainfall; both 1981-2025) back up the live request for guided examples and for the default view.
     const hit = CACHES.find(d => { const preset = P.find(q => q.key === d.preset); return args.variable.key === d.key && preset && sameBox(preset.box, args.box) && args.startYear === 1981 && args.endYear === 2025; });
     if (!hit) return fetchMonthly(args);
-    try { return await Promise.race([fetchMonthly(args), new Promise((_, rej) => setTimeout(() => rej(new Error("NASA POWER took too long.")), DEMO_TIMEOUT_MS))]); }
+    const lc = new AbortController(), link = () => lc.abort(); let tm = 0;
+    if (args.signal) { if (args.signal.aborted) lc.abort(); else args.signal.addEventListener("abort", link, { once: true }); }
+    try { return await Promise.race([fetchMonthly({ ...args, signal: lc.signal }), new Promise((_, rej) => { tm = setTimeout(() => { lc.abort(); rej(new Error("NASA POWER took too long.")); }, DEMO_TIMEOUT_MS); })]); }
     catch (e) {
+      if (args.signal && args.signal.aborted) throw e;
+      
       let c; try { const r = await fetch(`data/demo_cache/${hit.cache}.json`); if (!r.ok) throw new Error("no cache"); c = await r.json(); } catch (e2) { throw e; }
+      if (args.signal && args.signal.aborted) throw e;
       if (args.onProgress) args.onProgress({ done: 1, total: 1 });
       const rows = c.rows.map(([year, month, value]) => ({ year, month, value }));
       return { stub: false, source: args.variable.source, units: c.units, rows, note: c.note, method: c.method, n_tiles: c.n_tiles, n_cells: c.n_cells, first_year: c.first_year, last_year: c.last_year, cached: true, cachedLabel: `The live NASA POWER request did not work just now, so this shows the identical request, saved on ${c.fetched_label}, 2026. Live data is tried first every time.` };
@@ -264,29 +287,45 @@ export function detective(cat, bundle, query = "") {
   }
   const cachedBadge = R => R && R.data && R.data.cached ? h("p", { class: "callout", role: "note" }, h("b", {}, "Cached copy from Nov 14. "), R.data.cachedLabel) : null;
 
-  async function run(counted) {
-    clearTimeout(timer); pending = false;
-    const errs = validateBox(state.box), v = curVar(), season = curSeason(), my = ++runId;
-    if (errs.length) { state.status = "error"; state.err = errs.join(" "); state.stale = false; drawResult(); drawProgress(); return false; }
-    if (v.src === "power" && planBox(state.box).kind === "too_big") { state.status = "error"; state.err = planBox(state.box).message; state.stale = false; drawResult(); drawProgress(); return false; }
+  // Reuse what is already downloaded: a POWER series covers any year window inside it (and any season); a library series is reused for the same window.
+  function cachedData(v, box, y0, y1) {
+    const e = dataCache.get(`${v.src}|${v.key}|${[box.s, box.n, box.w, box.e].map(num4).join(",")}`);
+    if (!e) return null;
+    if (v.src === "library") return e.y0 === y0 && e.y1 === y1 ? e.data : null;
+    if (e.y0 > y0 || e.y1 < y1) return null;
+    if (e.y0 === y0 && e.y1 === y1) return e.data;
+    const rows = e.data.rows.filter(r => r.year >= y0 && r.year <= y1);
+    return rows.length ? { ...e.data, rows, first_year: rows[0].year, last_year: rows[rows.length - 1].year } : null;
+  }
+  async function run() {
+    clearTimeout(timer); pending = false; if (ctl) { ctl.abort(); ctl = null; }
+    // Snapshot every setting before awaiting: what the result shows is what was asked when the run began, whatever is clicked meanwhile.
+    const v = curVar(), season = curSeason(), box = { ...state.box }, y0 = state.y0, y1 = state.y1, my = ++runId, asked = { v, season, box, y0, y1 };
+    const errs = validateBox(box);
+    if (errs.length) { state.status = "error"; state.err = errs.join(" "); state.stale = false; drawResult(); drawProgress(); updateStrip(); return false; }
+    if (v.src === "power" && planBox(box).kind === "too_big") { state.status = "error"; state.err = planBox(box).message; state.stale = false; drawResult(); drawProgress(); updateStrip(); return false; }
+    const own = cachedData(v, box, y0, y1);
     state.status = "loading"; state.err = ""; state.stale = !!state.last;
     const bar = h("progress", { max: 1, value: 0, "aria-label": "Download progress" }), cap = h("p", { class: "muted small", style: "margin:8px 0 0" }, v.src === "library" ? "Reading the NASA data library." : "Contacting NASA POWER.");
-    prog = { bar, cap, name: v.name.toLowerCase(), src: v.src }; drawResult(); drawProgress();
+    prog = { bar, cap, name: v.name.toLowerCase(), src: v.src }; drawResult(); drawProgress(); updateStrip();
+    ctl = new AbortController(); const signal = ctl.signal;
     try {
       const onProgress = ({ done, total }) => { if (my !== runId) return; bar.value = total ? done / total : 0; cap.textContent = `${done} of ${total} ${v.src === "library" ? "file" : "request"}${total === 1 ? "" : "s"} done.`; };
-      const data = v.src === "library" ? await libraryRegional({ variable: v, box: state.box, y0: state.y0, y1: state.y1, onProgress }) : await fetchOrCache({ variable: v, box: state.box, startYear: state.y0, endYear: state.y1, onProgress });
-      if (my !== runId) return false; // the user changed a choice while the data was coming
+      const data = own || (v.src === "library" ? await libraryRegional({ variable: v, box, y0, y1, onProgress, signal }) : await fetchOrCache({ variable: v, box, startYear: y0, endYear: y1, onProgress, signal }));
+      if (my !== runId) return false; // a newer question was asked while the data was coming: this answer is dropped
+      if (!own) dataCache.set(`${v.src}|${v.key}|${[box.s, box.n, box.w, box.e].map(num4).join(",")}`, { y0, y1, data });
       let rows, skipped = [];
-      if (v.src === "library") { const c = completeSeasons(data.rows, season.months, state.y0, state.y1); rows = c.rows; skipped = c.skipped; } else rows = data.rows.filter(r => season.months.includes(r.month));
-      const R = { v, season, data, rows, skipped, box: { ...state.box }, y0: state.y0, y1: state.y1, flagged: v.src === "library" && pastQuality(v, state.y1) };
+      if (v.src === "library") { const c = completeSeasons(data.rows, season.months, y0, y1); rows = c.rows; skipped = c.skipped; } else rows = data.rows.filter(r => season.months.includes(r.month));
+      const R = { v, season, data, rows, skipped, box: { ...asked.box }, y0, y1, flagged: v.src === "library" && pastQuality(v, y1) };
       state.result = R; state.last = analyze(R); state.status = "ready"; state.stale = false;
-      if (!demo) { if (counted && !state.last.W.tooShort) noteTry(R); if (!state.last.W.tooShort) syncUrl(shareHash(R)); }
-      drawResult(); drawProgress();
+      // A question counts once, when its result is displayed: failed, superseded and too-short runs do not count, and neither do repeats.
+      if (!state.last.W.tooShort) { noteTry(R); if (!demo) syncUrl(shareHash(R)); }
+      drawResult(); drawProgress(); updateStrip();
       announce("Result updated. " + (state.last.W.tooShort ? "Too few years to test." : `Ruling: ${rulingLabel(state.last).label}.`));
       return true;
     } catch (e) {
-      if (my !== runId) return false;
-      state.status = "error"; state.stale = false; state.err = "Could not get the series. " + (e && e.message || e); drawResult(); drawProgress(); return false;
+      if (my !== runId || (signal && signal.aborted)) return false;
+      state.status = "error"; state.stale = false; state.err = "Could not get the series. " + (e && e.message || e); drawResult(); drawProgress(); updateStrip(); return false;
     }
   }
   function analyze(R) {
@@ -311,15 +350,16 @@ export function detective(cat, bundle, query = "") {
     return { W, R, rungs };
   }
   // Any input change: the question updates at once, the result follows after a short pause (so dragging a handle does not fire a request per year).
+  // draft: a handle is being dragged or an arrow key is held. The question and the status update at once; the statistics wait for release.
   function changed(now) {
     if (demo) { demo = null; document.querySelectorAll(".demo-focus").forEach(e => e.classList.remove("demo-focus")); drawDemoCard(); } // changing an input ends a guided example
-    drawHeader(); drawProgress(); clearTimeout(timer); pending = true; runId++; // an in-flight run for the old question is now stale
+    drawHeader(); drawProgress(); clearTimeout(timer); pending = true; runId++; if (ctl) { ctl.abort(); ctl = null; } // an in-flight run for the old question is now stale
     state.stale = !!state.last; if (state.status === "loading") state.status = "idle";
     if (resultBusy) resultBusy.hidden = false;
-    timer = setTimeout(() => run(true), now ? 0 : DEBOUNCE_MS);
-    markPending();
+    if (!holding) timer = setTimeout(() => run(), now ? 0 : DEBOUNCE_MS);
+    markPending(); updateStrip();
   }
-  function markPending() { const b = document.getElementById("result-state"); if (b) { b.textContent = "Updating"; b.hidden = false; } document.querySelector(".result-grid")?.classList.add("stale"); }
+  function markPending() { const b = document.getElementById("result-state"); if (b) { b.textContent = "Updating"; b.hidden = false; } document.querySelector(".result-grid")?.classList.add("stale"); const n = document.getElementById("prev-note"); if (n) n.hidden = false; }
 
   // ======================================================== the result: record, trial and ruling, directly under the builder
   const resultHost = h("section", { class: "result", id: "result", "aria-labelledby": "result-h" });
@@ -437,7 +477,9 @@ export function detective(cat, bundle, query = "") {
     const foot = L && !L.W.tooShort && state.status !== "error" ? h("div", { class: "result-foot" },
       h("div", { class: "actions" }, csvBtn(L.W, L.R), linkBtn(L.R)), triesLine(),
       h("p", { class: "caution" }, "Every new window, place or season you try is another chance to find a trend by luck. Report every try, not only the one that looks best. ", h("a", { href: "#/cases" }, "See a registered case"))) : null;
-    resultHost.replaceChildren(headRow, body, foot);
+    const own = R && L && !L.W.tooShort && state.status !== "error" ? h("p", { class: "result-own muted small", style: "margin:0 0 var(--sp-3)" }, `${R.v.name} \u00b7 ${isWorld(R.box) ? "whole world" : boxStr(R.box)} \u00b7 ${R.y0}\u2013${R.y1} \u00b7 ${R.season.key === "all" ? "whole year" : seasonShort(R.season)}`) : null;
+    const prev = h("p", { class: "callout", id: "prev-note", role: "note", hidden: !(state.stale && (pending || state.status === "loading")) }, h("b", {}, "Previous question \u2014 updating. "), "The numbers below belong to the settings listed above them, not to the ones you have just chosen.");
+    resultHost.replaceChildren(headRow, prev, own, body, foot);
     if (demo) drawDemoCard();
   }
 
@@ -518,10 +560,22 @@ export function detective(cat, bundle, query = "") {
   }
   function exitDemo() { demo = null; document.querySelectorAll(".demo-focus").forEach(e => e.classList.remove("demo-focus")); drawDemoCard(); drawProgress(); document.getElementById("demo")?.querySelector("summary")?.focus(); }
 
-  // ======================================================== phones: a sticky "See result" action
-  let seeBtn = null;
-  seeBtn = h("button", { class: "btn", type: "button", id: "see-result", onclick: () => { if (pending) run(true); jump("result"); } }, "See result");
-  const seeBar = h("div", { class: "see-bar" }, seeBtn);
+  // ======================================================== status strip: always says what the page is showing and whether it is still catching up
+  const stripText = h("span", { class: "strip-text", role: "status", "aria-live": "polite" });
+  const strip = h("div", { class: "status-strip" }, stripText, h("a", { class: "btn-text strip-jump", href: "#result", onclick: e => { e.preventDefault(); jump("result"); } }, "Jump to record"));
+  function updateStrip() {
+    const se = curSeason(), base = `${state.y0}\u2013${state.y1} \u00b7 ${state.season === "all" ? "Whole year" : seasonShort(se).replace(/^./, c => c.toUpperCase())}`;
+    const L = state.last, busy = pending || state.status === "loading";
+    const n = triesNow(), count = n ? ` \u00b7 ${n} question${n === 1 ? "" : "s"} tried` : "";
+    let t;
+    if (busy) t = `${base} \u00b7 Updating\u2026`;
+    else if (state.status === "error") t = `${base} \u00b7 Could not run`;
+    else if (L && !L.W.tooShort && state.status === "ready") t = `${signed(L.W.A_an.sen.slopePerDecade, 2)} ${U(L.R.v.units)}/decade \u00b7 Exploratory${count}`;
+    else if (L && L.W.tooShort) t = `${base} \u00b7 Too few years to test`;
+    else t = `${base} \u00b7 Updating\u2026`;
+    stripText.textContent = t;
+  }
+  const seeBar = strip;
 
   // ======================================================== layout
   const replayNote = h("div", { hidden: true });
@@ -550,12 +604,12 @@ export function detective(cat, bundle, query = "") {
     }
     if (curVar().src === "power" && isWorld(state.box)) state.box = { ...P.find(p => p.key === "wisconsin").box };
     clampYears(); wm.setBox(state.box); for (const k of "nswe") inputs[k].value = state.box[k];
-    drawHeader(); drawProgress(); drawMeasure(); drawPlace(""); drawPeriod(); drawDemoCard();
+    drawHeader(); drawProgress(); drawMeasure(); drawPlace(""); drawPeriod(); drawDemoCard(); updateStrip();
     built = true;
     if (state.last && !replay) { drawResult(); return; } // coming back to the page in the same tab: show the last result again
     drawResult();
-    run(!!replay && replayOk); // a replay link counts as a question tried; the default view on arrival does not
+    run(); // the first result counts when it is displayed, like any other
   }
   if (libVars) setup(); else { resultHost.replaceChildren(h("p", { class: "muted loading" }, "Loading the NASA data library list.")); loadLibrary().then(v => { libVars = v; setup(); }); }
-  return { node: root, title: "Investigate a question", dispose() { killSpiral(); clearTimeout(timer); runId++; } };
+  return { node: root, title: "Investigate a question", dispose() { killSpiral(); clearTimeout(timer); runId++; if (ctl) { ctl.abort(); ctl = null; } } };
 }

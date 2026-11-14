@@ -1,0 +1,2111 @@
+{
+ "id": "airs_h2o",
+ "product": "AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)",
+ "collection": {
+  "concept_id": "C1701805662-GES_DISC",
+  "short_name": "AIRS3STM",
+  "version": "7.0",
+  "doi": "10.5067/UBENJB9D3T2H",
+  "title": "Aqua/AIRS L3 Monthly Standard Physical Retrieval (AIRS-only) 1 degree x 1 degree V7.0",
+  "temporal": [
+   {
+    "BeginningDateTime": "2002-09-01T00:00:00.000Z"
+   }
+  ]
+ },
+ "agency_archive": "NASA GES DISC",
+ "source_variable": "TotH2OVap_A and TotH2OVap_D (kg/m2, mean of the two)",
+ "access": "Earthdata Login (environment token); GES DISC OPeNDAP DAP4 server-side subset of 4 variables per month in one request, in memory (no raw file kept)",
+ "retrieved_utc": [
+  "2026-11-14T18:20:07.268868+00:00",
+  "2026-11-14T18:21:18.536784+00:00"
+ ],
+ "regrid": "none: AIRS3STM is already 1 degree, row 0 = 89.5N; (TotH2OVap_A + TotH2OVap_D) / 2",
+ "granules": [
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.01.01.L3.RetStd_IR031.v7.0.3.0.G20217173932.hdf",
+   "year": 2003,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.01.01.L3.RetStd_IR031.v7.0.3.0.G20217173932.hdf",
+   "sha256_dap_response": "0aefb5a81bfaf85dcaf7502c05ca0a000bb24c799a75153621a58b1400215f75"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.02.01.L3.RetStd_IR028.v7.0.3.0.G20217173600.hdf",
+   "year": 2003,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.02.01.L3.RetStd_IR028.v7.0.3.0.G20217173600.hdf",
+   "sha256_dap_response": "2db5ebc1066d056b04e47d3cc16500df02bee21b5c91326f47845eda1494a58f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.03.01.L3.RetStd_IR031.v7.0.3.0.G20217173747.hdf",
+   "year": 2003,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.03.01.L3.RetStd_IR031.v7.0.3.0.G20217173747.hdf",
+   "sha256_dap_response": "772dbb6caf85b08247e38c7616567b113ca06ac3543549391f2766d8537f8a8f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.04.01.L3.RetStd_IR030.v7.0.3.0.G20174141813.hdf",
+   "year": 2003,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.04.01.L3.RetStd_IR030.v7.0.3.0.G20174141813.hdf",
+   "sha256_dap_response": "15d04b333bbcfe97bc6e1fcc50b4e0b744509445de4b22073949bbaa41f756f8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.05.01.L3.RetStd_IR031.v7.0.3.0.G20217183834.hdf",
+   "year": 2003,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.05.01.L3.RetStd_IR031.v7.0.3.0.G20217183834.hdf",
+   "sha256_dap_response": "107986df5a8b0216e187370815071c67b9b93371da667366a0a5de0e4b399e83"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.06.01.L3.RetStd_IR030.v7.0.3.0.G20171234211.hdf",
+   "year": 2003,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.06.01.L3.RetStd_IR030.v7.0.3.0.G20171234211.hdf",
+   "sha256_dap_response": "83f93e8c4c6ef1363919edd4fe07a3bf344ad98e76b05369062efe66db373957"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.07.01.L3.RetStd_IR031.v7.0.3.0.G20218101211.hdf",
+   "year": 2003,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.07.01.L3.RetStd_IR031.v7.0.3.0.G20218101211.hdf",
+   "sha256_dap_response": "c1beeb33e15ba753119b6be329de1de106e0d1ff6f15afe8b029c5bf471f920f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.08.01.L3.RetStd_IR031.v7.0.3.0.G20218101222.hdf",
+   "year": 2003,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.08.01.L3.RetStd_IR031.v7.0.3.0.G20218101222.hdf",
+   "sha256_dap_response": "37015d13bb75982507e21048526c7906da12143970ab69fbfce89e97311a55c4"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.09.01.L3.RetStd_IR030.v7.0.3.0.G20174225208.hdf",
+   "year": 2003,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.09.01.L3.RetStd_IR030.v7.0.3.0.G20174225208.hdf",
+   "sha256_dap_response": "24d078f04cf98979fd100953ead37e25e679d699699f89377015c6da666d8489"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.10.01.L3.RetStd_IR031.v7.0.3.0.G20218143612.hdf",
+   "year": 2003,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.10.01.L3.RetStd_IR031.v7.0.3.0.G20218143612.hdf",
+   "sha256_dap_response": "64ec4d19e0aa5342aa472008750a802819127b64db1fb810aa28419c1d531bb9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.11.01.L3.RetStd_IR030.v7.0.3.0.G20218143235.hdf",
+   "year": 2003,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.11.01.L3.RetStd_IR030.v7.0.3.0.G20218143235.hdf",
+   "sha256_dap_response": "454e9c75d572c42f06b47536ac0d06819f9f161326e1609ce22c5088fea73a54"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2003.12.01.L3.RetStd_IR031.v7.0.3.0.G20218141731.hdf",
+   "year": 2003,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2003/AIRS.2003.12.01.L3.RetStd_IR031.v7.0.3.0.G20218141731.hdf",
+   "sha256_dap_response": "c82d55d00e3822259c1df3231ed697d331c78e6c4854487576705d757e579143"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.01.01.L3.RetStd_IR031.v7.0.3.0.G20217160916.hdf",
+   "year": 2004,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.01.01.L3.RetStd_IR031.v7.0.3.0.G20217160916.hdf",
+   "sha256_dap_response": "66dbd3e16723f9def56efdd1186f4659106ff4bda9d7edaf917e87ff9aa43537"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.02.01.L3.RetStd_IR029.v7.0.3.0.G20217160823.hdf",
+   "year": 2004,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.02.01.L3.RetStd_IR029.v7.0.3.0.G20217160823.hdf",
+   "sha256_dap_response": "c13af0abe12999c924c75abd5900360fae339260b3521b08bdee291dfa7e3490"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.03.01.L3.RetStd_IR031.v7.0.3.0.G20217160834.hdf",
+   "year": 2004,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.03.01.L3.RetStd_IR031.v7.0.3.0.G20217160834.hdf",
+   "sha256_dap_response": "d023fe0d36c831c6ac11aebd7e391dd53332ff8b17519992389496f08e8ab0b3"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.04.01.L3.RetStd_IR030.v7.0.3.0.G20170205834.hdf",
+   "year": 2004,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.04.01.L3.RetStd_IR030.v7.0.3.0.G20170205834.hdf",
+   "sha256_dap_response": "fb3c062d26ddc98bd6269373c8445f4b0c5a0ee3b5b5a04a463c3af00c410b45"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.05.01.L3.RetStd_IR031.v7.0.3.0.G20217190152.hdf",
+   "year": 2004,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.05.01.L3.RetStd_IR031.v7.0.3.0.G20217190152.hdf",
+   "sha256_dap_response": "828aab8750901099ee38a3f0dea99e9e7570cd8d9d375a49220df85ea3157165"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.06.01.L3.RetStd_IR030.v7.0.3.0.G20170205702.hdf",
+   "year": 2004,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.06.01.L3.RetStd_IR030.v7.0.3.0.G20170205702.hdf",
+   "sha256_dap_response": "4481ea6fb1418363cd70c3a0ed6ccd4ba0796c4e3ad3e96bcf20c39ee4f2ed09"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.07.01.L3.RetStd_IR031.v7.0.3.0.G20218055233.hdf",
+   "year": 2004,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.07.01.L3.RetStd_IR031.v7.0.3.0.G20218055233.hdf",
+   "sha256_dap_response": "d9d0a3ab2b2da52c85e6821c6f0ff38b074006ade1255a4057fe837a7e0568db"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.08.01.L3.RetStd_IR031.v7.0.3.0.G20218055212.hdf",
+   "year": 2004,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.08.01.L3.RetStd_IR031.v7.0.3.0.G20218055212.hdf",
+   "sha256_dap_response": "655e7cea24b256b6fef1e10a67a85f77561a80684967fbf901ab0a622a197b6e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.09.01.L3.RetStd_IR030.v7.0.3.0.G20171084154.hdf",
+   "year": 2004,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.09.01.L3.RetStd_IR030.v7.0.3.0.G20171084154.hdf",
+   "sha256_dap_response": "3c211a66f84a254b99a23ddd703de4de9858e00d5ca0a749b5ed2d027c438128"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.10.01.L3.RetStd_IR031.v7.0.3.0.G20218151014.hdf",
+   "year": 2004,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.10.01.L3.RetStd_IR031.v7.0.3.0.G20218151014.hdf",
+   "sha256_dap_response": "61976d3cd3dc5a724ddeed8d4e495e0c46b99fa86f6e2b52e91cae7e33ca93ea"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.11.01.L3.RetStd_IR030.v7.0.3.0.G20218150947.hdf",
+   "year": 2004,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.11.01.L3.RetStd_IR030.v7.0.3.0.G20218150947.hdf",
+   "sha256_dap_response": "7659f816992f0db204cdb500286997e3ff9b42745055ccc0cf17b8f98c2ea29f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2004.12.01.L3.RetStd_IR031.v7.0.3.0.G20218150945.hdf",
+   "year": 2004,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2004/AIRS.2004.12.01.L3.RetStd_IR031.v7.0.3.0.G20218150945.hdf",
+   "sha256_dap_response": "a443296694a4083cd4763d00e328e62abc9f8d5ee8d949121b14f813397c11a7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.01.01.L3.RetStd_IR031.v7.0.3.0.G20217151253.hdf",
+   "year": 2005,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.01.01.L3.RetStd_IR031.v7.0.3.0.G20217151253.hdf",
+   "sha256_dap_response": "ec963099e6babb05e0f158549377cc908c39683c97ad48f7e23371a305d5d001"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.02.01.L3.RetStd_IR028.v7.0.3.0.G20217151152.hdf",
+   "year": 2005,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.02.01.L3.RetStd_IR028.v7.0.3.0.G20217151152.hdf",
+   "sha256_dap_response": "1bcf9be2670e0eb9585e8056eae41c42f9080e3c3b28821782a26022f7e2c3df"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.03.01.L3.RetStd_IR031.v7.0.3.0.G20217151332.hdf",
+   "year": 2005,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.03.01.L3.RetStd_IR031.v7.0.3.0.G20217151332.hdf",
+   "sha256_dap_response": "66b7c71b5feda4505afc645c230a27b20a135ff59bbe2ddf3152ac215e312f28"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.04.01.L3.RetStd_IR030.v7.0.3.0.G20168195630.hdf",
+   "year": 2005,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.04.01.L3.RetStd_IR030.v7.0.3.0.G20168195630.hdf",
+   "sha256_dap_response": "0828f0af34668658ba565868d267a7ecf21e8d358f1c158dbc6ff2abea90844d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.05.01.L3.RetStd_IR031.v7.0.3.0.G20217191300.hdf",
+   "year": 2005,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.05.01.L3.RetStd_IR031.v7.0.3.0.G20217191300.hdf",
+   "sha256_dap_response": "b64ddc722e7ef07cb186fa306840449bfff9fd1f05b7cfcd9a9707c7b497072c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.06.01.L3.RetStd_IR030.v7.0.3.0.G20168195622.hdf",
+   "year": 2005,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.06.01.L3.RetStd_IR030.v7.0.3.0.G20168195622.hdf",
+   "sha256_dap_response": "297cfc79f9f71e7fdebd83ae91e68c024aaf0ebf793304e562e35ed6799a220f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.07.01.L3.RetStd_IR031.v7.0.3.0.G20218051720.hdf",
+   "year": 2005,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.07.01.L3.RetStd_IR031.v7.0.3.0.G20218051720.hdf",
+   "sha256_dap_response": "e7accb76909f7775a7a46aeb32d89cd6c309f0f3597a9b4a00f06d7caeaefee7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.08.01.L3.RetStd_IR031.v7.0.3.0.G20218051716.hdf",
+   "year": 2005,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.08.01.L3.RetStd_IR031.v7.0.3.0.G20218051716.hdf",
+   "sha256_dap_response": "d339d8081fe47ce4dcf1ca61d4d9d7c2e7054fe851768d7afba61d7232b19e2c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.09.01.L3.RetStd_IR030.v7.0.3.0.G20169045526.hdf",
+   "year": 2005,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.09.01.L3.RetStd_IR030.v7.0.3.0.G20169045526.hdf",
+   "sha256_dap_response": "d6285f19c1147d257ffc450541e2d05e9e94c237adac3886e66dedb03502b99c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.10.01.L3.RetStd_IR031.v7.0.3.0.G20218172530.hdf",
+   "year": 2005,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.10.01.L3.RetStd_IR031.v7.0.3.0.G20218172530.hdf",
+   "sha256_dap_response": "a0707835395f18a39b66324cc2b328adab83b3f957f90ea2328e08386d3a6593"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.11.01.L3.RetStd_IR030.v7.0.3.0.G20218172439.hdf",
+   "year": 2005,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.11.01.L3.RetStd_IR030.v7.0.3.0.G20218172439.hdf",
+   "sha256_dap_response": "c31e0959e923311bcf35bc292cf0f1bb2cba0a688b504c4fdd8ff052f00f0648"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2005.12.01.L3.RetStd_IR031.v7.0.3.0.G20218172530.hdf",
+   "year": 2005,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2005/AIRS.2005.12.01.L3.RetStd_IR031.v7.0.3.0.G20218172530.hdf",
+   "sha256_dap_response": "36dc70717be155b2157a1cfbda23ee0e038256837078fa700ba32274229da5ec"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.01.01.L3.RetStd_IR031.v7.0.3.0.G20217143806.hdf",
+   "year": 2006,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.01.01.L3.RetStd_IR031.v7.0.3.0.G20217143806.hdf",
+   "sha256_dap_response": "48c687d5333f257846ef6eb0c96010bc8591f8739fbb238e934125570dd82db0"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.02.01.L3.RetStd_IR028.v7.0.3.0.G20217143656.hdf",
+   "year": 2006,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.02.01.L3.RetStd_IR028.v7.0.3.0.G20217143656.hdf",
+   "sha256_dap_response": "ce4046687932c2df50fc3b19366c603e8e60fc24965ff92978f1ad82dcbc3dfe"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.03.01.L3.RetStd_IR031.v7.0.3.0.G20217143747.hdf",
+   "year": 2006,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.03.01.L3.RetStd_IR031.v7.0.3.0.G20217143747.hdf",
+   "sha256_dap_response": "8b849fe3760689f8193fe6143c5de3e9f7364147ec5ecbf8e8e84eca035c04c1"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.04.01.L3.RetStd_IR030.v7.0.3.0.G20166100852.hdf",
+   "year": 2006,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.04.01.L3.RetStd_IR030.v7.0.3.0.G20166100852.hdf",
+   "sha256_dap_response": "6998bc25a53bcfba29b92688195b26fb62e12362b613409959cfec6e93bc3239"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.05.01.L3.RetStd_IR031.v7.0.3.0.G20217194224.hdf",
+   "year": 2006,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.05.01.L3.RetStd_IR031.v7.0.3.0.G20217194224.hdf",
+   "sha256_dap_response": "b21dfddfcf11e99b7fa4d8ce19f3882563ada86d5f9a549022172710c2ae8d7c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.06.01.L3.RetStd_IR030.v7.0.3.0.G20166101419.hdf",
+   "year": 2006,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.06.01.L3.RetStd_IR030.v7.0.3.0.G20166101419.hdf",
+   "sha256_dap_response": "63581554f92f28c69e027a7aa5a5a1a2b2957a4b4682b516f65d0ea3d2977316"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.07.01.L3.RetStd_IR031.v7.0.3.0.G20218044441.hdf",
+   "year": 2006,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.07.01.L3.RetStd_IR031.v7.0.3.0.G20218044441.hdf",
+   "sha256_dap_response": "82fe0a940bc8102579dd01eb034d58c2fc31e0c0e20a6699ee56eeed042a769b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.08.01.L3.RetStd_IR031.v7.0.3.0.G20218044441.hdf",
+   "year": 2006,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.08.01.L3.RetStd_IR031.v7.0.3.0.G20218044441.hdf",
+   "sha256_dap_response": "ebdb1b13bc05e2ac79b29d1149c7ae54383f7d44e4918a510af9f90644286489"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.09.01.L3.RetStd_IR030.v7.0.3.0.G20167155918.hdf",
+   "year": 2006,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.09.01.L3.RetStd_IR030.v7.0.3.0.G20167155918.hdf",
+   "sha256_dap_response": "e8fc25d1ff36d5e936606c2a3b9344382c913b7c5460f7b2fe5d79977eb3fe93"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.10.01.L3.RetStd_IR031.v7.0.3.0.G20218183622.hdf",
+   "year": 2006,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.10.01.L3.RetStd_IR031.v7.0.3.0.G20218183622.hdf",
+   "sha256_dap_response": "6970b6b933203448b4e2172bdd31715217b59380b5be97af34912cc2ab0e2261"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.11.01.L3.RetStd_IR030.v7.0.3.0.G20218183538.hdf",
+   "year": 2006,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.11.01.L3.RetStd_IR030.v7.0.3.0.G20218183538.hdf",
+   "sha256_dap_response": "e37a389c96e9ff556b20dbefc858b61e15c5e2c5af191725c921b998dc72b793"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2006.12.01.L3.RetStd_IR031.v7.0.3.0.G20218183602.hdf",
+   "year": 2006,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2006/AIRS.2006.12.01.L3.RetStd_IR031.v7.0.3.0.G20218183602.hdf",
+   "sha256_dap_response": "a5b83b9ed38c1d018a7b738ad47ebda1acca674dac02343b215037e96cfb8e03"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.01.01.L3.RetStd_IR031.v7.0.3.0.G20217122949.hdf",
+   "year": 2007,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.01.01.L3.RetStd_IR031.v7.0.3.0.G20217122949.hdf",
+   "sha256_dap_response": "fc533edcd1ea87f2ba0db7ba536f5ca6565af95e4d05001e8b4bbd9531e371db"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.02.01.L3.RetStd_IR028.v7.0.3.0.G20217122914.hdf",
+   "year": 2007,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.02.01.L3.RetStd_IR028.v7.0.3.0.G20217122914.hdf",
+   "sha256_dap_response": "e4fc715f84cf40497fa871a35c76d55750ea65da0538c566e39c4ce8d1af702c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.03.01.L3.RetStd_IR031.v7.0.3.0.G20217123002.hdf",
+   "year": 2007,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.03.01.L3.RetStd_IR031.v7.0.3.0.G20217123002.hdf",
+   "sha256_dap_response": "24f23385736ed7e2b007a6f7d778ed38cafff83d755f6c1aea31943205b8ae40"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.04.01.L3.RetStd_IR030.v7.0.3.0.G20164143558.hdf",
+   "year": 2007,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.04.01.L3.RetStd_IR030.v7.0.3.0.G20164143558.hdf",
+   "sha256_dap_response": "ddcfdbbdbcb0e494e505ccf4a221365d6655775cc2b30216d4ff90646f84ec39"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.05.01.L3.RetStd_IR031.v7.0.3.0.G20217195230.hdf",
+   "year": 2007,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.05.01.L3.RetStd_IR031.v7.0.3.0.G20217195230.hdf",
+   "sha256_dap_response": "a02308863c3fa14cb1bc9e1bb9546d7e3e59ab6e9f4bda525a1f1c18d915bf88"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.06.01.L3.RetStd_IR030.v7.0.3.0.G20164142551.hdf",
+   "year": 2007,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.06.01.L3.RetStd_IR030.v7.0.3.0.G20164142551.hdf",
+   "sha256_dap_response": "ec9cd86be7efa3912efcfd3ca10acabaf37c0063c720ed2c0dd26bc8a17cc0ae"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.07.01.L3.RetStd_IR031.v7.0.3.0.G20218040125.hdf",
+   "year": 2007,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.07.01.L3.RetStd_IR031.v7.0.3.0.G20218040125.hdf",
+   "sha256_dap_response": "530acc7b3da03ed57f088e56103614bd6916702b30445303ef780b8db33e78d4"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.08.01.L3.RetStd_IR031.v7.0.3.0.G20218040114.hdf",
+   "year": 2007,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.08.01.L3.RetStd_IR031.v7.0.3.0.G20218040114.hdf",
+   "sha256_dap_response": "f382b757291d1bd8c335c7f25972bb18cefda1ec31e826eb9d50831a949e7d04"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.09.01.L3.RetStd_IR030.v7.0.3.0.G20165001212.hdf",
+   "year": 2007,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.09.01.L3.RetStd_IR030.v7.0.3.0.G20165001212.hdf",
+   "sha256_dap_response": "b66636c0e0f60f387b491c9293ae6ee52e7b75ba89016b6bef3667b41f9a4b84"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.10.01.L3.RetStd_IR031.v7.0.3.0.G20218191541.hdf",
+   "year": 2007,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.10.01.L3.RetStd_IR031.v7.0.3.0.G20218191541.hdf",
+   "sha256_dap_response": "b9380b86cbd6b6cab877d895ba435d2699217e6a8995554ff0eea572e4881a63"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.11.01.L3.RetStd_IR030.v7.0.3.0.G20218191516.hdf",
+   "year": 2007,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.11.01.L3.RetStd_IR030.v7.0.3.0.G20218191516.hdf",
+   "sha256_dap_response": "2dc29fa3d2df90b662c83e9219bb2aab0fd25b36174b4d89fa1904b2c9e325fd"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2007.12.01.L3.RetStd_IR031.v7.0.3.0.G20218191539.hdf",
+   "year": 2007,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2007/AIRS.2007.12.01.L3.RetStd_IR031.v7.0.3.0.G20218191539.hdf",
+   "sha256_dap_response": "1e68bcd2c7272b33d2bf75d15e5b8d1c9e4cd92a17c7f66c529b531c060b501e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.01.01.L3.RetStd_IR031.v7.0.3.0.G20217115340.hdf",
+   "year": 2008,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.01.01.L3.RetStd_IR031.v7.0.3.0.G20217115340.hdf",
+   "sha256_dap_response": "7621bf8cebfe0ca9a3bf1d9f91c96880374d51083b2031412459bc51a17f7b6b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.02.01.L3.RetStd_IR029.v7.0.3.0.G20217115326.hdf",
+   "year": 2008,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.02.01.L3.RetStd_IR029.v7.0.3.0.G20217115326.hdf",
+   "sha256_dap_response": "ff3ddbc596d5e24df97c54ff6a1d7601b10873ea07d7a72bad45a06e3707ea7b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.03.01.L3.RetStd_IR031.v7.0.3.0.G20217115406.hdf",
+   "year": 2008,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.03.01.L3.RetStd_IR031.v7.0.3.0.G20217115406.hdf",
+   "sha256_dap_response": "e0f07a3d9276d03b7d72099c95d213a6c941e7bb88e3293637466207ebed3a6d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.04.01.L3.RetStd_IR030.v7.0.3.0.G20162230941.hdf",
+   "year": 2008,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.04.01.L3.RetStd_IR030.v7.0.3.0.G20162230941.hdf",
+   "sha256_dap_response": "57df80dbf9098f7d2cce1f5e2bfd1d84fc86961b995bcf895b0032292ef1f0a2"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.05.01.L3.RetStd_IR031.v7.0.3.0.G20217195951.hdf",
+   "year": 2008,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.05.01.L3.RetStd_IR031.v7.0.3.0.G20217195951.hdf",
+   "sha256_dap_response": "092b2c9d117b44512ef89e1840dc733c2a46eff5659b7412260cacdca3b30dc0"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.06.01.L3.RetStd_IR030.v7.0.3.0.G20162232831.hdf",
+   "year": 2008,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.06.01.L3.RetStd_IR030.v7.0.3.0.G20162232831.hdf",
+   "sha256_dap_response": "6793c1bd1419f619e3ac93c805f313f898d6fd62b313f39d16c493db0a7571eb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.07.01.L3.RetStd_IR031.v7.0.3.0.G20218033155.hdf",
+   "year": 2008,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.07.01.L3.RetStd_IR031.v7.0.3.0.G20218033155.hdf",
+   "sha256_dap_response": "6d84d20cef7e71a48c77e90de60dc6532571b15d07bc03855ff31b1bbf86bf17"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.08.01.L3.RetStd_IR031.v7.0.3.0.G20218033201.hdf",
+   "year": 2008,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.08.01.L3.RetStd_IR031.v7.0.3.0.G20218033201.hdf",
+   "sha256_dap_response": "c9db15d4178d76e53fb55031f0532b7e126953fad30ab7bab00f8bc03c33fd15"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.09.01.L3.RetStd_IR030.v7.0.3.0.G20163154546.hdf",
+   "year": 2008,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.09.01.L3.RetStd_IR030.v7.0.3.0.G20163154546.hdf",
+   "sha256_dap_response": "5e766b51048b0550f9cebcdee5b368b56692228e335c3a8ae1ba11ad34ab4649"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.10.01.L3.RetStd_IR031.v7.0.3.0.G20218200031.hdf",
+   "year": 2008,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.10.01.L3.RetStd_IR031.v7.0.3.0.G20218200031.hdf",
+   "sha256_dap_response": "be5f3993df4e72fec3a407aab3670464c935dbfab3a0a2e844243e718376ed13"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.11.01.L3.RetStd_IR030.v7.0.3.0.G20218200007.hdf",
+   "year": 2008,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.11.01.L3.RetStd_IR030.v7.0.3.0.G20218200007.hdf",
+   "sha256_dap_response": "3d792856bfda8fd946f4cafb94b4148a6543b1794edcfb88aa4b7b3cd2e90a4b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2008.12.01.L3.RetStd_IR031.v7.0.3.0.G20218200034.hdf",
+   "year": 2008,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2008/AIRS.2008.12.01.L3.RetStd_IR031.v7.0.3.0.G20218200034.hdf",
+   "sha256_dap_response": "ce1ddc1b628504aff16091bb68c813f5367e76e9c875721a11af67c111cbd545"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.01.01.L3.RetStd_IR031.v7.0.3.0.G20217111540.hdf",
+   "year": 2009,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.01.01.L3.RetStd_IR031.v7.0.3.0.G20217111540.hdf",
+   "sha256_dap_response": "9f9e83ccc0123e1fbdae5e07f6b349bbaa3c886358f4daea1918f2b3839a4414"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.02.01.L3.RetStd_IR028.v7.0.3.0.G20217111623.hdf",
+   "year": 2009,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.02.01.L3.RetStd_IR028.v7.0.3.0.G20217111623.hdf",
+   "sha256_dap_response": "3a533ff8c3569632cee347fdb11ae1bd3415e7884cab6924155080812baca47a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.03.01.L3.RetStd_IR031.v7.0.3.0.G20217111517.hdf",
+   "year": 2009,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.03.01.L3.RetStd_IR031.v7.0.3.0.G20217111517.hdf",
+   "sha256_dap_response": "35990244e2161c6646ee866443758891fcc5bbf9dfb39bdc8d28385d55126cba"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.04.01.L3.RetStd_IR030.v7.0.3.0.G20160154619.hdf",
+   "year": 2009,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.04.01.L3.RetStd_IR030.v7.0.3.0.G20160154619.hdf",
+   "sha256_dap_response": "3ca7d7c701dc0d3809b044802311ecc7db1a6056557971217c039e202f58ca9f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.05.01.L3.RetStd_IR031.v7.0.3.0.G20217202848.hdf",
+   "year": 2009,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.05.01.L3.RetStd_IR031.v7.0.3.0.G20217202848.hdf",
+   "sha256_dap_response": "aa511923570898d13f874f8acb17d562077dcef00f704042451ab7e50ae11c50"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.06.01.L3.RetStd_IR030.v7.0.3.0.G20160154558.hdf",
+   "year": 2009,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.06.01.L3.RetStd_IR030.v7.0.3.0.G20160154558.hdf",
+   "sha256_dap_response": "839d59beb17c9866eeea52e122b1f402d59d9fbd67d09f687077a568cb430db8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.07.01.L3.RetStd_IR031.v7.0.3.0.G20218025908.hdf",
+   "year": 2009,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.07.01.L3.RetStd_IR031.v7.0.3.0.G20218025908.hdf",
+   "sha256_dap_response": "803eec478990f8c06f9030c6abcee97d2a69548b78965e8e797029284b69cbf7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.08.01.L3.RetStd_IR031.v7.0.3.0.G20218025908.hdf",
+   "year": 2009,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.08.01.L3.RetStd_IR031.v7.0.3.0.G20218025908.hdf",
+   "sha256_dap_response": "68c3d9a2a26059e60d2e1b3c4931a2905383fecaeea3b8d1c3450341ec4ba871"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.09.01.L3.RetStd_IR030.v7.0.3.0.G20162103634.hdf",
+   "year": 2009,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.09.01.L3.RetStd_IR030.v7.0.3.0.G20162103634.hdf",
+   "sha256_dap_response": "8a9c3a01386d04c1c675fa4e86e1d3044d5fb7b12854d7108c0a887277487973"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.10.01.L3.RetStd_IR031.v7.0.3.0.G20218213528.hdf",
+   "year": 2009,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.10.01.L3.RetStd_IR031.v7.0.3.0.G20218213528.hdf",
+   "sha256_dap_response": "7399af99cd90e94c0133c45724cca3e7d450029e2765219eedcf57ca1f5d26a7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.11.01.L3.RetStd_IR030.v7.0.3.0.G20218213453.hdf",
+   "year": 2009,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.11.01.L3.RetStd_IR030.v7.0.3.0.G20218213453.hdf",
+   "sha256_dap_response": "0d8f49d89be31930281e045123338d34be49f683f8cb7b510fcf87f40cd53cfe"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2009.12.01.L3.RetStd_IR031.v7.0.3.0.G20218213525.hdf",
+   "year": 2009,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2009/AIRS.2009.12.01.L3.RetStd_IR031.v7.0.3.0.G20218213525.hdf",
+   "sha256_dap_response": "6321601b6bd840aa16271ecac469385e788ddfc2d5bcf2c7304d06959cd4aa21"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.01.01.L3.RetStd_IR031.v7.0.3.0.G20217101104.hdf",
+   "year": 2010,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.01.01.L3.RetStd_IR031.v7.0.3.0.G20217101104.hdf",
+   "sha256_dap_response": "93e727d3721792e45cb7d652391038a50e9c20b59c0553cdef53102a104c92ae"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.02.01.L3.RetStd_IR028.v7.0.3.0.G20216232946.hdf",
+   "year": 2010,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.02.01.L3.RetStd_IR028.v7.0.3.0.G20216232946.hdf",
+   "sha256_dap_response": "ad1ec37edc037de91bfe2a6ac4528b0f3076b42c9b9f67c8fd3a6efc829ab7d3"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.03.01.L3.RetStd_IR031.v7.0.3.0.G20216233029.hdf",
+   "year": 2010,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.03.01.L3.RetStd_IR031.v7.0.3.0.G20216233029.hdf",
+   "sha256_dap_response": "c99d9f029fcc844cd8011f2d1071099f01920ab508d32175bdb458089f210d2c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.04.01.L3.RetStd_IR030.v7.0.3.0.G20158163427.hdf",
+   "year": 2010,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.04.01.L3.RetStd_IR030.v7.0.3.0.G20158163427.hdf",
+   "sha256_dap_response": "81d134609f355fdf01197b9252e236e0ed12bfe2560f9cc0ff09816176f41e2a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.05.01.L3.RetStd_IR031.v7.0.3.0.G20217203412.hdf",
+   "year": 2010,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.05.01.L3.RetStd_IR031.v7.0.3.0.G20217203412.hdf",
+   "sha256_dap_response": "5d3fc8eb035fdad1382064ec5d2fb760e47fff1edd11e5aa6e8ac87907d54d07"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.06.01.L3.RetStd_IR030.v7.0.3.0.G20206221012.hdf",
+   "year": 2010,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.06.01.L3.RetStd_IR030.v7.0.3.0.G20206221012.hdf",
+   "sha256_dap_response": "a73de088f22436ac823d8fad3bff111bf4dfe46d67a39950850e5b570293783e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.07.01.L3.RetStd_IR031.v7.0.3.0.G20218022913.hdf",
+   "year": 2010,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.07.01.L3.RetStd_IR031.v7.0.3.0.G20218022913.hdf",
+   "sha256_dap_response": "39f5cb0eff4fce61e3a05d4d7bd0bbaf76c6e6181e16a542942fc5fa5f8d3608"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.08.01.L3.RetStd_IR031.v7.0.3.0.G20218022849.hdf",
+   "year": 2010,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.08.01.L3.RetStd_IR031.v7.0.3.0.G20218022849.hdf",
+   "sha256_dap_response": "8a6fc90c49e01a13d9e781f9f16e4e78df9ad36a164c5312628d6ed5e9d8c571"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.09.01.L3.RetStd_IR030.v7.0.3.0.G20160020959.hdf",
+   "year": 2010,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.09.01.L3.RetStd_IR030.v7.0.3.0.G20160020959.hdf",
+   "sha256_dap_response": "db5bc59f0be35249d950f081ad61f287d1cb919933bc299dc07fd7569e38e73c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.10.01.L3.RetStd_IR031.v7.0.3.0.G20218222513.hdf",
+   "year": 2010,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.10.01.L3.RetStd_IR031.v7.0.3.0.G20218222513.hdf",
+   "sha256_dap_response": "917830b74ee58979b8b0e9a82057036ebb89f5f6f3c2461c7126d79891051bdb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.11.01.L3.RetStd_IR030.v7.0.3.0.G20218222446.hdf",
+   "year": 2010,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.11.01.L3.RetStd_IR030.v7.0.3.0.G20218222446.hdf",
+   "sha256_dap_response": "939fef9983e90dcde5155f806c6354cc425fa4b42b1c35a7e675a2d340d7350e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2010.12.01.L3.RetStd_IR031.v7.0.3.0.G20218222456.hdf",
+   "year": 2010,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2010/AIRS.2010.12.01.L3.RetStd_IR031.v7.0.3.0.G20218222456.hdf",
+   "sha256_dap_response": "0ab611b49a4a7ba619f346475f3dc9597955f578a84bcd9ee64a96f5920aa69e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.01.01.L3.RetStd_IR031.v7.0.3.0.G20216223223.hdf",
+   "year": 2011,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.01.01.L3.RetStd_IR031.v7.0.3.0.G20216223223.hdf",
+   "sha256_dap_response": "418df38f3d0e1260c5d97cc8526ed95468d458f5360bc48ab7ca7dfa6acf5458"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.02.01.L3.RetStd_IR028.v7.0.3.0.G20216223221.hdf",
+   "year": 2011,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.02.01.L3.RetStd_IR028.v7.0.3.0.G20216223221.hdf",
+   "sha256_dap_response": "fbd25872b75fbbe15614014712904b54cf453772db254444b964fe00ee5e7be4"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.03.01.L3.RetStd_IR031.v7.0.3.0.G20216223309.hdf",
+   "year": 2011,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.03.01.L3.RetStd_IR031.v7.0.3.0.G20216223309.hdf",
+   "sha256_dap_response": "f4b1688000a8f75992d6d2fb5f95e323f4fc14ea6b2127fe9ad0614a11fd70a9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.04.01.L3.RetStd_IR030.v7.0.3.0.G20156221721.hdf",
+   "year": 2011,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.04.01.L3.RetStd_IR030.v7.0.3.0.G20156221721.hdf",
+   "sha256_dap_response": "5c5f8bb4ca0b5d78caeabafbd8afbf03c26b82e1be46b6463d15a341992e0079"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.05.01.L3.RetStd_IR031.v7.0.3.0.G20217205135.hdf",
+   "year": 2011,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.05.01.L3.RetStd_IR031.v7.0.3.0.G20217205135.hdf",
+   "sha256_dap_response": "226a2421b827e3dd05c6f2a98418c3776375a2b4d18f25c182fa487f3b35b3cb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.06.01.L3.RetStd_IR030.v7.0.3.0.G20157140604.hdf",
+   "year": 2011,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.06.01.L3.RetStd_IR030.v7.0.3.0.G20157140604.hdf",
+   "sha256_dap_response": "917b8478d4f3555d4dba9be0fbe4fd760454325f60b82926206531ef32d4a84b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.07.01.L3.RetStd_IR031.v7.0.3.0.G20218014449.hdf",
+   "year": 2011,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.07.01.L3.RetStd_IR031.v7.0.3.0.G20218014449.hdf",
+   "sha256_dap_response": "f62615706fdf28ea099722a3e477f9841b09f0a88ce16d1fb6152be9b98862a7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.08.01.L3.RetStd_IR031.v7.0.3.0.G20218014444.hdf",
+   "year": 2011,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.08.01.L3.RetStd_IR031.v7.0.3.0.G20218014444.hdf",
+   "sha256_dap_response": "3af5b41dce7fd25c5d11d9fbc0ed14955c3abe48c8e191b0165900af35f78b25"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.09.01.L3.RetStd_IR030.v7.0.3.0.G20157234554.hdf",
+   "year": 2011,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.09.01.L3.RetStd_IR030.v7.0.3.0.G20157234554.hdf",
+   "sha256_dap_response": "53f5db30df250ee3d4e6ee9f3be34f7b55b61093ae4296be9cafb7e8fc95c79a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.10.01.L3.RetStd_IR031.v7.0.3.0.G20218230651.hdf",
+   "year": 2011,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.10.01.L3.RetStd_IR031.v7.0.3.0.G20218230651.hdf",
+   "sha256_dap_response": "a94f0f3116d6932de73a93ce121cbe0f61c8d6fcffd5c615609f2d8ff352f698"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.11.01.L3.RetStd_IR030.v7.0.3.0.G20218230616.hdf",
+   "year": 2011,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.11.01.L3.RetStd_IR030.v7.0.3.0.G20218230616.hdf",
+   "sha256_dap_response": "61c73f9208fdc40040595868e71c9bd9db271470441fe04c785663e48f31f6ed"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2011.12.01.L3.RetStd_IR031.v7.0.3.0.G20218230629.hdf",
+   "year": 2011,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2011/AIRS.2011.12.01.L3.RetStd_IR031.v7.0.3.0.G20218230629.hdf",
+   "sha256_dap_response": "7943af06740a3b222b711f46ecf9dac0c08ecbafcdae1deb6d815737e3f3b2df"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.01.01.L3.RetStd_IR031.v7.0.3.0.G20216205950.hdf",
+   "year": 2012,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.01.01.L3.RetStd_IR031.v7.0.3.0.G20216205950.hdf",
+   "sha256_dap_response": "6c8255668c9625641acc5776747a5ffe3cf405238077222c1240251a7db4f576"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.02.01.L3.RetStd_IR029.v7.0.3.0.G20216205957.hdf",
+   "year": 2012,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.02.01.L3.RetStd_IR029.v7.0.3.0.G20216205957.hdf",
+   "sha256_dap_response": "1c18c453c591f58fa4de0701550ad49c0c179f2c154455652e488602a92152e4"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.03.01.L3.RetStd_IR031.v7.0.3.0.G20216210256.hdf",
+   "year": 2012,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.03.01.L3.RetStd_IR031.v7.0.3.0.G20216210256.hdf",
+   "sha256_dap_response": "22fa419d15426b06ca21f8df112147fb6e7026da18e7e4af0052372d338a355b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.04.01.L3.RetStd_IR030.v7.0.3.0.G20154173152.hdf",
+   "year": 2012,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.04.01.L3.RetStd_IR030.v7.0.3.0.G20154173152.hdf",
+   "sha256_dap_response": "4cd0b69fc05aec523d071bc83ec78a6d1fe09fdd5979d466d2756578cafd68a5"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.05.01.L3.RetStd_IR031.v7.0.3.0.G20217211941.hdf",
+   "year": 2012,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.05.01.L3.RetStd_IR031.v7.0.3.0.G20217211941.hdf",
+   "sha256_dap_response": "4b8df96d29cb2ab5e3280790c5700bdab9ea4af8a48d00688cc1ce40d1920988"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.06.01.L3.RetStd_IR030.v7.0.3.0.G20155151410.hdf",
+   "year": 2012,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.06.01.L3.RetStd_IR030.v7.0.3.0.G20155151410.hdf",
+   "sha256_dap_response": "69b5e20773d72085cbaed31b92df21afa3c9d3887e418f8efd7d00a4d855f0cf"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.07.01.L3.RetStd_IR031.v7.0.3.0.G20218011424.hdf",
+   "year": 2012,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.07.01.L3.RetStd_IR031.v7.0.3.0.G20218011424.hdf",
+   "sha256_dap_response": "46703cead0ec029b12e8278045e440b888f13bbf416df8112e6ddced2334261b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.08.01.L3.RetStd_IR031.v7.0.3.0.G20218011249.hdf",
+   "year": 2012,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.08.01.L3.RetStd_IR031.v7.0.3.0.G20218011249.hdf",
+   "sha256_dap_response": "9be22676600ab4c976f5e6d1eed4457b56a2c29745d2a354499e592b773c7479"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.09.01.L3.RetStd_IR030.v7.0.3.0.G20156010652.hdf",
+   "year": 2012,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.09.01.L3.RetStd_IR030.v7.0.3.0.G20156010652.hdf",
+   "sha256_dap_response": "348086abba7ac7233d856376367480c8b67b298ac958ce480431c3e6147a398c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.10.01.L3.RetStd_IR031.v7.0.3.0.G20219081951.hdf",
+   "year": 2012,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.10.01.L3.RetStd_IR031.v7.0.3.0.G20219081951.hdf",
+   "sha256_dap_response": "a402c09fff234ec9ce29bc0f9169346d35f5c18b1592ba2900b97619341c9c0c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.11.01.L3.RetStd_IR030.v7.0.3.0.G20219081930.hdf",
+   "year": 2012,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.11.01.L3.RetStd_IR030.v7.0.3.0.G20219081930.hdf",
+   "sha256_dap_response": "ed51c7dad285cfad217bdfe30d88fa2f4e6cdd13a85444b1d79b0a38a94966e4"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2012.12.01.L3.RetStd_IR031.v7.0.3.0.G20219082125.hdf",
+   "year": 2012,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2012/AIRS.2012.12.01.L3.RetStd_IR031.v7.0.3.0.G20219082125.hdf",
+   "sha256_dap_response": "9ddfb14b857f2589915c6d4b524fe8935e76100beb78f182828665ddbbb2947e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.01.01.L3.RetStd_IR031.v7.0.3.0.G20216182809.hdf",
+   "year": 2013,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.01.01.L3.RetStd_IR031.v7.0.3.0.G20216182809.hdf",
+   "sha256_dap_response": "ab6b6c21ab9051d55768b3cb1bc38575055824feeb8a6e5d8fe4a5871419f365"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.02.01.L3.RetStd_IR028.v7.0.3.0.G20216190815.hdf",
+   "year": 2013,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.02.01.L3.RetStd_IR028.v7.0.3.0.G20216190815.hdf",
+   "sha256_dap_response": "3afa0f999d72eb993ce77e1a67933f4d8677f75a7679f81094dc8628bb0bfc92"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.03.01.L3.RetStd_IR031.v7.0.3.0.G20216172718.hdf",
+   "year": 2013,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.03.01.L3.RetStd_IR031.v7.0.3.0.G20216172718.hdf",
+   "sha256_dap_response": "bd3378c4f223964dc503f3b3d1db7b837fdb496d444aab461aef85233da97056"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.04.01.L3.RetStd_IR030.v7.0.3.0.G20151162536.hdf",
+   "year": 2013,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.04.01.L3.RetStd_IR030.v7.0.3.0.G20151162536.hdf",
+   "sha256_dap_response": "131118c18db8e5d42b67d6f3c1e2050fdc9e69f3b00813da302793e4ec03a714"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.05.01.L3.RetStd_IR031.v7.0.3.0.G20217213819.hdf",
+   "year": 2013,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.05.01.L3.RetStd_IR031.v7.0.3.0.G20217213819.hdf",
+   "sha256_dap_response": "790902aca35395f12a828091b9c74bbea3215154f9b4a3b67adc9c3a1e2c3c9b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.06.01.L3.RetStd_IR030.v7.0.3.0.G20151191619.hdf",
+   "year": 2013,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.06.01.L3.RetStd_IR030.v7.0.3.0.G20151191619.hdf",
+   "sha256_dap_response": "2ff3a69a367268c02e33795cdd569adf0d25750bbdb5bddda2b49aea34d99a32"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.07.01.L3.RetStd_IR031.v7.0.3.0.G20218004003.hdf",
+   "year": 2013,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.07.01.L3.RetStd_IR031.v7.0.3.0.G20218004003.hdf",
+   "sha256_dap_response": "dea104b44fbc121122c11c709f5c731730b8439799671e15a764a7c6c92b3030"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.08.01.L3.RetStd_IR031.v7.0.3.0.G20218003902.hdf",
+   "year": 2013,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.08.01.L3.RetStd_IR031.v7.0.3.0.G20218003902.hdf",
+   "sha256_dap_response": "cc196bab2ac84f57dcca8598678619cae33b783a078bca0007b1505b4da6af48"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.09.01.L3.RetStd_IR030.v7.0.3.0.G20151222748.hdf",
+   "year": 2013,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.09.01.L3.RetStd_IR030.v7.0.3.0.G20151222748.hdf",
+   "sha256_dap_response": "fc71483a7e67d0e340543651dcd9e79478fa5ae044bd86a4314953a14530d62e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.10.01.L3.RetStd_IR031.v7.0.3.0.G20219093746.hdf",
+   "year": 2013,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.10.01.L3.RetStd_IR031.v7.0.3.0.G20219093746.hdf",
+   "sha256_dap_response": "ddad7d1b370e7e072cef11aa934fe9bf9a8611aef320933547a344841ad83a47"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.11.01.L3.RetStd_IR030.v7.0.3.0.G20219093712.hdf",
+   "year": 2013,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.11.01.L3.RetStd_IR030.v7.0.3.0.G20219093712.hdf",
+   "sha256_dap_response": "5454c63751effd35647750aa7734cd79e7d4250b28b6d7424558750da5ecdad7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2013.12.01.L3.RetStd_IR031.v7.0.3.0.G20219093756.hdf",
+   "year": 2013,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2013/AIRS.2013.12.01.L3.RetStd_IR031.v7.0.3.0.G20219093756.hdf",
+   "sha256_dap_response": "256db676cf19aebf1a7297976f078aa821243c78048c7fc70f0f15d25eff1299"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.01.01.L3.RetStd_IR031.v7.0.3.0.G20216152827.hdf",
+   "year": 2014,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.01.01.L3.RetStd_IR031.v7.0.3.0.G20216152827.hdf",
+   "sha256_dap_response": "536060388eb6a9b6354ce6ebd43141bff9c792c83d9ac0c338aa9d00016ba736"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.02.01.L3.RetStd_IR028.v7.0.3.0.G20216160358.hdf",
+   "year": 2014,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.02.01.L3.RetStd_IR028.v7.0.3.0.G20216160358.hdf",
+   "sha256_dap_response": "66250d2e6cde031b2dba285b49365a0b0028204e8cb3c274239f0b7e061757b2"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.03.01.L3.RetStd_IR031.v7.0.3.0.G20216155437.hdf",
+   "year": 2014,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.03.01.L3.RetStd_IR031.v7.0.3.0.G20216155437.hdf",
+   "sha256_dap_response": "9b5acb3782124659f6e28b9b39ac643690b47114538ce9aff4497ae3259e264f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.04.01.L3.RetStd_IR030.v7.0.3.0.G20150172850.hdf",
+   "year": 2014,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.04.01.L3.RetStd_IR030.v7.0.3.0.G20150172850.hdf",
+   "sha256_dap_response": "77a6e60650e1e2c61fe5d05a60b4249a42181613af392682db3dc893a66f0674"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.05.01.L3.RetStd_IR031.v7.0.3.0.G20217214820.hdf",
+   "year": 2014,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.05.01.L3.RetStd_IR031.v7.0.3.0.G20217214820.hdf",
+   "sha256_dap_response": "358e564376549d9d77294ea7827a32247e3fd8c2034c58c68842820e1e12069d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.06.01.L3.RetStd_IR030.v7.0.3.0.G20150181911.hdf",
+   "year": 2014,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.06.01.L3.RetStd_IR030.v7.0.3.0.G20150181911.hdf",
+   "sha256_dap_response": "3d2afe2a15ac4545cd35af4601d993597193c9ef0ad968385e5eaf72310a806e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.07.01.L3.RetStd_IR031.v7.0.3.0.G20218000238.hdf",
+   "year": 2014,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.07.01.L3.RetStd_IR031.v7.0.3.0.G20218000238.hdf",
+   "sha256_dap_response": "87591136fe3508d200d25a1778820d9608f96cda09b2cd12c15027121084af25"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.08.01.L3.RetStd_IR031.v7.0.3.0.G20218000145.hdf",
+   "year": 2014,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.08.01.L3.RetStd_IR031.v7.0.3.0.G20218000145.hdf",
+   "sha256_dap_response": "0268ab5b9c3e5805e1f0bbfb448c7e51323af29c5e3be6fb29d8e271fd1f7857"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.09.01.L3.RetStd_IR030.v7.0.3.0.G20150182350.hdf",
+   "year": 2014,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.09.01.L3.RetStd_IR030.v7.0.3.0.G20150182350.hdf",
+   "sha256_dap_response": "bab5e253d7210fdde1a289462d90127a279f072e62fdff69b94f37bfe6d2bc4f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.10.01.L3.RetStd_IR031.v7.0.3.0.G20219122721.hdf",
+   "year": 2014,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.10.01.L3.RetStd_IR031.v7.0.3.0.G20219122721.hdf",
+   "sha256_dap_response": "978f40175fb5660681441eecc43cc1afb23ad5c1484023760e7cf4fe4b7c4255"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.11.01.L3.RetStd_IR030.v7.0.3.0.G20219122940.hdf",
+   "year": 2014,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.11.01.L3.RetStd_IR030.v7.0.3.0.G20219122940.hdf",
+   "sha256_dap_response": "13b9f3daf374fd3d1f7fa4b3adb6dd93656488de009404684a7af14d1108fc77"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2014.12.01.L3.RetStd_IR031.v7.0.3.0.G20219123127.hdf",
+   "year": 2014,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2014/AIRS.2014.12.01.L3.RetStd_IR031.v7.0.3.0.G20219123127.hdf",
+   "sha256_dap_response": "119722aa45baeec25ef9fa56c8770412ccbb4341bdb8ded2412be3f8661309be"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.01.01.L3.RetStd_IR031.v7.0.3.0.G20216142144.hdf",
+   "year": 2015,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.01.01.L3.RetStd_IR031.v7.0.3.0.G20216142144.hdf",
+   "sha256_dap_response": "f1b648420a118f50937cdfca6cacf423e7841e482be946cc42421dba3202d700"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.02.01.L3.RetStd_IR028.v7.0.3.0.G20216142207.hdf",
+   "year": 2015,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.02.01.L3.RetStd_IR028.v7.0.3.0.G20216142207.hdf",
+   "sha256_dap_response": "b2213de7a6bd6af351ac170bb956466e5555417230680ff26b5552e4d841a1aa"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.03.01.L3.RetStd_IR031.v7.0.3.0.G20216143940.hdf",
+   "year": 2015,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.03.01.L3.RetStd_IR031.v7.0.3.0.G20216143940.hdf",
+   "sha256_dap_response": "dacf88310e2d4db820f608d3d138b7d181618725ada5c75b4e9bef95de21920a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.04.01.L3.RetStd_IR030.v7.0.3.0.G20149223835.hdf",
+   "year": 2015,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.04.01.L3.RetStd_IR030.v7.0.3.0.G20149223835.hdf",
+   "sha256_dap_response": "c4ac170014e2f92e339c2f347717f2c7e0a05c53c8c9ed2fb9e26d9dff9bee4d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.05.01.L3.RetStd_IR031.v7.0.3.0.G20217221345.hdf",
+   "year": 2015,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.05.01.L3.RetStd_IR031.v7.0.3.0.G20217221345.hdf",
+   "sha256_dap_response": "78c4daa1b94b35964cea591939b6357276f58d6091d456a9710f01be196cbe00"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.06.01.L3.RetStd_IR030.v7.0.3.0.G20149233601.hdf",
+   "year": 2015,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.06.01.L3.RetStd_IR030.v7.0.3.0.G20149233601.hdf",
+   "sha256_dap_response": "c2d20374effb4211321c838c9a7dbcda9e643c16dcf261fd440d01762ca24f1b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.07.01.L3.RetStd_IR031.v7.0.3.0.G20217232819.hdf",
+   "year": 2015,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.07.01.L3.RetStd_IR031.v7.0.3.0.G20217232819.hdf",
+   "sha256_dap_response": "b8d375424625ac5b36e25811cf5340ab8c3e25be9bc0051bfc3f6c9cb1e2f73a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.08.01.L3.RetStd_IR031.v7.0.3.0.G20217232731.hdf",
+   "year": 2015,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.08.01.L3.RetStd_IR031.v7.0.3.0.G20217232731.hdf",
+   "sha256_dap_response": "2d238ccf6c9d2299f1b647eac4ddaa3da7b4b8a4e802c263bd6be5c6ba2fb5c5"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.09.01.L3.RetStd_IR030.v7.0.3.0.G20150114542.hdf",
+   "year": 2015,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.09.01.L3.RetStd_IR030.v7.0.3.0.G20150114542.hdf",
+   "sha256_dap_response": "392570c2582a8c5e020c3445a6753bed92596aa60b449fb5adfd4fa0ff1a013b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.10.01.L3.RetStd_IR031.v7.0.3.0.G20219132644.hdf",
+   "year": 2015,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.10.01.L3.RetStd_IR031.v7.0.3.0.G20219132644.hdf",
+   "sha256_dap_response": "a5928c9bcf954c6b1fb7e6f1c0410e7beb4153562aff6fbb4dabc88057e81b5b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.11.01.L3.RetStd_IR030.v7.0.3.0.G20219133113.hdf",
+   "year": 2015,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.11.01.L3.RetStd_IR030.v7.0.3.0.G20219133113.hdf",
+   "sha256_dap_response": "d6a2081ed50b896d8d0ab8fb7e47a8a091b8ad82590a4beda10e35f84c19ea70"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2015.12.01.L3.RetStd_IR031.v7.0.3.0.G20219133045.hdf",
+   "year": 2015,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2015/AIRS.2015.12.01.L3.RetStd_IR031.v7.0.3.0.G20219133045.hdf",
+   "sha256_dap_response": "370e3083b193c0cbd8dc813934972985baec00f92d1abc4a99d36a657a159595"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.01.01.L3.RetStd_IR031.v7.0.3.0.G20216131410.hdf",
+   "year": 2016,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.01.01.L3.RetStd_IR031.v7.0.3.0.G20216131410.hdf",
+   "sha256_dap_response": "29fd6f9cd263dd900155c81cbb5fd0f2e3ebed0baa61d3926d8b9ca61f6bdb6c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.02.01.L3.RetStd_IR029.v7.0.3.0.G20216131336.hdf",
+   "year": 2016,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.02.01.L3.RetStd_IR029.v7.0.3.0.G20216131336.hdf",
+   "sha256_dap_response": "336e0f34719b855c5fd22253cb3324fc06e7b6314ef97de0485b01627c326a61"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.03.01.L3.RetStd_IR031.v7.0.3.0.G20216130336.hdf",
+   "year": 2016,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.03.01.L3.RetStd_IR031.v7.0.3.0.G20216130336.hdf",
+   "sha256_dap_response": "5d2ebf3875b2523f64b4c2d510ac33539bf572e08eb47d5b54df62c1271eb339"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.04.01.L3.RetStd_IR030.v7.0.3.0.G20149150223.hdf",
+   "year": 2016,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.04.01.L3.RetStd_IR030.v7.0.3.0.G20149150223.hdf",
+   "sha256_dap_response": "f99e4a0d55ea86d179fa7d84f4f13593e0e020d412645b2a5f314362075df55a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.05.01.L3.RetStd_IR031.v7.0.3.0.G20217221848.hdf",
+   "year": 2016,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.05.01.L3.RetStd_IR031.v7.0.3.0.G20217221848.hdf",
+   "sha256_dap_response": "93905e1d7178093421856a68fe5376f4c6e7cd330af8332957f948f601865821"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.06.01.L3.RetStd_IR030.v7.0.3.0.G20149153151.hdf",
+   "year": 2016,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.06.01.L3.RetStd_IR030.v7.0.3.0.G20149153151.hdf",
+   "sha256_dap_response": "98a070ebc5bdbe4d7a5b08b403e6df2b0d9358b6f33e0959d11d92b1dfbff00f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.07.01.L3.RetStd_IR031.v7.0.3.0.G20217230036.hdf",
+   "year": 2016,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.07.01.L3.RetStd_IR031.v7.0.3.0.G20217230036.hdf",
+   "sha256_dap_response": "0d6be91787261f116f7183f647610aacc887b185e490db9d2985170ca30dcfa3"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.08.01.L3.RetStd_IR031.v7.0.3.0.G20217225951.hdf",
+   "year": 2016,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.08.01.L3.RetStd_IR031.v7.0.3.0.G20217225951.hdf",
+   "sha256_dap_response": "33befe6a46af389ad68fc2e7c6486c78898ed0e1b7c34a465efba4c8070c2f16"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.09.01.L3.RetStd_IR030.v7.0.3.0.G20149194700.hdf",
+   "year": 2016,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.09.01.L3.RetStd_IR030.v7.0.3.0.G20149194700.hdf",
+   "sha256_dap_response": "99820dfc6ac56a92d52cbdd4e11e299ca9066de3b4d6c101ddf30eb4408692ee"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.10.01.L3.RetStd_IR031.v7.0.3.0.G20219142040.hdf",
+   "year": 2016,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.10.01.L3.RetStd_IR031.v7.0.3.0.G20219142040.hdf",
+   "sha256_dap_response": "f6a043e4920a4621cb2049fdebb666ef0549ea735243fc4121e4df2e6905b67f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.11.01.L3.RetStd_IR030.v7.0.3.0.G20219141905.hdf",
+   "year": 2016,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.11.01.L3.RetStd_IR030.v7.0.3.0.G20219141905.hdf",
+   "sha256_dap_response": "853ebff7fdf81e6b7d0f462b0730d1453f7e99e0e47f08e75f22ad60224c67ae"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2016.12.01.L3.RetStd_IR031.v7.0.3.0.G20219141944.hdf",
+   "year": 2016,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2016/AIRS.2016.12.01.L3.RetStd_IR031.v7.0.3.0.G20219141944.hdf",
+   "sha256_dap_response": "7a9d1137e13bb324cc0f2683fbbc5099b6aadf0272946be1b8274fa8f48f96d9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.01.01.L3.RetStd_IR031.v7.0.3.0.G20210132836.hdf",
+   "year": 2017,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.01.01.L3.RetStd_IR031.v7.0.3.0.G20210132836.hdf",
+   "sha256_dap_response": "75a37b86d7cd0e59b8c8483c85380e011697fd4ffda519090b26c2467032473d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.02.01.L3.RetStd_IR028.v7.0.3.0.G20210183109.hdf",
+   "year": 2017,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.02.01.L3.RetStd_IR028.v7.0.3.0.G20210183109.hdf",
+   "sha256_dap_response": "96fdb83c2b0cd3af341b57c4dbe21bd5b3cde334842bdad0fef3057f5effbef8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.03.01.L3.RetStd_IR031.v7.0.3.0.G20210124514.hdf",
+   "year": 2017,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.03.01.L3.RetStd_IR031.v7.0.3.0.G20210124514.hdf",
+   "sha256_dap_response": "31f954dcc48653aa338bedd044772a7a1242ffc427348465350b0b384555276c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.04.01.L3.RetStd_IR030.v7.0.3.0.G20147145829.hdf",
+   "year": 2017,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.04.01.L3.RetStd_IR030.v7.0.3.0.G20147145829.hdf",
+   "sha256_dap_response": "30c2bdaabdcc9667cbf63d05ce7e2db604b44b16929f89323de1ffa118690453"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.05.01.L3.RetStd_IR031.v7.0.3.0.G20210130731.hdf",
+   "year": 2017,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.05.01.L3.RetStd_IR031.v7.0.3.0.G20210130731.hdf",
+   "sha256_dap_response": "cc7ca9048b85169c88148249681fe708784daac1a052ca36f5404723c00f86eb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.06.01.L3.RetStd_IR030.v7.0.3.0.G20147175430.hdf",
+   "year": 2017,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.06.01.L3.RetStd_IR030.v7.0.3.0.G20147175430.hdf",
+   "sha256_dap_response": "2733da6daaeec382daa26bf4fdc2f9fcd2128badd272c8e35c1569af10f6b269"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.07.01.L3.RetStd_IR031.v7.0.3.0.G20210125334.hdf",
+   "year": 2017,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.07.01.L3.RetStd_IR031.v7.0.3.0.G20210125334.hdf",
+   "sha256_dap_response": "77e8612a77ef312008be461deff2284aa5f19e55078136ef2281d5e9772aac5b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.08.01.L3.RetStd_IR031.v7.0.3.0.G20210143911.hdf",
+   "year": 2017,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.08.01.L3.RetStd_IR031.v7.0.3.0.G20210143911.hdf",
+   "sha256_dap_response": "ef20081d465e9d7453167e10fd6a95017c1557271aae76594d155f1f1c80a62a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.09.01.L3.RetStd_IR030.v7.0.3.0.G20148113633.hdf",
+   "year": 2017,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.09.01.L3.RetStd_IR030.v7.0.3.0.G20148113633.hdf",
+   "sha256_dap_response": "01d9543ec6da96e8f84fa5a1de7e7de3aa7b9196db56f875835541343c59eb3e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.10.01.L3.RetStd_IR031.v7.0.3.0.G20210183156.hdf",
+   "year": 2017,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.10.01.L3.RetStd_IR031.v7.0.3.0.G20210183156.hdf",
+   "sha256_dap_response": "ac7bb1118adb8943ee2ebfb6263fd36239fabd65a7d469693b3b84d3f4c8d1d8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.11.01.L3.RetStd_IR030.v7.0.3.0.G20148184117.hdf",
+   "year": 2017,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.11.01.L3.RetStd_IR030.v7.0.3.0.G20148184117.hdf",
+   "sha256_dap_response": "d9350a017db1c8329a46493e3befaeceac3a44fa33a3b4a2d56d5fa6bef99867"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2017.12.01.L3.RetStd_IR031.v7.0.3.0.G20210144614.hdf",
+   "year": 2017,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2017/AIRS.2017.12.01.L3.RetStd_IR031.v7.0.3.0.G20210144614.hdf",
+   "sha256_dap_response": "c37299d2d81ee32946bc1248ce4152fd1e6b86c912553756120edca6cc2f8d3a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.01.01.L3.RetStd_IR031.v7.0.3.0.G20210105410.hdf",
+   "year": 2018,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.01.01.L3.RetStd_IR031.v7.0.3.0.G20210105410.hdf",
+   "sha256_dap_response": "3adf5f11c9aa78c2491f69e6b4de1f35d365c8dbab72cd5cf659f3e9041d91d9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.02.01.L3.RetStd_IR028.v7.0.3.0.G20210105314.hdf",
+   "year": 2018,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.02.01.L3.RetStd_IR028.v7.0.3.0.G20210105314.hdf",
+   "sha256_dap_response": "748f80b6a62656c5ddc244e9d57343bcfc0486a5cbd798ca01592fe8b1c809aa"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.03.01.L3.RetStd_IR031.v7.0.3.0.G20210105516.hdf",
+   "year": 2018,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.03.01.L3.RetStd_IR031.v7.0.3.0.G20210105516.hdf",
+   "sha256_dap_response": "b1e5553054cfd49e727f70a23a825b3313de3b13438a96a996c846c812823e02"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.04.01.L3.RetStd_IR030.v7.0.3.0.G20144174705.hdf",
+   "year": 2018,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.04.01.L3.RetStd_IR030.v7.0.3.0.G20144174705.hdf",
+   "sha256_dap_response": "62f85dad461aa585bb5503ff7eb8133be1e1dc41a945eb362da79add608b347d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.05.01.L3.RetStd_IR031.v7.0.3.0.G20210105413.hdf",
+   "year": 2018,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.05.01.L3.RetStd_IR031.v7.0.3.0.G20210105413.hdf",
+   "sha256_dap_response": "86628ce11e74f1991f5485daca2b31aca4e8548d67fa9008e0cfe170efdab27c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.06.01.L3.RetStd_IR030.v7.0.3.0.G20144180915.hdf",
+   "year": 2018,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.06.01.L3.RetStd_IR030.v7.0.3.0.G20144180915.hdf",
+   "sha256_dap_response": "767b18c92fe47b00485ee9015a5c01047287d3e15971bc5b77941b571f9b0bda"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.07.01.L3.RetStd_IR031.v7.0.3.0.G20210105349.hdf",
+   "year": 2018,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.07.01.L3.RetStd_IR031.v7.0.3.0.G20210105349.hdf",
+   "sha256_dap_response": "783e15ee80034a4e589713f5a9901778d5474da24d4031fae4c8386571a2358d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.08.01.L3.RetStd_IR031.v7.0.3.0.G20210105541.hdf",
+   "year": 2018,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.08.01.L3.RetStd_IR031.v7.0.3.0.G20210105541.hdf",
+   "sha256_dap_response": "2e66d83c64ce96c20dd01b7faa221f3af347e883913d61365689f99d2a529c2e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.09.01.L3.RetStd_IR030.v7.0.3.0.G20145142219.hdf",
+   "year": 2018,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.09.01.L3.RetStd_IR030.v7.0.3.0.G20145142219.hdf",
+   "sha256_dap_response": "9604ce94cafeff6f1bd3cc89fdfdc28ab3780318405304d5f1e3a313ab194114"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.10.01.L3.RetStd_IR031.v7.0.3.0.G20210105607.hdf",
+   "year": 2018,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.10.01.L3.RetStd_IR031.v7.0.3.0.G20210105607.hdf",
+   "sha256_dap_response": "90eb279e070a2932798e1cd362f59e2ef3c96f956954b721c3e1c7ec960adbb6"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.11.01.L3.RetStd_IR030.v7.0.3.0.G20146001044.hdf",
+   "year": 2018,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.11.01.L3.RetStd_IR030.v7.0.3.0.G20146001044.hdf",
+   "sha256_dap_response": "048037229cb86d06d94a4e9e83d69b4f8ee93b946b0ad4b2c3900074625a75e0"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2018.12.01.L3.RetStd_IR031.v7.0.3.0.G20210105406.hdf",
+   "year": 2018,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2018/AIRS.2018.12.01.L3.RetStd_IR031.v7.0.3.0.G20210105406.hdf",
+   "sha256_dap_response": "d545f7caa8faab8d9e0a0708dd93b08e7eb65e5bb24e69f38d62b5ecbbec16af"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.01.01.L3.RetStd_IR031.v7.0.3.0.G20209221154.hdf",
+   "year": 2019,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.01.01.L3.RetStd_IR031.v7.0.3.0.G20209221154.hdf",
+   "sha256_dap_response": "57aa21944c4794a97ddcf971088d569bd09c9653bc17edbbc0580a3eb180cfd0"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.02.01.L3.RetStd_IR028.v7.0.3.0.G20209221059.hdf",
+   "year": 2019,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.02.01.L3.RetStd_IR028.v7.0.3.0.G20209221059.hdf",
+   "sha256_dap_response": "24bada400c934bafc6b9c93659416e87a7878a9dae16437027797212236824f7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.03.01.L3.RetStd_IR031.v7.0.3.0.G20209223028.hdf",
+   "year": 2019,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.03.01.L3.RetStd_IR031.v7.0.3.0.G20209223028.hdf",
+   "sha256_dap_response": "55e4f641b1db4da233502faca9eb869a84b4cce125a21b5417a2880bd5d8bcf5"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.04.01.L3.RetStd_IR030.v7.0.3.0.G20141202137.hdf",
+   "year": 2019,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.04.01.L3.RetStd_IR030.v7.0.3.0.G20141202137.hdf",
+   "sha256_dap_response": "53b3695d59af5a401515fd762c9a0bec333c3f4c4892307c804b83b0e3aa9a8a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.05.01.L3.RetStd_IR031.v7.0.3.0.G20209230120.hdf",
+   "year": 2019,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.05.01.L3.RetStd_IR031.v7.0.3.0.G20209230120.hdf",
+   "sha256_dap_response": "e4dc56f987b5267817b159d826fb272333b271da8eedad69ae76fa88eab92e93"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.06.01.L3.RetStd_IR030.v7.0.3.0.G20141224359.hdf",
+   "year": 2019,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.06.01.L3.RetStd_IR030.v7.0.3.0.G20141224359.hdf",
+   "sha256_dap_response": "69855680ba317483ad31c2012ac7df2d0d37ce25e48ac7b2c94f0d351deaf87e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.07.01.L3.RetStd_IR031.v7.0.3.0.G20209230505.hdf",
+   "year": 2019,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.07.01.L3.RetStd_IR031.v7.0.3.0.G20209230505.hdf",
+   "sha256_dap_response": "c5d3e4a2b8f2cda7e3553eeedce0ea4bd7c609b4d3d4dc5e2eafff8e82446383"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.08.01.L3.RetStd_IR031.v7.0.3.0.G20209220833.hdf",
+   "year": 2019,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.08.01.L3.RetStd_IR031.v7.0.3.0.G20209220833.hdf",
+   "sha256_dap_response": "d145c1b0059b376a88daf58575fd9e9461652841946e31154772bf804d18a22b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.09.01.L3.RetStd_IR030.v7.0.3.0.G20142161959.hdf",
+   "year": 2019,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.09.01.L3.RetStd_IR030.v7.0.3.0.G20142161959.hdf",
+   "sha256_dap_response": "fe7e5d4755d24dc73cd1f695d26197efe63aa87e188e1af586206adbd43c1c09"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.10.01.L3.RetStd_IR031.v7.0.4.0.G20356140333.hdf",
+   "year": 2019,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.10.01.L3.RetStd_IR031.v7.0.4.0.G20356140333.hdf",
+   "sha256_dap_response": "5e938cdf4ab06528e16f471f631059f285a43e73bd2275bda572597dfa298e23"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.11.01.L3.RetStd_IR030.v7.0.4.0.G20300195850.hdf",
+   "year": 2019,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.11.01.L3.RetStd_IR030.v7.0.4.0.G20300195850.hdf",
+   "sha256_dap_response": "8a032790bf40af806ebe11c9e6b02a2597874e1195611939461a8de26d9de1e7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2019.12.01.L3.RetStd_IR031.v7.0.4.0.G20336214541.hdf",
+   "year": 2019,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2019/AIRS.2019.12.01.L3.RetStd_IR031.v7.0.4.0.G20336214541.hdf",
+   "sha256_dap_response": "99a5a0af0e51955557ca63128254699f09d94432579520b6c7320e1a38eddab3"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.01.01.L3.RetStd_IR031.v7.0.4.0.G20336214947.hdf",
+   "year": 2020,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.01.01.L3.RetStd_IR031.v7.0.4.0.G20336214947.hdf",
+   "sha256_dap_response": "79d33098da8c2d8dbf36e11f543d1c47ab2327f34735b97bf609a868afb98f2a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.02.01.L3.RetStd_IR029.v7.0.4.0.G20336215127.hdf",
+   "year": 2020,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.02.01.L3.RetStd_IR029.v7.0.4.0.G20336215127.hdf",
+   "sha256_dap_response": "d78275b0f00136c68cb3d215bf4553e68ca921075b696167de31d0c18006592b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.03.01.L3.RetStd_IR031.v7.0.4.0.G20336220133.hdf",
+   "year": 2020,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.03.01.L3.RetStd_IR031.v7.0.4.0.G20336220133.hdf",
+   "sha256_dap_response": "5b0b03e3faa3f41d7ff7ba956fbbdb1fbdda3d57807ce12c6498941df2ed071e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.04.01.L3.RetStd_IR030.v7.0.4.0.G20324121623.hdf",
+   "year": 2020,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.04.01.L3.RetStd_IR030.v7.0.4.0.G20324121623.hdf",
+   "sha256_dap_response": "48af5fbe703aecc32404dd3b87627f67ad473d6cefecdb07bbfeea4a1533fc1d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.05.01.L3.RetStd_IR031.v7.0.4.0.G20336221543.hdf",
+   "year": 2020,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.05.01.L3.RetStd_IR031.v7.0.4.0.G20336221543.hdf",
+   "sha256_dap_response": "50c31e4e9574b49d1841ebb196e6f2e086253ce64f590fa4ec49416fbd1e1e54"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.06.01.L3.RetStd_IR030.v7.0.4.0.G20356161224.hdf",
+   "year": 2020,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.06.01.L3.RetStd_IR030.v7.0.4.0.G20356161224.hdf",
+   "sha256_dap_response": "be25381e0c4a017afe9038e61dbd652e1dfabfabe9aa72e6143ce80954989fec"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.07.01.L3.RetStd_IR031.v7.0.4.0.G20335131858.hdf",
+   "year": 2020,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.07.01.L3.RetStd_IR031.v7.0.4.0.G20335131858.hdf",
+   "sha256_dap_response": "1ca1b94c36aebab90566a9b67193a51409d37da10d8643bee88a1a0a4828b406"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.08.01.L3.RetStd_IR031.v7.0.4.0.G20336114434.hdf",
+   "year": 2020,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.08.01.L3.RetStd_IR031.v7.0.4.0.G20336114434.hdf",
+   "sha256_dap_response": "3dee6e9115a3bc7565f43b78c79da96267a4f1759d022e19fbf8732b2eb1b76c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.09.01.L3.RetStd_IR030.v7.0.4.0.G20338111658.hdf",
+   "year": 2020,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.09.01.L3.RetStd_IR030.v7.0.4.0.G20338111658.hdf",
+   "sha256_dap_response": "f156eb8ad2b064d28af694872b6381a61af1d12a385824946d9ce5fb0509e171"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.10.01.L3.RetStd_IR031.v7.0.4.0.G20356210256.hdf",
+   "year": 2020,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.10.01.L3.RetStd_IR031.v7.0.4.0.G20356210256.hdf",
+   "sha256_dap_response": "500b14f8a4b192a4a9f388458158877f64e561b971c642d6ff2791d0797f750f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.11.01.L3.RetStd_IR030.v7.0.4.0.G20349150214.hdf",
+   "year": 2020,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.11.01.L3.RetStd_IR030.v7.0.4.0.G20349150214.hdf",
+   "sha256_dap_response": "9d217ef5b3790447bdf81e539c4b98185d0f92a0d0e11405da6718d0628494d9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2020.12.01.L3.RetStd_IR031.v7.0.4.0.G21007093147.hdf",
+   "year": 2020,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2020/AIRS.2020.12.01.L3.RetStd_IR031.v7.0.4.0.G21007093147.hdf",
+   "sha256_dap_response": "2707688a9c55b0c173997a4a29b97cd42d191153e6c80db399c4126a2633c4a9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.01.01.L3.RetStd_IR031.v7.0.4.0.G21036093739.hdf",
+   "year": 2021,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.01.01.L3.RetStd_IR031.v7.0.4.0.G21036093739.hdf",
+   "sha256_dap_response": "f1eb1106e7d796811c3da4e255f690440d5cf4ee8d7772630e3be15020cda53d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.02.01.L3.RetStd_IR028.v7.0.4.0.G21066221513.hdf",
+   "year": 2021,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.02.01.L3.RetStd_IR028.v7.0.4.0.G21066221513.hdf",
+   "sha256_dap_response": "ddabad6a2fcd63aea8c39682578b9bd4ce37e7798350188637d3e8395635eb2e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.03.01.L3.RetStd_IR031.v7.0.4.0.G21095220416.hdf",
+   "year": 2021,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.03.01.L3.RetStd_IR031.v7.0.4.0.G21095220416.hdf",
+   "sha256_dap_response": "2b999d0905ea8dbd0e7e26cb8d6021f4d5338b2e10ec18bedae729ecc895a32e"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.04.01.L3.RetStd_IR030.v7.0.4.0.G21130005914.hdf",
+   "year": 2021,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.04.01.L3.RetStd_IR030.v7.0.4.0.G21130005914.hdf",
+   "sha256_dap_response": "885404f8da2a3bffa5e6281052dd14a11c1053597998f536e77b49b92f93cd5c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.05.01.L3.RetStd_IR031.v7.0.4.0.G21159101416.hdf",
+   "year": 2021,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.05.01.L3.RetStd_IR031.v7.0.4.0.G21159101416.hdf",
+   "sha256_dap_response": "1543458d53e16822911f1a8f41f5e2a9af1c6bd77cc935783e746ee44ac84457"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.06.01.L3.RetStd_IR030.v7.0.4.0.G21194221634.hdf",
+   "year": 2021,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.06.01.L3.RetStd_IR030.v7.0.4.0.G21194221634.hdf",
+   "sha256_dap_response": "bba857e4300c7de97a31fd72fb4fc56e01dd6e7199aec1ee76f133ff15b3b6f8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.07.01.L3.RetStd_IR031.v7.0.4.0.G21224190921.hdf",
+   "year": 2021,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.07.01.L3.RetStd_IR031.v7.0.4.0.G21224190921.hdf",
+   "sha256_dap_response": "519deb1ab44b4fe7d5f41fbf09120903df4924c46cddf218415967e41531458b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.08.01.L3.RetStd_IR031.v7.0.4.0.G21257103846.hdf",
+   "year": 2021,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.08.01.L3.RetStd_IR031.v7.0.4.0.G21257103846.hdf",
+   "sha256_dap_response": "823f46fa12d393852e1c72012e53fe587b9bf89814aec716835af8380efb7ce5"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.09.01.L3.RetStd_IR030.v7.0.9.3.G25297174427.hdf",
+   "year": 2021,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.09.01.L3.RetStd_IR030.v7.0.9.3.G25297174427.hdf",
+   "sha256_dap_response": "5259093a37d5ce7456d2f0a9f69a1659eea4c9ce9445afd16b07e66cbed74b71"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.10.01.L3.RetStd_IR031.v7.0.9.3.G25304185332.hdf",
+   "year": 2021,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.10.01.L3.RetStd_IR031.v7.0.9.3.G25304185332.hdf",
+   "sha256_dap_response": "8eef5091a950511c885dcd7f80280c0c4f5cf7d154ec47a56a6af01dc9c18f2d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.11.01.L3.RetStd_IR030.v7.0.9.3.G26015012100.hdf",
+   "year": 2021,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.11.01.L3.RetStd_IR030.v7.0.9.3.G26015012100.hdf",
+   "sha256_dap_response": "1e153e5ad345e49c32870b3d802091c4500db26a6072f08a337aad7828dccee7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2021.12.01.L3.RetStd_IR031.v7.0.9.3.G26015153828.hdf",
+   "year": 2021,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2021/AIRS.2021.12.01.L3.RetStd_IR031.v7.0.9.3.G26015153828.hdf",
+   "sha256_dap_response": "4deb2edd29b4cb670ed869d5afa4e78b1d48cf2c4a28d551052137a9014481e8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.01.01.L3.RetStd_IR031.v7.0.9.3.G25291151416.hdf",
+   "year": 2022,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.01.01.L3.RetStd_IR031.v7.0.9.3.G25291151416.hdf",
+   "sha256_dap_response": "fc49b7909d1a7f4a987495b1ef341b9804ecb432073c51565a97027f92d64037"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.02.01.L3.RetStd_IR028.v7.0.9.3.G25291210725.hdf",
+   "year": 2022,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.02.01.L3.RetStd_IR028.v7.0.9.3.G25291210725.hdf",
+   "sha256_dap_response": "eff6556ba3314daa1b82a4b8c0e22d962b2c005149ddcc69642b246e1c1109c5"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.03.01.L3.RetStd_IR031.v7.0.9.3.G25292020639.hdf",
+   "year": 2022,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.03.01.L3.RetStd_IR031.v7.0.9.3.G25292020639.hdf",
+   "sha256_dap_response": "4c8811dbb472abf0b5d475e590f612de43c90468de4e312ae6e01a733683bb13"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.04.01.L3.RetStd_IR030.v7.0.9.3.G25293091921.hdf",
+   "year": 2022,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.04.01.L3.RetStd_IR030.v7.0.9.3.G25293091921.hdf",
+   "sha256_dap_response": "5b118a5f39e1be52db2895f95642733e49f3545e55f0a09821ee6b2292304016"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.05.01.L3.RetStd_IR031.v7.0.9.3.G25293184819.hdf",
+   "year": 2022,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.05.01.L3.RetStd_IR031.v7.0.9.3.G25293184819.hdf",
+   "sha256_dap_response": "be950b1d7e57facf4a360a9a732a7cdd2b2cb716932bb1845ac6be4b8b7de27a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.06.01.L3.RetStd_IR030.v7.0.9.3.G25294005855.hdf",
+   "year": 2022,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.06.01.L3.RetStd_IR030.v7.0.9.3.G25294005855.hdf",
+   "sha256_dap_response": "2e4503a7ac2dee2351f3e708ab70fe62d5efb00ac01c2141543293a660ea9208"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.07.01.L3.RetStd_IR031.v7.0.9.3.G25294204926.hdf",
+   "year": 2022,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.07.01.L3.RetStd_IR031.v7.0.9.3.G25294204926.hdf",
+   "sha256_dap_response": "3ab2563ae5064111d114545282f50d2e1ad60c86cb13957d90568184faeb4717"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.08.01.L3.RetStd_IR031.v7.0.9.3.G25295133939.hdf",
+   "year": 2022,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.08.01.L3.RetStd_IR031.v7.0.9.3.G25295133939.hdf",
+   "sha256_dap_response": "f8977e0017cc45c8e62ef172045f191e0e5fc087c07eb140b03cc73aa3501eff"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.09.01.L3.RetStd_IR030.v7.0.9.3.G25295190603.hdf",
+   "year": 2022,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.09.01.L3.RetStd_IR030.v7.0.9.3.G25295190603.hdf",
+   "sha256_dap_response": "e5e548dd5c28b4bcaab3507d808b11bbe13d9fb86c4194c99c732b5cec8a7322"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.10.01.L3.RetStd_IR031.v7.0.9.3.G25296010432.hdf",
+   "year": 2022,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.10.01.L3.RetStd_IR031.v7.0.9.3.G25296010432.hdf",
+   "sha256_dap_response": "465d78f7eef4044a49de28bd63672d2132f1fa62abe39351422b2ffdd6028d20"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.11.01.L3.RetStd_IR030.v7.0.9.3.G25296133505.hdf",
+   "year": 2022,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.11.01.L3.RetStd_IR030.v7.0.9.3.G25296133505.hdf",
+   "sha256_dap_response": "856555d0f9183718f080a4657422302493479f053e680f9c940e165d8387e624"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2022.12.01.L3.RetStd_IR031.v7.0.9.3.G25296235941.hdf",
+   "year": 2022,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2022/AIRS.2022.12.01.L3.RetStd_IR031.v7.0.9.3.G25296235941.hdf",
+   "sha256_dap_response": "46fe478fd849fefe9ac21e117a5783b0c10ed969c2c4c954ef2c009a3e26485a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.01.01.L3.RetStd_IR031.v7.0.9.3.G25267180114.hdf",
+   "year": 2023,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.01.01.L3.RetStd_IR031.v7.0.9.3.G25267180114.hdf",
+   "sha256_dap_response": "524fa8d31fbe8c791664bcde6fb38a642753bd33ffb8ac89240c03126059c9a9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.02.01.L3.RetStd_IR028.v7.0.9.3.G25282201947.hdf",
+   "year": 2023,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.02.01.L3.RetStd_IR028.v7.0.9.3.G25282201947.hdf",
+   "sha256_dap_response": "977a66c952a41b7cd41c265f787a045df0618273b02be20c5671fe5dc7552005"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.03.01.L3.RetStd_IR031.v7.0.9.3.G25283003709.hdf",
+   "year": 2023,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.03.01.L3.RetStd_IR031.v7.0.9.3.G25283003709.hdf",
+   "sha256_dap_response": "6646d1c4434c0eac216ec80fb5c030910c483de662c2044d3cbe8a051b0c2510"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.04.01.L3.RetStd_IR030.v7.0.9.3.G25283154057.hdf",
+   "year": 2023,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.04.01.L3.RetStd_IR030.v7.0.9.3.G25283154057.hdf",
+   "sha256_dap_response": "cc5f8011f67ddc9687bbf0be565b562c9b32b25b112d4cbeadec2fc14384685f"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.05.01.L3.RetStd_IR031.v7.0.9.3.G26015224734.hdf",
+   "year": 2023,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.05.01.L3.RetStd_IR031.v7.0.9.3.G26015224734.hdf",
+   "sha256_dap_response": "6324b36fb570efb72cc493f0a581c54bfe7a7ad695ee77232cb89c5df6c74feb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.06.01.L3.RetStd_IR030.v7.0.9.3.G25287143535.hdf",
+   "year": 2023,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.06.01.L3.RetStd_IR030.v7.0.9.3.G25287143535.hdf",
+   "sha256_dap_response": "c767d8fe5ac708a7c13191ea03796ebcdbbf93ebe266305cf9a2caa32e3d9887"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.07.01.L3.RetStd_IR031.v7.0.9.3.G25287235046.hdf",
+   "year": 2023,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.07.01.L3.RetStd_IR031.v7.0.9.3.G25287235046.hdf",
+   "sha256_dap_response": "e0a0d974e967fa5f1c19a77696bdf069a730c8a080730f2dd7c2449d2b86b1d1"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.08.01.L3.RetStd_IR031.v7.0.9.3.G25288172855.hdf",
+   "year": 2023,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.08.01.L3.RetStd_IR031.v7.0.9.3.G25288172855.hdf",
+   "sha256_dap_response": "fc118ea2995360538e2d2bda263fb6a2f484d9848138e23e0728555c961e26eb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.09.01.L3.RetStd_IR030.v7.0.9.3.G25289000236.hdf",
+   "year": 2023,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.09.01.L3.RetStd_IR030.v7.0.9.3.G25289000236.hdf",
+   "sha256_dap_response": "6aabaa5911f7b3e9fe02999be7f1e19373ac8281eefb7cabe076bf9c4de6f83b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.10.01.L3.RetStd_IR031.v7.0.9.3.G25289162212.hdf",
+   "year": 2023,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.10.01.L3.RetStd_IR031.v7.0.9.3.G25289162212.hdf",
+   "sha256_dap_response": "4f9001db6ca335ad66a293a5222768b19f8d8aaf159e1478f5ea64809cc75a80"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.11.01.L3.RetStd_IR030.v7.0.9.3.G25290001447.hdf",
+   "year": 2023,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.11.01.L3.RetStd_IR030.v7.0.9.3.G25290001447.hdf",
+   "sha256_dap_response": "22f0782ef1a426c8a1eeea4374425800c4121ec44269e6623bd20219e6418488"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2023.12.01.L3.RetStd_IR031.v7.0.9.3.G25290153000.hdf",
+   "year": 2023,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2023/AIRS.2023.12.01.L3.RetStd_IR031.v7.0.9.3.G25290153000.hdf",
+   "sha256_dap_response": "f4e310149dc08cc5125f7e4ba6b8262fdc046eefc0be0df36ce88eb7d550d3ae"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.01.01.L3.RetStd_IR031.v7.0.9.3.G25246023416.hdf",
+   "year": 2024,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.01.01.L3.RetStd_IR031.v7.0.9.3.G25246023416.hdf",
+   "sha256_dap_response": "e1aa47f33db8778277d3c9fe159e1b2039ce68c823d074da6d05dec55129d5b7"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.02.01.L3.RetStd_IR029.v7.0.9.3.G25246165443.hdf",
+   "year": 2024,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.02.01.L3.RetStd_IR029.v7.0.9.3.G25246165443.hdf",
+   "sha256_dap_response": "4ad1a97cc4d6dd633880fa12f5ed3048f3da9fd03250e74b9653ec3e9b77ebc9"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.03.01.L3.RetStd_IR031.v7.0.9.3.G25258180452.hdf",
+   "year": 2024,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.03.01.L3.RetStd_IR031.v7.0.9.3.G25258180452.hdf",
+   "sha256_dap_response": "80fe1fa66acebbb81d6bfcfa9057b50974b92c966f96ed2efb9f21ed247fffbe"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.04.01.L3.RetStd_IR030.v7.0.9.3.G25259102625.hdf",
+   "year": 2024,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.04.01.L3.RetStd_IR030.v7.0.9.3.G25259102625.hdf",
+   "sha256_dap_response": "1f4c3eb5956cf651068d7dac8875be1e2ac956f56df0f0d3fecebe92d72c3158"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.05.01.L3.RetStd_IR031.v7.0.9.3.G25262111251.hdf",
+   "year": 2024,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.05.01.L3.RetStd_IR031.v7.0.9.3.G25262111251.hdf",
+   "sha256_dap_response": "61841ebf3ef844a6d61e0f182bf2987d68852ea8cc2a952b7c73e006044afe1b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.06.01.L3.RetStd_IR030.v7.0.9.3.G25261142208.hdf",
+   "year": 2024,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.06.01.L3.RetStd_IR030.v7.0.9.3.G25261142208.hdf",
+   "sha256_dap_response": "620ba5d88848e96f7f13d00b01f53e56689cabd4a7fb04915d684932a2d36f61"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.07.01.L3.RetStd_IR031.v7.0.9.3.G25265112851.hdf",
+   "year": 2024,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.07.01.L3.RetStd_IR031.v7.0.9.3.G25265112851.hdf",
+   "sha256_dap_response": "18799620781b767542d1ed667c42dd01a2b85d04c89eea32040b858ad72f13d5"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.08.01.L3.RetStd_IR031.v7.0.9.3.G25265154011.hdf",
+   "year": 2024,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.08.01.L3.RetStd_IR031.v7.0.9.3.G25265154011.hdf",
+   "sha256_dap_response": "d660a6fc497aa421ce69fc84ed8a6e4a45b70b86dea531db33f24c9ffeaaed13"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.09.01.L3.RetStd_IR030.v7.0.9.3.G25265235037.hdf",
+   "year": 2024,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.09.01.L3.RetStd_IR030.v7.0.9.3.G25265235037.hdf",
+   "sha256_dap_response": "415004a21bbd17b07d74ea2813c223ef3431210a04e03ab44c73ef5dfd28210c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.10.01.L3.RetStd_IR031.v7.0.9.3.G25266133009.hdf",
+   "year": 2024,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.10.01.L3.RetStd_IR031.v7.0.9.3.G25266133009.hdf",
+   "sha256_dap_response": "374ad3626cf73075559cf6cb2f5508a1f50999c98f91b859a8bb825d4d3056b2"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.11.01.L3.RetStd_IR030.v7.0.9.3.G25267134610.hdf",
+   "year": 2024,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.11.01.L3.RetStd_IR030.v7.0.9.3.G25267134610.hdf",
+   "sha256_dap_response": "dd0f7a28424800fc61ce7521af6682b3d087bcc996553203d428f8c0db4a1955"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2024.12.01.L3.RetStd_IR031.v7.0.9.3.G26015000001.hdf",
+   "year": 2024,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2024/AIRS.2024.12.01.L3.RetStd_IR031.v7.0.9.3.G26015000001.hdf",
+   "sha256_dap_response": "77a746e4d47adbdb3e261365e9b5a969d892a158648f6df94a8697e48043d68d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.01.01.L3.RetStd_IR031.v7.0.9.3.G26050163630.hdf",
+   "year": 2025,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.01.01.L3.RetStd_IR031.v7.0.9.3.G26050163630.hdf",
+   "sha256_dap_response": "855a9a92d2c81ee830618de8ed44491863c63b623582250aaef2b0a04e9d53e6"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.02.01.L3.RetStd_IR028.v7.0.9.3.G26050191931.hdf",
+   "year": 2025,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.02.01.L3.RetStd_IR028.v7.0.9.3.G26050191931.hdf",
+   "sha256_dap_response": "1c506d7c0c51adf0ddf0f6e0e6b75523d1f0da623a40c4cc68ab7d06c994257c"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.03.01.L3.RetStd_IR031.v7.0.9.3.G26050203828.hdf",
+   "year": 2025,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.03.01.L3.RetStd_IR031.v7.0.9.3.G26050203828.hdf",
+   "sha256_dap_response": "df00a68bdbfaca74f3f220908b4616cd5fa878b864b81c37a0963ddb94aebb6d"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.04.01.L3.RetStd_IR030.v7.0.9.3.G26050203437.hdf",
+   "year": 2025,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.04.01.L3.RetStd_IR030.v7.0.9.3.G26050203437.hdf",
+   "sha256_dap_response": "5cea50923044557d7ccc6e203fa3d29419d11abedd01d23f6c4a8360995e9763"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.05.01.L3.RetStd_IR031.v7.0.9.3.G26050203743.hdf",
+   "year": 2025,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.05.01.L3.RetStd_IR031.v7.0.9.3.G26050203743.hdf",
+   "sha256_dap_response": "63895119bcd8c02295940042ec9aff09a6c4c26e14d5a21c3bb7fd775da10eeb"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.06.01.L3.RetStd_IR030.v7.0.9.3.G26050204516.hdf",
+   "year": 2025,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.06.01.L3.RetStd_IR030.v7.0.9.3.G26050204516.hdf",
+   "sha256_dap_response": "b5e3003f08acd08e9c5b326ec4ca32b7d99c486c1d0a61c848e265a9d228fea0"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.07.01.L3.RetStd_IR031.v7.0.9.3.G26050204658.hdf",
+   "year": 2025,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.07.01.L3.RetStd_IR031.v7.0.9.3.G26050204658.hdf",
+   "sha256_dap_response": "40d42dbb04391ce49a8f01123a386f645752de64f591aa2d36d6e1dc0dfa36df"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.08.01.L3.RetStd_IR031.v7.0.9.3.G25245211432.hdf",
+   "year": 2025,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.08.01.L3.RetStd_IR031.v7.0.9.3.G25245211432.hdf",
+   "sha256_dap_response": "e8fb24f0054f298b8531adf70bb5a4c4348cd14c5b9bcce3227e120d2e18b554"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.09.01.L3.RetStd_IR030.v7.0.9.3.G25282113626.hdf",
+   "year": 2025,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.09.01.L3.RetStd_IR030.v7.0.9.3.G25282113626.hdf",
+   "sha256_dap_response": "7f473461b3a1e4406aa4b215f0b8d2d20e4bab7cecfbccd455da546ccac946a2"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.10.01.L3.RetStd_IR031.v7.0.10.0.G25317135204.hdf",
+   "year": 2025,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.10.01.L3.RetStd_IR031.v7.0.10.0.G25317135204.hdf",
+   "sha256_dap_response": "2c69e5f1101d81ce66416636cf010b77a80195aae8d0a1371c9d588e3a5f4e0a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.11.01.L3.RetStd_IR030.v7.0.10.0.G25337155205.hdf",
+   "year": 2025,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.11.01.L3.RetStd_IR030.v7.0.10.0.G25337155205.hdf",
+   "sha256_dap_response": "4bda3847d86a2c3bcdb54eb0866ab3bb5345f15efec37a438ae34ee1fb426df3"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2025.12.01.L3.RetStd_IR031.v7.0.10.0.G26007152202.hdf",
+   "year": 2025,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2025/AIRS.2025.12.01.L3.RetStd_IR031.v7.0.10.0.G26007152202.hdf",
+   "sha256_dap_response": "7f3845bbe8d57a6b08a49f59eecf53a8c0b6566006b8cedac855d805ad9bb8db"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.01.01.L3.RetStd_IR031.v7.0.9.3.G26041113145.hdf",
+   "year": 2026,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.01.01.L3.RetStd_IR031.v7.0.9.3.G26041113145.hdf",
+   "sha256_dap_response": "fc569ca9e3ffa4ea0c47d795d51cc50564a43f1bc8da4973c7a30cd7b5457583"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.02.01.L3.RetStd_IR028.v7.0.9.3.G26071000110.hdf",
+   "year": 2026,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.02.01.L3.RetStd_IR028.v7.0.9.3.G26071000110.hdf",
+   "sha256_dap_response": "d451e689732b491c8d729c02b3ce10e28218528a9dfdd77a99d77136d45fa898"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.03.01.L3.RetStd_IR031.v7.0.9.3.G26098131737.hdf",
+   "year": 2026,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.03.01.L3.RetStd_IR031.v7.0.9.3.G26098131737.hdf",
+   "sha256_dap_response": "69c968011e150af9f7e7a8ecab9fbdf0b51519949b1b6f1a370f8f0074a19b6a"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.04.01.L3.RetStd_IR030.v7.0.9.3.G26128100209.hdf",
+   "year": 2026,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.04.01.L3.RetStd_IR030.v7.0.9.3.G26128100209.hdf",
+   "sha256_dap_response": "186f247c933f8f1cb0e5588d28c1277a57e2e7650f92a85ad1f180572424a7af"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.05.01.L3.RetStd_IR031.v7.0.9.3.G26159102655.hdf",
+   "year": 2026,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.05.01.L3.RetStd_IR031.v7.0.9.3.G26159102655.hdf",
+   "sha256_dap_response": "976609c71b7b305eab382983bbbff50c2758deb88959049a615060c0f4d4a1c8"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.06.01.L3.RetStd_IR030.v7.0.9.3.G26195133533.hdf",
+   "year": 2026,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.06.01.L3.RetStd_IR030.v7.0.9.3.G26195133533.hdf",
+   "sha256_dap_response": "254b4b0fd0c2c614fd5242d8c1cc73fbb9e2d2740e1044708e5bbb433bc9093b"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.07.01.L3.RetStd_IR031.v7.0.9.3.G26218171645.hdf",
+   "year": 2026,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.07.01.L3.RetStd_IR031.v7.0.9.3.G26218171645.hdf",
+   "sha256_dap_response": "93bdcb56b41895a2f98e40230b5f4d9c68c358bbba3d6afd3eb0cc2149a41582"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.08.01.L3.RetStd_IR031.v7.0.9.3.G26251132944.hdf",
+   "year": 2026,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.08.01.L3.RetStd_IR031.v7.0.9.3.G26251132944.hdf",
+   "sha256_dap_response": "47c853d83c7ee81a22799ffe1a92742400215bbece4add72b67bf07c41293f58"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.09.01.L3.RetStd_IR030.v7.0.9.3.G26281110531.hdf",
+   "year": 2026,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.09.01.L3.RetStd_IR030.v7.0.9.3.G26281110531.hdf",
+   "sha256_dap_response": "e26ec079e9f3961c336e2d076d0e9e580e2b820138770d3c16afd8485ac94773"
+  },
+  {
+   "granule_ur": "AIRS3STM.7.0:AIRS.2026.10.01.L3.RetStd_IR031.v7.0.9.3.G26314094504.hdf",
+   "year": 2026,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level3/AIRS3STM.7.0/2026/AIRS.2026.10.01.L3.RetStd_IR031.v7.0.9.3.G26314094504.hdf",
+   "sha256_dap_response": "b92bd8b0f882bd4dafeeee8704297d6953a33ab7bcee0fcae5d97cd381212f8a"
+  }
+ ],
+ "outputs_sha256": {
+  "global_series.json": "908535aec2c6c1ed84b2e5cfbefd57a2cf06ecbff7ca18eb665b54f9a1bf24a3",
+  "tile_0_0.bin.gz": "5fd28be5d780ac4a8aee27ae04166bca32c8c4701b8493bbf6478fa83b2654ce",
+  "tile_0_1.bin.gz": "b7b8ddda09f8988137d92e97a44824533345f45ea0612211b1ff4749ca14bda8",
+  "tile_0_10.bin.gz": "3387a5fa7ad7e4ee33ef98f07409ff67f45f859cb56fe0e07c8759bb25102960",
+  "tile_0_11.bin.gz": "4d8c5f3eaf4ed967b3e100c69e581130d8a2af664c0da6eb03d7b14a80903678",
+  "tile_0_2.bin.gz": "5ae2a391d46f734c29ec94d1b4ec8d64ae70aa09cd1a5b2e6222a8947f380aad",
+  "tile_0_3.bin.gz": "16992c4ffb77c33330c09a7fdade834e053685e2d63fbf2a7ad419e361f5f616",
+  "tile_0_4.bin.gz": "33b3db78c5df135d0a4d271c0f0d5aa5a833bac2915974ee616a7d66e55e5d5c",
+  "tile_0_5.bin.gz": "ff20ae4224eea70f34105fabbc4fd3337efa400f642baa35cff9693251f84ecf",
+  "tile_0_6.bin.gz": "06ed32502e34cf12c50e1ee1da196a9cf05fe84f36776613f1b3e8bb471ca1f4",
+  "tile_0_7.bin.gz": "b11de3e29349355f15e3d6e9c9e44b45f3ab75ac279c8b019cdce64e05076bf6",
+  "tile_0_8.bin.gz": "50ac47b8b4d7289e59b578860a10a6df6ad0f21d84b52a7eae30fa3dab0cdbdd",
+  "tile_0_9.bin.gz": "f08e793a72cac837be4dc525d5b9eb57a2126e1c7112a988ce8a2c19a0fdc56a",
+  "tile_1_0.bin.gz": "8791b47252594d15f9ef4a5e6b67dc9f7fd784d028c436f6d5dacd37578c635d",
+  "tile_1_1.bin.gz": "ed5ca16d51a81311effe29608a63ec8e786c81f8261d4978c9c81116c3003d74",
+  "tile_1_10.bin.gz": "8246f3c9430e440822a0416c0b3d6bbfdde72621d662c454a3fae220c21d6ede",
+  "tile_1_11.bin.gz": "61ec19fc490a3d86170d91a38ba61052f25cb2f92d65c4d9b3e5446c4a19c249",
+  "tile_1_2.bin.gz": "e0a308b6ce19bfebb0ec77fe24faec18492c3555602a885e1f577c29c6072400",
+  "tile_1_3.bin.gz": "b965b20fd29d53d29c06757959f90fc36fc95ab5ab0105617d0c430f2c4ed8a4",
+  "tile_1_4.bin.gz": "70f04b4dfe800af35ab43dd9b0d929e4857ee858b1cff3c6599cc9a5a3ee0b1e",
+  "tile_1_5.bin.gz": "f04921eec4d5cc68168f9abf667aeb9b64187ef1ba8ad4ddd59bbe223f0e054b",
+  "tile_1_6.bin.gz": "44cd62d6be3e4f34034eeac3b68a0da1ee23fe8cd6c1bf412ca44f1fb91d5053",
+  "tile_1_7.bin.gz": "14caa4108d027b18afd81fc4c2face728bfc0d1c204189be98b2a6335abde64f",
+  "tile_1_8.bin.gz": "4b692e92f55c171a4e5682b44e385c952d71b5063ffac06b7bb1a8c1a420fb32",
+  "tile_1_9.bin.gz": "99f01bf5795469202ec8ceb0427d4f8f2dcf563d1dddda98fa985523ce0a0842",
+  "tile_2_0.bin.gz": "56db83602f4bc1484eefe879dc3619563f80953bf4f8d3fb53ed35d441b74cc0",
+  "tile_2_1.bin.gz": "3f178d96a2451be77cdc14e54e3a6acc676336b6670b7cec030b56caed55277f",
+  "tile_2_10.bin.gz": "07253fe46cd9a8e733b39cd9b33c4657b40c500f16b7523a6ad1e37c25914946",
+  "tile_2_11.bin.gz": "9d34db5e943a197757b57c53fc2882cf31638af961cb588efda573fbf54cd75d",
+  "tile_2_2.bin.gz": "b691de6801a55294a68d86259abedd2ae47ffccbec006847a9e28d92b964c686",
+  "tile_2_3.bin.gz": "bf2186b68022e8da3dea2ec9fcf2d0d204c2742a29449b6141b46804007ca614",
+  "tile_2_4.bin.gz": "81c13de2426c7c46e199b9ab287bdc6ed3440c4b4aef9afd76855460ea4fe17c",
+  "tile_2_5.bin.gz": "5f0bf442042592f8233cd77751956af64405c1144030a9ac0a8cdd6ee7e588d9",
+  "tile_2_6.bin.gz": "4e6ac213d8cb998b9a37dd0c07ed0b96912a990042bf0ebc2e22e30a5c25a3aa",
+  "tile_2_7.bin.gz": "ce26f00710d716f057aafc7ed0b143dc03b9074304d2bc4f17fef0966d5f1813",
+  "tile_2_8.bin.gz": "a89898972033dcf36602c683486bc6fd1aa2c46b699250e30e943d5f0c52ead4",
+  "tile_2_9.bin.gz": "0542ddf069a322a763393d1b5573f0491a1a7167fe7d4e0b4383471f73c86a2b",
+  "tile_3_0.bin.gz": "76837330b1bc55f4c71ffc62b1f3cf15a1405e62177dccc3821b985b3ff6042a",
+  "tile_3_1.bin.gz": "b94ab9c76ac928840ed5ce14924c22f880fb062c55db0ab85cf2f4527a3cc9a9",
+  "tile_3_10.bin.gz": "ad3f5811f0b3fa93bbec8c367751d1f92915f6ae674fa7b1d16ee1c05b03be6b",
+  "tile_3_11.bin.gz": "d62592c1341acb62d6d5686909292e8f92b421fa013a8f9d87e5fef0d0dcc971",
+  "tile_3_2.bin.gz": "e9201d7d99a56918a40bb48f91cdc72be26f07cc06e0358bdeb3938f749375db",
+  "tile_3_3.bin.gz": "c024b98318cdc943e3ec03d80800bfc1669fbfb28705e61c576953735a29711b",
+  "tile_3_4.bin.gz": "79a6818762014e7b82a8b9fcb3aff39435c1ebc3c03853c0d5688fd77a6402a2",
+  "tile_3_5.bin.gz": "c8bd6699018d12a4ae478e4f7856cd29e05f0f2ddf6b8b4d1640b36aa60944af",
+  "tile_3_6.bin.gz": "78d6cfc045cef4011ff57930feb2a3c9394ba235fee26b8e4daa9ce6d5bd5d12",
+  "tile_3_7.bin.gz": "0597f2cc38a49ee0d2dd4f26e7b41fdc7235b399e81ac6c4f1f0d1d536fca924",
+  "tile_3_8.bin.gz": "f93b64e0038214e351f92a19bf4c7a63c4930bca18fdb5c31a128b0632db7762",
+  "tile_3_9.bin.gz": "e4f151a0dabef9fa36de1f0aa4c368c1d2c8720a27884e5790fe66e1cefa7380",
+  "tile_4_0.bin.gz": "7116961fb2a09b0e726450247cd0eb2dcb40b11fb8f94e608c8146f0817943be",
+  "tile_4_1.bin.gz": "19d0cf3628539f54b1947015ab19d8c9cf6f2012aaa38977a027cd208c000b5c",
+  "tile_4_10.bin.gz": "6b8771de044ef1db589ceffdab423489d963d096a0650a2965238210f3f87cef",
+  "tile_4_11.bin.gz": "ad8827e3c78228ac6120edae4a1da61f1e26e81333b27a83c752d4325662e008",
+  "tile_4_2.bin.gz": "11622877de304b5614dc9d5882ce41da6cdf557154cf959c465b22fb948cde5a",
+  "tile_4_3.bin.gz": "f3c89e8beebad709b41651f2010253958b8dbcd0dee9f0d9b02460b5cc054553",
+  "tile_4_4.bin.gz": "426f2fb8af3aaadac39a0475b254af47328340445bf42741d40c9a4b01b5b1ff",
+  "tile_4_5.bin.gz": "b21c221bdfe09bbab4fd3439f91af626cc09a21393ecc3b5a06f00d64be12010",
+  "tile_4_6.bin.gz": "149b05c33ff23f62ea1173f8f3789881eb1316008528983c6ad397180f45d7a7",
+  "tile_4_7.bin.gz": "e9036ffd38dd3c7d948016dc7a39dae0f0577562ecea57032dafe3f190cb5d3a",
+  "tile_4_8.bin.gz": "8c8c8b4fca65f34aa3b6a297e1133d300c7eb67b726a410042cdd1a9a6f777a5",
+  "tile_4_9.bin.gz": "0d0e4955c51762060ebf76c7b9bde009e0285469804fce654f8a9a107cc6660e",
+  "tile_5_0.bin.gz": "fefa57d620f3885d49cee0c1741adf6bb710c782e9cd13c3b7a69fc4a6186ea6",
+  "tile_5_1.bin.gz": "9a2ac37c191995ddbc16e6f91c3d310c6c45685b19054a697bb550769418741c",
+  "tile_5_10.bin.gz": "e5b52f9ac65c8cf3353482a53b728c27b23ff7e4853bb4b96e2854c734f67a5b",
+  "tile_5_11.bin.gz": "ef52891985c7f8fceb26fb95da847f31623f70b39101b2052e1a8b52f00d979c",
+  "tile_5_2.bin.gz": "a6a90dc368f2984f4c49efa4691caef6db8d098306d14421328bff6ff8402345",
+  "tile_5_3.bin.gz": "0ceaa24fc7ea6103b998d6a1a4fe863d6b7ba2af5bb5a0e7c95917ce01f81aae",
+  "tile_5_4.bin.gz": "dfce1393cda8463dc2c9e70f9b2e36a221a3b0a68e9aa971baf3d4b80ceaf038",
+  "tile_5_5.bin.gz": "02b2c1a5e6173d38531a9107438546db6bc0c32be337c554abd91f9c54406c4f",
+  "tile_5_6.bin.gz": "54e53a3d7c3fa5c3bb746de6049f092fd7720c2ddcc0af47f69da1cb639342e9",
+  "tile_5_7.bin.gz": "c1eb673d0da277072d22ec0e7d779e50db37ad8e739f3c15521588008aed3636",
+  "tile_5_8.bin.gz": "f84b1e47837f0a2292ee2683b043ed509490369e686e96f0c3c0555209f12ce0",
+  "tile_5_9.bin.gz": "c2a17ba778ba1ddf64d2b924ecf9b57b29f1130893cf104afe1cca37404eaff1",
+  "tile_means.json": "4682ff2c0d588fa320ea1c7fcba4510929e96151fbfe60ab2bbe74f84f175344"
+ },
+ "builder_scripts": [
+  "data/library/scripts/libcommon.py",
+  "data/library/scripts/products.py",
+  "data/library/scripts/finalize.py",
+  "data/library/scripts/build_airs.py"
+ ],
+ "note": "Raw granules are not kept; only the 1-degree monthly derivative is shipped. No trend statistic is computed in the build."
+}

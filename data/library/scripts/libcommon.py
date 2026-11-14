@@ -169,13 +169,15 @@ def update_manifest(entry):
         "encoding": "gunzip; bytes = [all high bytes of the int16 values][all low bytes]; int16 little-endian = (high<<8)|low; layout [month][30][30]; value = int16*scale + offset; -32768 = no data; tiles that are entirely no-data are not written"},
         "variables": []}
     m["variables"] = [v for v in m["variables"] if v["id"] != entry["id"]] + [entry]
-    order = ["precip_imerg", "aod_myd08", "tws_grace", "lst_day_myd11", "snow_mod10cm"]
+    order = ["precip_imerg", "aod_myd08", "tws_grace", "lst_day_myd11", "snow_mod10cm", "no2_omi", "airs_tair", "airs_h2o", "soil_gldas", "et_gldas"]
     m["variables"].sort(key=lambda v: order.index(v["id"]) if v["id"] in order else 99)
     MANIFEST.write_text(json.dumps(m, indent=1))
 
 
 # ---------- OPeNDAP DAP4 helpers (HDF4 / HDF5 granules; raw stored values are returned and decoded by the caller, to avoid the double-scaling bug) ----------
 import xml.etree.ElementTree as ET
+import threading
+NC_LOCK = threading.Lock()   # HDF5/netCDF4 is not thread-safe: decode responses one at a time, fetch in parallel
 def dmr_path(xml_text, name):
     root = ET.fromstring(xml_text); found = []
     def walk(el, path):
@@ -198,7 +200,7 @@ def dap4_raw(sess, opendap_url, var, index="", path=None, retries=4):
                 if not path: raise RuntimeError("variable not in DMR")
             r = sess.get(base + ".dap.nc4", params={"dap4.ce": path + index}, timeout=600)
             if r.status_code != 200 or "html" in r.headers.get("content-type", ""): raise RuntimeError(f"dap http {r.status_code}")
-            with netCDF4.Dataset("mem.nc", memory=r.content) as ds:
+            with NC_LOCK, netCDF4.Dataset("mem.nc", memory=r.content) as ds:
                 node = ds
                 for part in path.strip("/").split("/")[:-1]: node = node[part]
                 v = node[var]; v.set_auto_maskandscale(False); raw = np.array(v[:])

@@ -1,0 +1,2234 @@
+{
+ "id": "et_gldas",
+ "product": "GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)",
+ "collection": {
+  "concept_id": "C1288937542-GES_DISC",
+  "short_name": "GLDAS_NOAH10_M",
+  "version": "2.1",
+  "doi": "10.5067/LWTYSMP3VM5Z",
+  "title": "GLDAS Noah Land Surface Model L4 monthly 1.0 x 1.0 degree V2.1 (GLDAS_NOAH10_M)",
+  "temporal": [
+   {
+    "BeginningDateTime": "2000-01-01T00:00:00.000Z"
+   }
+  ]
+ },
+ "agency_archive": "NASA GES DISC",
+ "source_variable": "Evap_tavg (kg/m2/s x 86400)",
+ "access": "Earthdata Login (environment token); GES DISC OPeNDAP DAP4 server-side subset of one variable per month, in memory",
+ "retrieved_utc": [
+  "2026-11-14T18:17:58.289601+00:00",
+  "2026-11-14T18:21:07.042529+00:00"
+ ],
+ "regrid": "none: GLDAS Noah 1 degree grid (150 rows, 59.5S to 89.5N) placed into the 180 x 360 library grid; Evap_tavg x 86400 (kg/m2/s to mm/day)",
+ "granules": [
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200101.021.nc4",
+   "year": 2001,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200101.021.nc4",
+   "sha256_dap_response": "368bc5edfa396a2f252a32b186ffa45e8ec943ca3ebdd15a6c4b404a3fab29cb"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200102.021.nc4",
+   "year": 2001,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200102.021.nc4",
+   "sha256_dap_response": "036977121009eadcba8b2bd9f014ff3b59a5e2d259a269285d71cfc8b2e8ccc6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200103.021.nc4",
+   "year": 2001,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200103.021.nc4",
+   "sha256_dap_response": "2428d4bdc4652555464ef26ec1c614c8ddba08f434a570d3452c11b3c1958ca0"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200104.021.nc4",
+   "year": 2001,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200104.021.nc4",
+   "sha256_dap_response": "3f6d0032774fb95266bff209fa40ae1f60f53687a214eea17c6b0919ff811f2c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200105.021.nc4",
+   "year": 2001,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200105.021.nc4",
+   "sha256_dap_response": "04963b5576c7323d33a2e7b5585198a7688d2d0b885cf8e55b45ffc2a91e0fd1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200106.021.nc4",
+   "year": 2001,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200106.021.nc4",
+   "sha256_dap_response": "e95182ad241ee5d181a2b9c18a2d43b4967103d0ba4bb8ae50e24f91f8bc916f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200107.021.nc4",
+   "year": 2001,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200107.021.nc4",
+   "sha256_dap_response": "79e251c63d0f99ba34e15804e4aebdc12a1de0a046a0f82e7d67193268666f0f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200108.021.nc4",
+   "year": 2001,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200108.021.nc4",
+   "sha256_dap_response": "45db0f309495b2589f08a5e5fb4d27b086c6b7927cde8ef4fb865aae7c05e534"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200109.021.nc4",
+   "year": 2001,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200109.021.nc4",
+   "sha256_dap_response": "a97ed39ab42799463725141b69a8da7145eb4e6c579de8c58b4c727f59f84461"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200110.021.nc4",
+   "year": 2001,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200110.021.nc4",
+   "sha256_dap_response": "128c98a5226aae55ffa5e5ce8bc319cd74972f50729b2643c066c7262199fa77"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200111.021.nc4",
+   "year": 2001,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200111.021.nc4",
+   "sha256_dap_response": "8c57fa7872616f95920fbb92c3a2a31068423fb250dd45d3ed26075025e91b9a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200112.021.nc4",
+   "year": 2001,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2001/GLDAS_NOAH10_M.A200112.021.nc4",
+   "sha256_dap_response": "f4d29b64b9d78142e63f259a5a81c98508baccbbb86d53faa9fa12d21855c7aa"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200201.021.nc4",
+   "year": 2002,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200201.021.nc4",
+   "sha256_dap_response": "7f00b032075d987f5617e56d6d786ae4bf4f5a2294ad142dbf346910d24692b3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200202.021.nc4",
+   "year": 2002,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200202.021.nc4",
+   "sha256_dap_response": "f896c0bcf27121f77fd4a3191b905070818bd86cc6d960f376d49117a98e03b8"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200203.021.nc4",
+   "year": 2002,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200203.021.nc4",
+   "sha256_dap_response": "a43a14530aa0db1becc9b19a692ee29f9add905be4503d729a02d7c8206d3031"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200204.021.nc4",
+   "year": 2002,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200204.021.nc4",
+   "sha256_dap_response": "2825305bda24952ca7e63089781c5dc56e46a6e5138410efcd28b0bd90742210"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200205.021.nc4",
+   "year": 2002,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200205.021.nc4",
+   "sha256_dap_response": "a2da9950580fd8173ffebae55b540f5117a50c1a8b026e5e6635fca5fb704937"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200206.021.nc4",
+   "year": 2002,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200206.021.nc4",
+   "sha256_dap_response": "49b549e7466d2244b3fa3fdfb58b8e4a06f9ca690a3eaa0e45040b9b37c456e3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200207.021.nc4",
+   "year": 2002,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200207.021.nc4",
+   "sha256_dap_response": "13f62e9731561908f6beb2f0472efcb8de2e8933ba45a7974cdc69b30ab16d3b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200208.021.nc4",
+   "year": 2002,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200208.021.nc4",
+   "sha256_dap_response": "40e565de7dd0441c58cd3a66371ea93d9d8abb966d7ae6a7d79dadfc54d3e7f1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200209.021.nc4",
+   "year": 2002,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200209.021.nc4",
+   "sha256_dap_response": "41728cd562cc205badabc5514f1a5c5d100d47a2578e032af4de9bcc0df9cbfc"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200210.021.nc4",
+   "year": 2002,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200210.021.nc4",
+   "sha256_dap_response": "0309a8aa3379d365f8b26409a71d342bd7b00e8c452292265dea610fe380b6dd"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200211.021.nc4",
+   "year": 2002,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200211.021.nc4",
+   "sha256_dap_response": "771c1d4956da4352a601f2dbe1762866c20f10166c9b0f40f1d343c2334ca530"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200212.021.nc4",
+   "year": 2002,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2002/GLDAS_NOAH10_M.A200212.021.nc4",
+   "sha256_dap_response": "869cec0ff0b8038341e957f6e11975350a2ff09e6ed5138d4bbb56febc758d88"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200301.021.nc4",
+   "year": 2003,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200301.021.nc4",
+   "sha256_dap_response": "bca93a28a061264942ef27db56139614a8034bd5f75d887055b825b312abf5e1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200302.021.nc4",
+   "year": 2003,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200302.021.nc4",
+   "sha256_dap_response": "f44f68d1301b0bb3d15af9c7c11ea56b04cd7af202786605adff761f6fadb35f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200303.021.nc4",
+   "year": 2003,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200303.021.nc4",
+   "sha256_dap_response": "1366a6f819120b6b22934806326e13f88e4adce78d7a24e2bd776fc6d109a6ea"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200304.021.nc4",
+   "year": 2003,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200304.021.nc4",
+   "sha256_dap_response": "cff652fc6337f47d3a351a9eba9b202b736bd8d39f50d2ea6b4eebe01d6bc982"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200305.021.nc4",
+   "year": 2003,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200305.021.nc4",
+   "sha256_dap_response": "8797f42bbadd43cbc2e5c44b483d2cde2200a27ea3ae6fe6b1f4ce2c996c6835"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200306.021.nc4",
+   "year": 2003,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200306.021.nc4",
+   "sha256_dap_response": "bd4efac01a3bfc1a9c65f6899364ee2c2a8b9fc969cbdd5bf94c7a490051d015"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200307.021.nc4",
+   "year": 2003,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200307.021.nc4",
+   "sha256_dap_response": "956de074c39ffc1ce39e7126179c44c904e5b8c6005b29ccc521c0b2f66bdb5d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200308.021.nc4",
+   "year": 2003,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200308.021.nc4",
+   "sha256_dap_response": "fe1407a6b0c8bfa8d4575d43bff319660cfd5c0658568dad4e75d7a699a745b9"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200309.021.nc4",
+   "year": 2003,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200309.021.nc4",
+   "sha256_dap_response": "2cad62ea73ced4128410590fbbe55c1f1d2349ad502391261fda5b3f73d109da"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200310.021.nc4",
+   "year": 2003,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200310.021.nc4",
+   "sha256_dap_response": "8bdb4e0a28b76fc1188c73c4b37cd147e295d131dc593413886b73998fd27ea3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200311.021.nc4",
+   "year": 2003,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200311.021.nc4",
+   "sha256_dap_response": "07213fe2ab2b4941d588584ee8e65d004a7f4938870c5573a5277ea002c42249"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200312.021.nc4",
+   "year": 2003,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2003/GLDAS_NOAH10_M.A200312.021.nc4",
+   "sha256_dap_response": "19a36604146b3bdabb7fa9e1e556eaf9c896e5bd38c633c77d2ee9b777b0e46e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200401.021.nc4",
+   "year": 2004,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200401.021.nc4",
+   "sha256_dap_response": "a1352461f4a3653b14ca89cfcbd48f81da2569773e4ad09a909b15f9c07cb06c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200402.021.nc4",
+   "year": 2004,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200402.021.nc4",
+   "sha256_dap_response": "ef3f6723ac3763bff3fde204e2bfdfa149658b4f2a210ef7c16b4638173b08ab"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200403.021.nc4",
+   "year": 2004,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200403.021.nc4",
+   "sha256_dap_response": "f3432e201df436fcb0b4681bc57aa22397defbc88a84dee887854c4fcba96349"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200404.021.nc4",
+   "year": 2004,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200404.021.nc4",
+   "sha256_dap_response": "2c07fea166c3dc6581f14ed765949c2c544b00d426fbd7bf864832150db98fe4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200405.021.nc4",
+   "year": 2004,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200405.021.nc4",
+   "sha256_dap_response": "ab6a75bf3ba07da7b54b6024eadf071bc4ec43f87d7c01e2a9b9fed07fff4253"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200406.021.nc4",
+   "year": 2004,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200406.021.nc4",
+   "sha256_dap_response": "4390fa9dbf463e9bd340462d6a5d039af9922de8ebe7c24fdef7caf202c76302"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200407.021.nc4",
+   "year": 2004,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200407.021.nc4",
+   "sha256_dap_response": "445c19376164a89370b7d230ce7d29ee44a09204b3eee8277e4e01a385782e20"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200408.021.nc4",
+   "year": 2004,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200408.021.nc4",
+   "sha256_dap_response": "b5a17ca90d834681df1d22b79b00573f9adc242bfd6560d243bc34bb26ceda99"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200409.021.nc4",
+   "year": 2004,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200409.021.nc4",
+   "sha256_dap_response": "8f886ac454441c70cd1db8db1914651337d10e2c80eb2e43759a75564dad6fac"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200410.021.nc4",
+   "year": 2004,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200410.021.nc4",
+   "sha256_dap_response": "5b478e4e8b15e030de7f7d588f5e3eaf3548f4db6cd6504b062a4f49023e8b4b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200411.021.nc4",
+   "year": 2004,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200411.021.nc4",
+   "sha256_dap_response": "c2448bff83ec69dac092ecbcdf3c05587abcc3942b071861f2e2bb71817207b8"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200412.021.nc4",
+   "year": 2004,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2004/GLDAS_NOAH10_M.A200412.021.nc4",
+   "sha256_dap_response": "ec457bfb0d91ea1acf2a16b0bcc645a5771382d3dd4394c0af20c705c93df820"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200501.021.nc4",
+   "year": 2005,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200501.021.nc4",
+   "sha256_dap_response": "d6f08208a3ce6615919f2a675f7bfd977f1ddfb066a2cb517e3d20b32ff2e712"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200502.021.nc4",
+   "year": 2005,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200502.021.nc4",
+   "sha256_dap_response": "61b932fee1b779b0ac4cb220acb7d8e107b539addab8e57d3ab121037240f984"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200503.021.nc4",
+   "year": 2005,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200503.021.nc4",
+   "sha256_dap_response": "294289c4655e104123595948db035784ee97866dc31cfc0218846315b40cc814"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200504.021.nc4",
+   "year": 2005,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200504.021.nc4",
+   "sha256_dap_response": "a5cb14206b207c002710e00b7a3e7636b567a20bb4407f119219001da0f710ed"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200505.021.nc4",
+   "year": 2005,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200505.021.nc4",
+   "sha256_dap_response": "6d71453da0f080eadd1581867cc639540f25be6100e55c34cb75631411c359e4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200506.021.nc4",
+   "year": 2005,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200506.021.nc4",
+   "sha256_dap_response": "3fd64e019ea36be3bbc66468f5f0bd809b240f3d6b7175c42353b8d5eab1b1a2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200507.021.nc4",
+   "year": 2005,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200507.021.nc4",
+   "sha256_dap_response": "a1d7e872625b85127f504a5b99c86966f944f45320224a76e58d8b55d84b5457"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200508.021.nc4",
+   "year": 2005,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200508.021.nc4",
+   "sha256_dap_response": "7bfc4739ce8212ebd32a4b975369efb1ba01a385e662dd31a3c1e309c8bc354e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200509.021.nc4",
+   "year": 2005,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200509.021.nc4",
+   "sha256_dap_response": "2cf8bb19d224ecba33bac382d63ae45fd6cd0d03d433df70a2a54dc38264ae2c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200510.021.nc4",
+   "year": 2005,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200510.021.nc4",
+   "sha256_dap_response": "0492f476514364d79b3df0535bbfb3d093e46297c4f3b5e0fd74a3f75a383f24"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200511.021.nc4",
+   "year": 2005,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200511.021.nc4",
+   "sha256_dap_response": "20004acb3cc92fb439bc37fc15b7200bc102ca4a3fbe1871fbfd9b23b908329b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200512.021.nc4",
+   "year": 2005,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2005/GLDAS_NOAH10_M.A200512.021.nc4",
+   "sha256_dap_response": "a9477aaa0b7d41c1200c9cb194565f5d158f0533a293eb8fb714db5a3dd1d24c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200601.021.nc4",
+   "year": 2006,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200601.021.nc4",
+   "sha256_dap_response": "00542cb7512ff5547a632232da237c64ce2ce0a3495a8cd84568c40f8e6d7e88"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200602.021.nc4",
+   "year": 2006,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200602.021.nc4",
+   "sha256_dap_response": "5ae5782362c3f928a40eb0f7e63df467a52a1cb723bcdcab85d37a67fee2f45f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200603.021.nc4",
+   "year": 2006,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200603.021.nc4",
+   "sha256_dap_response": "dc8afc53670602e7362a769f590c0c15f0e878fbb93b6ec51aad5ddd88a0ead2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200604.021.nc4",
+   "year": 2006,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200604.021.nc4",
+   "sha256_dap_response": "8d6b085b3f48aea4afcd7e8f01e38d8bf6f5b868c8f008b3b4d25d0c84c83cdb"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200605.021.nc4",
+   "year": 2006,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200605.021.nc4",
+   "sha256_dap_response": "d8b6b59e39062b8ebad5e04d95a693d9207ca4e12eea2094f13dd2ecc9839a4c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200606.021.nc4",
+   "year": 2006,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200606.021.nc4",
+   "sha256_dap_response": "25ea8ac3081900df20b84f43c5bcb4e80361bd93603876a76b0c932bfbb0f2ec"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200607.021.nc4",
+   "year": 2006,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200607.021.nc4",
+   "sha256_dap_response": "178d11e0d1867ee0247a3c9ceb3ab084cd355b153eeb2f385fa3783724c76b64"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200608.021.nc4",
+   "year": 2006,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200608.021.nc4",
+   "sha256_dap_response": "b84e4e0e3bbfcd46723dd27ad24fabbdf1ab8dc425031ed43c83526ab9a571f1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200609.021.nc4",
+   "year": 2006,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200609.021.nc4",
+   "sha256_dap_response": "030d02574032b657cc850570cb8209ca5806fa18479f7c78ae8afd2972393b8d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200610.021.nc4",
+   "year": 2006,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200610.021.nc4",
+   "sha256_dap_response": "52bfd6115279b3fd87911d27982eeb0269cf2c1e3d2146172be9db6dc2e3d812"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200611.021.nc4",
+   "year": 2006,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200611.021.nc4",
+   "sha256_dap_response": "0937920a0cdba71bc6052245c3259026f354c636dae150c2754659eb0409a29d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200612.021.nc4",
+   "year": 2006,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2006/GLDAS_NOAH10_M.A200612.021.nc4",
+   "sha256_dap_response": "2618b8f93d606adc48f29b9bf29e6f6c26819f30066e4c341259c5f1d1a0cab1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200701.021.nc4",
+   "year": 2007,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200701.021.nc4",
+   "sha256_dap_response": "90183d389416c27c8d2c74a8524ddc459eb081f742e669fee20fb2c2d908b49d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200702.021.nc4",
+   "year": 2007,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200702.021.nc4",
+   "sha256_dap_response": "90df01fd103739c5572ff0e5000816569ac64d03350ce646385b9bc76f16dd6f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200703.021.nc4",
+   "year": 2007,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200703.021.nc4",
+   "sha256_dap_response": "fdf777da21d110dd2c953673227b742599276356f4da76801e0e2dec1ffef5df"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200704.021.nc4",
+   "year": 2007,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200704.021.nc4",
+   "sha256_dap_response": "c92e8a128cd79a8d05f08beb2ac3520f3ccbcb2d5b0c6d05c6b804ff77164b16"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200705.021.nc4",
+   "year": 2007,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200705.021.nc4",
+   "sha256_dap_response": "3721cb852f7aade8aa369c435781f6a9ad5056f2063d0a1b2a106a77d0d0bd95"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200706.021.nc4",
+   "year": 2007,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200706.021.nc4",
+   "sha256_dap_response": "566189b56ba9af901ceabf0b427a5b5518d069c893493e0a046209bc1b8e415e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200707.021.nc4",
+   "year": 2007,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200707.021.nc4",
+   "sha256_dap_response": "e696a2ca14b7950a8d385cd8ae4071bf9222f44739ad63b4803dc86957554556"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200708.021.nc4",
+   "year": 2007,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200708.021.nc4",
+   "sha256_dap_response": "3a47e600b09a3adc6b52dac0a071676344a88c0d51e4b04b1aa708ad9e324b63"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200709.021.nc4",
+   "year": 2007,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200709.021.nc4",
+   "sha256_dap_response": "e4c22a76728c62ab5d5e5a41e8813bf2e2727d56732e72aebc108008ae8dd895"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200710.021.nc4",
+   "year": 2007,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200710.021.nc4",
+   "sha256_dap_response": "f1add5af7e749c7f34c7f9fae3ced4dedcaffeb43e559d7a3642ffb09d07b37a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200711.021.nc4",
+   "year": 2007,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200711.021.nc4",
+   "sha256_dap_response": "534ad2ca3ebf6e8f79db7a677a223590a113cd08acf0762fbe75bee89b2ba818"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200712.021.nc4",
+   "year": 2007,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2007/GLDAS_NOAH10_M.A200712.021.nc4",
+   "sha256_dap_response": "b609a1ed795620b2b69ce473629b2cc89c4bfc0af665368061b42f94e97aea89"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200801.021.nc4",
+   "year": 2008,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200801.021.nc4",
+   "sha256_dap_response": "ff54c96f49c2d7d84876525eab2d4b893408b27e7538bae0e591831d91dc2c28"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200802.021.nc4",
+   "year": 2008,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200802.021.nc4",
+   "sha256_dap_response": "74d926e7aec38822534f87bbcbce6a7b24fd10716ef9f505f30a4b74b0cfcc4b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200803.021.nc4",
+   "year": 2008,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200803.021.nc4",
+   "sha256_dap_response": "646dbb640348b38e1bdac127334ff6b4ea4547383f3943597f408758b54191e9"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200804.021.nc4",
+   "year": 2008,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200804.021.nc4",
+   "sha256_dap_response": "0bc7540cd97165f581c6d1fae9add03f375741ea93be1b14c12ca557db507590"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200805.021.nc4",
+   "year": 2008,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200805.021.nc4",
+   "sha256_dap_response": "88bf89a0b96dd0d03c1f74ff491d9a3b20fca002dac319dce0b57f5a67792593"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200806.021.nc4",
+   "year": 2008,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200806.021.nc4",
+   "sha256_dap_response": "a5f5bb41d9cf10d8f98d950c99c063607bcb29b2833b8cf03bcc9f1b19a0a840"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200807.021.nc4",
+   "year": 2008,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200807.021.nc4",
+   "sha256_dap_response": "4996a88d70a5719c34c7f35c1651724b4e761e0cd710de255b447f5b1711ef72"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200808.021.nc4",
+   "year": 2008,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200808.021.nc4",
+   "sha256_dap_response": "7e704d408de117d8865599e802e62e210a17fef7dc6d48443d9a4bf785a34028"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200809.021.nc4",
+   "year": 2008,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200809.021.nc4",
+   "sha256_dap_response": "097812d8ff4b5abd6ebd4f332c70000381f08386c49f4836b77787f506d885d0"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200810.021.nc4",
+   "year": 2008,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200810.021.nc4",
+   "sha256_dap_response": "392a5032433e53f37b8c8f29b64c14887b831e820bf40a9de300da8e57c87bcf"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200811.021.nc4",
+   "year": 2008,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200811.021.nc4",
+   "sha256_dap_response": "a2590ad8d3f4052cbe23d2dc37b5e5e587d7901750cf832bedb7e47b0aad4fb2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200812.021.nc4",
+   "year": 2008,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2008/GLDAS_NOAH10_M.A200812.021.nc4",
+   "sha256_dap_response": "17370e68bf370c56c509a5f95eb08ba59ac9a8f7139a78b3510fd29916850111"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200901.021.nc4",
+   "year": 2009,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200901.021.nc4",
+   "sha256_dap_response": "5c3d77d724c32a760cfef1bb20d3d1bdbbcc28f0e2d6660176e957f8aa169bdc"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200902.021.nc4",
+   "year": 2009,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200902.021.nc4",
+   "sha256_dap_response": "cf834c109d2f698915794501b77de657c9d058c091c6581fd58729b630867f68"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200903.021.nc4",
+   "year": 2009,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200903.021.nc4",
+   "sha256_dap_response": "520cdd9a41882490aba4ac3227ada0f2a82ce5dd13251a8179f46b06aa9a65bf"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200904.021.nc4",
+   "year": 2009,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200904.021.nc4",
+   "sha256_dap_response": "7fd3c878313f4e18ae69e585efd5111720e89c708b592b5f67874f8c28814c28"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200905.021.nc4",
+   "year": 2009,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200905.021.nc4",
+   "sha256_dap_response": "99b0103065922be0c0b23ce4b91f463ebfc3aa83ff1bb17274418c306fd29ffe"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200906.021.nc4",
+   "year": 2009,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200906.021.nc4",
+   "sha256_dap_response": "5aceb6067a720947972de1bc8922e1f550ca316edf98a8084b53e198b4e32da2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200907.021.nc4",
+   "year": 2009,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200907.021.nc4",
+   "sha256_dap_response": "7ad39d9309a9bd427969f17d460c7aeede946f9917c21a1dcf276e5f38aaf89c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200908.021.nc4",
+   "year": 2009,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200908.021.nc4",
+   "sha256_dap_response": "6c049a2ba033acb729a47ed195a7ac9de2433848bf16b3e4c8716f8fd05edaca"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200909.021.nc4",
+   "year": 2009,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200909.021.nc4",
+   "sha256_dap_response": "f3144c9f9ed244d2c12a82c89b2676e52470be088bcc38a5cb9c200c9616b62d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200910.021.nc4",
+   "year": 2009,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200910.021.nc4",
+   "sha256_dap_response": "87b471ce4202d0da6c9d9498e6873d436cf40c078348f567df767ef738685ba1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200911.021.nc4",
+   "year": 2009,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200911.021.nc4",
+   "sha256_dap_response": "e6f74aaaa518e821ca87b35cc725892cdf8ed62f01d6eb30c85b2b08b130e72e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A200912.021.nc4",
+   "year": 2009,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2009/GLDAS_NOAH10_M.A200912.021.nc4",
+   "sha256_dap_response": "33c8745c653034e6719497831867da204a0221baa24403b96457736fbf4fa362"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201001.021.nc4",
+   "year": 2010,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201001.021.nc4",
+   "sha256_dap_response": "9b51b2409094f34f81073831832bcfdbfc463240860c3cae3be0a30010764c98"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201002.021.nc4",
+   "year": 2010,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201002.021.nc4",
+   "sha256_dap_response": "e64c1a035b685b7cfde3a7200c38c2803641bec50da03996185bc6fa83522af4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201003.021.nc4",
+   "year": 2010,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201003.021.nc4",
+   "sha256_dap_response": "51d4613db843d1649a6bd3334316f7cd4c32491a998e31fed24272e3cc97f868"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201004.021.nc4",
+   "year": 2010,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201004.021.nc4",
+   "sha256_dap_response": "23a4e15c7e3f41aa40a47540333bc191dbb48698e769935c668b6410f9e24453"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201005.021.nc4",
+   "year": 2010,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201005.021.nc4",
+   "sha256_dap_response": "4cf2e8992b53e0e06a086d57a29da75f7a92a1622be44f628b17788dac342acf"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201006.021.nc4",
+   "year": 2010,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201006.021.nc4",
+   "sha256_dap_response": "fa6d0e2aef4778833b863ead5f3fc7b768c80704142b2207ed9ba9af9345ef70"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201007.021.nc4",
+   "year": 2010,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201007.021.nc4",
+   "sha256_dap_response": "dab4a4f96b0d392b32ea5f5441162fcd3a25568fa8b1713772eea8667c90da49"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201008.021.nc4",
+   "year": 2010,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201008.021.nc4",
+   "sha256_dap_response": "9e58bb8bfd21bfdced2bb4fdb24ca48a466690067828edf8ad9b154718fc54c7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201009.021.nc4",
+   "year": 2010,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201009.021.nc4",
+   "sha256_dap_response": "8c0d080d8afe93e4cc74b1241451b4af7ee493282e000a9802bf6a655618ccf7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201010.021.nc4",
+   "year": 2010,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201010.021.nc4",
+   "sha256_dap_response": "66bc6ab26bb77cea83743d4d89067699d3820adebf2dc549053b412aef6508a6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201011.021.nc4",
+   "year": 2010,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201011.021.nc4",
+   "sha256_dap_response": "b9289b4bdf7ae42b3312084db184dd53448529e79b23842a27fec50cb84ce856"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201012.021.nc4",
+   "year": 2010,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2010/GLDAS_NOAH10_M.A201012.021.nc4",
+   "sha256_dap_response": "2b9f9aaa095e4bc1bee36306804bd881ac4cc472de37f20d35d31ffdd584a554"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201101.021.nc4",
+   "year": 2011,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201101.021.nc4",
+   "sha256_dap_response": "6dfbc7f57f97bb353b606506788d00d054d97aca0b93814a0bd272c2f9755eb0"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201102.021.nc4",
+   "year": 2011,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201102.021.nc4",
+   "sha256_dap_response": "7ea954497e6afa6d98f67637035c3609c20de23f1c3e6bf7c18dc171973a1a24"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201103.021.nc4",
+   "year": 2011,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201103.021.nc4",
+   "sha256_dap_response": "3575171bd153f6147c7f9b8224ccf854b6e03077e9bb6542c8228c58d567d6a3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201104.021.nc4",
+   "year": 2011,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201104.021.nc4",
+   "sha256_dap_response": "112815800fc6bc6ca48d0345ac8d6daefbfbf722550caedbc1b19fe0b4570c9b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201105.021.nc4",
+   "year": 2011,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201105.021.nc4",
+   "sha256_dap_response": "58bfc2c0cfef7067d14d4f78a1e7d04f154dea5d6b588f8f0ce5ab087d71a185"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201106.021.nc4",
+   "year": 2011,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201106.021.nc4",
+   "sha256_dap_response": "c47318aa15e674ea48c793df7414846de8351fd48e34078a978a8c6f9a040504"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201107.021.nc4",
+   "year": 2011,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201107.021.nc4",
+   "sha256_dap_response": "f07f480aa0beac5afabe976df09d21f990071feb635ac5816e8e95f95bd8196e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201108.021.nc4",
+   "year": 2011,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201108.021.nc4",
+   "sha256_dap_response": "792be7d18c9387675a97345e2fe575cd5a9b3958c1d338e94c4283c4c4e2b998"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201109.021.nc4",
+   "year": 2011,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201109.021.nc4",
+   "sha256_dap_response": "0908c925d6f216c7a42fd0fd096418a5a3073adb5b9d437e846a7ff381370d2b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201110.021.nc4",
+   "year": 2011,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201110.021.nc4",
+   "sha256_dap_response": "4cd1faed633353d7df2a7959765f828114b35e0ffc443f2e0d00c201e5e9ec2c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201111.021.nc4",
+   "year": 2011,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201111.021.nc4",
+   "sha256_dap_response": "0e001f2bcaf058bad79a1badc1de8f8264c55ea0c62f904b38058aa709cfe663"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201112.021.nc4",
+   "year": 2011,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2011/GLDAS_NOAH10_M.A201112.021.nc4",
+   "sha256_dap_response": "26760966eee70bbb91664fa1a98c7e373a4bd745a7bb44088bc8f96b5503a63a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201201.021.nc4",
+   "year": 2012,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201201.021.nc4",
+   "sha256_dap_response": "405ba5c5b0061a7a22d4929b7cba6771bf7e2239a436c73763a2eed264cc8e89"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201202.021.nc4",
+   "year": 2012,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201202.021.nc4",
+   "sha256_dap_response": "c5555a6abc8f7c4c07dc0aa6f9d0c88e4459402fddf639ff9f0a8d79c1c638b4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201203.021.nc4",
+   "year": 2012,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201203.021.nc4",
+   "sha256_dap_response": "a2f7fcb09c9d4faf00933ebd5b08f9eae766296c10a89367babea31dfb23e600"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201204.021.nc4",
+   "year": 2012,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201204.021.nc4",
+   "sha256_dap_response": "cb01ba5ae8e7dd8f129b4374a85de7bb9a7a294dfc8e1c85d539a5e389305bcd"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201205.021.nc4",
+   "year": 2012,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201205.021.nc4",
+   "sha256_dap_response": "004d4f8878f2a9a884313a4b84b16f9eb2dffc81c50c1be37ae61727a66fc20f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201206.021.nc4",
+   "year": 2012,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201206.021.nc4",
+   "sha256_dap_response": "d497ed4dfc922f4a9d68c0ad38373c32c9b5b884bc38e2a753c090b5d3487219"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201207.021.nc4",
+   "year": 2012,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201207.021.nc4",
+   "sha256_dap_response": "277e846413c2b0710b82a2a6a861363f12889f91b5979588cddbbf6fc6b46564"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201208.021.nc4",
+   "year": 2012,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201208.021.nc4",
+   "sha256_dap_response": "ba0e1fe915a0c8d340754557523a544814419aebe1c453081b87c1da25e01068"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201209.021.nc4",
+   "year": 2012,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201209.021.nc4",
+   "sha256_dap_response": "520233d444bc18d0220f25f11fff3d54e443507ccefa4c8d28a6ba5f0cd442af"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201210.021.nc4",
+   "year": 2012,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201210.021.nc4",
+   "sha256_dap_response": "09ddfe073a0a5eb8ad8411236212a8d340ba54281bea0ae084a93768c6f9de1c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201211.021.nc4",
+   "year": 2012,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201211.021.nc4",
+   "sha256_dap_response": "2b700cbc43759b1932103b63f431e5c50a455af0a855ba1138cede2c0ed36662"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201212.021.nc4",
+   "year": 2012,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2012/GLDAS_NOAH10_M.A201212.021.nc4",
+   "sha256_dap_response": "344eecb3ee135451f37a52420700aaefb920319a6da90e65cf53e0c4155ecba5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201301.021.nc4",
+   "year": 2013,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201301.021.nc4",
+   "sha256_dap_response": "67b18133c5465313f4c4e455624369149a450e1be815b8707205e5e19485261c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201302.021.nc4",
+   "year": 2013,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201302.021.nc4",
+   "sha256_dap_response": "5822372e3fe292cad914fb8ddf3c672f0e9a6ea72c575a471b219a94c46069aa"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201303.021.nc4",
+   "year": 2013,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201303.021.nc4",
+   "sha256_dap_response": "4bc3a09d93c02faac8a0ea3a1f80b167ac1271ce97e27b2969db6acd722329e5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201304.021.nc4",
+   "year": 2013,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201304.021.nc4",
+   "sha256_dap_response": "88b54be1ec397cb5f377dd24ccb516763b2d1e09338942cbd87420e8a1ab57d0"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201305.021.nc4",
+   "year": 2013,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201305.021.nc4",
+   "sha256_dap_response": "caab6db9d64f337de80f97feeb16c35a03d97f073ef4bb79892f0e71feeeae4d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201306.021.nc4",
+   "year": 2013,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201306.021.nc4",
+   "sha256_dap_response": "78809db129c6eb6f8a298d4161d7a5721329986c5f9b08cc72563a670b7fb3f7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201307.021.nc4",
+   "year": 2013,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201307.021.nc4",
+   "sha256_dap_response": "764124ae6ec1e7af5069c2b573e4f71c884f5c823833cc46a83a8b36d1633f24"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201308.021.nc4",
+   "year": 2013,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201308.021.nc4",
+   "sha256_dap_response": "8a0faff92587e862085a082e09d733c427f6c81b48bcf8933f292ff7b9591ab5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201309.021.nc4",
+   "year": 2013,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201309.021.nc4",
+   "sha256_dap_response": "1508749d705478a3c236132485814f84a998e67678cdbccef00a9c42fab015d2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201310.021.nc4",
+   "year": 2013,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201310.021.nc4",
+   "sha256_dap_response": "c7b5f41ce3f795292434c8b1a285fedeede95597ec997db90ea72a18e43960ef"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201311.021.nc4",
+   "year": 2013,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201311.021.nc4",
+   "sha256_dap_response": "6f6574c97979f14ae0d38c38a0ef3ffe8a62a91fa63b88031bbf3fb1564d8e7d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201312.021.nc4",
+   "year": 2013,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2013/GLDAS_NOAH10_M.A201312.021.nc4",
+   "sha256_dap_response": "69fd85b53a4e43a90ee584985422d6f165849cb1e20d992dc6f58bb0a522cdf4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201401.021.nc4",
+   "year": 2014,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201401.021.nc4",
+   "sha256_dap_response": "a7ca667d26fcf424313181f84127b4b477cdb92dcf8e0b407adf1df5dbc9a641"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201402.021.nc4",
+   "year": 2014,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201402.021.nc4",
+   "sha256_dap_response": "605d38a9014da2bf4cb4f01201bb881ee8ecf80f05547bdd0f54fdbf506468d6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201403.021.nc4",
+   "year": 2014,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201403.021.nc4",
+   "sha256_dap_response": "51037923090857482ca02ebd11e2acb0a4baa8cfd5b900bd5ae478e4930d5666"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201404.021.nc4",
+   "year": 2014,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201404.021.nc4",
+   "sha256_dap_response": "ee3ac29f7716e852b7a96d987daa108bbee8bd734d72e9b50ac8cc788390a489"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201405.021.nc4",
+   "year": 2014,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201405.021.nc4",
+   "sha256_dap_response": "3bb3241a7c3ec59d57c3379a9f4268dc8b50bb1061ce5adcb543c6ecee14c758"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201406.021.nc4",
+   "year": 2014,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201406.021.nc4",
+   "sha256_dap_response": "bd44783e6d6f78924ade9729bae00074e0b721707612210f0a78056406c12e87"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201407.021.nc4",
+   "year": 2014,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201407.021.nc4",
+   "sha256_dap_response": "ef7181cad0c5c27dae129114785ec961ef9d339e040ca13acd751851d94cf770"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201408.021.nc4",
+   "year": 2014,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201408.021.nc4",
+   "sha256_dap_response": "43765a50f6fb589ff3d2ecc59422e8afa42b949554056c5c0d4ec05c9bce9ed5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201409.021.nc4",
+   "year": 2014,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201409.021.nc4",
+   "sha256_dap_response": "122b12070b7dfb58b8f4bcfd51e7ce9d41f31d82687081a62eb7b85d66019bee"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201410.021.nc4",
+   "year": 2014,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201410.021.nc4",
+   "sha256_dap_response": "fdd46278e2e43dbd681d697e3becf9e608c8908db5d2604065ac0e1dcd2411eb"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201411.021.nc4",
+   "year": 2014,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201411.021.nc4",
+   "sha256_dap_response": "d2c3ec861e10f942ae9bec41db100baca9ae5966ac4af55214ab20fb7fbc4126"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201412.021.nc4",
+   "year": 2014,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2014/GLDAS_NOAH10_M.A201412.021.nc4",
+   "sha256_dap_response": "a66baf56115624b3d4a049f3219b506749a4897780bc999da1fee67b7254aef7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201501.021.nc4",
+   "year": 2015,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201501.021.nc4",
+   "sha256_dap_response": "3abd1e5d04836ed98bd705713b760dc39b36e9cdf841db1df793f859226bad9c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201502.021.nc4",
+   "year": 2015,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201502.021.nc4",
+   "sha256_dap_response": "bfbd8dde89c658ee78b9496e12e74d0e104606a7c2aa1763d47fb8b331cc3e9b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201503.021.nc4",
+   "year": 2015,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201503.021.nc4",
+   "sha256_dap_response": "b0568e8508c1d39e2dfc689c804fdb91ec6b77164518f6ba5c440ea618ce324d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201504.021.nc4",
+   "year": 2015,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201504.021.nc4",
+   "sha256_dap_response": "cd3be30582a05bc5bcb56007c20f82d69321e70103a3a263143a7ed77c3f273b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201505.021.nc4",
+   "year": 2015,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201505.021.nc4",
+   "sha256_dap_response": "46b2dee7a7272a8ff3ca130ee460fa9e717bb105f2faeb75a4c854d2f7d630c5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201506.021.nc4",
+   "year": 2015,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201506.021.nc4",
+   "sha256_dap_response": "18ee5591a16260c9ddc73dd083fd96ba8149af66c8fa39a595f170a0c115b2d0"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201507.021.nc4",
+   "year": 2015,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201507.021.nc4",
+   "sha256_dap_response": "782749a3d970c7a6dee144c259b89a7cb649b47f24d37cd0291d7bf45f073d55"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201508.021.nc4",
+   "year": 2015,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201508.021.nc4",
+   "sha256_dap_response": "80114343e04f45f4f4bf96c27180dfd1948528406f36945eb14603d22e37569f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201509.021.nc4",
+   "year": 2015,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201509.021.nc4",
+   "sha256_dap_response": "813e8f2785653b006c618289ed8ccc0ee51f51ddae93af2fcf75bb6add33fb73"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201510.021.nc4",
+   "year": 2015,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201510.021.nc4",
+   "sha256_dap_response": "76348eb40e18cdf734cae7051572095e5c1a12345d2b82dd269ff96198d6be9d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201511.021.nc4",
+   "year": 2015,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201511.021.nc4",
+   "sha256_dap_response": "8cf8b29886e33a7944f8f8e532031f017956242a94e46b007278dbe7b824bd2f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201512.021.nc4",
+   "year": 2015,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2015/GLDAS_NOAH10_M.A201512.021.nc4",
+   "sha256_dap_response": "693721073bcac6efb31186121d99c4a69cd89633a75cf9d329f675d58a971a30"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201601.021.nc4",
+   "year": 2016,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201601.021.nc4",
+   "sha256_dap_response": "cbf491e75ab5c772d5bcb679400457a08a7a9646d21e8e5c0250b5ce4cece8cb"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201602.021.nc4",
+   "year": 2016,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201602.021.nc4",
+   "sha256_dap_response": "a545da107240e74ff25fce9c81ed782c9fb1964135731bfae5bf5a5fcd0889ef"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201603.021.nc4",
+   "year": 2016,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201603.021.nc4",
+   "sha256_dap_response": "1e586b7cba6ab49e3aa691a5bcf469a8e0dbe3e218c38da9bc6affda25538921"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201604.021.nc4",
+   "year": 2016,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201604.021.nc4",
+   "sha256_dap_response": "23cb46f5191b1aa621ccc887a0c47a3f9405a9a1fbbe4d40566a18d36f36c176"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201605.021.nc4",
+   "year": 2016,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201605.021.nc4",
+   "sha256_dap_response": "a76e892bf29b0ad165a2d9e8760fd5b0bdeb86eb967a94247ee09c03c4237fd8"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201606.021.nc4",
+   "year": 2016,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201606.021.nc4",
+   "sha256_dap_response": "51367242f82bdcf2065b742b3277d950c66930400c549c6a4c17676c23d19dba"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201607.021.nc4",
+   "year": 2016,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201607.021.nc4",
+   "sha256_dap_response": "224fc26ba70be006ca30f954eb9b3f311814ebed3b41366bac037230805bfd34"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201608.021.nc4",
+   "year": 2016,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201608.021.nc4",
+   "sha256_dap_response": "4cac35a9eb493add006fd80b2b3eb21f5696128ebe84fc5924647d5db8fe9888"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201609.021.nc4",
+   "year": 2016,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201609.021.nc4",
+   "sha256_dap_response": "d650db308bb9060428e37538ffcaacb16ba82016a261adc01d8c4f425ad3ee36"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201610.021.nc4",
+   "year": 2016,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201610.021.nc4",
+   "sha256_dap_response": "340f26fc2968876152d23a275f696a204e13334953dfe1ff7b3ee029694b7d50"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201611.021.nc4",
+   "year": 2016,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201611.021.nc4",
+   "sha256_dap_response": "f7bc7b7a42dad5a6501836d268a7de6c9df1689238934be896bc65371d33bfcf"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201612.021.nc4",
+   "year": 2016,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2016/GLDAS_NOAH10_M.A201612.021.nc4",
+   "sha256_dap_response": "a1f03d85a3119758cf5d47dd7058225e1b5584983974a9120a18b70711b7261a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201701.021.nc4",
+   "year": 2017,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201701.021.nc4",
+   "sha256_dap_response": "25f8d8d18db3fc2dedc428bcf26ba6bd0b8850707519eb15a519469132e9a643"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201702.021.nc4",
+   "year": 2017,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201702.021.nc4",
+   "sha256_dap_response": "a8c1a5194df157120c0533c5190957b96fed1874de0ccc1127ee6edac85834c5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201703.021.nc4",
+   "year": 2017,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201703.021.nc4",
+   "sha256_dap_response": "2d43215fbf94e3aeb961e879d617a558bde03073ab74bfda30c9fc4c446e3904"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201704.021.nc4",
+   "year": 2017,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201704.021.nc4",
+   "sha256_dap_response": "347b3b9c526f938c1d5ae4c87c796fbb059d462b9030fb93aa155d4ff7c31ff4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201705.021.nc4",
+   "year": 2017,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201705.021.nc4",
+   "sha256_dap_response": "c7d411d5f5a424a381658ca185263cd4ae80343ab171fcf4ef5c53e90436e7e1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201706.021.nc4",
+   "year": 2017,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201706.021.nc4",
+   "sha256_dap_response": "92e77876ce50a97cbe168b8dda71a919ffce91ede5e8bd2e05bb763dabed5eb8"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201707.021.nc4",
+   "year": 2017,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201707.021.nc4",
+   "sha256_dap_response": "ccd05dce20f28461cb5cafdb521c086647705a2e384bcef80f6a245a81491a8e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201708.021.nc4",
+   "year": 2017,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201708.021.nc4",
+   "sha256_dap_response": "8b9205d6c9bd481d793ef49eb7c1a7e008252e6bf9d1c005c5c483baf087785b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201709.021.nc4",
+   "year": 2017,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201709.021.nc4",
+   "sha256_dap_response": "212cadac0fc590ea5b7bcfd01e4ef46f2faa80b918b66ba68ae59fe0363fc585"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201710.021.nc4",
+   "year": 2017,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201710.021.nc4",
+   "sha256_dap_response": "ac5cefe38f80cfafe708dea4774d46f68e093049e04a7d9abac856a9979559f5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201711.021.nc4",
+   "year": 2017,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201711.021.nc4",
+   "sha256_dap_response": "43e72fca67ba5886d66088aa46f65f55382a8d0edf43465c1bf79111bf5569ca"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201712.021.nc4",
+   "year": 2017,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2017/GLDAS_NOAH10_M.A201712.021.nc4",
+   "sha256_dap_response": "b7fb999607913e1673174765d7112c2089f092333a2f193945ee0b60ac225c1a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201801.021.nc4",
+   "year": 2018,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201801.021.nc4",
+   "sha256_dap_response": "708c17edde7936f94ade19d9432fc31659c92135ffb642fc189095fb72c47f1b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201802.021.nc4",
+   "year": 2018,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201802.021.nc4",
+   "sha256_dap_response": "7d845c7815629bcb5c4e44ad0e78c93f5e236c89d5f5a6aabae7310edf58147e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201803.021.nc4",
+   "year": 2018,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201803.021.nc4",
+   "sha256_dap_response": "e279134858cd24bab9fe8f3ba18cc182c7cee510a91549fb15ed438687ae3503"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201804.021.nc4",
+   "year": 2018,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201804.021.nc4",
+   "sha256_dap_response": "56603e48753dddbf2ce659d10f56c3f24aff7853963ec66409753602a2ad7943"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201805.021.nc4",
+   "year": 2018,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201805.021.nc4",
+   "sha256_dap_response": "da6a38529392c96fefdf03374d04462ff4d3e61cdebeb2d67f6039bf845e10e3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201806.021.nc4",
+   "year": 2018,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201806.021.nc4",
+   "sha256_dap_response": "aa00af6dbb5bb03eea4e1788bcc5d2f0d0f565dfdccd68b24720b0c7a2c94827"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201807.021.nc4",
+   "year": 2018,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201807.021.nc4",
+   "sha256_dap_response": "26aa9dafc6b1a00b793700bd1b8036375e824098d289ec7587886b75f24c73ab"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201808.021.nc4",
+   "year": 2018,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201808.021.nc4",
+   "sha256_dap_response": "a176be4b8ab415dcbd7a254d6d168f092f027f1084a17d7798262ee1b4c616ad"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201809.021.nc4",
+   "year": 2018,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201809.021.nc4",
+   "sha256_dap_response": "88bc8607e3a87c932dc19413320db6196f6b05d300186d331791b9883c907c4c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201810.021.nc4",
+   "year": 2018,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201810.021.nc4",
+   "sha256_dap_response": "e00eee2117c66977b3664eab782b6b4b33c5025aa261d613e383bbc79b3ed12b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201811.021.nc4",
+   "year": 2018,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201811.021.nc4",
+   "sha256_dap_response": "6e946103d3f77cdb75eeefd2e69b52cc299c3ae315caed35603ff402700ea91e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201812.021.nc4",
+   "year": 2018,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2018/GLDAS_NOAH10_M.A201812.021.nc4",
+   "sha256_dap_response": "817aca9f184af4a5156927fe3c09234e2f6b9d424d34caeddc6a1b230a583bd6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201901.021.nc4",
+   "year": 2019,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201901.021.nc4",
+   "sha256_dap_response": "61ffb336c4a7c02d2576a55977988ce140af2887ad920fac5d796b67b23fc925"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201902.021.nc4",
+   "year": 2019,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201902.021.nc4",
+   "sha256_dap_response": "55d15c111db0605de6e6d0d18d2e7c2bb73c0b501589c5ee53ffbb5e4a2f1f06"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201903.021.nc4",
+   "year": 2019,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201903.021.nc4",
+   "sha256_dap_response": "a34c40daea63e2cae70407062f7ca4493dcb7aed17a5859d0f2bc7ea5524980a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201904.021.nc4",
+   "year": 2019,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201904.021.nc4",
+   "sha256_dap_response": "38d2f467b4db25eb4bf0144f97fbd900ddba3109afe7b7b6f3c636244834db3d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201905.021.nc4",
+   "year": 2019,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201905.021.nc4",
+   "sha256_dap_response": "deda2d71b7f8c66dfe618e6b2cb6bb44b8195bd220a2df3ea9eeeb326d283f6f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201906.021.nc4",
+   "year": 2019,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201906.021.nc4",
+   "sha256_dap_response": "be702b2c3ebc83d4be390a6d3068bf528907f0e18d746aacef6bb9fdaa715f59"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201907.021.nc4",
+   "year": 2019,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201907.021.nc4",
+   "sha256_dap_response": "4488d8abad2e29208442f68a1612d7f70a82362d501cdb726f3e86dcd1922e5d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201908.021.nc4",
+   "year": 2019,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201908.021.nc4",
+   "sha256_dap_response": "748268e27bb62e44aa71588aba0bda7e2165116a50134d9647556f8b5418d0ff"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201909.021.nc4",
+   "year": 2019,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201909.021.nc4",
+   "sha256_dap_response": "f2f3edd86ea5934ba20469117899284bee8d5e894a2870141ba0b8a2af5e97ad"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201910.021.nc4",
+   "year": 2019,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201910.021.nc4",
+   "sha256_dap_response": "e55fa4caa464ff10d6087deba45a9a621c35bae6936c28d941a775586354b1fc"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201911.021.nc4",
+   "year": 2019,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201911.021.nc4",
+   "sha256_dap_response": "b38bc6253747f055c0d67dffe5a6cabbeda9eabed4ffa5c1dd8037fc9235e9fa"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A201912.021.nc4",
+   "year": 2019,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2019/GLDAS_NOAH10_M.A201912.021.nc4",
+   "sha256_dap_response": "bc193f6106b8130f30db6fa42f61c6d93075e2963c7597c2370e3a46f3c5e330"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202001.021.nc4",
+   "year": 2020,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202001.021.nc4",
+   "sha256_dap_response": "235f2c618eabddadca60989d04b1bb2a89001485f222314126689eb99854f386"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202002.021.nc4",
+   "year": 2020,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202002.021.nc4",
+   "sha256_dap_response": "9c9aeebb57edb6395a47ad364d94212df1e1478f6910e5a28631ccfb05c06221"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202003.021.nc4",
+   "year": 2020,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202003.021.nc4",
+   "sha256_dap_response": "06ec244ee4d69b69a9348f712e0191be930112014780558548f0cf627cd22dd5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202004.021.nc4",
+   "year": 2020,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202004.021.nc4",
+   "sha256_dap_response": "8494ce6375f477b48a44cd96add80944007dcee3c92ff9290c607fc9de856e99"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202005.021.nc4",
+   "year": 2020,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202005.021.nc4",
+   "sha256_dap_response": "289086d685bd3da4a9a4eb36480c8dc012b98c7aa9e0987511f950d8b9cd79e3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202006.021.nc4",
+   "year": 2020,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202006.021.nc4",
+   "sha256_dap_response": "163e21590f29a85a6edf11b5355899ec94c027a8c6b0f9ae0eff3a897eb1b71b"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202007.021.nc4",
+   "year": 2020,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202007.021.nc4",
+   "sha256_dap_response": "195bdaba719839e9efa5ca68f6ffb4525f087e2c8d8fbd4c8da1f490fb34f755"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202008.021.nc4",
+   "year": 2020,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202008.021.nc4",
+   "sha256_dap_response": "176f895e8b6abe17387c0a3e3b5adb72770dd90db542fba4eef46a12e36e8e32"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202009.021.nc4",
+   "year": 2020,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202009.021.nc4",
+   "sha256_dap_response": "15cf88dd3c50e2bc95e73bfcc4d3a722a99917374383af06b58aca4440c90b74"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202010.021.nc4",
+   "year": 2020,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202010.021.nc4",
+   "sha256_dap_response": "91d172f7c5db438682e47678e67f394050eee3d964b39bddd41cc5d39bcbdbe1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202011.021.nc4",
+   "year": 2020,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202011.021.nc4",
+   "sha256_dap_response": "d1236b87cfbf30d8e19d2e976d36c9dcd700872cd217d2e6c5c720e486f03864"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202012.021.nc4",
+   "year": 2020,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2020/GLDAS_NOAH10_M.A202012.021.nc4",
+   "sha256_dap_response": "46d8a330f0f7de7781386c9e41224909d3ab42360806150387a4d1b69cef9a90"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202101.021.nc4",
+   "year": 2021,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202101.021.nc4",
+   "sha256_dap_response": "53bbb1ab4db6f30ac5535ffc465439b635b8b0ae37d949deb3052e8d85c90bd6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202102.021.nc4",
+   "year": 2021,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202102.021.nc4",
+   "sha256_dap_response": "7b3cdb9139ec5479c92eb07a3aabbf597d42600f92699cdfae416b11a5cbdbd4"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202103.021.nc4",
+   "year": 2021,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202103.021.nc4",
+   "sha256_dap_response": "cf39ae4dc0a58084715224ea16066e0b18800c775ff3bc5cdefdafb93796f4ef"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202104.021.nc4",
+   "year": 2021,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202104.021.nc4",
+   "sha256_dap_response": "c50fbbe724a70fc2e5c47060cbac837b8e9bc55dad106b2abf662cbe36391407"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202105.021.nc4",
+   "year": 2021,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202105.021.nc4",
+   "sha256_dap_response": "390bd87f53c70ff69cb3ba832df7d132d2421ad24ced0543cb8d9b881a002723"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202106.021.nc4",
+   "year": 2021,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202106.021.nc4",
+   "sha256_dap_response": "26f7c856f0b91f23cfefd5230b172eb31bb50501b46dbc0244c0c12e1e522cb2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202107.021.nc4",
+   "year": 2021,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202107.021.nc4",
+   "sha256_dap_response": "59505f1edc1fe8dc82c5cdb90d6d9d137186eb86cdfa8360b3ef107905952cce"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202108.021.nc4",
+   "year": 2021,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202108.021.nc4",
+   "sha256_dap_response": "98fde90c94b7ee880b2463272a10c7af0d6bf19a21f2fbad9cfe5261f415fe29"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202109.021.nc4",
+   "year": 2021,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202109.021.nc4",
+   "sha256_dap_response": "4e275553841d5781995a192f0f673e6dfc49652c134e7819853f62fc677d89b3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202110.021.nc4",
+   "year": 2021,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202110.021.nc4",
+   "sha256_dap_response": "b0479aa53026dd4a7a08653e0aaafbd0d327e1a6fef7d9471df950ef5be9be6f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202111.021.nc4",
+   "year": 2021,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202111.021.nc4",
+   "sha256_dap_response": "6fcf147ef690b739d92ccf5116c72b59735a71a2410c9a1e80125e1da644a8fb"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202112.021.nc4",
+   "year": 2021,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2021/GLDAS_NOAH10_M.A202112.021.nc4",
+   "sha256_dap_response": "aecae8cb728387c542e4855d5a897246cfe74716f7f9f1da269227b1eb9a2fed"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202201.021.nc4",
+   "year": 2022,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202201.021.nc4",
+   "sha256_dap_response": "6b2ac40986cf5acf565746305c979cd3d3341911a02253fdde36770e7c2e9652"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202202.021.nc4",
+   "year": 2022,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202202.021.nc4",
+   "sha256_dap_response": "83cb0b5127e28a1d532b3594ff767e0bf5664f25a02c5b98672d58e203c03b8e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202203.021.nc4",
+   "year": 2022,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202203.021.nc4",
+   "sha256_dap_response": "a2e07b5b000accc160958e88085c57f0bee383bbe3cb407f5df6a24d3f935ee5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202204.021.nc4",
+   "year": 2022,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202204.021.nc4",
+   "sha256_dap_response": "569ad5beee3374c081868fe469b664e94797ac5a1a751c28f6cd230bdfb094a1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202205.021.nc4",
+   "year": 2022,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202205.021.nc4",
+   "sha256_dap_response": "c422af509d7b559dd2ad76d3997fe97604199794b13dd8b014aa1056456e2d78"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202206.021.nc4",
+   "year": 2022,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202206.021.nc4",
+   "sha256_dap_response": "7756136ced89bea38ce6f51edfd5c11e2a483424a1555675d83b5d48972d79b5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202207.021.nc4",
+   "year": 2022,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202207.021.nc4",
+   "sha256_dap_response": "ecc759280a9ad9647b1c3d894dcd60afe4d03937d6ebd413f4228ca56d56cbf5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202208.021.nc4",
+   "year": 2022,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202208.021.nc4",
+   "sha256_dap_response": "a0bea26e735aacac6f0b5a21ebdbf92f39e44c884d4430a479d735c3ed538ddd"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202209.021.nc4",
+   "year": 2022,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202209.021.nc4",
+   "sha256_dap_response": "7f605b192ff7eb7bd5ea45f8e493fd8be4cb99ac6adb0100b59611aeb83daef7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202210.021.nc4",
+   "year": 2022,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202210.021.nc4",
+   "sha256_dap_response": "f2e1af29dd2e65239b811543b4bf8daf8d6f2aba60e3770152f208629fe89f4e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202211.021.nc4",
+   "year": 2022,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202211.021.nc4",
+   "sha256_dap_response": "075c42154655055a2c464141d544f9cc756e0e3d005b3839e2f08134c9245594"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202212.021.nc4",
+   "year": 2022,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2022/GLDAS_NOAH10_M.A202212.021.nc4",
+   "sha256_dap_response": "b23f3ea9b0cc1b9bbd641591714a7747ac00814c4396bb4a08b6afe3a191fd1e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202301.021.nc4",
+   "year": 2023,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202301.021.nc4",
+   "sha256_dap_response": "d2f918a1174cca4937b2eaf2a8dfc0241c8a4130c98fd6ac83a6b31386d1817e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202302.021.nc4",
+   "year": 2023,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202302.021.nc4",
+   "sha256_dap_response": "baf5a65707fcc4e044d60bdf491c9274eb9a7b484f07bb6028d6919162973db6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202303.021.nc4",
+   "year": 2023,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202303.021.nc4",
+   "sha256_dap_response": "91f12d115eb054de6d1dec9be699a2e8690ef069bcb44353551107c376cabff7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202304.021.nc4",
+   "year": 2023,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202304.021.nc4",
+   "sha256_dap_response": "a00b20b1b33c5d5802f8cc031c4a48d6b3d7559c5a8e96ce4586d93f443993e7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202305.021.nc4",
+   "year": 2023,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202305.021.nc4",
+   "sha256_dap_response": "8423a28ee2d4931f686d8706437c8c1bc138b5e29624fc39450e02c48938a7b3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202306.021.nc4",
+   "year": 2023,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202306.021.nc4",
+   "sha256_dap_response": "d27dd92d4e80abe5ffbaba907066dbab85f215b18ee0f26cb7c82200d2f1f3c2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202307.021.nc4",
+   "year": 2023,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202307.021.nc4",
+   "sha256_dap_response": "de211ddd5e04d45d4d072e4069dddfafad7672e05c533db2211ee3f8709be27c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202308.021.nc4",
+   "year": 2023,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202308.021.nc4",
+   "sha256_dap_response": "68c1b588181b290fe2158fb9bba84c8152280305aa469587cb5eb69f7a00b41f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202309.021.nc4",
+   "year": 2023,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202309.021.nc4",
+   "sha256_dap_response": "90a20fae5ead45fd9edb1dbe3ee7890eccf2ed29c5adeb433e506aadebf91c0c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202310.021.nc4",
+   "year": 2023,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202310.021.nc4",
+   "sha256_dap_response": "f7c98e01ca516a8dad6fb55dc79092569c6f3125db4f819b52b7d2295b7156f3"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202311.021.nc4",
+   "year": 2023,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202311.021.nc4",
+   "sha256_dap_response": "8dba82684925921dddb6b1f2c032b504633b742f0a4f708192609529dbb4b67c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202312.021.nc4",
+   "year": 2023,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2023/GLDAS_NOAH10_M.A202312.021.nc4",
+   "sha256_dap_response": "7c23d3b3abe6fa8071e368e671bf8f527d5eac540bf97cc00bfb0b9b2beaf4b8"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202401.021.nc4",
+   "year": 2024,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202401.021.nc4",
+   "sha256_dap_response": "84bf7f4691e64190b9da35ab78a61d2a3b47d72df2da1efa02b0926bbf55a0a6"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202402.021.nc4",
+   "year": 2024,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202402.021.nc4",
+   "sha256_dap_response": "bb496a2de6dfff21022f622a91e246031fcce5c3095fee600ecba2c48f460388"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202403.021.nc4",
+   "year": 2024,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202403.021.nc4",
+   "sha256_dap_response": "8405c075f0672498927e44326d6ee56d49577c1b44e598bcd5c2ae2334f216a7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202404.021.nc4",
+   "year": 2024,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202404.021.nc4",
+   "sha256_dap_response": "88836a68d19c8fee0a9c48ef969def39f711f9be4c6b45566eb0600d94c72de2"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202405.021.nc4",
+   "year": 2024,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202405.021.nc4",
+   "sha256_dap_response": "4de93a68ea55407ac45dcfacd6f807335fdef325f2251125d4521548d8e468a5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202406.021.nc4",
+   "year": 2024,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202406.021.nc4",
+   "sha256_dap_response": "8b5956ffff3209a07ba474e204875257ac501c2940e5b688d6a87963bad36e56"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202407.021.nc4",
+   "year": 2024,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202407.021.nc4",
+   "sha256_dap_response": "8cbdc952223e9da2ca262af636623a3cccc4156bd814a3244a293927d3dd8417"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202408.021.nc4",
+   "year": 2024,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202408.021.nc4",
+   "sha256_dap_response": "7fe230c0453d00d33a35b27d21e8d65592d161b188e0c913a3145d82302c61cf"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202409.021.nc4",
+   "year": 2024,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202409.021.nc4",
+   "sha256_dap_response": "045044577427a897e24f34198c145c506eac9751b8fd55583cfae3b45ad2ffb5"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202410.021.nc4",
+   "year": 2024,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202410.021.nc4",
+   "sha256_dap_response": "ebfd0fea9637f7688677a7d3336211e46b3d0f7241ce59bbef9486fec410e3a7"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202411.021.nc4",
+   "year": 2024,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202411.021.nc4",
+   "sha256_dap_response": "6e379753b9ca03b46d90b8e0127f3952ec1efe2568a39cf668e1bf7459e76e42"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202412.021.nc4",
+   "year": 2024,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2024/GLDAS_NOAH10_M.A202412.021.nc4",
+   "sha256_dap_response": "c384eea32b7998c38c3b0a9ed74d2ae75c34bd313b212fef20a4cbb7870bbd81"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202501.021.nc4",
+   "year": 2025,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202501.021.nc4",
+   "sha256_dap_response": "ce5096f8e05e7d12823869192b7c1a81f2ccfe30eea7cee608eda56fc6db2bdc"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202502.021.nc4",
+   "year": 2025,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202502.021.nc4",
+   "sha256_dap_response": "9a1bdbcaae8406351410e51729af1e889fb96b2efafed86ec10767fabc0b9717"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202503.021.nc4",
+   "year": 2025,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202503.021.nc4",
+   "sha256_dap_response": "e4bc741244d233c4a9fdbbad5b5185b395c95556e87a553709779649de73d89f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202504.021.nc4",
+   "year": 2025,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202504.021.nc4",
+   "sha256_dap_response": "fc10d7e64b01cd78390fac0bebb1bc61e6a918ad54d3ed056a54374d378c5c43"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202505.021.nc4",
+   "year": 2025,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202505.021.nc4",
+   "sha256_dap_response": "25c1a675ea75dd72ce02ab1556b37cbf7ae3efd02c2fef82204bad08bf26e85a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202506.021.nc4",
+   "year": 2025,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202506.021.nc4",
+   "sha256_dap_response": "261bde00a8e671af44d9ae245da7c95fc1299c9ee4e05dcf789dac5ae332df1f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202507.021.nc4",
+   "year": 2025,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202507.021.nc4",
+   "sha256_dap_response": "4f3c5a9dad79e85d1e45e11473f513bc1f625609dddb47cb09cd9ea9b38ad007"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202508.021.nc4",
+   "year": 2025,
+   "month": 8,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202508.021.nc4",
+   "sha256_dap_response": "73b101c8046041562222fc3b9f329a79053e8f8e8c174d3b9b3a123815716683"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202509.021.nc4",
+   "year": 2025,
+   "month": 9,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202509.021.nc4",
+   "sha256_dap_response": "07dc59fc1a2d3d8e1dc7c3e03081dc02c66faf96694e5275c0a757536e1df58c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202510.021.nc4",
+   "year": 2025,
+   "month": 10,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202510.021.nc4",
+   "sha256_dap_response": "2f6e21bfe26f164c19a4fe6c146a59c41cd5c64237f0361a217564d9c53da52e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202511.021.nc4",
+   "year": 2025,
+   "month": 11,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202511.021.nc4",
+   "sha256_dap_response": "85a467146d0432441efaae9bd16828497a1ec031349e4dc9da725d902d9c6e3c"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202512.021.nc4",
+   "year": 2025,
+   "month": 12,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2025/GLDAS_NOAH10_M.A202512.021.nc4",
+   "sha256_dap_response": "5dc222676a8daf8ad31d16376770a18e3f3246a93b9f8de132178a394b3e5c0e"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202601.021.nc4",
+   "year": 2026,
+   "month": 1,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202601.021.nc4",
+   "sha256_dap_response": "1f4b138dcd6279bb161a7446e4dfe52ff33391e82b2e18e69753b3098a01ba8f"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202602.021.nc4",
+   "year": 2026,
+   "month": 2,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202602.021.nc4",
+   "sha256_dap_response": "d81ab34aa2926cc4c055841dcacfadb78562c22d12ce9ae45b63dd8d8cd1e1d1"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202603.021.nc4",
+   "year": 2026,
+   "month": 3,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202603.021.nc4",
+   "sha256_dap_response": "46ac5c649ddd93d75c340ff7ab3d34be6eb67e2106988193b972cf41023110eb"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202604.021.nc4",
+   "year": 2026,
+   "month": 4,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202604.021.nc4",
+   "sha256_dap_response": "de8036a66c6e52c3c8d78340d80a6e9b8a36f84afd1c0520381cb6a4bcc1811a"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202605.021.nc4",
+   "year": 2026,
+   "month": 5,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202605.021.nc4",
+   "sha256_dap_response": "8184787664193be9bd31a8d68ffe34274f876c48c92dce54a680ea4f2a94d52d"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202606.021.nc4",
+   "year": 2026,
+   "month": 6,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202606.021.nc4",
+   "sha256_dap_response": "680dd8b46fe9e3971f827b97953f49bf466854126fb34a531abe4fdea6d7e138"
+  },
+  {
+   "granule_ur": "GLDAS_NOAH10_M.2.1:GLDAS_NOAH10_M.A202607.021.nc4",
+   "year": 2026,
+   "month": 7,
+   "url": "https://data.gesdisc.earthdata.nasa.gov/data/GLDAS/GLDAS_NOAH10_M.2.1/2026/GLDAS_NOAH10_M.A202607.021.nc4",
+   "sha256_dap_response": "2f418c97caedd7d492b3baed69751383c9dce5f7cf10044c8a3a562b1643a09f"
+  }
+ ],
+ "outputs_sha256": {
+  "global_series.json": "b4058b80c2bbf1135dc2e993edeaead83414d77be140248a0224506a63014181",
+  "tile_0_0.bin.gz": "f2c06e786eac8682940db7beea2553ac5342ad23c0f0e4899929bcdbd496bdcb",
+  "tile_0_1.bin.gz": "ae8a79a454f3846dd5a91b5e97df2fe1e70cd51fbadc7e608f77723e4a774bfb",
+  "tile_0_10.bin.gz": "d87423b811dc547ad4369aa202e37bcec71a0a86111dde8d273acb4c9ab36ab9",
+  "tile_0_11.bin.gz": "356212006d756052351262f4e75111ea3b29989a2a41c6415e88806e07c76258",
+  "tile_0_2.bin.gz": "9dda1b81484ab042975585001fb5fa6c37900bb19b0e978625778706b6663b00",
+  "tile_0_3.bin.gz": "77210321d7d3dc49b2ae7ef00a9b85aa1b2bc1e981e353374b3bd34f6257f8d6",
+  "tile_0_4.bin.gz": "e18e6c96e277a3e27ff5bcec8bb04e2607d217ffb24edc55174752e5e443a9a5",
+  "tile_0_5.bin.gz": "48188a71a172bd92de5dd6102d0665f7152b358b9c8ef8884dbe61645bef7b79",
+  "tile_0_6.bin.gz": "d216536fd24d58e064b3bd2984f4915f61c9a8f3675d39c858a9a2fd660bf5fd",
+  "tile_0_7.bin.gz": "f978782621636d5211f3a934f1fa976d1fd32a7eaf85b370bad95b7c56439bb4",
+  "tile_0_8.bin.gz": "cb61dbb398c76ed8be023d0496582ba08956a27efceb075b530bcd01f680fe5d",
+  "tile_0_9.bin.gz": "ccdf4bda06b67dc01bab9df9a1e550d5f15c6ebe5d39786e642922ce045d59a8",
+  "tile_1_0.bin.gz": "1a10d57d0e55de4d0fda2961286b529baa141df9a7b26aa0b38f80f868f6ed04",
+  "tile_1_1.bin.gz": "b4d6ff69e86c1827a24ba5991ea2fe018459d5fbbf414b8a6c35753915e05a79",
+  "tile_1_10.bin.gz": "c2e97a70cd888ebc37c314cd6eeb8ef9fa1c2a7b674c8875cb12f607ba184510",
+  "tile_1_11.bin.gz": "e3f3919d53062aadeb9269208c0b6218f7a8486fd0ad6e212912829c32df5d47",
+  "tile_1_2.bin.gz": "4360357ca3114c7966680f4a262fe3c8bcf0382ca0d8197b5e1b5da98f862601",
+  "tile_1_3.bin.gz": "95593d2520946b10d85216372995b3d03f476d9e1691e9a05d9a33af6e84bb9a",
+  "tile_1_4.bin.gz": "db218b903fdcc61ba807f0f5e32fb730006d471a6fac30f435b094a2f09aa91b",
+  "tile_1_5.bin.gz": "e890b11d3b0423053cc208c55b5ee5bf98723c5a63448b670bc3a355c64637a6",
+  "tile_1_6.bin.gz": "d54b170cfa147dd42fe957866729e6469798c266905764c2c873fc423cd7c458",
+  "tile_1_7.bin.gz": "2da060f8a4dcf996e50e9a402d8b68a8ab294260e93be0bd8609e2e64020f730",
+  "tile_1_8.bin.gz": "33f30b4e5de4dc48fd76f8e5266a4a0aae4fad3a197ec3ff6d8150923d6eeeb0",
+  "tile_1_9.bin.gz": "f501f485e05b67008b9a8ca2b3c75f143d095f60e6f56c87e1c79f658db65ca9",
+  "tile_2_0.bin.gz": "7944dd803cc45585bf24f975739defedd1d90a4e4e0bcc806c6611024b6446ba",
+  "tile_2_10.bin.gz": "40ddd15eae7c37fcfe8e726b62ffec8fab1c4464a09bc867b2199b50bb0e72ce",
+  "tile_2_2.bin.gz": "25ca4b1a482c4f599fc0554007118ef120ae082c5dfd2c85259cc6bc81398a21",
+  "tile_2_3.bin.gz": "8454c8340616402697bcd82c5fbe160577a7a880051cd90fa7f650663633ac8d",
+  "tile_2_4.bin.gz": "34ab2c2b1d448c26418163b6f7ca5abd6af245b52b0b07540dfad99077492d13",
+  "tile_2_5.bin.gz": "ade277b9647ea8d2ac88739f02d90d1262368ac7b791b76ac7fb34321febf9a8",
+  "tile_2_6.bin.gz": "6b4bd594b0c4206ad7654134a1cfa36f5b1ae4474c7d768a2b9e5b81713b7240",
+  "tile_2_7.bin.gz": "b5e05a2014262252c9750fb8b23d0c8447eaeb891bca9ebd2affddcebfa2867a",
+  "tile_2_8.bin.gz": "8a23eac8bc3851e8ae242d36555bd77e7500cc495f28a13f8a7b368532d0d894",
+  "tile_2_9.bin.gz": "4238d5f51cdd38883a10a76fad18e560e7649db1dd955ff8abc29b92eeafeca3",
+  "tile_3_10.bin.gz": "f9bf6b9d11252d2ca9a130178c263f40bc6b71559e6807e7ed8905ec584e3641",
+  "tile_3_11.bin.gz": "2f255126b3ab42c3d33a9f01dfe2c38944def921fc3210398b6c2aa0d19ffed0",
+  "tile_3_3.bin.gz": "81a6b459becdab444ad5cb978615e671f855a401da3986490132fc7b78464bae",
+  "tile_3_4.bin.gz": "6179ed67a087df017b2b51e699a640e9cf2e25b884c56a57572e94b2db5987c2",
+  "tile_3_6.bin.gz": "44ca96c1158a46d934b495567b501bf48e41acee17854a6d6d78cf808899d64e",
+  "tile_3_7.bin.gz": "692498dec00b6dfb00a2270951268cd895321ca154cc5416c5ef4224c93a4bf3",
+  "tile_3_9.bin.gz": "1d02cdf01ae96e361107be918ed2a7ee9feb26e044229636f621f849680830c5",
+  "tile_4_10.bin.gz": "6fd73b40dbe5b7526cdcfcd27308ec365455e02ef4b4b16742e38f8c0d26978c",
+  "tile_4_11.bin.gz": "27bc30ab2eee4757db12f9a782dbc39d362f606eabc34b1f957ae1fe02ac53cc",
+  "tile_4_3.bin.gz": "490fce97a09323ae5611ca6885d5ac2a1133ab5b4fab4314fb3400ebe3f73160",
+  "tile_4_4.bin.gz": "bd15ed8ff090d01c0c248bbd6999bbec312828ddefb8d01aa3c59d307e4eb9db",
+  "tile_4_6.bin.gz": "a8157a9921b223fa007aa6fcf2ff555ad09c353e331ddb5cd32fdcdf7f7278cd",
+  "tile_4_7.bin.gz": "071e65208569e0016392fe8d6ed1cfa37f90609739bb2f68086f5c55114f9b41",
+  "tile_4_9.bin.gz": "43fe22914c7bbf7a6318d5edd122962ff5bd7beb1d8e9967825360d22c92cdef",
+  "tile_means.json": "d4a8f8f7034d0232eac911b8d85fdf667b3a3eb77b9f43083871ccd2d6d20720"
+ },
+ "builder_scripts": [
+  "data/library/scripts/libcommon.py",
+  "data/library/scripts/products.py",
+  "data/library/scripts/finalize.py",
+  "data/library/scripts/build_gldas.py"
+ ],
+ "note": "Raw granules are not kept; only the 1-degree monthly derivative is shipped. No trend statistic is computed in the build."
+}

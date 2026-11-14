@@ -17,15 +17,21 @@ assert len(set(ym)) == len(ym), "duplicate months"
 times = L.month_axis(2003, 1, (ym[-1][0] - 2003) * 12 + ym[-1][1])
 print("granules", len(gl), ym[0], ym[-1], flush=True)
 
+CACHE = L.SCRATCH / "aod_cache"; CACHE.mkdir(parents=True, exist_ok=True)   # per-month cache so a killed run can resume
 def one(g):
+    key = g["begin"][:7]; cf = CACHE / f"{key}.npz"
+    if cf.exists():
+        z = np.load(cf, allow_pickle=True); return z["v"], str(z["h"]), json.loads(str(z["dec"])), json.loads(str(z["at"]))
     raw, at, content = L.dap4_raw(s, g["opendap_url"], VAR)
     v, dec = L.modis_decode(raw, at)
     assert v.shape == (180, 360), v.shape
-    return v.astype(np.float32), L.sha_bytes(content), dec, at
+    h = L.sha_bytes(content)
+    np.savez(cf, v=v.astype(np.float32), h=h, dec=json.dumps(dec), at=json.dumps(at))
+    return v.astype(np.float32), h, dec, at
 
 cube = np.full((len(times), 180, 360), np.nan, np.float32); prov = []; idx = {t: i for i, t in enumerate(times)}
 t0 = dt.datetime.now(dt.timezone.utc); dec0 = None
-with ThreadPoolExecutor(8) as ex:
+with ThreadPoolExecutor(12) as ex:
     for k, (g, res) in enumerate(zip(gl, ex.map(one, gl))):
         v, h, dec, at = res
         if dec0 is None: dec0 = dict(decode=dec, attrs={a: at[a] for a in ("units", "scale_factor", "add_offset", "_FillValue", "valid_range") if a in at}); print("decode", dec0, flush=True)

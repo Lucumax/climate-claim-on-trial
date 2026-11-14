@@ -1207,6 +1207,1114 @@
     "tile_means": "snow_mod10cm/tile_means.json"
    },
    "build_date_utc": "2026-11-14"
+  },
+  {
+   "id": "airs_tair",
+   "name": "Surface air temperature (day and night mean)",
+   "definition": "The temperature of the air near the ground, as estimated by an infrared sounder on the Aqua satellite, averaged over the afternoon and night passes and over the month (degrees Celsius). It works over land and ocean.",
+   "units": "degC",
+   "product": "AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)",
+   "version": "7.0",
+   "short_name": "AIRS3STM",
+   "concept_id": "C1701805662-GES_DISC",
+   "doi": "https://doi.org/10.5067/UBENJB9D3T2H",
+   "agency": "NASA GES DISC",
+   "kind": "satellite observation (retrieval)",
+   "source_variable": "SurfAirTemp_A and SurfAirTemp_D (K, mean of the two minus 273.15)",
+   "period": {
+    "first_month": "2003-01",
+    "last_month": "2026-10",
+    "n_months_axis": 286,
+    "t0": [
+     2003,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "1 degree (native)",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.1,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "Retrieved from the infrared sounder AIRS on Aqua together with microwave data, for scenes it can see through partly cloudy skies, so very cloudy places are under-sampled. The surface air temperature here is the mean of the afternoon (about 1:30 PM) and night (about 1:30 AM) overpasses, and is a retrieved value, not a weather-station reading. Aqua's overpass times have drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), which can shift both the day and night views a little after 2021. Version 7 replaces older versions, so do not splice with Version 6 values.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     2,
+     11
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "airs_tair/global_series.json",
+    "tile_means": "airs_tair/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
+  },
+  {
+   "id": "airs_h2o",
+   "name": "Total water vapour column",
+   "definition": "How much water vapour (the invisible gas form of water) is in the whole column of air above a spot, written as the depth of liquid water it would make if it all condensed (millimetres). Warm, humid places have high values, cold dry places low ones.",
+   "units": "kg/m2 (= mm of water)",
+   "product": "AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)",
+   "version": "7.0",
+   "short_name": "AIRS3STM",
+   "concept_id": "C1701805662-GES_DISC",
+   "doi": "https://doi.org/10.5067/UBENJB9D3T2H",
+   "agency": "NASA GES DISC",
+   "kind": "satellite observation (retrieval)",
+   "source_variable": "TotH2OVap_A and TotH2OVap_D (kg/m2, mean of the two)",
+   "period": {
+    "first_month": "2003-01",
+    "last_month": "2026-10",
+    "n_months_axis": 286,
+    "t0": [
+     2003,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "1 degree (native)",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.1,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "Retrieved from the infrared sounder AIRS on Aqua together with microwave data, for scenes it can see through partly cloudy skies, so very cloudy places are under-sampled. The surface air temperature here is the mean of the afternoon (about 1:30 PM) and night (about 1:30 AM) overpasses, and is a retrieved value, not a weather-station reading. Aqua's overpass times have drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), which can shift both the day and night views a little after 2021. Version 7 replaces older versions, so do not splice with Version 6 values.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     2,
+     11
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "airs_h2o/global_series.json",
+    "tile_means": "airs_h2o/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
+  },
+  {
+   "id": "soil_gldas",
+   "name": "Soil moisture, top 10 cm (model)",
+   "definition": "How much water the soil holds in its top 10 centimetres, written as millimetres of water (100 would be completely full). This is computed by a NASA land-surface model fed with satellite and ground weather data, not measured directly.",
+   "units": "kg/m2 (= mm of water in the top 10 cm)",
+   "product": "GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)",
+   "version": "2.1",
+   "short_name": "GLDAS_NOAH10_M",
+   "concept_id": "C1288937542-GES_DISC",
+   "doi": "https://doi.org/10.5067/LWTYSMP3VM5Z",
+   "agency": "NASA GES DISC",
+   "kind": "model output (land-surface model driven by observations)",
+   "source_variable": "SoilMoi0_10cm_inst",
+   "period": {
+    "first_month": "2001-01",
+    "last_month": "2026-07",
+    "n_months_axis": 307,
+    "t0": [
+     2001,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "1 degree (native)",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.05,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "MODEL OUTPUT, not a direct observation: the NASA GLDAS Noah land-surface model, driven by satellite- and ground-based weather inputs, computes how much water is in the top 10 cm of soil. It does not measure soil water from space. The value is the water in a 10 cm soil layer expressed as kg/m2 (the same as mm of water; 100 would mean completely full); frozen soil, forests and bare rock behave differently, and model biases can differ by region. Land only and only between 60S and 90N (no Antarctica). The forcing data changed over time in GLDAS 2.1, so check that a change is not just a change in the model inputs.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ]
+   ],
+   "files": {
+    "series": "soil_gldas/global_series.json",
+    "tile_means": "soil_gldas/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
+  },
+  {
+   "id": "et_gldas",
+   "name": "Evapotranspiration (model)",
+   "definition": "How much water leaves the land and goes into the air each day, by evaporating from soil, puddles and leaves and by plants releasing water vapour (millimetres of water per day, monthly average). Computed by a NASA land-surface model, not measured directly.",
+   "units": "mm/day",
+   "product": "GLDAS Noah land surface model monthly V2.1 (GLDAS_NOAH10_M)",
+   "version": "2.1",
+   "short_name": "GLDAS_NOAH10_M",
+   "concept_id": "C1288937542-GES_DISC",
+   "doi": "https://doi.org/10.5067/LWTYSMP3VM5Z",
+   "agency": "NASA GES DISC",
+   "kind": "model output (land-surface model driven by observations)",
+   "source_variable": "Evap_tavg (kg/m2/s x 86400)",
+   "period": {
+    "first_month": "2001-01",
+    "last_month": "2026-07",
+    "n_months_axis": 307,
+    "t0": [
+     2001,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "1 degree (native)",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.02,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "MODEL OUTPUT, not a direct observation: the NASA GLDAS Noah land-surface model computes evapotranspiration (water leaving the land as evaporation from soil and water plus plant transpiration), in mm per day averaged over the month. It follows from the model's weather inputs and its vegetation and soil settings, so errors in rain or sunshine inputs carry through. Land only and only between 60S and 90N (no Antarctica). The forcing data changed over time in GLDAS 2.1, so check that a change is not just a change in the model inputs.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ]
+   ],
+   "files": {
+    "series": "et_gldas/global_series.json",
+    "tile_means": "et_gldas/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
   }
  ]
 }

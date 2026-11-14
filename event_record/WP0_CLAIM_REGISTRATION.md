@@ -34,3 +34,11 @@ Same regional test and ladder as section "Methods fixed now". Detective mode (us
 
 ## Timestamp correction (orchestrator)
 The "about 11:00 AM ET" in the first paragraph and "~11:30 AM" in addendum 1 were the orchestrator's estimates and were wrong. The git commit times are authoritative: registration committed Sat Nov 14 10:29 AM ET (839f802), addendum 1 at 10:35 AM ET (36de9c7). Both are after the 9:00 AM ET start and before any claim-data download (first data commit f08c4f0, C-C only).
+
+## Addendum 3, Sat Nov 14 13:15 ET (orchestrator; BEFORE any NO2 data download; C-A to C-D unchanged)
+Reason: the brief says one variable can trend one way in one region and the opposite way in another, even when the same process drives both; the challenge author names OMI. This registers an opposite-sign pair driven by the same process (combustion emissions and their controls).
+| ID | Claim | Variable and product (DOI copied at download) | Region | Season and period |
+|---|---|---|---|---|
+| C-E1 | Tropospheric nitrogen dioxide over the eastern United States has fallen | OMI/Aura tropospheric NO2 column, cloud-screened, Level-3 (OMNO2d v003 or the current GES DISC version), aggregated to monthly then annual means | 35-45N, 90-70W | Annual mean, 2005-2025 |
+| C-E2 | Tropospheric nitrogen dioxide over the Indo-Gangetic Plain (northern India) has risen | same product | 22-30N, 75-88E | Annual mean, 2005-2025 |
+Same regional test, ladder, gates and validation rules as the other cases (method addendum 2, adaptive-procedure gate). OMI row-anomaly data handling follows the product's own flags; document it. If time runs out, this pair is dropped and the drop is disclosed.

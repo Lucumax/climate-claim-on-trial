@@ -9,6 +9,7 @@
     ["ok", "surface"], ["warn", "surface"], ["bad", "surface"],
     ["ok", "ok-bg"], ["warn", "warn-bg"], ["bad", "bad-bg"], ["ink", "warn-bg"], ["ink", "brass-soft"],
     ["muted", "land"], ["ink", "land"],
+    ["up", "surface"], ["up", "brass-soft"], ["muted", "brass-soft"], ["accent", "brass-soft"],
     ["up-mark", "up"], ["down-mark", "down"]
   ],
   "graphics": [

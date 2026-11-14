@@ -1,0 +1,674 @@
+{
+ "claim_id": "C-A",
+ "status": "independent multi-sensor witness, exploratory check, not the registered test; the C-A verdict (withheld) is unchanged",
+ "title": "A second witness from space: the ESA LST CCI multi-sensor record (ATSR-2, AATSR, Terra MODIS, Sentinel-3B SLSTR)",
+ "generated_utc": "2026-11-14T19:33:23+00:00",
+ "witness": {
+  "name": "ESA Land Surface Temperature Climate Change Initiative (LST_cci), IRCDR multi-sensor L3S, monthly daytime, 0.01 degree, v3.00",
+  "doi": "10.5285/b8be3f3993e54d309fddf61ea5d3674f",
+  "product_user_guide": "ESA LST_cci Product User Guide LST-CCI-D4.3-PUG v3.1 (15 Jan 2024), section 4.9 / Table 15 (pp. 41-43) and section 6.2 (p. 62). https://admin.climate.esa.int/documents/3019/LST-CCI-D4.3-PUG_-_i3r1_-_Product_User_Guide.pdf",
+  "data_url": "https://dap.ceda.ac.uk/thredds/dodsC/neodc/esacci/land_surface_temperature/data/MULTISENSOR_IRCDR/L3S/0.01/v3.00/monthly",
+  "access": "anonymous OPeNDAP subsets (box 30-37N, 90W-75.5W, June-August), raw int16 scaled here; fetch script data/scripts/fetch_esa_lst.py",
+  "sensor_sources_in_order": [
+   {
+    "first_month": "2001-07",
+    "platform": "ERS-2",
+    "sensor": "ATSR-2",
+    "source": "ESA LST CCI ATSR_2 L3S V3.00"
+   },
+   {
+    "first_month": "2002-06",
+    "platform": "Envisat",
+    "sensor": "AATSR",
+    "source": "ESA LST CCI ATSR_3 L3S V3.00"
+   },
+   {
+    "first_month": "2012-06",
+    "platform": "Terra",
+    "sensor": "MODIS",
+    "source": "ESA LST CCI MODIST L3C V4.50"
+   },
+   {
+    "first_month": "2017-06",
+    "platform": "Terra",
+    "sensor": "MODIS",
+    "source": "ESA LST CCI ATSR_2 L3S V3.00"
+   },
+   {
+    "first_month": "2017-07",
+    "platform": "Terra",
+    "sensor": "MODIS",
+    "source": "ESA LST CCI MODIST L3C V4.50"
+   },
+   {
+    "first_month": "2019-06",
+    "platform": "Sentinel3B",
+    "sensor": "SLSTR",
+    "source": "ESA LST CCI SLSTRB L3S V3.00"
+   }
+  ],
+  "important_caveat": "From June 2012 to May 2019 the ESA multi-sensor record is itself built from MODIS on Terra (ESA's own L3C V4.50 processing of Terra MODIS). So ESA is independent of the NASA MOD11C3 product and of Terra's late-record drift only in 2001-2011 (ATSR-2/AATSR) and 2019-2024 (Sentinel-3B); in 2012-2018 it shares the Terra instrument with C-A.",
+  "time_of_day_handling": "The user guide says the multi-sensor record is intercalibrated to IASI and then given a temporal correction to a common local equatorial crossing time, with Terra MODIS as the reference sensor. It documents this for the v2.0 record; the v3.00 monthly files used here carry no time-correction variable, so how far the correction applies to these v3.00 daytime months is not confirmed from the files.",
+  "known_breaks": "The guide names the sensor transitions (ATSR-2 to AATSR 2002, AATSR to Terra MODIS 2012, Terra MODIS to Sentinel-3 SLSTR) and warns that inconsistencies or discontinuities may occur when sensors change; its stability line for the ATSR-2/AATSR period is -0.41 to 0.25 K per decade (global, against air temperature). No step sizes are published for this region."
+ },
+ "case": {
+  "claim_text": "Summer daytime land surface temperature over the Southeastern United States has risen (box 30-37N, 90W-75.5W, JJA 2001-2025)",
+  "box": {
+   "lat_min": 30,
+   "lat_max": 37,
+   "lon_min": -90,
+   "lon_max": -75.5
+  },
+  "season": "JJA",
+  "period_compared": [
+   2001,
+   2024
+  ],
+  "note": "ESA stops at 2024 here, so MODIS C-A is cut to the same 24 seasons. 2001 has July and August only (ESA has no June 2001 file)."
+ },
+ "units": {
+  "temperature": "degC",
+  "anomaly": "degC"
+ },
+ "years": [
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008,
+  2009,
+  2010,
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024
+ ],
+ "series": {
+  "esa_jja_anomaly_degC": [
+   -1.989,
+   1.0453,
+   -2.0063,
+   -1.4517,
+   -0.6395,
+   0.9945,
+   1.6391,
+   0.8103,
+   -0.3282,
+   0.632,
+   1.9765,
+   0.164,
+   -1.8608,
+   -0.6522,
+   0.1681,
+   0.664,
+   -1.1789,
+   -0.354,
+   0.0683,
+   -0.1024,
+   -0.2723,
+   0.6343,
+   0.2033,
+   1.1727
+  ],
+  "modis_terra_jja_anomaly_degC": [
+   -0.7144,
+   1.1472,
+   -1.3677,
+   -1.2283,
+   -0.3698,
+   1.0308,
+   1.5873,
+   0.9248,
+   -0.2764,
+   0.8529,
+   1.8412,
+   0.5206,
+   -1.5723,
+   -0.5336,
+   0.0302,
+   0.6156,
+   -0.7475,
+   -0.3565,
+   0.0564,
+   -0.1388,
+   -0.7794,
+   0.0099,
+   -0.4728,
+   -0.0593
+  ],
+  "esa_minus_modis_degC": [
+   -1.2746,
+   -0.1018,
+   -0.6386,
+   -0.2235,
+   -0.2698,
+   -0.0363,
+   0.0517,
+   -0.1145,
+   -0.0518,
+   -0.221,
+   0.1353,
+   -0.3567,
+   -0.2885,
+   -0.1185,
+   0.1379,
+   0.0484,
+   -0.4314,
+   0.0026,
+   0.0119,
+   0.0365,
+   0.5071,
+   0.6244,
+   0.6761,
+   1.232
+  ],
+  "esa_jja_mean_level_degC": 32.2877,
+  "modis_jja_mean_level_degC": 28.9576,
+  "modis_terra_view_time_utc_h": [
+   16.674,
+   16.578,
+   16.539,
+   16.539,
+   16.547,
+   16.523,
+   16.572,
+   16.566,
+   16.561,
+   16.576,
+   16.557,
+   16.576,
+   16.589,
+   16.561,
+   16.559,
+   16.562,
+   16.571,
+   16.587,
+   16.556,
+   16.57,
+   16.495,
+   16.357,
+   16.106,
+   15.801
+  ],
+  "esa_mean_solar_zenith_deg": [
+   23.6282,
+   26.9932,
+   27.2482,
+   26.998,
+   27.0372,
+   27.1856,
+   26.9799,
+   26.9598,
+   27.0471,
+   27.1503,
+   26.1745,
+   22.0285,
+   22.1764,
+   21.9912,
+   21.7262,
+   22.0279,
+   21.9637,
+   21.8089,
+   27.0326,
+   26.6889,
+   27.0825,
+   26.9332,
+   26.9185,
+   26.899
+  ],
+  "esa_mean_clear_sky_pixels_per_0p01_cell_month": [
+   3.9676,
+   3.3728,
+   2.9025,
+   3.0228,
+   3.4997,
+   3.8242,
+   3.4509,
+   3.3928,
+   3.2016,
+   3.5296,
+   4.1339,
+   4.0181,
+   3.4634,
+   3.9434,
+   4.1866,
+   4.6134,
+   3.9398,
+   4.4194,
+   3.8923,
+   3.6628,
+   3.4193,
+   3.4262,
+   3.1977,
+   3.8685
+  ],
+  "sensors_per_year": {
+   "2001": [
+    "ERS-2 ATSR-2"
+   ],
+   "2002": [
+    "Envisat AATSR"
+   ],
+   "2003": [
+    "Envisat AATSR"
+   ],
+   "2004": [
+    "Envisat AATSR"
+   ],
+   "2005": [
+    "Envisat AATSR"
+   ],
+   "2006": [
+    "Envisat AATSR"
+   ],
+   "2007": [
+    "Envisat AATSR"
+   ],
+   "2008": [
+    "Envisat AATSR"
+   ],
+   "2009": [
+    "Envisat AATSR"
+   ],
+   "2010": [
+    "Envisat AATSR"
+   ],
+   "2011": [
+    "Envisat AATSR"
+   ],
+   "2012": [
+    "Terra MODIS"
+   ],
+   "2013": [
+    "Terra MODIS"
+   ],
+   "2014": [
+    "Terra MODIS"
+   ],
+   "2015": [
+    "Terra MODIS"
+   ],
+   "2016": [
+    "Terra MODIS"
+   ],
+   "2017": [
+    "Terra MODIS"
+   ],
+   "2018": [
+    "Terra MODIS"
+   ],
+   "2019": [
+    "Sentinel3B SLSTR"
+   ],
+   "2020": [
+    "Sentinel3B SLSTR"
+   ],
+   "2021": [
+    "Sentinel3B SLSTR"
+   ],
+   "2022": [
+    "Sentinel3B SLSTR"
+   ],
+   "2023": [
+    "Sentinel3B SLSTR"
+   ],
+   "2024": [
+    "Sentinel3B SLSTR"
+   ]
+  }
+ },
+ "footprint": {
+  "rule": "fixed footprint: the C-A land-support cells (0.25 degree) that are valid in every ESA month and every MODIS month. A 0.25 degree cell is valid in a month if at least 50% of its 625 fine ESA pixels are valid (not water/snow, lst in range, n>0), the same 50% rule as C-A. Anomalies are per cell and per calendar month against the 2001-2024 mean of that cell, then cos(latitude)-weighted, then averaged over June-August.",
+  "cells_ca_land_support": 1264,
+  "cells_esa_valid_all_months_in_support": 1003,
+  "cells_fixed_footprint": 1003,
+  "cells_relaxed_sensitivity": 1229,
+  "esa_months_loaded": 71,
+  "esa_months_expected": 72,
+  "missing_month": "2001-06: no file exists on the CEDA server (HTTP 404 on the .das request); the record here starts in July 2001",
+  "grid_cells": [
+   28,
+   58
+  ]
+ },
+ "trend": {
+  "esa": {
+   "n": 24,
+   "sen_per_decade": 0.3689,
+   "sen_ci95_per_decade": [
+    -0.4752,
+    1.1154
+   ],
+   "p_mk_independent": 0.3853,
+   "p_hamed_rao_registered": 0.3853,
+   "p_yue_wang": 0.4494,
+   "tau": 0.1304,
+   "ols_per_decade": 0.3312,
+   "ols_p": 0.3206
+  },
+  "modis_terra_same_footprint_2001_2024": {
+   "n": 24,
+   "sen_per_decade": -0.2443,
+   "sen_ci95_per_decade": [
+    -0.83,
+    0.4429
+   ],
+   "p_mk_independent": 0.5352,
+   "p_hamed_rao_registered": 0.5352,
+   "p_yue_wang": 0.6127,
+   "tau": -0.0942,
+   "ols_per_decade": -0.1646,
+   "ols_p": 0.55
+  },
+  "modis_terra_registered_support_2001_2024": {
+   "n": 24,
+   "sen_per_decade": -0.2402,
+   "sen_ci95_per_decade": [
+    -0.7755,
+    0.4504
+   ],
+   "p_mk_independent": 0.5352,
+   "p_hamed_rao_registered": 0.5352,
+   "p_yue_wang": 0.6173,
+   "tau": -0.0942,
+   "ols_per_decade": -0.1519,
+   "ols_p": 0.5711
+  },
+  "modis_terra_registered_2001_2025": {
+   "sen_per_decade": -0.3503,
+   "p_hamed_rao_registered": 0.2723,
+   "note": "copied read-only from the C-A bundle (25 seasons)"
+  },
+  "esa_minus_modis": {
+   "n": 24,
+   "sen_per_decade": 0.4372,
+   "sen_ci95_per_decade": [
+    0.1973,
+    0.6901
+   ],
+   "p_mk_independent": 0.0005,
+   "p_hamed_rao_registered": 0.0005,
+   "p_yue_wang": 0.002,
+   "tau": 0.5145,
+   "ols_per_decade": 0.4958,
+   "ols_p": 0.0
+  },
+  "sensitivity_relaxed_footprint": {
+   "esa": {
+    "n": 24,
+    "sen_per_decade": 0.3668,
+    "sen_ci95_per_decade": [
+     -0.4808,
+     1.0843
+    ],
+    "p_mk_independent": 0.3587,
+    "p_hamed_rao_registered": 0.3587,
+    "p_yue_wang": 0.427,
+    "tau": 0.1377,
+    "ols_per_decade": 0.3213,
+    "ols_p": 0.3288
+   },
+   "modis": {
+    "n": 24,
+    "sen_per_decade": -0.2369,
+    "sen_ci95_per_decade": [
+     -0.7999,
+     0.4479
+    ],
+    "p_mk_independent": 0.5352,
+    "p_hamed_rao_registered": 0.5352,
+    "p_yue_wang": 0.6176,
+    "tau": -0.0942,
+    "ols_per_decade": -0.1578,
+    "ols_p": 0.5617
+   },
+   "agreement": {
+    "pearson_r": 0.9074,
+    "pearson_p": 0.0,
+    "spearman_rho": 0.8878,
+    "spearman_p": 0.0,
+    "r_year_to_year_changes": 0.9757,
+    "r_year_to_year_changes_p": 0.0,
+    "r_detrended": 0.9617,
+    "r_detrended_p": 0.0,
+    "n_years": 24
+   },
+   "cells": 1229
+  },
+  "sensitivity_2001_2020_before_terra_drift": {
+   "esa": {
+    "n": 20,
+    "sen_per_decade": 0.0801,
+    "sen_ci95_per_decade": [
+     -0.8946,
+     1.2349
+    ],
+    "p_mk_independent": 0.9225,
+    "p_hamed_rao_registered": 0.9225,
+    "p_yue_wang": 0.9319,
+    "tau": 0.0211,
+    "ols_per_decade": 0.2098,
+    "ols_p": 0.656
+   },
+   "modis": {
+    "n": 20,
+    "sen_per_decade": -0.1933,
+    "sen_ci95_per_decade": [
+     -0.9505,
+     0.7886
+    ],
+    "p_mk_independent": 0.8711,
+    "p_hamed_rao_registered": 0.8711,
+    "p_yue_wang": 0.8962,
+    "tau": -0.0316,
+    "ols_per_decade": -0.0625,
+    "ols_p": 0.8737
+   }
+  },
+  "sensitivity_2002_2024_without_2001": {
+   "esa": {
+    "n": 23,
+    "sen_per_decade": 0.099,
+    "sen_ci95_per_decade": [
+     -0.6652,
+     1.0083
+    ],
+    "p_mk_independent": 0.7116,
+    "p_hamed_rao_registered": 0.7116,
+    "p_yue_wang": 0.7699,
+    "tau": 0.0593,
+    "ols_per_decade": 0.1437,
+    "ols_p": 0.6726
+   },
+   "modis": {
+    "n": 23,
+    "sen_per_decade": -0.3706,
+    "sen_ci95_per_decade": [
+     -0.8965,
+     0.3991
+    ],
+    "p_mk_independent": 0.3156,
+    "p_hamed_rao_registered": 0.3156,
+    "p_yue_wang": 0.4456,
+    "tau": -0.1542,
+    "ols_per_decade": -0.2718,
+    "ols_p": 0.3562
+   }
+  },
+  "air_temperature_cross_check": {
+   "note": "NASA POWER T2M (regional JJA mean over the C-A land support, from the C-A witness file); anomalies re-centred on 2001-2024; footprint differs slightly from the fixed footprint",
+   "esa": {
+    "pearson_r": 0.899,
+    "mean_gap_2021_2024": 0.1613,
+    "mean_gap_2001_2020": -0.0323
+   },
+   "modis": {
+    "pearson_r": 0.8429,
+    "mean_gap_2021_2024": -0.6262,
+    "mean_gap_2001_2020": 0.1252
+   },
+   "power_t2m_trend": {
+    "n": 24,
+    "sen_per_decade": 0.2938,
+    "sen_ci95_per_decade": [
+     -0.2579,
+     0.8214
+    ],
+    "p_mk_independent": 0.2242,
+    "p_hamed_rao_registered": 0.2242,
+    "p_yue_wang": 0.3097,
+    "tau": 0.1812,
+    "ols_per_decade": 0.2181,
+    "ols_p": 0.3495
+   },
+   "esa_minus_t2m_trend": {
+    "n": 24,
+    "sen_per_decade": 0.1274,
+    "sen_ci95_per_decade": [
+     -0.2938,
+     0.4792
+    ],
+    "p_mk_independent": 0.6024,
+    "p_hamed_rao_registered": 0.6024,
+    "p_yue_wang": 0.6072,
+    "tau": 0.0797,
+    "ols_per_decade": 0.1131,
+    "ols_p": 0.4839
+   },
+   "modis_minus_t2m_trend": {
+    "n": 24,
+    "sen_per_decade": -0.449,
+    "sen_ci95_per_decade": [
+     -0.7359,
+     -0.1126
+    ],
+    "p_mk_independent": 0.0059,
+    "p_hamed_rao_registered": 0.0059,
+    "p_yue_wang": 0.0264,
+    "tau": -0.4058,
+    "ols_per_decade": -0.3827,
+    "ols_p": 0.0049
+   }
+  },
+  "p_note": "No regional test is shipped for C-A (the gate withheld the verdict). p_hamed_rao_registered is the Hamed-Rao Mann-Kendall used as the registered headline; p_yue_wang is the Yue-Wang variant, which stayed closest to nominal size for this series in the gate table; p_mk_independent treats years as independent."
+ },
+ "agreement": {
+  "esa_vs_modis": {
+   "pearson_r": 0.905,
+   "pearson_p": 0.0,
+   "spearman_rho": 0.8887,
+   "spearman_p": 0.0,
+   "r_year_to_year_changes": 0.9763,
+   "r_year_to_year_changes_p": 0.0,
+   "r_detrended": 0.9618,
+   "r_detrended_p": 0.0,
+   "n_years": 24
+  },
+  "pearson_r_by_era": {
+   "ATSR-2/AATSR (ERS-2, Envisat)": {
+    "r": 0.9773,
+    "p": 0.0,
+    "n": 11
+   },
+   "Terra MODIS (ESA L3C V4.50)": {
+    "r": 0.973,
+    "p": 0.0002,
+    "n": 7
+   },
+   "Sentinel-3B SLSTR": {
+    "r": 0.5301,
+    "p": 0.2794,
+    "n": 6
+   }
+  }
+ },
+ "sensor_changes": {
+  "era_mean_difference": [
+   {
+    "era": "ATSR-2/AATSR (ERS-2, Envisat)",
+    "years": [
+     2001,
+     2011
+    ],
+    "n": 11,
+    "mean_diff_esa_minus_modis": -0.2495,
+    "sd": 0.3959
+   },
+   {
+    "era": "Terra MODIS (ESA L3C V4.50)",
+    "years": [
+     2012,
+     2018
+    ],
+    "n": 7,
+    "mean_diff_esa_minus_modis": -0.1437,
+    "sd": 0.2188
+   },
+   {
+    "era": "Sentinel-3B SLSTR",
+    "years": [
+     2019,
+     2024
+    ],
+    "n": 6,
+    "mean_diff_esa_minus_modis": 0.5147,
+    "sd": 0.4548
+   }
+  ],
+  "step_model": {
+   "model": "difference (ESA minus MODIS) = a + c2012*[year>=2012] + c2019*[year>=2019] + c2021*[year>=2021]; OLS levels, descriptive, not a test of cause; years are autocorrelated so the p values are indicative only",
+   "step_2012_degC": 0.1058,
+   "step_2012_se": 0.1592,
+   "step_2012_p": 0.5139,
+   "step_2019_degC": 0.1679,
+   "step_2019_se": 0.2639,
+   "step_2019_p": 0.5319,
+   "step_2021_degC": 0.7357,
+   "step_2021_se": 0.2851,
+   "step_2021_p": 0.0179,
+   "df": 20
+  },
+  "mean_diff_2021_2024": 0.7599,
+  "mean_diff_2001_2020": -0.1851,
+  "difference_vs_terra_view_time": {
+   "pearson_r": -0.7836,
+   "p": 0.0,
+   "n": 24,
+   "note": "dominated by the four drift years; a correlation of two series that both change at the end is not evidence of cause"
+  },
+  "note": "Anomaly differences, ESA minus MODIS Terra, same footprint. Steps are descriptive; there are 6 to 11 seasons per era."
+ },
+ "reading": {
+  "same_sign": false,
+  "esa_ci_overlaps_modis_ci": true
+ },
+ "method_notes": [
+  "Registered C-A uses MOD11C3 0.05 degree block-meaned to 0.25 degree; ESA 0.01 degree is block-meaned 25x25 to the same grid.",
+  "Statistics are the shipped stats\\trendtrial functions (mk_core, sen_ci_analytic, regional_test_p, ols); Sen slope in degC per decade.",
+  "ESA lst is the mean of clear-sky daytime observations in the month; the monthly files keep no overpass time beyond solze and n.",
+  "Exploratory check; nothing here changes the registered result or the withheld verdict."
+ ],
+ "provenance": {
+  "esa_doi": "10.5285/b8be3f3993e54d309fddf61ea5d3674f",
+  "esa_product_page": "https://catalogue.ceda.ac.uk/uuid/e67b02b814bf4a78b9ec90b4259f0741/",
+  "esa_opendap_base": "https://dap.ceda.ac.uk/thredds/dodsC/neodc/esacci/land_surface_temperature/data/MULTISENSOR_IRCDR/L3S/0.01/v3.00/monthly",
+  "pug": "https://admin.climate.esa.int/documents/3019/LST-CCI-D4.3-PUG_-_i3r1_-_Product_User_Guide.pdf",
+  "modis_product": "MOD11C3 V061, doi 10.5067/MODIS/MOD11C3.061 (data/C-A/monthly.npz)",
+  "script": "data/witness_esa/make_esa_witness.py",
+  "fetch_script": "data/scripts/fetch_esa_lst.py",
+  "scaling_source": "https://dap.ceda.ac.uk/thredds/dodsC/neodc/esacci/land_surface_temperature/data/MULTISENSOR_IRCDR/L3S/0.01/v3.00/monthly/2005/07/ESACCI-LST-L3S-LST-IRCDR_-0.01deg_1MONTHLY_DAY-20050701000000-fv3.00.nc.das"
+ }
+}

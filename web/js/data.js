@@ -87,9 +87,9 @@ function displayTexts(val, iv) {
   const d = val.display || {}, ad = val.adaptive || {};
   const pc = o => (o && Number.isFinite(o.value) ? `${(o.value * 100).toFixed(1).replace(/\.0$/, "")}%` : null);
   let interval = iv ? (d.interval_text || null) : null;
-  if (iv && !interval && ad.status === "run" && pc(ad.interval_coverage_null)) interval = `nominal 95% interval; measured coverage ${pc(ad.interval_coverage_null)} (trendless) / ${pc(ad.interval_coverage_trend) || "n/a"} (with a trend) at this setting`;
+  if (iv && !interval && ad.status === "run" && pc(ad.interval_coverage_null)) interval = `nominal 95% interval; measured coverage ${pc(ad.interval_coverage_null)} in trendless simulations and ${pc(ad.interval_coverage_trend) || "n/a"} in simulations with a trend, at this setting`;
   let fp = d.false_positive_text || null;
-  if (!fp && ad.status === "run" && pc(ad.size_given_release)) fp = `false-positive rate among released verdicts at this setting: ${pc(ad.size_given_release)}${pc(ad.size_unconditional) ? ` (overall ${pc(ad.size_unconditional)})` : ""}`;
+  if (!fp && ad.status === "run" && pc(ad.size_given_release)) fp = `false-alarm rate among simulated records that received a verdict, at this setting: ${pc(ad.size_given_release)}${pc(ad.size_unconditional) ? ` (overall ${pc(ad.size_unconditional)})` : ""}`;
   return { interval, falsePositive: fp };
 }
 

@@ -87,18 +87,18 @@ def build_display(gate, interval_selected):
     out = dict(status="run", setting_text=setting, adaptive_cell=ad.get("cell"), noise=ad.get("noise", "normal"))
     if interval_selected and cn.get("value") is not None and ct.get("value") is not None:
         pts = lambda v: f"{100 * v['se']:.1f}"
-        out["interval_text"] = (f"nominal 95% interval; measured coverage {pc(cn['value'])} (null) / {pc(ct['value'])} (trend) "
-                                f"at this claim's setting ({setting}). Monte Carlo SE {pts(cn)} / {pts(ct)} points, "
-                                f"{cn['R']:,} / {ct['R']:,} synthetic series with an interval shown")
+        out["interval_text"] = (f"nominal 95% interval; measured coverage {pc(cn['value'])} in trendless simulations and {pc(ct['value'])} in simulations with a trend, "
+                                f"at this claim's setting ({setting}). Simulation standard error {pts(cn)} / {pts(ct)} points, "
+                                f"from {cn['R']:,} / {ct['R']:,} simulated series with an interval shown")
         out["interval_coverage_null"], out["interval_coverage_trend"] = cn, ct
     else:
         out["interval_text"] = None
         out["interval_note"] = "no interval is shown for this claim, so no coverage is quoted"
     z, w, rr = ad.get("size_given_release") or {}, ad.get("size_unconditional") or {}, ad.get("release_rate") or {}
     if z.get("value") is not None and w.get("value") is not None:
-        out["false_positive_text"] = (f"false-positive rate among released verdicts at this setting: {pc(z['value'])} "
-                                      f"(overall {pc(w['value'])}) ({setting}). Monte Carlo SE {100 * z['se']:.1f} / {100 * w['se']:.1f} points; "
-                                      f"{z['R']:,} released of {w['R']:,} trendless synthetic series")
+        out["false_positive_text"] = (f"false-alarm rate among simulated records that received a verdict, at this setting: {pc(z['value'])} "
+                                      f"(overall {pc(w['value'])}) ({setting}). Simulation standard error {100 * z['se']:.1f} / {100 * w['se']:.1f} points. "
+                                      f"{z['R']:,} of {w['R']:,} trendless simulated records received a verdict")
         out["false_positive_released"], out["false_positive_overall"], out["release_rate"] = z, w, rr
         out["false_positive_definition"] = ("share of trendless synthetic series called significant: among those for which a verdict was "
                                             "released, and among all of them (withheld series count as no call); intended 5%")

@@ -428,8 +428,8 @@ def explain_no_passer(sc, ids_null, bar_cands):
         n_bad = sum(1 for c in bar_cands if not ch[c]["passed"])
         sz = sc[i]["candidates"][ref]["size"]
         side = ch[ref]["side"]
-        rows.append(f"{_scenario_label(i)}: Yue-Wang {100 * sz['value']:.1f}% ({'too liberal' if side == 'liberal' else ('too conservative' if side == 'conservative' else 'within the bar')}; "
-                    f"{n_bad} of {len(bar_cands)} candidate tests too liberal)")
+        rows.append(f"{_scenario_label(i)}: Yue-Wang {100 * sz['value']:.1f}% ({'too many false alarms' if side == 'liberal' else ('too few false alarms' if side == 'conservative' else 'within the bar')}; "
+                    f"{n_bad} of {len(bar_cands)} candidate tests gave too many false alarms)")
         if n_bad:
             bad.append(i)
             bad_kinds.add("skew" if "-skewed-" in i else ("gaps" if "-gaps-" in i else "dependence"))
@@ -444,7 +444,7 @@ def explain_no_passer(sc, ids_null, bar_cands):
     else:
         driver = "+".join(sorted(bad_kinds))
     lead = {"skew": "The tests kept their size with symmetric noise at this length and persistence; they failed only where the noise was lopsided.",
-            "dependence": "The tests failed already with symmetric noise at this length and persistence, so the cause is the dependence between years (with this few years), not lopsidedness.",
+            "dependence": "The tests failed already with symmetric noise at this length and persistence, so the cause is the dependence between years (with so few years), not lopsidedness.",
             "gaps": "The tests failed only in the scenario with missing years.",
             "none": "Every scenario passed for at least one test, but no single test passed in all of them."}.get(driver, "More than one condition failed: " + ", ".join(sorted(bad_kinds)) + ".")
     text = ("No candidate regional test kept its false-positive rate within 0.05 +/- 2 SE in every simulation matched to this series. " + lead +

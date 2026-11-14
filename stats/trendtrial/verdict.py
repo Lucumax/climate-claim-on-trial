@@ -173,7 +173,7 @@ def build_slots(claim, inp):
         "signed_slope": _fmt(slope),
         "ci_text": ci_text, "p": _fmt_p(inp["p"]),
         "breadth_clause": breadth_clause, "narrow_clause": narrow_clause, "local_clause": local_clause,
-        "withheld_reasons": "; ".join(inp.get("withheld_reasons") or []),
+        "withheld_reasons": "; ".join(inp.get("withheld_reasons") or []).rstrip(". "),
     }
 
 

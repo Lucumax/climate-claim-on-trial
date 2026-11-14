@@ -169,10 +169,10 @@ def test_display_numbers_and_skewed_adaptive_cell():
     g = gate_for_claim(res, 45, 0.05, False, skew=0.2)
     from trendtrial.pipeline import build_display
     d = build_display(g["gate"], dict(method="analytic_hr"))
-    assert d["interval_text"].startswith("nominal 95% interval; measured coverage 92.5% (null) / 93.8% (trend) at this claim's setting")
-    assert d["false_positive_text"].startswith("false-positive rate among released verdicts at this setting: 6.6% (overall 4.3%)")
-    assert "Monte Carlo SE 0.5 / 0.3 points; 2,520 released of 4,000 trendless synthetic series" in d["false_positive_text"]
-    assert "Monte Carlo SE 0.8 / 0.8 points, 600 / 600 synthetic series" in d["interval_text"]
+    assert d["interval_text"].startswith("nominal 95% interval; measured coverage 92.5% in trendless simulations and 93.8% in simulations with a trend, at this claim's setting")
+    assert d["false_positive_text"].startswith("false-alarm rate among simulated records that received a verdict, at this setting: 6.6% (overall 4.3%)")
+    assert "Simulation standard error 0.5 / 0.3 points. 2,520 of 4,000 trendless simulated records received a verdict" in d["false_positive_text"]
+    assert "Simulation standard error 0.8 / 0.8 points, from 600 / 600 simulated series" in d["interval_text"]
     assert d["false_positive_released"]["R"] == 2520 and d["false_positive_overall"]["R"] == 4000 and d["interval_coverage_null"]["R"] == 600
     g2 = gate_for_claim(res, 45, 0.05, False, skew=1.1)["gate"]                    # lopsided claim: the skewed adaptive cell governs
     assert g2["adaptive"]["cell"].endswith("-skewed") and g2["adaptive"]["noise"] == "skewed"

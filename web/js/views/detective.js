@@ -11,7 +11,7 @@ import { disc, copyButton } from "./common.js";
 import { monthlyData } from "../viz/monthly.js";
 import { groupVariables } from "./pages.js";
 import { loadLibrary, libraryPlan, libraryRegional, completeSeasons, isWorld, periodNote, pastQuality, WORLD } from "../library.js";
-import { pWords, trendWords, stepWords, sigClass, sigLabel, ALPHA, fixVerdict, PERSISTENCE_CAVEAT, INTERVAL_EXPLORATORY } from "../words.js";
+import { pWords, descPWords, descLabel, trendWords, stepWords, sigClass, sigLabel, ALPHA, fixVerdict, PERSISTENCE_CAVEAT, INTERVAL_EXPLORATORY } from "../words.js";
 
 const LAST_YEAR = 2025, DEMO_TIMEOUT_MS = 25000, DEBOUNCE_MS = 450;
 // The two sources, named the same way everywhere. "short" is the label on a row; "full" is the label in the summary and for screen readers.
@@ -35,6 +35,8 @@ const STEPS = [
 const PHRASE = { t2m: "air temperature", t2m_max: "the daily high temperature", t2m_min: "the daily low temperature", precip: "rainfall", solar: "sunlight reaching the ground", cloud: "cloud cover", rh: "humidity", wind: "wind speed", soil_root: "root-zone soil wetness", soil_top: "surface soil wetness", frost: "the number of frost days", snow: "snow depth", airs_tair: "surface air temperature (satellite)", airs_h2o: "water vapor in the air", soil_gldas: "soil moisture (model)", et_gldas: "evapotranspiration (model)",
   precip_imerg: "rainfall and snow (satellite)", tws_grace: "water stored on land", lst_day_myd11: "land surface temperature", snow_mod10cm: "snow cover", aod_myd08: "smoke and haze" };
 const GROUP_ORDER = [["Temperature", "Temperature"], ["Water", "Water, snow and ice"], ["Sun and sky", "Sun and sky"], ["Wind", "Wind"], ["Air", "Air"]];
+// Starting measurements (source, key): plain, familiar, and covering model, satellite and gauge-blended records. The rest sit under "All measurements".
+const STARTERS = [["power", "t2m"], ["power", "precip"], ["library", "snow_mod10cm"], ["library", "soil_gldas"], ["library", "no2_omi"], ["library", "aod_myd08"]];
 const PLACE = { world: "the whole world", amazon: "the Amazon basin", sus: "the Southeastern United States" };
 const POWER_WORLD_NOTE = "Whole world is for the precomputed library measurements. Live NASA POWER requests are limited to regional boxes of about 40 by 50 degrees.";
 
@@ -67,7 +69,7 @@ export function detective(cat, bundle, query = "") {
   const caseIds = new Set(((bundle && bundle.claims) || []).map(c => c.id));
   const P = cat.presets, S = cat.seasons;
   const root = h("div", {});
-  let M = [], runId = 0, prog = null, demo = null, timer = null, pending = false, countNext = false, built = false, ctl = null, holding = false;
+  let allOpen = false, M = [], runId = 0, prog = null, demo = null, timer = null, pending = false, countNext = false, built = false, ctl = null, holding = false;
   const dataCache = new Map();   // the last downloaded series per measurement and box, so season changes and contained year windows need no new request
 
   // ======================================================== measurements: the two sources in one list
@@ -150,9 +152,16 @@ export function detective(cat, bundle, query = "") {
     const groups = GROUP_ORDER.map(([key, label]) => ({ label, items: M.filter(v => v.group === key) })).filter(g => g.items.length);
     const rest = M.filter(v => !GROUP_ORDER.some(([k]) => k === v.group)); if (rest.length) groups.push({ label: "Other", items: rest });
     const aod = !M.some(v => v.src === "library" && /aod/i.test(v.key)) ? cat.variables.find(v => v.live === false && caseIds.has(v.case_id)) : null;
-    const list = h("div", { class: "pick-list", role: "radiogroup", "aria-label": "Measurement" }, groups.map(g => h("fieldset", { class: "pick-group" }, h("legend", {}, g.label),
-      g.items.map(v => h("label", { class: "pick-row" }, h("input", { type: "radio", name: "variable", value: v.src + ":" + v.key, checked: v === cur, onchange: () => setMeasure(v) }),
-        h("span", { class: "pr" }, h("span", { class: "pr-name" }, v.name), h("span", { class: "src-chip " + sinfo(v).cls }, sinfo(v).short, h("span", { class: "sr-only" }, ` (${sinfo(v).full})`))))))));
+    const row = (v, name) => h("label", { class: "pick-row" }, h("input", { type: "radio", name, value: v.src + ":" + v.key, checked: v === cur, onchange: () => setMeasure(v) }),
+      h("span", { class: "pr" }, h("span", { class: "pr-name" }, v.name), h("span", { class: "src-chip " + sinfo(v).cls }, sinfo(v).short, h("span", { class: "sr-only" }, ` (${sinfo(v).full})`))));
+    // A few clear starting measurements first; the full inventory is one click away. A measurement chosen another way (a replay link, a guided example) opens the full list.
+    const starters = STARTERS.map(([src, key]) => M.find(v => v.src === src && v.key === key)).filter(Boolean);
+    const inStarters = starters.includes(cur);
+    if (!inStarters) allOpen = true;
+    const full = h("details", { class: "quiet pick-all", open: allOpen, ontoggle: e => { allOpen = e.target.open; } }, h("summary", {}, `All ${M.length} measurements`),
+      groups.map(g => h("fieldset", { class: "pick-group" }, h("legend", {}, g.label), g.items.map(v => row(v, "variable")))));
+    const list = h("div", { class: "pick-list", role: "group", "aria-label": "Measurement" },
+      starters.length ? h("fieldset", { class: "pick-group pick-start", role: "radiogroup" }, h("legend", {}, "Good places to start"), starters.map(v => row(v, "variable-start"))) : null, full);
     const model = cur.src === "power" || cur.kind === "model_output";
     measureBody.replaceChildren(list,
       h("div", { class: "defpanel", "aria-live": "polite" },
@@ -160,7 +169,7 @@ export function detective(cat, bundle, query = "") {
         cur.limit ? h("p", { class: "small muted", style: "margin:8px 0 0" }, h("b", {}, "Limit. "), cur.limit) : null,
         disc("What is this measurement?", h("p", { class: "small" }, cur.one_line), h("p", { class: "small" }, h("b", {}, "Source. "), cur.source, cur.doi ? [" · ", h("a", { href: cur.doi, target: "_blank", rel: "noopener" }, "NASA product page")] : ""),
           h("p", { class: "small" }, model ? (cur.src === "power" ? "A computer model blended many measurements to fill the whole map. It is useful for trends but is not a direct measurement. A trend can reflect changes in the data that feed the model as well as the climate." : cur.caveats) : cur.caveats))),
-      aod ? h("p", { class: "other-case" }, `${aod.name} is a registered case, not a live measurement. `, h("a", { href: aod.case_link }, "Open case " + aod.case_id)) : null);
+      ...(aod ? [h("p", { class: "other-case" }, `${aod.name} is a registered case, not a live measurement. `, h("a", { href: aod.case_link }, "Open case " + aod.case_id))] : []));
   }
   function setMeasure(v) {
     state.src = v.src; state.key = v.key;
@@ -321,7 +330,7 @@ export function detective(cat, bundle, query = "") {
       // A question counts once, when its result is displayed: failed, superseded and too-short runs do not count, and neither do repeats.
       if (!state.last.W.tooShort) { noteTry(R); if (!demo) syncUrl(shareHash(R)); }
       drawResult(); drawProgress(); updateStrip();
-      announce("Result updated. " + (state.last.W.tooShort ? "Too few years to test." : `Ruling: ${rulingLabel(state.last).label}.`));
+      announce("Result updated. " + (state.last.W.tooShort ? "Too few years to test." : `${rulingLabel(state.last).calibrated ? "Ruling: " : ""}${rulingLabel(state.last).label}.`));
       return true;
     } catch (e) {
       if (my !== runId || (signal && signal.aborted)) return false;
@@ -367,10 +376,33 @@ export function detective(cat, bundle, query = "") {
   function killSpiral() { spiralToken++; if (spiralH) { try { spiralH.destroy(); } catch (e) { /* ignore */ } spiralH = null; } }
   const stat = (k, val, sub) => h("div", { class: "stat" }, h("div", { class: "k" }, k), h("div", { class: "v num" }, val), h("div", { class: "s" }, sub));
 
+  // A significance-style label is for a calibrated record only. When the calibration check failed (or years are missing, or the window reaches
+  // flagged months) the headline says so and the p-value is shown as a description. The computation is unchanged.
+  const EXPLORATORY_HEAD = "Exploratory statistic; calibration failed";
+  const EXPLORATORY_SUB = "does not justify a calibrated significance conclusion";
+  const moves = s => (s > 0 ? "rises" : s < 0 ? "declines" : "is flat");
   function rulingLabel(L) {
-    const { W, rungs } = L, pRaw = rungs[0].p, pFin = rungs[2].p, sig = pFin < ALPHA, weak = pRaw < ALPHA && !sig;
-    if (L.R.flagged) return { label: "Withheld", tone: "warn", sig: false, weak: false, noVerdict: true, pRaw, pFin, W };
-    return { label: sig ? "Significant at 0.05" : weak ? "Weakened by the trial" : "Not significant at 0.05", tone: sig ? "ok" : weak ? "warn" : "", sig, weak, pRaw, pFin, W };
+    const { W, rungs } = L, pRaw = rungs[0].p, pFin = rungs[2].p, sig = pFin < ALPHA, weak = pRaw < ALPHA && !sig, calibrated = !!(W.gate && W.gate.calibrated) && !L.R.flagged;
+    if (L.R.flagged) return { label: "Withheld", tone: "warn", sig: false, weak: false, noVerdict: true, calibrated: false, pRaw, pFin, W };
+    if (!calibrated) return { label: EXPLORATORY_HEAD, tone: "warn", sig, weak, calibrated: false, pRaw, pFin, W };
+    return { label: sig ? "Significant at 0.05" : weak ? "Weakened by the trial" : "Not significant at 0.05", tone: sig ? "ok" : weak ? "warn" : "", sig, weak, calibrated: true, pRaw, pFin, W };
+  }
+  // The simulation setting the check actually looked at, and the plain reasons it failed. Built from the gate's own fields; nothing new is computed.
+  function calibrationFacts(gate, R) {
+    if (!gate) return { setting: "", failed: ["No calibration check was available for this record."] };
+    const n = gate.nValid, phi = Number.isFinite(gate.phiHat) ? gate.phiHat.toFixed(2) : "n/a", sk = Number.isFinite(gate.skew) ? gate.skew.toFixed(2) : "n/a";
+    const size = gate.sizeAtBucket && Number.isFinite(gate.sizeAtBucket.size) ? (100 * gate.sizeAtBucket.size).toFixed(1) : null;
+    const setting = `Simulation setting checked: ${n} yearly values (nearest tested length ${gate.nGov}), year-to-year persistence ${phi}` + (gate.phiGov !== null && gate.phiGov !== undefined ? ` (tested value ${gate.phiGov})` : " (above the tested range)") + `, skewness ${sk}` + (size !== null ? `. At that setting the correction called a trend in ${size}% of trendless synthetic series (intended 5%).` : ".");
+    const failed = [];
+    const rs = gate.reasons || [];
+    if (rs.includes("gaps") || gate.missList && gate.missList.length) failed.push(`${gate.missingYears} year${gate.missingYears === 1 ? "" : "s"} missing${gate.missList && gate.missList.length ? ": " + gate.missList.join(", ") : ""}. The calibration checks used complete series, and no check with missing years passed.`);
+    if (rs.includes("size_liberal")) failed.push(`At this length and persistence the simulated false-alarm rate was too high${size !== null ? " (" + size + "% instead of 5%)" : ""}, so the p-value is probably too small.`);
+    if (rs.includes("persistence_above_range")) failed.push(`Year-to-year persistence (${phi}) is above the range tested (0.6), so the reliability of the p-value is unknown.`);
+    if (rs.includes("skewed")) failed.push(`The series is strongly lopsided (skewness ${sk}), beyond the range that was checked.`);
+    if (rs.includes("length")) failed.push(`The series has ${n} valid points; the calibration checks cover 20 to 50.`);
+    if (R && R.flagged) failed.push(`This window includes months after ${R.v.qualityEndText} (${R.v.qualityLabel}). ${R.v.qualityReason}`);
+    if (!failed.length) failed.push("The calibration check did not pass for this record.");
+    return { setting, failed };
   }
   // The ruling is a compact aside. The word comes from the same rule as before; the longer reading notes are in a disclosure.
   function rulingLite(L) {
@@ -380,6 +412,20 @@ export function detective(cat, bundle, query = "") {
       h("h3", { class: "ruling-h" }, g.label),
       h("p", { class: "callout", role: "note" }, h("b", {}, "Withheld. "), gate.caveat, " Shorten the period to end in ", String(R.v.goodLast), " to exclude the flagged months. The revised record will be checked again."),
       h("p", { class: "muted" }, `Described only: the Sen slope is ${signed(slope, 3)} ${u} per decade. It is not a basis for a conclusion.`));
+    if (!g.calibrated) {
+      const f = calibrationFacts(gate, R);
+      return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
+        h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), h("span", { class: "chip warn" }, "Calibration failed")),
+        h("h3", { class: "ruling-h" }, g.label),
+        h("p", {}, `The record ${moves(slope)}, but this analysis ${EXPLORATORY_SUB}.`),
+        h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip neutral" }, `Descriptive p ${fmtP(pFin)}` + (pFin < 0.001 ? ` (${pFin.toPrecision(2)})` : ""))),
+        h("p", { class: "muted small" }, `The p-value is shown as a description only (${fmtP(pRaw) === fmtP(pFin) ? `p ${fmtP(pFin)} both at the start and after the correction` : `p ${fmtP(pRaw)} at the start, ${fmtP(pFin)} after the correction`} for year-to-year persistence). It is not read as a significance finding.`),
+        h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u)),
+        h("div", { class: "callout", role: "note" }, h("b", {}, "Why the calibration failed. "), h("ul", { class: "calib-list" }, f.failed.map(t => h("li", {}, t))), h("p", { class: "muted small", style: "margin:8px 0 0" }, f.setting)),
+        disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
+          h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),
+          h("p", { class: "muted small" }, (gate ? gate.label : "Your own exploration, not pre-registered") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
+    }
     const lines = [h("p", {}, fixVerdict(A.verdict.text))];
     if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the trial it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until the record is asked different questions.`));
     else if (sig && Math.max(pRaw, pFin) < 0.001) lines.push(h("p", {}, "It held up clearly: p is below 0.001 at the start and still below 0.001 after the correction."));
@@ -389,9 +435,9 @@ export function detective(cat, bundle, query = "") {
     if (!sig) lines.push(h("p", { class: "muted small" }, "Inconclusive is a result too. Next: try a longer period or a larger region, and keep a note of every try."));
     lines.push(h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u)));
     return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
-      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), gate ? h("span", { class: "chip" }, gate.calibrated ? "Test calibrated for this record" : "Not calibrated") : null),
+      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), h("span", { class: "chip" }, `Calibration checked: ${gate.nValid} years, persistence ${gate.phiHat.toFixed(2)}, skew ${gate.skew.toFixed(2)}`)),
       h("h3", { class: "ruling-h" }, g.label), h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip " + g.tone }, `p ${fmtP(pFin)}`)), ...lines,
-      gate && !gate.calibrated ? h("p", { class: "callout", role: "note" }, h("b", {}, "Not calibrated for this record. "), gate.caveat) : h("p", { class: "muted small calib" }, gate ? gate.caveat : PERSISTENCE_CAVEAT),
+      h("p", { class: "muted small calib" }, calibrationFacts(gate, R).setting, " This is your own exploration, not a pre-registered test, and a p-value is not the probability that the trend is real."),
       disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
         h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),
         h("p", { class: "muted small" }, (gate ? gate.label : "Your own exploration, not pre-registered") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
@@ -401,6 +447,7 @@ export function detective(cat, bundle, query = "") {
 
   function recordSection(L) {
     const { W, R } = L, season = R.season, u = U(R.v.units), R_ = W.A_raw;
+    const cal = rulingLabel(L).calibrated, sigL = p => (cal ? sigLabel(p) : descLabel(p));
     const showAn = state.view === "anom" && season.key !== "all", y = showAn ? W.anomaly : W.raw, A = showAn ? W.A_an : W.A_raw, ols0 = showAn ? W.olsInterceptAn : W.olsIntercept;
     const senLine = W.years.map(t => A.mk.intercept + A.mk.slope * t), olsLine = W.years.map(t => ols0 + A.ols.slope * t);
     const chart = trendChart({
@@ -427,28 +474,28 @@ export function detective(cat, bundle, query = "") {
       cycle ? null : h("p", { class: "slope-label top" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade; ${INTERVAL_EXPLORATORY} ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)}`),
       cycle ? h("div", { id: "det-chart" }, h("p", { class: "muted small", style: "margin:0 0 8px" }, `Each loop is one year; each point is one month, measured from the average of the same calendar month over ${R.y0}–${R.y1}. A descriptive view of the same data: the trend test uses the yearly record.`), cycHost) : h("div", { id: "det-chart" }, chart.node),
       disc("Two tests side by side", h("div", { class: "statgrid" },
-        stat("Mann-Kendall test", `p ${fmtP(R_.mkIndependent.p)}`, `${sigLabel(R_.mkIndependent.p)}. Sen slope ${signed(R_.sen.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(R_.sen.intervalPerDecade[0], 2)} to ${signed(R_.sen.intervalPerDecade[1], 2)}`),
-        stat("Familiar t-test (least squares)", `p ${fmtP(R_.ols.p)}`, `${sigLabel(R_.ols.p)}. ${signed(R_.ols.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(R_.ols.ciPerDecade[0], 2)} to ${signed(R_.ols.ciPerDecade[1], 2)}`)),
-        h("p", { class: "small", style: "margin:12px 0 0" }, pWords(R_.mkIndependent.p)),
+        stat("Mann-Kendall test", `p ${fmtP(R_.mkIndependent.p)}`, `${sigL(R_.mkIndependent.p)}. Sen slope ${signed(R_.sen.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(R_.sen.intervalPerDecade[0], 2)} to ${signed(R_.sen.intervalPerDecade[1], 2)}`),
+        stat("Familiar t-test (least squares)", `p ${fmtP(R_.ols.p)}`, `${sigL(R_.ols.p)}. ${signed(R_.ols.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(R_.ols.ciPerDecade[0], 2)} to ${signed(R_.ols.ciPerDecade[1], 2)}`)),
+        h("p", { class: "small", style: "margin:12px 0 0" }, cal ? pWords(R_.mkIndependent.p) : descPWords(R_.mkIndependent.p)),
         h("p", { class: "muted small" }, "Mann-Kendall asks whether later values tend to be higher or lower than earlier ones, with no straight-line assumption. The t-test is the version most people learn first. They can differ a little. That is normal.")),
       R.v.src === "library" ? disc("About this data product", h("p", { class: "small" }, h("b", {}, R.v.product + ". "), R.v.caveats)) : null);
     if (cycle) { const my = ++spiralToken; import("../viz/cycle.js").then(m => m.renderCycle(cycHost, cyc, {})).then(hnd => { if (my !== spiralToken) { hnd && hnd.destroy(); return; } spiralH = hnd; }).catch(e => { console.error(e); cycHost.append(h("p", { class: "muted small" }, "The monthly cycle could not be drawn. The yearly record is unaffected.")); }); }
     return sec;
   }
   function trialSection(L) {
-    const { W, R, rungs } = L, u = U(R.v.units);
+    const { W, R, rungs } = L, u = U(R.v.units), cal = rulingLabel(L).calibrated;
     return h("div", { class: "res-sec", id: "result-trial" }, h("h3", { id: "result-trial-h", tabindex: "-1" }, "The trial: does it hold up?"),
       h("p", { class: "chart-sub" }, "Three hearings, each changing one thing. We report what happened, whichever way the p-value moves."),
       h("ol", { class: "trial-list" }, rungs.map((r, i) => {
         const pw = Math.min(1, r.p / 0.2) * 100;
         return h("li", { class: "trial-step" },
-          h("div", { class: "trial-step-top" }, h("span", {}, "Hearing " + r.n + " of 3"), h("span", { class: "chip " + sigClass(r.p) }, sigLabel(r.p))),
+          h("div", { class: "trial-step-top" }, h("span", {}, "Hearing " + r.n + " of 3"), h("span", { class: "chip " + (cal ? sigClass(r.p) : "neutral") }, cal ? sigLabel(r.p) : descLabel(r.p))),
           h("h4", {}, r.title || r.name), r.method ? h("p", { class: "small", style: "margin:0 0 4px" }, h("b", {}, "Method: "), r.method) : null,
           h("p", { class: "explain" }, r.note, r.extra ? " " + r.extra + "." : ""),
           h("div", { class: "pbar-row" }, h("strong", { class: "num" }, "p " + fmtP(r.p)), h("span", { class: "pbar", "aria-hidden": "true" }, h("i", { style: `width:${pw}%` }), h("em", { style: "left:25%" })), h("span", { class: "delta" }, i ? (Math.abs(r.p - rungs[i - 1].p) < 0.0005 ? "no change" : (r.p > rungs[i - 1].p ? "weaker ↑" : "stronger ↓")) : "baseline")),
           h("p", { class: "small", style: "margin:8px 0 0" }, h("b", {}, "What this step did. "), stepWords(rungs[i - 1], r), ` Sen slope ${signed(r.slope, 2)} ${u} per decade.`));
       })),
-      h("p", { class: "note" }, "The short bar marks the 0.05 line: left of it is significant."),
+      h("p", { class: "note" }, cal ? "The short bar marks the 0.05 line: left of it is significant." : "The short bar marks the 0.05 line. These p-values are descriptive: calibration failed for this record."),
       h("p", { class: "muted small", style: "margin:0" }, `Statistics: trendtrial ${STATS_VERSION}, checked against the Python reference.`));
   }
 
@@ -489,6 +536,7 @@ export function detective(cat, bundle, query = "") {
     const g = rulingLabel(L), a = fmtP(g.pRaw), b = fmtP(g.pFin);
     let t;
     if (g.noVerdict) return "Withheld: this window includes months the data product flags as unreliable.";
+    if (!g.calibrated) return `${EXPLORATORY_HEAD}. The record ${moves(L.W.A_an.sen.slopePerDecade)}, but this analysis ${EXPLORATORY_SUB}. Descriptive p-values: ${a} at the start, ${b} after the correction.`;
     if (g.sig && Math.max(g.pRaw, g.pFin) < 0.001) t = `It holds, clearly: p is below 0.001 at the start and still below 0.001 after the correction.`;
     else if (g.sig && Math.abs(g.pFin - g.pRaw) < 0.0005) t = `It holds, and the trial changes nothing: all three hearings give p ${b}.`;
     else if (g.sig && g.pFin > g.pRaw * 1.5) t = `It holds, but less strongly: p goes from ${a} to ${b}.`;
@@ -506,8 +554,8 @@ export function detective(cat, bundle, query = "") {
   function trialCaption(L) {
     const { W } = L, g = rulingLabel(L);
     let t = `${outcome(L)} Mann-Kendall gives p ${fmtP(W.A_raw.mkIndependent.p)}; the familiar t-test gives p ${fmtP(W.A_raw.ols.p)}.`;
-    if (g.sig && g.pFin > 0.01) t += " That is not far below the 0.05 line, so call it modest evidence, not proof.";
-    if (W.gate && !W.gate.calibrated) t += " The calibration check says this test is not well checked for a record like this one, so read the number with care.";
+    if (g.calibrated && g.sig && g.pFin > 0.01) t += " That is not far below the 0.05 line, so call it modest evidence, not proof.";
+    if (g.calibrated === false && !g.noVerdict) t += " " + calibrationFacts(W.gate, L.R).failed.join(" ");
     return t;
   }
   const DEMOS = [

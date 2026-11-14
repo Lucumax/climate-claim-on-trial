@@ -55,7 +55,7 @@ const testTitle = m => m === "mk_independent" ? "Mann-Kendall (years treated as 
 const COV_NOTE = "; passed a 90% coverage check in simulations";
 const INTERVAL_WORD = { analytic_hr: "Sen slope, analytic", bootstrap: "Sen slope, moving-block bootstrap" };
 export const BAND_MEANING = "The shaded band is the Sen line tilted between the lower and upper ends of the 95% slope interval, pivoting at the middle year. It shows how steep the trend could plausibly be. It does not show uncertainty about the level, and it is not a range for individual years.";
-export const REG_SHORT = "Question registered before data download (10:29 AM ET; the NO₂ pair at 1:15 PM ET). Later changes, all disclosed: two method amendments made on simulated data before results, one cell-rule correction, and one validation-rule change made after the results (Addendum 4).";
+export const REG_SHORT = "Questions registered; methods amended and disclosed; final gate frozen. The questions were registered before data download (10:29 AM ET; the NO₂ pair at 1:15 PM ET). Method changes, all disclosed: two method amendments made on simulated data before results, one cell-rule correction, and one validation-rule change made after the results (Addendum 4).";
 
 // The ONE place that decides which test, interval and band a case shows. Everything downstream reads r.test / r.interval / r.band / r.ctx.
 function pickRegional(reg, T, gate, val) {

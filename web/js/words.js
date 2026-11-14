@@ -31,3 +31,7 @@ export function stepWords(prev, cur) {
 
 export function sigClass(p) { return p < ALPHA ? "ok" : "neutral"; }
 export function sigLabel(p) { return p < ALPHA ? "Significant at 0.05" : "Not significant at 0.05"; }
+
+// For a record whose calibration check failed: the p-value is a description, never a significance label.
+export function descLabel(p) { return p < ALPHA ? "p below 0.05 (descriptive)" : "p above 0.05 (descriptive)"; }
+export function descPWords(p) { return `The p-value is ${fmtP(p)}. Calibration failed for this record, so it is shown as a description only and is not read as a significance finding.`; }

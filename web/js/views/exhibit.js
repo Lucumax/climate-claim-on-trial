@@ -15,11 +15,17 @@ export function exhibit({ views, initial, tag, rulingNote, onView }) {
     const bodyW = Math.max(240, Math.round(body.clientWidth || 640)), wide = bodyW >= 880;
     return { bodyW, wide, plotW: Math.max(220, (wide ? bodyW - SIDE : bodyW) - MAP_MARGINS) };
   };
-  const seg = h("div", { class: "seg", role: "radiogroup", "aria-label": "View" }, views.map(v =>
-    h("label", {}, h("input", { type: "radio", name: "ex-view", value: v.key, checked: v.key === cur, onchange: () => select(v.key, { focus: true }) }), h("span", {}, v.label))));
+  // The ordinary views are always visible. Views marked `more: true` (alternative ways to draw the same data) sit behind a "More views" disclosure.
+  const mkSeg = (list, name, label) => h("div", { class: "seg", role: "radiogroup", "aria-label": label }, list.map(v =>
+    h("label", {}, h("input", { type: "radio", name, value: v.key, checked: v.key === cur, onchange: () => select(v.key, { focus: true }) }), h("span", {}, v.label))));
+  const mainViews = views.filter(v => !v.more), moreViews = views.filter(v => v.more);
+  const seg = mkSeg(mainViews, "ex-view", "View"), segMore = moreViews.length ? mkSeg(moreViews, "ex-view-more", "More views") : null;
+  const moreBox = segMore ? h("details", { class: "quiet ex-more", open: moreViews.some(v => v.key === cur) }, h("summary", {}, "More views"), h("p", { class: "muted small", style: "margin:8px 0" }, "Other ways to draw the same data. None of them is a test, and none changes the ruling."), segMore) : null;
+  const allSegs = () => [seg, segMore].filter(Boolean);
   const root = h("section", { class: "surface exhibit", id: "exhibit", tabindex: "-1", "aria-labelledby": "ex-h" },
     h("div", { class: "exhibit-head" }, h("div", { class: "exhibit-title" }, h("p", { class: "eyebrow" }, "Exhibit"), title), tag),
     h("div", { class: "ex-views" }, h("span", { class: "ex-views-l", id: "ex-views-l" }, "View"), seg),
+    moreBox,
     ask, body,
     rulingNote ? h("p", { class: "ex-foot" }, rulingNote) : null);
 
@@ -38,10 +44,11 @@ export function exhibit({ views, initial, tag, rulingNote, onView }) {
   function select(key, opts = {}) {
     if (!views.some(v => v.key === key)) return;
     const changed = key !== cur; cur = key;
-    seg.querySelectorAll("input").forEach(i => { i.checked = i.value === key; });
+    allSegs().forEach(sg => sg.querySelectorAll("input").forEach(i => { i.checked = i.value === key; }));
+    if (moreBox && moreViews.some(v => v.key === key)) moreBox.open = true;
     if (changed) { mountCurrent(); announce(`${views.find(v => v.key === key).title}. The ruling is unchanged.`); onView && onView(key); }
     if (opts.scroll) { root.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); root.focus({ preventScroll: true }); }
-    if (opts.focus) { const i = seg.querySelector(`input[value="${key}"]`); if (i) i.focus(); }
+    if (opts.focus) { const i = root.querySelector(`.ex-views input[value="${key}"], .ex-more input[value="${key}"]`); if (i) i.focus(); }
   }
   // The frame depends on the width of the area: remount a map view when the width class or the plot width really changed.
   function watch() {

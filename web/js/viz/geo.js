@@ -17,7 +17,7 @@ function decode(topo) {
       for (const poly of polys) for (const r of poly) {
         const pts = ring(r); let w = 1e9, e = -1e9, s = 1e9, n = -1e9;
         for (const p of pts) { if (p[0] < w) w = p[0]; if (p[0] > e) e = p[0]; if (p[1] < s) s = p[1]; if (p[1] > n) n = p[1]; }
-        rings.push({ pts, bb: [w, s, e, n] });
+        rings.push({ pts, bb: [w, s, e, n], name: (g.properties && g.properties.name) || null });
       }
     }
     out[name] = rings;

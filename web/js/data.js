@@ -1,6 +1,7 @@
 // Bundle loader and adapter. The real stats bundle (stats/SCHEMA, one bundle per claim) is mapped to the shape the views use.
 // Sources, first match wins: ?bundle=placeholder | ?bundle=withheld | data/index.json (list of bundle files) | data/example_bundle.json | placeholder.
 // All shape knowledge lives in this file, so a schema change is a one-place edit.
+import { chem } from "./util.js";
 let cache = null;
 
 async function getJson(url) { const r = await fetch(url, { cache: "no-cache" }); if (!r.ok) throw new Error(url + " " + r.status); return r.json(); }
@@ -24,6 +25,9 @@ export async function loadBundle() {
   cache = { ...normalizeAll(raws), _source: source, _raws: raws };
   return cache;
 }
+
+/** One raw stats bundle (stats/SCHEMA shape) -> the claim shape the views use. For callers that fetch a bundle file the index does not list yet. */
+export const adaptBundle = raw => normalizeAll([raw]).claims[0];
 
 function normalizeAll(raws) {
   const claims = [];
@@ -94,7 +98,7 @@ function fromReal(r) {
   const gate = val.gate || {};
   const sign = F.slope_per_decade.map(x => Math.sign(x));
   const mkFlags = k => F["flag_rung" + k].map((f, i) => F.valid[i] ? (f ? (sign[i] || 1) : 0) : null);
-  const nValid = cells.n_valid_cells, bhOn = cells.cells_mode !== "unadjusted_descriptive";
+  const nValid = cells.n_valid_cells, bhOn = cells.cells_mode !== "unadjusted_descriptive" && cells.cells_mode !== "off";   // no validated cell test (descriptive or off): hearing 4 (the false-discovery step) is not shown
   const cellTest = METHOD_NAME[cells.cell_test] || null;
   const ladder = cells.rungs.filter(R => bhOn || R.rung < 4).map(R => ({
     rung: R.rung, key: "rung" + R.rung, label: R.rung === 3 && cellTest ? `Autocorrelation correction: ${cellTest}` : R.name, changes: R.what_changes, flags: mkFlags(R.rung), n_cells: nValid,
@@ -119,7 +123,7 @@ function fromReal(r) {
   const periodText = `${seasonName(cl.season_months)}, ${cl.period[0]} to ${cl.period[1]}`;
   const iv = R_.interval;
   const finding = {
-    place: cl.region_name, variable: cl.variable, period: periodText,
+    place: cl.region_name, variable: chem(cl.variable), period: periodText,
     change_per_decade: { value: T.sen.slope_per_decade, unit: cl.units + " per decade", text: `${T.sen.slope_per_decade >= 0 ? "+" : "−"}${Math.abs(T.sen.slope_per_decade).toFixed(2)} ${cl.units} per decade (Sen slope)` },
     interval: iv ? { lo: iv.lo, hi: iv.hi, level: iv.level, label: iv.label, meaning: ch.interval_meaning || "How often such intervals contain the true slope was measured on synthetic series. It is not an interval for individual years." } : null,
     test: R_.test,
@@ -133,8 +137,8 @@ function fromReal(r) {
   const dataset = (/\(([^)]+)\)/.exec(cl.variable) || [null, cl.variable])[1].replace(/\s+via\s+.*$/i, "").split(",")[0];
   const scoped = v.branch === "withheld" ? lbl : `${lbl} for ${dataset} in this box, ${cl.period[0]}–${cl.period[1]}`;
   return {
-    id: cl.claim_id, claim_text: cl.claim_text.replace(/\.$/, ""), direction: cl.direction, synthetic,
-    variable: { key: cl.variable, name: cl.variable.charAt(0).toUpperCase() + cl.variable.slice(1), short: cl.variable, unit: cl.units, plain: cl.variable_plain },
+    id: cl.claim_id, claim_text: chem(cl.claim_text.replace(/\.$/, "")), direction: cl.direction, synthetic,
+    variable: { key: cl.variable, name: chem(cl.variable.charAt(0).toUpperCase() + cl.variable.slice(1)), short: chem(cl.variable), unit: cl.units, plain: chem(cl.variable_plain) },
     product: cl.product, region: { name: cl.region_name, box: { s: cl.region_box.lat_min, n: cl.region_box.lat_max, w: cl.region_box.lon_min, e: cl.region_box.lon_max }, note: noMask ? "This region is a rectangle of latitude and longitude. It includes ocean and other water cells, and no land mask was applied." : null },
     season: seasonName(cl.season_months), period: { start: cl.period[0], end: cl.period[1], n: cl.period[1] - cl.period[0] + 1 },
     data_kind: cl.is_model_data ? "model_reanalysis" : "satellite_observation",
@@ -143,7 +147,7 @@ function fromReal(r) {
     cell_slope_per_decade: F.slope_per_decade.map((x, i) => F.valid[i] ? x : null),
     ladder, cell_test_name: cellTest, cell_test_key: cells.cell_test, cells_mode: cells.cells_mode || "bh_flags", bh_q: r.params.bh_q, alpha: r.params.alpha, thresholds: { breadth: r.params.breadth_min, local: r.params.local_min },
     regional: {
-      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${String(reg.units).replace("degC", "°C").replace(/^1 \(unitless\)$/, "AOD (unitless)")}`,
+      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${String(reg.units).replace("degC", "°C").replace(/^1 \(unitless\)$/, "AOD (unitless)").replace(/1e15 molecules\/cm2/g, "×10¹⁵ molecules/cm²")}`,
       sen_line: reg.sen_line, test: R_.test, interval: iv, ctx: R_.ctx,
       sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },

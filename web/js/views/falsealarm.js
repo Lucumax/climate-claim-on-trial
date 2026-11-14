@@ -1,4 +1,4 @@
-// Exhibit Zero: The False-Alarm Planet. A synthetic planet with no trend in any cell, put through the same three
+// The False-Alarm Planet. A synthetic planet with no trend in any cell, put through the same three
 // tests as the case files (naive Mann-Kendall, Yue-Wang corrected, Benjamini-Hochberg). Everything is computed live in
 // the browser by js/falsealarm-core.js, which calls the shipped statistics module. Rendering: globe.gl (vendored, MIT)
 // on the same muted Earth as the Home globe (viz/globe-style.js), or an equal-area (Mollweide) canvas map of the same cells on phones, without WebGL, or on request.
@@ -11,12 +11,13 @@ const DEFAULT_SEED = 93;      // a planet whose naive and corrected rates sit ne
 const Q = 0, ALARM = 1, CLEARED = 2, FLASH = 3;
 const fmt = (n) => Number(n).toLocaleString("en-US");
 const pc = (f, d = 1) => (f * 100).toFixed(d) + "%";
-const oneIn = (count, total) => (count > 0 ? "1 in " + fmt(Math.max(1, Math.round(total / count))) : "none");
+const oneIn = (count, total) => "1 in " + fmt(Math.max(1, Math.round(total / count)));   // only called with count > 0; callers give the zero case its own sentence
+const oneInTail = (count, total) => (count > 0 ? ", " + oneIn(count, total) : "");
 const plural = (n, one, many) => (n === 1 ? one : many);
 const RUNG = [
-  { id: 1, name: "The naive test", short: "Naive", what: "Mann-Kendall trend test, p < 0.05, treating every year as independent." },
+  { id: 1, name: "The uncorrected test", short: "Uncorrected", what: "Mann-Kendall trend test, p < 0.05, treating every year as independent." },
   { id: 2, name: "The memory-corrected test", short: "Corrected", what: "The same test with the Yue-Wang correction for year-to-year memory, p < 0.05." },
-  { id: 3, name: "Field-wide control", short: "FDR", what: "Benjamini-Hochberg at q = " + BH_Q.toFixed(2) + " across all cells, using the corrected p-values." },
+  { id: 3, name: "False-discovery control", short: "False discovery", what: "Benjamini-Hochberg at q = " + BH_Q.toFixed(2) + " across all cells, using the corrected p-values. The false discovery rate is the expected share of false alarms among flagged cells." },
 ];
 
 // ------------------------------------------------------------------------------------------ globe library (lazy)
@@ -81,7 +82,7 @@ function sameTrap() {
     h("div", { class: "strip" },
       cell("Finance", "Try enough trading strategies on the same past prices and one will look like a winner, by luck alone."),
       cell("Medicine", "A trial that checks 20 outcomes can show one that looks significant by chance alone."),
-      cell("Tech", "An A/B test stopped the moment it looks good will “win” more often than 1 time in 20 when nothing changed.")));
+      cell("Tech", "An A/B test stopped the moment it looks good will “win” in more than 1 out of 20 trials when nothing changed.")));
 }
 
 // opts.preview: the compact Home version. It keeps the stage, the computed counts, the legend and the three test selectors, starts at the finished
@@ -140,20 +141,20 @@ export function falseAlarm(opts = {}) {
 
   // -------------------------------------------------------------- DOM
   const N = N_CELLS;
-  const title = h("h1", { id: "page-title", tabindex: "-1" }, "Exhibit Zero: The False-Alarm Planet");
+  const title = h("h1", { id: "page-title", tabindex: "-1" }, "The False-Alarm Planet");
   const chipSynth = h("span", { class: "chip warn" }, "Synthetic");
   const heading = h("div", { class: "case-heading" },
-    h("div", { class: "case-number" }, h("strong", {}, "0"), h("span", {}, "Exhibit")),
+    h("div", { class: "case-number" }, h("strong", {}, "0"), h("span", {}, "Warm-up")),
     h("div", {}, h("p", { class: "eyebrow brass" }, "Before we judge real claims"), title,
       h("p", { class: "definition" }, h("b", {}, "The question. "), "If a planet has no trend at all, how many of its places will a trend test still call significant? We built that planet, ran the tests on it, and counted.")),
-    h("div", { class: "case-meta" }, h("b", {}, "Planet Null"), "Every cell has zero true trend. Any cell the tests flag is a false alarm.", h("br"), chipSynth, " ", h("span", { class: "chip neutral" }, "Seed ", h("span", { id: "fa-seed-chip" }, String(st.seed)))));
+    h("div", { class: "case-meta" }, h("b", {}, "Planet Null"), ", the simulated world with no trend in any cell. Any cell the tests flag is a false alarm.", h("br"), chipSynth, " ", h("span", { class: "chip neutral" }, "Seed ", h("span", { id: "fa-seed-chip" }, String(st.seed)))));
 
   // rail: the three rungs as buttons (order of hearings)
   const railBtns = [], railNum = [], railBar = [], railDelta = [], railStatus = [];
   const railList = h("ol", { class: "hearing-list" }, RUNG.map((r, i) => {
     const num = h("strong", {}, "–"), bar = h("i", { style: "width:0%" }), delta = h("span", { class: "delta" }, ""), status = h("span", { class: "status" }, "Waiting");
     const b = h("button", { type: "button", class: "hearing", onclick: () => chooseStage(i + 1) },
-      h("span", { class: "hearing-top" }, h("span", {}, "Rung " + r.id), status),
+      h("span", { class: "hearing-top" }, h("span", {}, "Step " + r.id), status),
       h("span", { class: "hearing-h" }, h("span", { class: "full" }, r.name), h("span", { class: "short" }, r.short)), h("p", { class: "explain" }, r.what),
       h("span", { class: "hearing-result" }, num, h("span", { class: "mini-bar", "aria-hidden": "true" }, bar), delta));
     railBtns.push(b); railNum.push(num); railBar.push(bar); railDelta.push(delta); railStatus.push(status);
@@ -161,7 +162,7 @@ export function falseAlarm(opts = {}) {
   }));
   const rail = h("aside", { class: "hearings fa-rail", "aria-labelledby": "fa-hearings-h" },
     h("div", { class: "hearings-head" }, h("p", { class: "eyebrow" }, "Three tests, one change each"), h("h2", { id: "fa-hearings-h" }, "Order of hearings")), railList,
-    h("p", { class: "hearing-note" }, "Share of all cells flagged. A later rung can also flag a cell an earlier rung did not, because each rung uses a different cut. We show whichever happens."));
+    h("p", { class: "hearing-note" }, "Share of all cells flagged. A later step can also flag a cell an earlier step did not, because each step uses a different cut. We show whichever happens."));
 
   // stage
   refs.headline = h("p", { class: "fa-headline", "aria-hidden": "true" });
@@ -206,9 +207,9 @@ export function falseAlarm(opts = {}) {
   refs.tableBox = h("div", { id: "fa-table", class: "fa-tablebox", hidden: true });
 
   const exhibit = h("section", { class: "panel", "aria-labelledby": "fa-ex-h" },
-    h("div", { class: "exhibit-header" }, h("div", { class: "exhibit-title" }, h("p", { class: "eyebrow" }, "Exhibit 0"), h("h2", { id: "fa-ex-h" }, "Planet Null")), refs.exTag = h("span", { class: "tag" }, "Not yet tested")),
+    h("div", { class: "exhibit-header" }, h("div", { class: "exhibit-title" }, h("p", { class: "eyebrow" }, "The simulated planet"), h("h2", { id: "fa-ex-h" }, "Planet Null")), refs.exTag = h("span", { class: "tag" }, "Not yet tested")),
     refs.headline, refs.sub, refs.stage, refs.readout, controls, legend, refs.summary,
-    h("p", { class: "muted small" }, "Neighbouring cells share some of their weather noise, so false alarms come in patches. That is exactly what a real regional trend would look like, which is why the test results alone cannot tell you which one you are seeing."),
+    h("p", { class: "muted small" }, "Neighboring cells share some of their weather noise, so false alarms come in patches. That is exactly what a real regional trend would look like, which is why the test results alone cannot tell you which one you are seeing."),
     h("div", { class: "fa-tablebar" }, refs.tableBtn), refs.tableBox);
 
   // ruling column
@@ -229,7 +230,7 @@ export function falseAlarm(opts = {}) {
   const node = preview
     ? h("div", { class: "fa-view fa-preview fa-pending" }, h("div", { class: "workspace fa-prev-ws" }, previewRail, previewStage))
     : h("div", { class: "fa-view fa-pending" },
-      h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Exhibit 0"), heading,
+      h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / False-Alarm Planet"), heading,
       h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit, sameTrap()), rulingColumn));
 
   // stylesheet: load it with the view, show the page when it is ready
@@ -344,7 +345,7 @@ export function falseAlarm(opts = {}) {
       railBtns[i].setAttribute("aria-current", s.stage === k ? "step" : "false");
       if (s.stage !== k) railBtns[i].removeAttribute("aria-current");
       railStatus[i].textContent = s.stage === k ? "● On the bench" : k < s.stage ? "✓ Heard" : "Waiting";
-      railBtns[i].setAttribute("aria-label", `Rung ${k}: ${r.name}. ${v == null ? "Not heard yet" : fmt(c[i]) + " of " + fmt(N) + " cells flagged"}.`);
+      railBtns[i].setAttribute("aria-label", `Step ${k}: ${r.name}. ${v == null ? "Not heard yet" : fmt(c[i]) + " of " + fmt(N) + " cells flagged"}.`);
     });
   }
   function updateRailStatusFinal() { /* kept for symmetry: statuses are set in updateRail */ }
@@ -355,12 +356,12 @@ export function falseAlarm(opts = {}) {
     else if (s.stage === 0) { big = "Planet Null has no trend anywhere."; sub = "Press Play the trial, or choose a test on the left."; }
     else {
       const v = s.p >= 1 ? c[s.stage - 1] : live;
-      if (s.stage === 1) { big = "The naive test cries wolf on " + (s.p >= 1 ? oneIn(v, N) : "…") + " cells."; sub = `${fmt(v)} of ${fmt(N)} cells flagged as a trend (p < 0.05). There is no trend to find.`; }
-      if (s.stage === 2) { big = "With the memory correction: " + (s.p >= 1 ? oneIn(v, N) : "…") + " cells."; sub = `${fmt(v)} of ${fmt(N)} cells still flagged. Most of the alarms went dark.`; }
-      if (s.stage === 3) { big = s.p >= 1 ? (v === 0 ? "No cell survives all three tests." : `${fmt(v)} of ${fmt(N)} cells survive all three tests.`) : "Checking every cell together…"; sub = `Benjamini-Hochberg, q = ${BH_Q.toFixed(2)}. Each survivor is still a false alarm.`; }
+      if (s.stage === 1) { big = s.p >= 1 ? (v === 0 ? "The uncorrected test flags no cells." : "The uncorrected test cries wolf on " + oneIn(v, N) + " cells.") : "The uncorrected test cries wolf on … cells."; sub = `${fmt(v)} of ${fmt(N)} cells flagged as a trend (p < 0.05). There is no trend to find.`; }
+      if (s.stage === 2) { big = s.p >= 1 ? (v === 0 ? "With the memory correction, no cells are flagged." : "With the memory correction: " + oneIn(v, N) + " cells.") : "With the memory correction: … cells."; sub = `${fmt(v)} of ${fmt(N)} cells flagged. The count ${v < c[0] ? "fell" : v > c[0] ? "rose" : "stayed the same"}, from ${fmt(c[0])} to ${fmt(v)}.`; }
+      if (s.stage === 3) { big = s.p >= 1 ? (v === 0 ? "No cells are flagged after the final step." : `${fmt(v)} of ${fmt(N)} cells are flagged after the final step.`) : "Checking every cell together…"; sub = `Benjamini-Hochberg, q = ${BH_Q.toFixed(2)}. Each flagged cell is still a false alarm.`; }
     }
     refs.headline.textContent = big; refs.sub.textContent = sub;
-    refs.exTag.textContent = s.stage === 0 ? "Not yet tested" : `Rung ${s.stage} of 3: ${RUNG[s.stage - 1].name}`;
+    refs.exTag.textContent = s.stage === 0 ? "Not yet tested" : `Step ${s.stage} of 3: ${RUNG[s.stage - 1].name}`;
     document.getElementById("fa-seed-chip") && (document.getElementById("fa-seed-chip").textContent = String(st.seed));
   }
 
@@ -368,32 +369,32 @@ export function falseAlarm(opts = {}) {
     const r = st.res; if (!r) return "";
     const [a, b, c] = r.counts;
     return `Planet Null, seed ${st.seed}: ${fmt(N)} cells, ${st.n} years each, persistence ${st.phi.toFixed(2)}. No cell has any true trend. ` +
-      `The naive test flags ${fmt(a)} cells (${pc(a / N)}, ${oneIn(a, N)}). With the memory correction it flags ${fmt(b)} (${pc(b / N)}, ${oneIn(b, N)}). ` +
+      `The uncorrected test flags ${fmt(a)} cells (${pc(a / N)}${oneInTail(a, N)}). With the memory correction it flags ${fmt(b)} (${pc(b / N)}${oneInTail(b, N)}). ` +
       `After Benjamini-Hochberg at q = ${BH_Q.toFixed(2)} it flags ${fmt(c)} (${pc(c / N, 2)}). Every flag is a false alarm.`;
   }
   function updateRuling() {
     const r = st.res, s = st.shown.stage;
     refs.summary.textContent = r ? resultText() : "";
     refs.canvas.setAttribute("aria-label", r ? resultText() : "Map of the synthetic planet");
-    if (st.playing) { refs.rulingTitle.textContent = "The court is hearing the tests"; refs.rulingStamp.textContent = st.shown.stage ? "Rung " + st.shown.stage + " on the bench" : "Planet Null enters the court"; refs.rulingBody.replaceChildren(h("p", {}, "Watch the red cells. Each one is a place where a test claims to see a trend on a planet that has none.")); return; }
+    if (st.playing) { refs.rulingTitle.textContent = "The court is hearing the tests"; refs.rulingStamp.textContent = st.shown.stage ? "Step " + st.shown.stage + " on the bench" : "Planet Null enters the court"; refs.rulingBody.replaceChildren(h("p", {}, "Watch the red cells. Each one is a place where a test claims to see a trend on a planet that has none.")); return; }
     if (!r) { refs.rulingTitle.textContent = "Ruling pending"; refs.rulingStamp.textContent = "Planet is being grown"; refs.rulingBody.replaceChildren(); return; }
     const [a, b, c] = r.counts;
     const body = [];
     if (s <= 1) {
       refs.rulingTitle.textContent = s === 0 ? "No test has been heard" : `Interim: ${fmt(a)} false alarms so far`;
-      refs.rulingStamp.textContent = s === 0 ? "Pending" : "After rung 1 only";
-      body.push(h("p", {}, h("b", {}, s === 0 ? "Planet Null was built with no trend in any cell." : `The naive test flagged ${fmt(a)} of ${fmt(N)} cells (${pc(a / N)}).`)));
-      body.push(h("p", {}, "It treats each year as a fresh, independent draw. Years that follow warm years are not independent, so it is far too easy to impress. " + (s === 0 ? "Every flag it raises will be false." : `${fmt(r.nAup)} of the flags look like warming and ${fmt(r.nAdown)} like cooling. All are noise.`)));
+      refs.rulingStamp.textContent = s === 0 ? "Pending" : "After step 1 only";
+      body.push(h("p", {}, h("b", {}, s === 0 ? "Planet Null was built with no trend in any cell." : `The uncorrected test flagged ${fmt(a)} of ${fmt(N)} cells (${pc(a / N)}).`)));
+      body.push(h("p", {}, "It treats each year as a fresh, independent draw. Years that follow warm years are not independent, so it is too likely to report a trend when there is none. " + (s === 0 ? "Every flag it raises will be false." : `${fmt(r.nAup)} of the flags look like warming and ${fmt(r.nAdown)} like cooling. All are noise.`)));
     } else if (s === 2) {
-      refs.rulingTitle.textContent = `Interim: ${fmt(b)} false alarms so far`; refs.rulingStamp.textContent = "After rung 2";
-      body.push(h("p", {}, h("b", {}, `The memory correction cut ${fmt(a)} flags to ${fmt(b)} (${pc(b / N)}).`)));
+      refs.rulingTitle.textContent = `Interim: ${fmt(b)} false alarms so far`; refs.rulingStamp.textContent = "After step 2";
+      body.push(h("p", {}, h("b", {}, `With the memory correction the count ${b < a ? "fell" : b > a ? "rose" : "stayed the same"}, from ${fmt(a)} to ${fmt(b)} (${pc(b / N)}).`)));
       body.push(h("p", {}, b / N > 0.075 ? `That is still more than the 5% a fair test promises. With ${st.n} years the test cannot measure the memory well enough to correct it fully.` : "That is close to the 5% a fair test promises."));
     } else {
-      refs.rulingTitle.textContent = `Ruling on Planet Null: ${fmt(c)} false ${plural(c, "alarm survives", "alarms survive")}`; refs.rulingStamp.textContent = "Final, after rung 3";
-      body.push(h("p", {}, h("b", {}, `The naive test flagged ${fmt(a)} of ${fmt(N)} cells. The memory correction left ${fmt(b)}. Benjamini-Hochberg left ${fmt(c)}.`)));
-      body.push(h("p", {}, `This planet was built with no trend, so every one of those is false. Together the tests removed ${pc(1 - c / Math.max(1, a), 1)} of the naive alarms and left ${fmt(c)}.`));
+      refs.rulingTitle.textContent = `Ruling on Planet Null: ${fmt(c)} false ${plural(c, "alarm remains", "alarms remain")} after the final step`; refs.rulingStamp.textContent = "Final, after step 3";
+      body.push(h("p", {}, h("b", {}, `The uncorrected test flagged ${fmt(a)} of ${fmt(N)} cells. After the memory correction ${fmt(b)} were flagged. After Benjamini-Hochberg ${fmt(c)} were flagged.`)));
+      body.push(h("p", {}, `This planet was built with no trend, so every one of those is false. Compared with the uncorrected test, the final count is ${c < a ? "lower" : c > a ? "higher" : "the same"}: ${fmt(a)} to ${fmt(c)}.`));
       const p = pubNow();
-      if (p && p.bhAny != null) body.push(h("p", { class: "caveat" }, h("b", {}, "One planet is one draw. "), `In the published check (${p.bhFields} planets like this), Benjamini-Hochberg left at least one false alarm on about ${pc(p.bhAny, 0)} of them at ${p.exactPhi ? "this memory" : "a nearby memory"}. Press New planet to see the spread.`));
+      if (p && p.bhAny != null) body.push(h("p", { class: "caveat" }, h("b", {}, "One planet is one draw. "), `In our validation runs (${p.bhFields} planets like this), Benjamini-Hochberg left at least one false alarm on about ${pc(p.bhAny, 0)} of them at ${p.exactPhi ? "this memory" : "a nearby memory"}. Press New planet to see the spread.`));
       else body.push(h("p", { class: "caveat" }, h("b", {}, "One planet is one draw. "), "Press New planet to see how much the counts change from planet to planet."));
     }
     refs.rulingBody.replaceChildren(...body);
@@ -403,7 +404,7 @@ export function falseAlarm(opts = {}) {
     if (st.tableOpen) renderTable();
     const r = st.res; if (!r) return;
     const s = st.shown.stage; clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => { if (s > 0) announce(`${RUNG[s - 1].name}: ${fmt(r.counts[s - 1])} of ${fmt(N)} cells flagged. ${s === 3 ? "Ruling on Planet Null: " + fmt(r.counts[2]) + " false " + plural(r.counts[2], "alarm survives", "alarms survive") + "." : ""}`); }, 400);
+    settleTimer = setTimeout(() => { if (s > 0) announce(`${RUNG[s - 1].name}: ${fmt(r.counts[s - 1])} of ${fmt(N)} cells flagged. ${s === 3 ? "Ruling on Planet Null: " + fmt(r.counts[2]) + " false " + plural(r.counts[2], "alarm remains", "alarms remain") + " after the final step." : ""}`); }, 400);
     if (!preview) scheduleEnsemble();
   }
 
@@ -413,11 +414,11 @@ export function falseAlarm(opts = {}) {
     const r = st.res; if (!r) return;
     const [a, b] = r.counts, p = pubNow();
     const kids = [h("h3", { id: "fa-leak-h" }, "Where the corrections leak")];
-    kids.push(h("p", {}, `At memory ${st.phi.toFixed(2)} and ${st.n} years, the corrected test flagged ${pc(b / N)} of this planet's cells. A fair 5% test would flag 5%. `,
+    kids.push(h("p", {}, `At memory ${st.phi.toFixed(2)} and ${st.n} years, the corrected test flagged ${pc(b / N)} of this planet's cells. Across repeated simulations, a test calibrated at 5% would flag about 5% of trendless cells on average. `,
       b / N > 0.075 ? "It leaks, because a short record cannot pin down how strong the memory is." : "Here it stays close to its promise."));
     if (p) {
       const [s25, s45] = p.byLength;
-      kids.push(h("p", {}, h("b", {}, "A longer record helps, slowly. "), `In the published runs at this memory, the corrected test falls from ${pc(s25.corrected)} at 25 years to ${pc(s45.corrected)} at 45 years. The naive test does not improve at all (${pc(s25.naive)} to ${pc(s45.naive)}). Slide the record length up and watch the corrected share fall while the naive share stays high.`));
+      kids.push(h("p", {}, h("b", {}, "A longer record helps, slowly. "), `In our validation runs at this memory, the corrected test falls from ${pc(s25.corrected)} at 25 years to ${pc(s45.corrected)} at 45 years. The uncorrected test does not improve at all (${pc(s25.naive)} to ${pc(s45.naive)}). Slide the record length up and watch the corrected share fall while the naive share stays high.`));
     }
     kids.push(h("p", { class: "muted small" }, "These numbers are for a planet of pure noise. Real data has real trends in it as well, which is why the case files also report what is left standing after every test."));
     refs.leak.replaceChildren(...kids);
@@ -426,7 +427,7 @@ export function falseAlarm(opts = {}) {
     const r = st.res; if (!r) return;
     const [a, b, c] = r.counts, p = pubNow(), e = st.ens;
     const kids = [h("h3", { id: "fa-check-h" }, "Does it match the validation?")];
-    if (!st.val) { kids.push(h("p", { class: "muted small" }, "The published validation table has not loaded.")); refs.check.replaceChildren(...kids); return; }
+    if (!st.val) { kids.push(h("p", { class: "muted small" }, "The project validation table has not loaded.")); refs.check.replaceChildren(...kids); return; }
     const cmp = (ens, se, pub, pubSe) => {
       if (!ens || !p || !p.exactN) return "";
       const tol = 2 * Math.sqrt(se * se + pubSe * pubSe) + (p.exactPhi ? 0 : 0.01);
@@ -436,17 +437,17 @@ export function falseAlarm(opts = {}) {
     const nv = e ? cmp(e.naive, e.naiveSE, p.naive, p.naiveSE) : "", cv = e ? cmp(e.corrected, e.correctedSE, p.corrected, p.correctedSE) : "";
     const ensTxt = (v, se) => (e ? `${pc(v)} ± ${pc(se)}` : (st.ensRunning != null ? `running ${Math.round(st.ensRunning * 100)}%` : "waiting"));
     kids.push(h("p", { class: "muted small" }, "Cell flag rates on a no-trend planet, from this page's live computation and from the project's validation run (4,000 series per row, seed 101)."));
-    kids.push(h("div", { class: "scroll fa-cmp", tabindex: "0", role: "region", "aria-label": "Comparison with the published validation (scrolls sideways)" }, h("table", { class: "data" },
-      h("thead", {}, h("tr", {}, h("th", { scope: "col" }, "Test"), h("th", { scope: "col" }, "This planet"), h("th", { scope: "col" }, e ? `Average of ${e.R} planets` : "Average of planets"), h("th", { scope: "col" }, "Published"), h("th", { scope: "col" }, "Check"))),
+    kids.push(h("div", { class: "scroll fa-cmp", tabindex: "0", role: "region", "aria-label": "Comparison with the project validation runs (scrolls sideways)" }, h("table", { class: "data" },
+      h("thead", {}, h("tr", {}, h("th", { scope: "col" }, "Test"), h("th", { scope: "col" }, "This planet"), h("th", { scope: "col" }, e ? `Average of ${e.R} planets` : "Average of planets"), h("th", { scope: "col" }, "Validation runs"), h("th", { scope: "col" }, "Check"))),
       h("tbody", {},
-        row("Naive", pc(a / N), ensTxt(e && e.naive, e && e.naiveSE), p ? pc(p.naive) : "n/a", nv),
+        row("Uncorrected", pc(a / N), ensTxt(e && e.naive, e && e.naiveSE), p ? pc(p.naive) : "n/a", nv),
         row("Memory-corrected", pc(b / N), ensTxt(e && e.corrected, e && e.correctedSE), p ? pc(p.corrected) : "n/a", cv),
         row("Benjamini-Hochberg: survivors", fmt(c) + " cells", e ? `${e.anyC} of ${e.R} planets had at least one` : (st.ensRunning != null ? "running" : "waiting"), p && p.bhAny != null ? `${pc(p.bhAny, 0)} of planets had at least one` : "n/a", "")))));
     const notes = [];
-    if (p && !p.exactN) notes.push(`No published run uses ${st.n} years. The nearest, ${p.n} years, is shown for scale only.`);
-    else if (p && !p.exactPhi) notes.push("The published runs use memory 0, 0.1, 0.2, 0.3, 0.45 and 0.6. The value shown is interpolated between them.");
+    if (p && !p.exactN) notes.push(`No validation run uses ${st.n} years. The nearest, ${p.n} years, is shown for scale only.`);
+    else if (p && !p.exactPhi) notes.push("The validation runs use memory 0, 0.1, 0.2, 0.3, 0.45 and 0.6. The value shown is interpolated between them.");
     if (e) notes.push(`The average comes from ${e.R} fresh planets of ${e.N} cells each, the same design as the validation (spatial smoothing of 2 cells), computed just now in your browser. “agrees” means within two standard errors.`);
-    if (p && p.bhAny != null) notes.push(`The published Benjamini-Hochberg figure uses ${p.bhFields} planets of 400 cells at 25 years, so it is a rough guide to the planet-level count here (this planet has ${fmt(N)} cells, so a survivor is somewhat more likely).`);
+    if (p && p.bhAny != null) notes.push(`The validation-run Benjamini-Hochberg figure uses ${p.bhFields} planets of 400 cells at 25 years, so it is a rough guide to the planet-level count here (this planet has ${fmt(N)} cells, so a survivor is somewhat more likely).`);
     notes.push(`Computed in this browser: ${fmt(N)} cells, ${st.n} years, 2 tests each, in ${st.computeMs != null ? (st.computeMs / 1000).toFixed(2) + " s" : "n/a"}.`);
     notes.forEach((t) => kids.push(h("p", { class: "muted small", style: "margin:6px 0 0" }, t)));
     refs.check.replaceChildren(...kids);
@@ -481,14 +482,14 @@ export function falseAlarm(opts = {}) {
     const p = pubNow();
     const [a, b, c] = r.counts;
     const t1 = h("table", { class: "data" }, h("caption", { class: "sr-only" }, "Cells flagged at each test"),
-      h("thead", {}, h("tr", {}, ["Test", "Cells flagged", "Share of cells", "About 1 in", "Published share"].map((x) => h("th", { scope: "col" }, x)))),
-      h("tbody", {}, [[RUNG[0].name, a, p && p.naive], [RUNG[1].name, b, p && p.corrected], [RUNG[2].name, c, null]].map(([nm, v, pub]) => h("tr", {}, h("th", { scope: "row" }, nm), h("td", {}, fmt(v)), h("td", {}, pc(v / N, 2)), h("td", {}, v ? fmt(Math.round(N / v)) : "none"), h("td", {}, pub != null ? pc(pub) : "n/a")))));
+      h("thead", {}, h("tr", {}, ["Test", "Cells flagged", "Share of cells", "About 1 in", "Share in validation runs"].map((x) => h("th", { scope: "col" }, x)))),
+      h("tbody", {}, [[RUNG[0].name, a, p && p.naive], [RUNG[1].name, b, p && p.corrected], [RUNG[2].name, c, null]].map(([nm, v, pub]) => h("tr", {}, h("th", { scope: "row" }, nm), h("td", {}, fmt(v)), h("td", {}, pc(v / N, 2)), h("td", {}, v ? fmt(Math.round(N / v)) : "n/a"), h("td", {}, pub != null ? pc(pub) : "n/a")))));
     const idx = []; for (let i = 0; i < N; i++) if (r.flags[0][i] || r.flags[1][i] || r.flags[2][i]) idx.push(i);
     idx.sort((x, y) => r.pA[x] - r.pA[y]);
     const rows = idx.slice(0, 400).map((i) => h("tr", {}, h("th", { scope: "row" }, String(i + 1)), h("td", {}, r.L.lat[i].toFixed(1)), h("td", {}, r.L.lon[i].toFixed(1)), h("td", {}, r.dir[i] > 0 ? "rising" : "falling"),
-      h("td", {}, r.pA[i].toFixed(4)), h("td", {}, r.pB[i].toFixed(4)), h("td", {}, r.padj[i].toFixed(4)), h("td", {}, r.flags[2][i] ? "survives all three" : r.flags[1][i] ? "flagged by rungs 1 and 2" : r.flags[0][i] ? "cleared at rung 2" : "added at rung 2")));
-    const t2 = h("div", { class: "scroll", tabindex: "0", role: "region", "aria-label": "Cells flagged by any test (scrolls)" }, h("table", { class: "data" }, h("caption", { class: "fa-cap" }, `Cells flagged by any test (${fmt(idx.length)}${idx.length > 400 ? ", the 400 with the smallest naive p-value" : ""}). Every one is a false alarm.`),
-      h("thead", {}, h("tr", {}, ["Cell", "Lat", "Lon", "Looks like", "Naive p", "Corrected p", "BH-adjusted p", "Status"].map((x) => h("th", { scope: "col" }, x)))), h("tbody", {}, rows)));
+      h("td", {}, r.pA[i].toFixed(4)), h("td", {}, r.pB[i].toFixed(4)), h("td", {}, r.padj[i].toFixed(4)), h("td", {}, "flagged by " + [r.flags[0][i] && "uncorrected test", r.flags[1][i] && "memory-corrected test", r.flags[2][i] && "false-discovery control"].filter(Boolean).join(", "))));
+    const t2 = h("div", { class: "scroll", tabindex: "0", role: "region", "aria-label": "Cells flagged by any test (scrolls)" }, h("table", { class: "data" }, h("caption", { class: "fa-cap" }, `Cells flagged by any test (${fmt(idx.length)}${idx.length > 400 ? ", the 400 with the smallest uncorrected p-value" : ""}). Every one is a false alarm.`),
+      h("thead", {}, h("tr", {}, ["Cell", "Lat", "Lon", "Looks like", "Uncorrected p", "Corrected p", "BH-adjusted p", "Status"].map((x) => h("th", { scope: "col" }, x)))), h("tbody", {}, rows)));
     refs.tableBox.replaceChildren(h("div", { class: "scroll", tabindex: "0", role: "region", "aria-label": "Cells flagged at each test (scrolls sideways)" }, t1), t2);
   }
 
@@ -600,7 +601,7 @@ export function falseAlarm(opts = {}) {
       const Globe = await loadGlobeLib();
       if (destroyed) return;
       // Looks like the Home globe: the same muted Earth texture with its outlines, the same atmosphere and the same material (see viz/globe-style.js).
-      // Only the look is shared. The cells, their colours and the Synthetic label are this page's own.
+      // Only the look is shared. The cells, their colors and the Synthetic label are this page's own.
       const g = Globe({ rendererConfig: { antialias: true, alpha: true, powerPreference: "high-performance" }, animateIn: false })(refs.globeEl);
       g.backgroundColor("rgba(0,0,0,0)").globeImageUrl(DUMMY);
       try { g.renderer().setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); } catch (e) { /* default ratio */ }
@@ -625,7 +626,7 @@ export function falseAlarm(opts = {}) {
   }
   function cellLabel(i) {
     const r = st.res; if (!r) return "";
-    return `<div class="fa-tip">Cell ${i + 1}, lat ${r.L.lat[i].toFixed(1)}, lon ${r.L.lon[i].toFixed(1)}<br>naive p ${r.pA[i].toFixed(3)}, corrected p ${r.pB[i].toFixed(3)}<br>${r.flags[0][i] ? "flagged by the naive test" : "not flagged"}${r.flags[2][i] ? "; survives all three" : ""}</div>`;
+    return `<div class="fa-tip">Cell ${i + 1}, lat ${r.L.lat[i].toFixed(1)}, lon ${r.L.lon[i].toFixed(1)}<br>uncorrected p ${r.pA[i].toFixed(3)}, corrected p ${r.pB[i].toFixed(3)}<br>${r.flags[0][i] ? "flagged by the uncorrected test" : "not flagged by the uncorrected test"}${r.flags[2][i] ? "; flagged after the final step" : "; not flagged after the final step"}</div>`;
   }
 
   // flat-map readout
@@ -634,7 +635,7 @@ export function falseAlarm(opts = {}) {
     const rc = refs.canvas.getBoundingClientRect(), x = e.clientX - rc.left, y = e.clientY - rc.top;
     let best = -1, bd = (flat.sp * 1.6) ** 2;
     for (let i = 0; i < st.res.N; i++) { const dx = flat.px[i] - x, dy = flat.py[i] - y, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = i; } }
-    refs.readout.textContent = best < 0 ? "Move over or tap the map to read a cell." : `Cell ${best + 1}: lat ${st.res.L.lat[best].toFixed(1)}, lon ${st.res.L.lon[best].toFixed(1)}. Naive p ${st.res.pA[best].toFixed(3)}, corrected p ${st.res.pB[best].toFixed(3)}. ${st.res.flags[0][best] ? "Flagged by the naive test." : "Not flagged."}${st.res.flags[2][best] ? " Survives all three." : ""}`;
+    refs.readout.textContent = best < 0 ? "Move over or tap the map to read a cell." : `Cell ${best + 1}: lat ${st.res.L.lat[best].toFixed(1)}, lon ${st.res.L.lon[best].toFixed(1)}. Uncorrected p ${st.res.pA[best].toFixed(3)}, corrected p ${st.res.pB[best].toFixed(3)}. ${st.res.flags[0][best] ? "Flagged by the uncorrected test." : "Not flagged by the uncorrected test."}${st.res.flags[2][best] ? " Flagged after the final step." : " Not flagged after the final step."}`;
   });
 
   // -------------------------------------------------------------- life cycle
@@ -668,5 +669,5 @@ export function falseAlarm(opts = {}) {
     compute();
   });
 
-  return { title: "Exhibit Zero: The False-Alarm Planet", node, destroy };
+  return { title: "The False-Alarm Planet", node, destroy };
 }

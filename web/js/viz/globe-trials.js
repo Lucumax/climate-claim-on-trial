@@ -1,11 +1,11 @@
 // "Where the trials are held": all registered case regions on one Earth, each drawn by its per-cell TREND (Sen slope per decade, from the case bundle).
-// Home hero only. One symmetric colour scale per case (the cases have different units). A case whose ruling is withheld is drawn as a neutral hatch,
-// never in trend colours, and says "withheld" on hover. Click a region (or a label, or a chip below) to open its docket. No year playback here.
+// Home hero only. One symmetric color scale per case (the cases have different units). A case whose ruling is withheld is drawn as a neutral hatch,
+// never in trend colors, and says "withheld" on hover. Click a region (or a label, or a chip below) to open its case file. No year playback here.
 // The globe starts paused. "Turn the Earth" is a deliberate, slow rotation; reduced motion keeps the Earth still (drag and the chips still work).
-// Optional (landing hook prototype): options.onPick(case) replaces "open the docket" on a region or label click, options.onPoint({lat,lng}) reports a click anywhere else on the Earth.
+// Optional (landing hook prototype): options.onPick(case) replaces "open the case file" on a region or label click, options.onPoint({lat,lng}) reports a click anywhere else on the Earth.
 //   The returned object also has focus(lat,lng,altitude,ms), select(id|null), markBox(box|null) and turn(on).
 // Optional (Home hook): options.labels = "focus" shows a region's name label only on the selected region and on the one under the pointer (six labels never collide),
-//   and marks the selected case's chip so the page can show just that chip (its colour key and docket link). The default draws every label and every chip.
+//   and marks the selected case's chip so the page can show just that chip (its color key and case-file link). The default draws every label and every chip.
 // render(container, claims, options) -> {destroy, el}.  claims: bundle.claims (data.js shape: grid, cell_slope_per_decade, regional.units, verdict).
 import { WEB, el, tok, isDark, onTheme, makeScale, clamp, signed, reducedMotion, nextId } from "./common.js";
 import { U } from "../util.js";
@@ -53,27 +53,27 @@ export async function render(container, claims, options = {}) {
   let selected = null, markPoly = null, destroyed = false, globe = null, tex = null, texCanvas = null, texCtx = null, baseTex = null, earth = null, io = null, hover = null, turning = false;
   let scales = new Map(cases.map((k) => [k.id, makeScale(k.scaleData)]));
 
-  const stage = el("div", { class: "viz-stage viz-stage--stage gt-stage", "aria-hidden": "false", role: "group", "aria-label": "Globe showing where the case regions are. Drag to turn it; the case list below opens each docket.", style: "height:" + (options.height || "clamp(340px, 38vw, 500px)") });
+  const stage = el("div", { class: "viz-stage viz-stage--stage gt-stage", "aria-hidden": "false", role: "group", "aria-label": "Globe showing where the case regions are. Drag to turn it; the case list below opens each case file.", style: "height:" + (options.height || "clamp(340px, 38vw, 500px)") });
   const host = el("div", { style: "position:absolute;inset:0" }); stage.append(host);
   const turnBtn = reduce ? null : el("button", { type: "button", class: "viz-btn", "aria-pressed": "false", onclick: () => setTurning(!turning) }, "Turn the Earth");
   const resetBtn = el("button", { type: "button", class: "viz-btn", onclick: () => home(true) }, "Reset view");
   const tip = el("p", { class: "viz-readout gt-tip", "aria-live": "polite" }, "Point at a region to see its ruling. Click it to open the case.");
 
-  // chips: the list of cases, which is also the legend and the keyboard route to every docket
+  // chips: the list of cases, which is also the legend and the keyboard route to every case file
   const chipGrad = (k) => el("div", { class: "gt-bar", "aria-hidden": "true", style: "background:" + scales.get(k.id).gradient() });
   const chips = el("ul", { class: "gt-chips" }, cases.map((k) => {
     const d = k.max >= 1 ? k.max.toFixed(0) : String(k.max);
-    const li = el("li", {}, el("a", { class: "gt-chip" + (k.withheld ? " is-withheld" : ""), href: "#/case/" + k.id, "data-case": k.id, "aria-label": `Open case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "ruling withheld, no trend drawn" : k.verdict}` },
+    const li = el("li", {}, el("a", { class: "gt-chip" + (k.withheld ? " is-withheld" : ""), href: "#/case/" + k.id, "data-case": k.id, "aria-label": `Open case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "withheld, no trend drawn" : k.verdict}` },
       el("span", { class: "gt-chip-id" }, `Case ${caseNo(k.id)}`), el("span", { class: "gt-chip-name" }, k.short),
-      k.withheld ? el("span", { class: "gt-hatch-row" }, el("i", { class: "gt-hatch", "aria-hidden": "true" }), "Ruling withheld, no trend drawn")
+      k.withheld ? el("span", { class: "gt-hatch-row" }, el("i", { class: "gt-hatch", "aria-hidden": "true" }), "Withheld, no trend drawn")
         : el("span", { class: "gt-scale" }, chipGrad(k), el("span", { class: "gt-ends num", "aria-hidden": "true" }, el("span", {}, `← ${k.words[0]}`), el("span", {}, `${k.words[1]} →`)),
           el("span", { class: "gt-unit num" }, `±${d} ${k.unit} per decade · ${k.verdict}`))));
     const a = li.firstChild;
     a.addEventListener("mouseenter", () => focusCase(k)); a.addEventListener("focus", () => focusCase(k));
     return li;
   }));
-  const summary = el("p", { class: "sr-only" }, "Four registered cases on one Earth. " + cases.map((k) => `Case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "ruling withheld, drawn hatched" : `${k.verdict}, drawn by each cell's trend per decade`}.`).join(" "));
-  if (options.poster) {             // phones and browsers without WebGL: a labelled static picture, with the same case list below it
+  const summary = el("p", { class: "sr-only" }, `${["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"][cases.length] || cases.length} registered cases on one Earth. ` + cases.map((k) => `Case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "withheld, drawn hatched" : `${k.verdict}, drawn by each cell's trend per decade`}.`).join(" "));
+  if (options.poster) {             // phones and browsers without WebGL: a labeled static picture, with the same case list below it
     const r = el("figure", { class: "viz viz-trials", id }, options.poster, options.caption || null, chips, summary);
     container.append(r); return { el: r, destroy() { r.remove(); }, focus() {}, select() {}, markBox() {}, turn() {}, spinning() { return false; }, hasGlobe: false };
   }
@@ -123,10 +123,10 @@ export async function render(container, claims, options = {}) {
   }
   const refreshPolys = () => { if (!globe) return; globe.polygonsData([...cases.map(polyOf), ...(markPoly ? [markPoly] : [])]); globe.polygonAltitude(altOf); globe.polygonCapColor(capOf); syncSel(); };
   const pick = (k, e) => { if (options.onPick) { if (e && e.preventDefault) e.preventDefault(); options.onPick(k); } else location.hash = "#/case/" + k.id; };
-  const tipHtml = (k) => `<div class="gt-tooltip"><b>Case ${caseNo(k.id)} · ${k.short}</b><br>${k.withheld ? "Ruling withheld: no trend is drawn." : `${k.verdict}. Colours: each cell's trend.`}<br><i>Click to open the case</i></div>`;
+  const tipHtml = (k) => `<div class="gt-tooltip"><b>Case ${caseNo(k.id)} · ${k.short}</b><br>${k.withheld ? "Withheld: no trend is drawn." : `${k.verdict}. Colors: each cell's trend.`}<br><i>Click to open the case</i></div>`;
   const view = { lat: 42, lng: -58, altitude: 1.5 };
   function home(animate) { if (globe) globe.pointOfView(view, animate && !reduce ? 700 : 0); }
-  function focusCase(k) { if (globe) globe.pointOfView({ lat: k.lat, lng: k.lng, altitude: 1.15 }, reduce ? 0 : 800); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: ruling withheld, so no trend is drawn.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}. Each square is one cell's trend per decade.`; }
+  function focusCase(k) { if (globe) globe.pointOfView({ lat: k.lat, lng: k.lng, altitude: 1.15 }, reduce ? 0 : 800); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: withheld, so no trend is drawn.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}. Each square is one cell's trend per decade.`; }
   // The spin runs only while nothing holds it: a drag, a hover over a region or label, a fly-to, or the globe scrolled out of view. Reduced motion never spins.
   function applySpin() { if (!globe) return; const c = globe.controls(); c.autoRotateSpeed = options.spinSpeed || 0.45; c.autoRotate = turning && !reduce && holds.size === 0; }
   const hold = (k, on) => { if (on) holds.add(k); else holds.delete(k); applySpin(); };
@@ -142,7 +142,7 @@ export async function render(container, claims, options = {}) {
       .globeImageUrl(DUMMY)
       .polygonsData(cases.map(polyOf)).polygonGeoJsonGeometry("geometry").polygonAltitude(altOf)
       .polygonCapColor(capOf).polygonSideColor(() => "rgba(0,0,0,0)").polygonStrokeColor(() => "rgba(0,0,0,0)")
-      .polygonLabel((d) => (!options.onPoint && kOf(d) ? tipHtml(kOf(d)) : "")).onPolygonHover((d) => { if (options.onPoint) return; hover = d || null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = hover ? "pointer" : "grab"; hold("hover", !!hover); if (hover && kOf(hover)) { const k = kOf(hover); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: ruling withheld.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}.`; } })
+      .polygonLabel((d) => (!options.onPoint && kOf(d) ? tipHtml(kOf(d)) : "")).onPolygonHover((d) => { if (options.onPoint) return; hover = d || null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = hover ? "pointer" : "grab"; hold("hover", !!hover); if (hover && kOf(hover)) { const k = kOf(hover); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: withheld.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}.`; } })
       .onPolygonClick((d) => { if (options.onPoint) return; const k = kOf(d); if (k) pick(k); })
       .htmlElementsData(cases).htmlLat((k) => k.lat).htmlLng((k) => k.lng).htmlAltitude(0.03).htmlElement((k) => {
         const a = el("a", { href: "#/case/" + k.id, class: "gt-label" + (k.withheld ? " is-withheld" : ""), tabindex: "-1", "aria-hidden": "true" }, `${caseNo(k.id)} ${k.short}`); a.style.pointerEvents = "auto"; labelEls.set(k.id, a); a.addEventListener("mouseenter", () => hold("label", true)); a.addEventListener("mouseleave", () => hold("label", false)); if (options.onPick) a.addEventListener("click", (e) => pick(k, e)); return a; });

@@ -21,7 +21,7 @@ const numWord = n => NUM[n] || String(n);
 const NO2 = "NO₂";
 
 const WORDS = {
-  temp: { down: "cooling", flat: "holding steady", up: "warming", fast: "warming fast" },
+  temp: { down: "cooling", flat: "holding steady", up: "warming", fast: "warming" },
   rain: { down: "drying", flat: "holding steady", up: "getting wetter" },
   haze: { down: "getting clearer", flat: "holding steady", up: "getting hazier" },
   no2: { down: "falling", flat: "holding steady", up: "rising" },                       // a tropospheric column, not ground-level air quality: never "cleaner" or "dirtier"
@@ -38,7 +38,7 @@ const KICKER = {
 const PRODUCT = { "C-A": "NASA MODIS Terra", "C-B": "NASA GPM IMERG", "C-C": "NASA MERRA-2", "C-D": "NASA MODIS Aqua", "C-E1": "NASA Aura OMI", "C-E2": "NASA Aura OMI" };
 const BTN = { "C-A": "Southeast US", "C-B": "Sahel", "C-C": "Alaska", "C-D": "Wisconsin", "C-E1": "Eastern US", "C-E2": "Northern India" };
 const EXPLORE = [["India", 22.5, 78.5], ["North China", 38.5, 114.5], ["Mongolia", 47.5, 105.5], ["North Atlantic", 57.5, -37.5]];
-const POSTER_ALT = "Two views of the Earth side by side, with all six registered case regions outlined. On the left, North America: interior and western Alaska and Wisconsin are coloured by each cell's trend per decade, and the Southeastern United States and the eastern United States are hatched because their rulings are withheld. On the right, Africa and Asia: the central Sahel is coloured by each cell's trend per decade, and northern India is hatched because its ruling is withheld. Open the case files for each ruling.";
+const POSTER_ALT = "Two views of the Earth side by side, with all six registered case regions outlined. On the left, North America: interior and western Alaska and Wisconsin are colored by each cell's estimated change per decade, and the Southeastern United States and the eastern United States are hatched because their rulings are withheld. On the right, Africa and Asia: the central Sahel is colored by each cell's estimated change per decade, and northern India is hatched because its ruling is withheld. Open the case files for each ruling.";
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const fmtLat = v => `${Math.abs(v).toFixed(1).replace(/\.0$/, "")}°${v >= 0 ? "N" : "S"}`, fmtLon = v => `${Math.abs(v).toFixed(1).replace(/\.0$/, "")}°${v >= 0 ? "E" : "W"}`;
 const plain = msg => Object.assign(new Error(msg), { plain: true });
@@ -83,11 +83,11 @@ export function hook(bundle) {
         h("div", { class: "hk-end-text" },
           h("p", { class: "hk-q", id: "hk-q" }, "Same NASA record. Opposite headlines. Which one is true?"),
           h("p", { class: "hk-resolve", id: "hk-resolve", hidden: true }),
-          h("div", { class: "hk-meta" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "Illustrative headlines written from the numbers, not real news."))),
+          h("div", { class: "hk-meta" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "Illustrative headlines written from the numbers, not real news. The rates come from least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."))),
         h("div", { class: "hk-link", id: "hk-link", hidden: true }))),
     h("section", { class: "hk-globe", "aria-labelledby": "hk-globe-h" },
       h("div", { class: "hk-globe-head" }, h("h2", { id: "hk-globe-h" }, "Where the trials are held"),
-        h("p", {}, `${numWord(claims.length)} registered regions, each drawn by its per-cell trend per decade. Imagery: NASA Blue Marble, muted.`)),
+        h("p", {}, `${numWord(claims.length)} registered regions. Each grid cell is colored by its estimated change per decade, and withheld cases are hatched. Imagery: NASA Blue Marble, muted.`)),
       h("div", { class: "hk-globe-host", id: "hk-globe" }),
       h("div", { class: "hk-regions", id: "hk-regions", role: "group", "aria-labelledby": "hk-regions-h" },
         h("p", { class: "hk-regions-h", id: "hk-regions-h" }, "Try another region ", h("span", {}, "Press a region on the globe, or anywhere else, land or sea, to explore it.")),
@@ -137,7 +137,7 @@ export function hook(bundle) {
     const place = `${fmtLat((box.s + box.n) / 2)} ${fmtLon((box.w + box.e) / 2)}`, yrs = range(years[0], years[years.length - 1]);
     return {
       type: "explore", id: "explore", kind: "temp", subject: country ? `This ${EXP.span}° box in ${country}` : `This ${EXP.span}° box at ${place}`, verb: "is", years, ser: vals.map(v => v - m0), units: "°C",
-      kicker: `Exploration · AIRS surface air temperature, yearly mean, ${EXP.span}° box centred ${place}, ${yrs}`, src: `NASA AIRS · satellite retrieval · ${yrs}`,
+      kicker: `Exploration · AIRS surface air temperature, yearly mean, ${EXP.span}° box centered ${place}, ${yrs}`, src: `NASA AIRS · satellite retrieval · ${yrs}`,
       short: country || place, box, center: { lat: (box.s + box.n) / 2, lng: (box.w + box.e) / 2 },
       link: { href: `#/investigate?src=library&v=${EXP.variable}&b=${box.s},${box.n},${box.w},${box.e}&y=${years[0]}-${years[years.length - 1]}&s=ALL`, text: "Open this place in Investigate",
         lead: "Exploration, not a trial: no registered test.", note: "Nobody registered this question before looking, so the windows show what is possible, not what is true. AIRS covers land and sea, and the box takes in whatever lies inside it." },
@@ -281,7 +281,7 @@ export function hook(bundle) {
     h1.setAttribute("x", x0 - 4.5); h2.setAttribute("x", x1 - 4.5);
     m1.setAttribute("x1", x0 - 1.5); m1.setAttribute("x2", x0 - 1.5); m2.setAttribute("x1", x1 + 1.5); m2.setAttribute("x2", x1 + 1.5);
     lbl.setAttribute("x", clamp((x0 + x1) / 2, m.l + 40, W - m.r - 40)); lbl.textContent = range(w.a, w.b);
-    g.setAttribute("aria-valuenow", w.a); g.setAttribute("aria-valuetext", `${w.a} to ${w.b}, ${signedFmt(w.slope)} ${units} per decade`);
+    g.setAttribute("aria-valuenow", w.a); g.setAttribute("aria-valuetext", `${w.a} to ${w.b}, estimated rate ${signedFmt(w.slope)} ${units} per decade`);
     const fe2 = Y0 + (Y1 - Y0) * S.full;
     fl.setAttribute("stroke-opacity", S.full > 0.001 ? 1 : 0); fl.setAttribute("x2", xs(fe2)); fl.setAttribute("y2", ys(fy(fe2)));
     const lo_ = clamp((S.full - 0.6) / 0.4, 0, 1).toFixed(2); flab.setAttribute("opacity", lo_); fsw.setAttribute("opacity", lo_);
@@ -291,9 +291,9 @@ export function hook(bundle) {
   function chipLabels() {
     const f = (el, label, s, t) => { el.replaceChildren(); el.dataset.tone = t; const sp = document.createElement("span"); sp.textContent = label; const b = document.createElement("b"); b.className = "num"; b.textContent = signedFmt(s); el.append(sp, b); };
     const ra = range(PRESET.a, PRESET.a + WIN - 1), rb = range(PRESET.b, PRESET.b + WIN - 1);
-    chipEls[0].setAttribute("aria-label", `${ra}, ${signedFmt(SLOPES.a)} ${units} per decade`);
-    chipEls[1].setAttribute("aria-label", `${rb}, ${signedFmt(SLOPES.b)} ${units} per decade`);
-    chipEls[2].setAttribute("aria-label", `Whole record, ${signedFmt(SLOPES.full)} ${units} per decade`);
+    chipEls[0].setAttribute("aria-label", `${ra}, estimated rate ${signedFmt(SLOPES.a)} ${units} per decade`);
+    chipEls[1].setAttribute("aria-label", `${rb}, estimated rate ${signedFmt(SLOPES.b)} ${units} per decade`);
+    chipEls[2].setAttribute("aria-label", `Whole record, estimated rate ${signedFmt(SLOPES.full)} ${units} per decade`);
     f(chipEls[0], ra, SLOPES.a, TONES.a); f(chipEls[1], rb, SLOPES.b, TONES.b); f(chipEls[2], "Whole record", SLOPES.full, "full");
     chipEls[0].hidden = chipEls[1].hidden = !CAN_FLIP;
   }
@@ -321,10 +321,10 @@ export function hook(bundle) {
   }
   let liveT = 0;
   const sayLater = t => { clearTimeout(liveT); liveT = setTimeout(() => { if (!dead) say(t); }, 500); };
-  function announceWin() { sayLater(S.mode === "win" ? `${range(win(S.start).a, win(S.start).b)}: ${lead.textContent} ${num.textContent}` : `Whole record: ${signedFmt(SLOPES.full)} ${units} per decade`); }
+  function announceWin() { sayLater(S.mode === "win" ? `${range(win(S.start).a, win(S.start).b)}: ${lead.textContent} ${num.textContent}` : `Whole record: estimated rate ${signedFmt(SLOPES.full)} ${units} per decade`); }
   function announceFinal() {
     const a = win(PRESET.a), b = win(PRESET.b), u = `${units} per decade`;
-    sayLater(CAN_FLIP ? `${spec.short}. ${range(a.a, a.b)}: ${spec.subject} ${spec.verb} ${word(a.slope, AGREE)}, ${signedFmt(a.slope)} ${u}. ${range(b.a, b.b)}: ${word(b.slope, AGREE)}, ${signedFmt(b.slope)} ${u}. Whole record: ${signedFmt(SLOPES.full)} ${u}. ${$("hk-resolve").textContent} ${spec.link.lead}` : `${spec.short}. Whole record: ${signedFmt(SLOPES.full)} ${u}. ${$("hk-resolve").textContent} ${spec.link.lead}`);
+    sayLater(CAN_FLIP ? `${spec.short}. ${range(a.a, a.b)}: ${spec.subject} ${spec.verb} ${word(a.slope, AGREE)}, ${signedFmt(a.slope)} ${u}. ${range(b.a, b.b)}: ${word(b.slope, AGREE)}, ${signedFmt(b.slope)} ${u}. Whole record: estimated rate ${signedFmt(SLOPES.full)} ${u}. ${$("hk-resolve").textContent} ${spec.link.lead}` : `${spec.short}. Whole record: estimated rate ${signedFmt(SLOPES.full)} ${u}. ${$("hk-resolve").textContent} ${spec.link.lead}`);
   }
 
   // ---------------------------------------------------------------- globe

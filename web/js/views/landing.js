@@ -30,10 +30,10 @@ export function landing(b) {
   mountLive(wHostB, async () => { const [mod, d] = await Promise.all([import("../viz/witness2.js"), getJson("data/witness/C-A_esa.json")]); return mod.render(wHostB, d, { preview: true }); });
   const witBand = ca ? h("section", { class: "band band-wit", "aria-labelledby": "wit-h" },
     h("div", { class: "band-head" }, h("h2", { id: "wit-h" }, "Before trusting the trend, check the witness."),
-      h("p", {}, `A satellite can drift. Two exploratory checks on the land-surface record for ${ca.region.name}. They do not change the ruling, which is ${ca.verdict.branch === "withheld" ? "withheld" : String(ca.verdict.label).toLowerCase()}.`)),
+      h("p", {}, `Changing observation time may affect a satellite record. Two exploratory checks on the land surface temperature record for ${ca.region.name}. They do not explain or change the ruling, which is ${ca.verdict.branch === "withheld" ? "withheld" : String(ca.verdict.label).toLowerCase()}: the registered reason for withholding is failed calibration under year-to-year dependence.`)),
     h("div", { class: "wit-pair" },
-      h("div", { class: "wit-col" }, wHostA, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness" }, "When did Terra look?")),
-      h("div", { class: "wit-col" }, wHostB, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness2" }, "Compare the second witness")))) : null;
+      h("div", { class: "wit-col" }, wHostA, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness" }, "Witness check: when did the satellite look?")),
+      h("div", { class: "wit-col" }, wHostB, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness2" }, "Second witness")))) : null;
   const invite = h("section", { class: "band band-invite", "aria-labelledby": "inv-h" },
     h("h2", { id: "inv-h" }, "Now ask your own question"),
     h("p", {}, "Pick a NASA measurement, a place and a period. The answer updates as you choose, and the page keeps count of how many questions you have tried."),

@@ -172,6 +172,33 @@ def opendap_subset(session, g, claim):
     la, lo = d_axes(); return dict(values=v2[::-1], lat=la[::-1], lon=lo, attrs=attrs, extra={})
 
 
+# ---------------- C-A optional: Day_view_time (separate function; does not touch any existing output) ----------------
+# DATA_QA_R1 found that a combined multi-variable DAP4 constraint returns HTTP 400, so this is its own request.
+# Day_view_time: uint8, scale_factor 0.2 (hours), _FillValue 255, valid_range 0-120. Rows flipped south-to-north like LST.
+def a_view_time_decode(raw, scale=0.2, fill=255, vmax=120):
+    raw = np.asarray(raw).astype(np.float64)
+    out = scale * raw
+    out[(raw == fill) | (raw > vmax)] = np.nan
+    return out.astype(np.float32)
+
+def a_view_time_opendap(session, g):
+    """One DAP4 request for /MODIS_MONTHLY_0_05DEG_CMG_LST/Data_Fields/Day_view_time over the C-A box. Returns (hours float32 [south-north], attrs)."""
+    base = re.sub(r"\.html$", "", g["opendap_url"])
+    r = session.get(base + ".dmr", timeout=120)
+    if r.status_code != 200: raise RuntimeError(f"dmr http {r.status_code}")
+    p = dmr_paths(r.text, {"Day_view_time"}).get("Day_view_time")
+    if not p: raise RuntimeError("Day_view_time not in DMR")
+    r = session.get(base + ".dap.nc4", params={"dap4.ce": p + f"[{A_R0}:{A_R1 - 1}][{A_C0}:{A_C1 - 1}]"}, timeout=300)
+    if r.status_code != 200 or "html" in r.headers.get("content-type", ""): raise RuntimeError(f"dap http {r.status_code}")
+    import netCDF4
+    with netCDF4.Dataset("mem.nc", memory=r.content) as ds:
+        node = ds
+        for part in p.strip("/").split("/")[:-1]: node = node[part]
+        v = node["Day_view_time"]; v.set_auto_maskandscale(False); raw = np.array(v[:])
+        attrs = {k: str(v.getncattr(k)) for k in v.ncattrs() if k in ("scale_factor", "add_offset", "_FillValue", "valid_range", "units")}
+    return a_view_time_decode(raw)[::-1], attrs
+
+
 # ---------------- main ----------------
 def block_mean(a, k, min_frac=0.5):
     """Same semantics as stats trendtrial.aggregate.block_aggregate: mean over k x k blocks, valid if >= min_frac cells valid."""

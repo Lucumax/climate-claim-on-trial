@@ -1,0 +1,358 @@
+{
+ "claim_id": "C-A",
+ "status": "exploratory check, not the registered test",
+ "title": "Cross-examine the witness: Terra's overpass time drifted",
+ "generated_utc": "2026-11-14T17:26:54+00:00",
+ "claim_text": "Summer daytime land surface temperature over the Southeastern United States has risen (box 30-37N, 90W-75.5W, JJA 2001-2025)",
+ "note_on_scope": "exploratory check, not the registered test. The registered result is the trend test in the case bundle; nothing on this page replaces it.",
+ "years": [
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008,
+  2009,
+  2010,
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "units": {
+  "temperature": "degC",
+  "view_time": "hours"
+ },
+ "series": {
+  "view_time_utc_h": [
+   16.674,
+   16.578,
+   16.539,
+   16.539,
+   16.547,
+   16.523,
+   16.572,
+   16.566,
+   16.561,
+   16.576,
+   16.557,
+   16.576,
+   16.589,
+   16.561,
+   16.559,
+   16.562,
+   16.571,
+   16.587,
+   16.556,
+   16.57,
+   16.495,
+   16.357,
+   16.106,
+   15.801,
+   15.388
+  ],
+  "view_time_local_solar_h": [
+   11.069,
+   10.973,
+   10.934,
+   10.934,
+   10.942,
+   10.918,
+   10.967,
+   10.961,
+   10.956,
+   10.972,
+   10.953,
+   10.971,
+   10.984,
+   10.956,
+   10.954,
+   10.957,
+   10.966,
+   10.983,
+   10.951,
+   10.966,
+   10.891,
+   10.752,
+   10.501,
+   10.196,
+   9.784
+  ],
+  "lst_day_degC": [
+   28.259,
+   30.039,
+   27.627,
+   27.789,
+   28.604,
+   30.001,
+   30.531,
+   29.837,
+   28.74,
+   29.792,
+   30.807,
+   29.416,
+   27.444,
+   28.445,
+   29.014,
+   29.553,
+   28.24,
+   28.631,
+   29.056,
+   28.827,
+   28.192,
+   28.962,
+   28.577,
+   28.91,
+   27.576
+  ],
+  "power_ts_degC": [
+   25.755,
+   26.895,
+   24.883,
+   25.466,
+   26.287,
+   27.25,
+   27.427,
+   26.504,
+   25.638,
+   27.767,
+   27.972,
+   26.28,
+   24.972,
+   25.681,
+   26.623,
+   27.34,
+   25.74,
+   26.374,
+   26.478,
+   26.123,
+   25.867,
+   27.189,
+   26.581,
+   27.26,
+   26.72
+  ],
+  "power_t2m_degC": [
+   25.556,
+   26.6,
+   24.895,
+   25.317,
+   26.173,
+   26.911,
+   27.081,
+   26.277,
+   25.513,
+   27.549,
+   27.668,
+   26.057,
+   24.902,
+   25.527,
+   26.435,
+   27.126,
+   25.611,
+   26.252,
+   26.329,
+   25.986,
+   25.772,
+   26.93,
+   26.452,
+   27.043,
+   26.581
+  ],
+  "lst_minus_ts_degC": [
+   2.504,
+   3.144,
+   2.744,
+   2.322,
+   2.317,
+   2.751,
+   3.105,
+   3.333,
+   3.102,
+   2.025,
+   2.835,
+   3.136,
+   2.472,
+   2.764,
+   2.391,
+   2.213,
+   2.499,
+   2.257,
+   2.579,
+   2.705,
+   2.326,
+   1.773,
+   1.996,
+   1.651,
+   0.856
+  ]
+ },
+ "view_time": {
+  "reported_as": "hours UTC (see east_west_check)",
+  "east_west_check": {
+   "slope_hours_per_degree_longitude": -0.0657,
+   "utc_expectation": -0.0667,
+   "local_solar_expectation": 0.0,
+   "reading": "A value near -0.067 h per degree means the field is hours UTC; near 0 would mean local solar time."
+  },
+  "local_solar_conversion": "local solar = UTC + longitude/15, applied cell by cell, then averaged with the same weights. About 85 W: box centre 82.75 W, area-weighted land centre 84.07 W, so local solar is roughly UTC minus 5.6 h.",
+  "first_five_years_mean_utc": 16.58,
+  "last_five_years_mean_utc": 16.03,
+  "mean_2001_2019_utc": 16.57,
+  "mean_2020_2025_utc": 16.12,
+  "mean_2001_2019_local_solar": 10.96,
+  "mean_2020_2025_local_solar": 10.52,
+  "change_2001_2019_to_2025_hours": -1.18
+ },
+ "summary": {
+  "label": "exploratory check, not the registered test",
+  "sen_per_decade": {
+   "lst_day": {
+    "per_decade": -0.35,
+    "ci95_low": -0.838,
+    "ci95_high": 0.317,
+    "mann_kendall_p": 0.275
+   },
+   "power_ts": {
+    "per_decade": 0.262,
+    "ci95_low": -0.252,
+    "ci95_high": 0.817,
+    "mann_kendall_p": 0.275
+   },
+   "power_t2m": {
+    "per_decade": 0.316,
+    "ci95_low": -0.174,
+    "ci95_high": 0.772,
+    "mann_kendall_p": 0.185
+   },
+   "lst_minus_ts": {
+    "per_decade": -0.456,
+    "ci95_low": -0.747,
+    "ci95_high": -0.172,
+    "mann_kendall_p": 0.002
+   },
+   "view_time_hours": {
+    "per_decade": -0.033,
+    "ci95_low": -0.116,
+    "ci95_high": -0.002,
+    "mann_kendall_p": 0.025
+   }
+  },
+  "subset_2001_2019_sen_per_decade": {
+   "lst_day": {
+    "per_decade": -0.121,
+    "ci95_low": -1.096,
+    "ci95_high": 0.894,
+    "mann_kendall_p": 0.89
+   },
+   "power_ts": {
+    "per_decade": 0.211,
+    "ci95_low": -0.696,
+    "ci95_high": 1.136,
+    "mann_kendall_p": 0.534
+   },
+   "power_t2m": {
+    "per_decade": 0.263,
+    "ci95_low": -0.551,
+    "ci95_high": 1.186,
+    "mann_kendall_p": 0.406
+   },
+   "lst_minus_ts": {
+    "per_decade": -0.193,
+    "ci95_low": -0.58,
+    "ci95_high": 0.166,
+    "mann_kendall_p": 0.267
+   },
+   "view_time_hours": {
+    "per_decade": 0.007,
+    "ci95_low": -0.013,
+    "ci95_high": 0.025,
+    "mann_kendall_p": 0.73
+   }
+  },
+  "gap_vs_view_time": {
+   "pearson_r": 0.767,
+   "pearson_p": 7.7e-06,
+   "spearman_rho": 0.448,
+   "n": 25,
+   "ols_slope_degC_per_hour": 1.472,
+   "ols_slope_ci95": [
+    0.941,
+    2.003
+   ],
+   "slope_2020_2025_degC_per_hour": 1.286,
+   "r_2020_2025": 0.925,
+   "n_2020_2025": 6
+  },
+  "view_time_adjusted_lst": {
+   "label": "exploratory check, not the registered test",
+   "ols_with_view_time": {
+    "method": "OLS regression of the yearly JJA regional LST on year and the yearly JJA regional mean Day_view_time (hours): LST = a + b*year + c*view_time, n = 25, residual df = 22; 95% CI from the t distribution.",
+    "slope_year_per_decade": -0.097,
+    "slope_ci95_per_decade": [
+     -0.748,
+     0.553
+    ],
+    "p_value": 0.759,
+    "view_time_coef_degC_per_hour": 0.718,
+    "view_time_coef_ci95": [
+     -0.953,
+     2.389
+    ],
+    "view_time_coef_p": 0.382,
+    "r2": 0.079
+   },
+   "ols_without_view_time": {
+    "slope_year_per_decade": -0.263,
+    "slope_ci95_per_decade": [
+     -0.783,
+     0.257
+    ],
+    "p_value": 0.306
+   },
+   "alternative_correction": {
+    "method": "Alternative: LST minus k*(view_time - mean 2001-2019 view_time), k = slope of (LST - POWER TS) on view time (degC per hour); then Sen slope.",
+    "k_degC_per_hour": 1.472,
+    "reference_view_time_utc_h": 16.57,
+    "sen": {
+     "per_decade": 0.146,
+     "ci95_low": -0.465,
+     "ci95_high": 0.705,
+     "mann_kendall_p": 0.694
+    }
+   }
+  },
+  "warning": "25 annual points and a view time that moves in one step (flat to 2019, then down); year and view time are strongly confounded, so the adjusted slope has a wide interval. It shows size and direction, not an exact correction."
+ },
+ "method": {
+  "lst": "data\\C-A\\monthly.npz (MOD11C3 v061 LST_Day_CMG, 0.25 degree block means, land support of 1264 cells); area-weighted (cos latitude) regional mean per month, JJA mean of the three monthly means; the same series the case uses (before anomalies).",
+  "view_time": "MOD11C3 Day_view_time (uint8, scale 0.2 h, fill 255, valid 0-120), own DAP4 request per granule, same 5x5 block mean rule (valid if >=50% of native cells valid), same support and weights; 0.9998 of support cells valid over all 75 months.",
+  "power": "NASA POWER monthly regional, community RE, parameters TS (earth skin temperature) and T2M, tiles lon -90..-80 and -80..-75.5, lat 30-37; 279 land cells kept of 360 returned (POWER cell kept when its nearest 0.25 degree LST block is in the support); same cos-latitude weights; JJA mean of monthly regional means. MERRA-2 based, model data.",
+  "sen": "Theil-Sen slope (scipy.stats.theilslopes, 95% interval) per decade; Mann-Kendall p from Kendall tau.",
+  "gap": "LST minus POWER TS per year, degC (positive means MODIS warmer than the model's skin temperature)."
+ },
+ "caveats": [
+  "Exploratory check, not the registered test.",
+  "POWER TS and T2M are MERRA-2 model output, not observations, and have their own inhomogeneities.",
+  "MODIS LST is clear-sky only; POWER is all-sky; a constant offset between them is expected, a changing one is what the panel looks at.",
+  "Terra's equator crossing time drifted earlier after 2020 (when orbit-maintenance burns stopped); cite NASA for that before using it in the write-up. The in-data Day_view_time series is the evidence used here."
+ ],
+ "files": {
+  "view_time_npz": "data\\C-A\\C-A_view_time.npz",
+  "provenance": "data\\C-A\\C-A_view_time_provenance.json",
+  "script": "data\\scripts\\make_ca_witness.py"
+ }
+}

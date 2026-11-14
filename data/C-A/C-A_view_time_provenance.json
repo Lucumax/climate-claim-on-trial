@@ -1,0 +1,485 @@
+{
+ "claim": "C-A",
+ "variable": "Day_view_time",
+ "short_name": "MOD11C3",
+ "version": "061",
+ "doi": "10.5067/MODIS/MOD11C3.061",
+ "concept_id": "C2565788897-LPCLOUD",
+ "path_in_file": "/MODIS_MONTHLY_0_05DEG_CMG_LST/Data_Fields/Day_view_time[1060:1199][1800:2089]",
+ "access_route": "Earthdata Login via environment token (value never printed or stored); OPeNDAP DAP4 server-side subset, one variable per request (a combined multi-variable constraint returned HTTP 400)",
+ "decode": "real hours = 0.2 * stored (uint8); stored 255 (fill) and > 120 (outside valid_range 0-120) set to NaN; rows flipped south-to-north like LST; then the same 5x5 block mean (valid if >= 50% native cells valid)",
+ "attrs_first_granule": {
+  "units": "hrs",
+  "valid_range": "[  0 120]",
+  "_FillValue": "255",
+  "scale_factor": "0.2",
+  "add_offset": "0.0"
+ },
+ "granules": [
+  {
+   "granule_ur": "MOD11C3.A2001152.061.2020094140405",
+   "year": 2001,
+   "month": 6,
+   "sha256_decoded_native_float32": "d316c9877c67e39d528e30c7350871310306bf556636fe8c02036670ee946d0c"
+  },
+  {
+   "granule_ur": "MOD11C3.A2001182.061.2020097064005",
+   "year": 2001,
+   "month": 7,
+   "sha256_decoded_native_float32": "14471d39fa9fbce587ee1cbb8cdbf0f6a1fc44325b8c5a1d61f264ee5e2e99e5"
+  },
+  {
+   "granule_ur": "MOD11C3.A2001213.061.2020099180647",
+   "year": 2001,
+   "month": 8,
+   "sha256_decoded_native_float32": "913a3e246b5f438188fabdcfa49ba493a972a7d357dc452df3024ebed7805a06"
+  },
+  {
+   "granule_ur": "MOD11C3.A2002152.061.2020118060151",
+   "year": 2002,
+   "month": 6,
+   "sha256_decoded_native_float32": "8d87ade90022acad7b6c1fc2ffe395ac6f77e284a9cf5279e4db5708e3fd7075"
+  },
+  {
+   "granule_ur": "MOD11C3.A2002182.061.2020149191104",
+   "year": 2002,
+   "month": 7,
+   "sha256_decoded_native_float32": "cdaa367b5a4255609c909cae1c824f632ed5e8f7681acc7462d5d15a8a26a21c"
+  },
+  {
+   "granule_ur": "MOD11C3.A2002213.061.2020149193932",
+   "year": 2002,
+   "month": 8,
+   "sha256_decoded_native_float32": "f774a746d2a402cb9b3c350bab9abeec827bf9a4a9177493be5248dadd4d32d3"
+  },
+  {
+   "granule_ur": "MOD11C3.A2003152.061.2020150004137",
+   "year": 2003,
+   "month": 6,
+   "sha256_decoded_native_float32": "bb326b0800d0cc06350c4fd527876a3e8c17fa6ad7d57c31cc791923c79d9edd"
+  },
+  {
+   "granule_ur": "MOD11C3.A2003182.061.2020150042221",
+   "year": 2003,
+   "month": 7,
+   "sha256_decoded_native_float32": "35ec18d2aa176c7585c40107ddd53bed206c3e4bd58338fb88dff75731c6ac91"
+  },
+  {
+   "granule_ur": "MOD11C3.A2003213.061.2020150191611",
+   "year": 2003,
+   "month": 8,
+   "sha256_decoded_native_float32": "d90d415b487c2c1a15d3e3df8e9e1497c6309f8868cd4463160a6b40645072fa"
+  },
+  {
+   "granule_ur": "MOD11C3.A2004153.061.2020181195359",
+   "year": 2004,
+   "month": 6,
+   "sha256_decoded_native_float32": "d5be02daf2db626ead75c1e3bfa29b74d586e1793ca2190acc92155affbf777b"
+  },
+  {
+   "granule_ur": "MOD11C3.A2004183.061.2020199042852",
+   "year": 2004,
+   "month": 7,
+   "sha256_decoded_native_float32": "68c8977a34fbad6200437aa8575c1174046c3ae8bbbf5f56bd264805cadf0ba9"
+  },
+  {
+   "granule_ur": "MOD11C3.A2004214.061.2020208024206",
+   "year": 2004,
+   "month": 8,
+   "sha256_decoded_native_float32": "f02955bfc3785e73d81a5769c69c096b79adbac40237be4db868f7752a97aca1"
+  },
+  {
+   "granule_ur": "MOD11C3.A2005152.061.2020246043059",
+   "year": 2005,
+   "month": 6,
+   "sha256_decoded_native_float32": "b43a824bac5132b508e26d9cb68af642c8b2c9d7aa156fa348f373a88be00162"
+  },
+  {
+   "granule_ur": "MOD11C3.A2005182.061.2020247152632",
+   "year": 2005,
+   "month": 7,
+   "sha256_decoded_native_float32": "c9d22a570243cd1e4c9e3fdd3b7e7bbf692541ef0c762422ff77a0906edfdbab"
+  },
+  {
+   "granule_ur": "MOD11C3.A2005213.061.2020248223958",
+   "year": 2005,
+   "month": 8,
+   "sha256_decoded_native_float32": "c8480abde00f40276253b692c130fe55720fd565b9f88e48e1bc9d59218ef488"
+  },
+  {
+   "granule_ur": "MOD11C3.A2006152.061.2020292225106",
+   "year": 2006,
+   "month": 6,
+   "sha256_decoded_native_float32": "919cf2187f5d03e68eafa203f3cee1e8dc28dc0771f5d52a0d8c7b14d0e9453a"
+  },
+  {
+   "granule_ur": "MOD11C3.A2006182.061.2020285084715",
+   "year": 2006,
+   "month": 7,
+   "sha256_decoded_native_float32": "42d92070f3fca6e70d68e7b270575afb0c54a2af423a04e304c0217d0dafb4bc"
+  },
+  {
+   "granule_ur": "MOD11C3.A2006213.061.2020286063353",
+   "year": 2006,
+   "month": 8,
+   "sha256_decoded_native_float32": "39465459e75359f718a0f626ef5b18f72fdc376b1cbf8847b3ee944eacb337cf"
+  },
+  {
+   "granule_ur": "MOD11C3.A2007152.061.2021068024232",
+   "year": 2007,
+   "month": 6,
+   "sha256_decoded_native_float32": "f22d681e2b892505c68dbba3461d59a3040dd026235d7f3096a43996620f264f"
+  },
+  {
+   "granule_ur": "MOD11C3.A2007182.061.2021070203244",
+   "year": 2007,
+   "month": 7,
+   "sha256_decoded_native_float32": "1664eb4202416eda14d337f110b62841779c922fc8e932604bb58185ba032971"
+  },
+  {
+   "granule_ur": "MOD11C3.A2007213.061.2021075030450",
+   "year": 2007,
+   "month": 8,
+   "sha256_decoded_native_float32": "4e82a2c17942e7e78477660daf61c705472ddf6a90a19000cad1e15b4da2b761"
+  },
+  {
+   "granule_ur": "MOD11C3.A2008153.061.2021104005726",
+   "year": 2008,
+   "month": 6,
+   "sha256_decoded_native_float32": "b9ec6f29018be49c203d68f0b73aed79f89d645eaa3e59ec0aa07cc4f55a970c"
+  },
+  {
+   "granule_ur": "MOD11C3.A2008183.061.2021107004534",
+   "year": 2008,
+   "month": 7,
+   "sha256_decoded_native_float32": "79cb3385b23fa94979e9fc4d005943c177589025d0e07ad4d051f66d6a7f9624"
+  },
+  {
+   "granule_ur": "MOD11C3.A2008214.061.2021108180626",
+   "year": 2008,
+   "month": 8,
+   "sha256_decoded_native_float32": "70cb6add83eab7f569f22cbe886bb9cd3b5b6fc755ea83de33271fe43a5bbf66"
+  },
+  {
+   "granule_ur": "MOD11C3.A2009152.061.2021144070554",
+   "year": 2009,
+   "month": 6,
+   "sha256_decoded_native_float32": "520d8d90a3ceb405df20b7e35a6bbc651c731d9256c4bb420b4aab00b7982f78"
+  },
+  {
+   "granule_ur": "MOD11C3.A2009182.061.2021145165618",
+   "year": 2009,
+   "month": 7,
+   "sha256_decoded_native_float32": "96157ac2a71bb97ba86248527127864df7ada81093f0942b0a21b8d48e06bed6"
+  },
+  {
+   "granule_ur": "MOD11C3.A2009213.061.2021148103932",
+   "year": 2009,
+   "month": 8,
+   "sha256_decoded_native_float32": "28827eddb94c15ec3a92942066c84f01222d54b021af0eb9491955802778bd4c"
+  },
+  {
+   "granule_ur": "MOD11C3.A2010152.061.2021176021431",
+   "year": 2010,
+   "month": 6,
+   "sha256_decoded_native_float32": "40757eaa22f506b483b0804d3c3de53ba5eeb543cb41f26f3fa19caa7a44a3dd"
+  },
+  {
+   "granule_ur": "MOD11C3.A2010182.061.2021177070804",
+   "year": 2010,
+   "month": 7,
+   "sha256_decoded_native_float32": "4890f2bd12a31e776ad52f50d1761cebf87b040968753106e2549a46e57ade0a"
+  },
+  {
+   "granule_ur": "MOD11C3.A2010213.061.2021178214058",
+   "year": 2010,
+   "month": 8,
+   "sha256_decoded_native_float32": "27d734b883f14914bfd382753db3f086ff2821f9fec1d76190dff6243770c815"
+  },
+  {
+   "granule_ur": "MOD11C3.A2011152.061.2021196175424",
+   "year": 2011,
+   "month": 6,
+   "sha256_decoded_native_float32": "af5368602568ee1eeffdfac45131cb8435554d3635729d58cbe6b3fc14ee5eda"
+  },
+  {
+   "granule_ur": "MOD11C3.A2011182.061.2021198053942",
+   "year": 2011,
+   "month": 7,
+   "sha256_decoded_native_float32": "5a76cb4180ca5dda9c1ace13973bee5aec36876e91c38472ff223b77e31d4c29"
+  },
+  {
+   "granule_ur": "MOD11C3.A2011213.061.2021200015457",
+   "year": 2011,
+   "month": 8,
+   "sha256_decoded_native_float32": "68bb2852d0e49b2ef5b34bbf307d41f36d9850493eb8e8bc401648b82efc0925"
+  },
+  {
+   "granule_ur": "MOD11C3.A2012153.061.2021222115722",
+   "year": 2012,
+   "month": 6,
+   "sha256_decoded_native_float32": "2f1699db7cb619749f6d092859d250e9e79adabe6109bef439ef9e6b16921b54"
+  },
+  {
+   "granule_ur": "MOD11C3.A2012183.061.2021226214145",
+   "year": 2012,
+   "month": 7,
+   "sha256_decoded_native_float32": "a1d79010bf89225d39d689266dd4565ab28250adf018e75ddb7c9d5a02b0843f"
+  },
+  {
+   "granule_ur": "MOD11C3.A2012214.061.2021231123740",
+   "year": 2012,
+   "month": 8,
+   "sha256_decoded_native_float32": "38cd310e6ddfb1ee968fcd118de5191998ef55836ce1d998e3c2c865a47d247e"
+  },
+  {
+   "granule_ur": "MOD11C3.A2013152.061.2021306124435",
+   "year": 2013,
+   "month": 6,
+   "sha256_decoded_native_float32": "c96242dd1b7d5cbd133148031148d0fcf652e9d836f182605160c5e848c625bd"
+  },
+  {
+   "granule_ur": "MOD11C3.A2013182.061.2021306125010",
+   "year": 2013,
+   "month": 7,
+   "sha256_decoded_native_float32": "8acc4b6157bafd7a4d05f4e3d8d8dbed8f6c24e2c9bfc8a0c06aaecd582c70c3"
+  },
+  {
+   "granule_ur": "MOD11C3.A2013213.061.2021308122542",
+   "year": 2013,
+   "month": 8,
+   "sha256_decoded_native_float32": "1f2e3155a45536b1e49d545b8f450a4af1a0362029a2e87401f2dff1f13a4b84"
+  },
+  {
+   "granule_ur": "MOD11C3.A2014152.061.2021335172331",
+   "year": 2014,
+   "month": 6,
+   "sha256_decoded_native_float32": "1bf4c1f454b35059d7ed8f52ed0049693bbbeb38928615b2add38dfd320c9b8e"
+  },
+  {
+   "granule_ur": "MOD11C3.A2014182.061.2021338041916",
+   "year": 2014,
+   "month": 7,
+   "sha256_decoded_native_float32": "b373d0ad7d208bfa7043cbcc5a908fb4db6cac376698fee9b1a7f3ddf2b9a6e5"
+  },
+  {
+   "granule_ur": "MOD11C3.A2014213.061.2021339145154",
+   "year": 2014,
+   "month": 8,
+   "sha256_decoded_native_float32": "0ec4b7f1e0f2a45a6651d45fa92576d4851f67861ae9b2fd2ace86b8766b8f45"
+  },
+  {
+   "granule_ur": "MOD11C3.A2015152.061.2021358204659",
+   "year": 2015,
+   "month": 6,
+   "sha256_decoded_native_float32": "ac908049594d46132fbfd8944ffeb4ac60b69237c371563c41d9f46da2ba8d98"
+  },
+  {
+   "granule_ur": "MOD11C3.A2015182.061.2021360043245",
+   "year": 2015,
+   "month": 7,
+   "sha256_decoded_native_float32": "23dfa0560ae0441a6a8a7d0a27bc0440f5558e9143aae7e9edb49d25d2b37753"
+  },
+  {
+   "granule_ur": "MOD11C3.A2015213.061.2021361100124",
+   "year": 2015,
+   "month": 8,
+   "sha256_decoded_native_float32": "92fbdbeae43d76efc46dd1554937bb80868f7df2df5a04725aa3c007a777fd4a"
+  },
+  {
+   "granule_ur": "MOD11C3.A2016153.061.2022016221146",
+   "year": 2016,
+   "month": 6,
+   "sha256_decoded_native_float32": "93eb82d29804afde078ac22c017daa6281c60402af18c305cf4597f9c854fe14"
+  },
+  {
+   "granule_ur": "MOD11C3.A2016183.061.2022018055805",
+   "year": 2016,
+   "month": 7,
+   "sha256_decoded_native_float32": "d78e070393826a5e4712a11f0e102959fff15cc52300b05b6ba94597f7f5385d"
+  },
+  {
+   "granule_ur": "MOD11C3.A2016214.061.2022019051824",
+   "year": 2016,
+   "month": 8,
+   "sha256_decoded_native_float32": "c1990ace4ca697cf40649af73bc8ea31b67a6700faa3cde8bf429a18f8b2905f"
+  },
+  {
+   "granule_ur": "MOD11C3.A2017152.061.2021306102554",
+   "year": 2017,
+   "month": 6,
+   "sha256_decoded_native_float32": "8fb6f8d0748cd02a35d4c22bf1b9efa2df9f909427f8bca17438bf17a67c9ef4"
+  },
+  {
+   "granule_ur": "MOD11C3.A2017182.061.2021308043120",
+   "year": 2017,
+   "month": 7,
+   "sha256_decoded_native_float32": "ed668dd555c507de7e08a8c19ede9b1a70984ef411a0773d9e21718bc1e8968c"
+  },
+  {
+   "granule_ur": "MOD11C3.A2017213.061.2021309131707",
+   "year": 2017,
+   "month": 8,
+   "sha256_decoded_native_float32": "b8c1e87bc021bef6a4a6f160f1bcb0848d4c5e2f6359a30f34776c7cb12019e6"
+  },
+  {
+   "granule_ur": "MOD11C3.A2018152.061.2021350141459",
+   "year": 2018,
+   "month": 6,
+   "sha256_decoded_native_float32": "70382c33f7bcf4f8a4e3004677b7cd7a040eea62955be3073724d68857fabfdb"
+  },
+  {
+   "granule_ur": "MOD11C3.A2018182.061.2021350141511",
+   "year": 2018,
+   "month": 7,
+   "sha256_decoded_native_float32": "cf9b1a70751e8c9f2bc475f6b9a461586afe1c369f5176d2bcf719d348a8bd94"
+  },
+  {
+   "granule_ur": "MOD11C3.A2018213.061.2021350141511",
+   "year": 2018,
+   "month": 8,
+   "sha256_decoded_native_float32": "fc228612e0af6bb40666973884e86c8431b4a6a412bc01fc3e9d62173aed8498"
+  },
+  {
+   "granule_ur": "MOD11C3.A2019152.061.2020355101541",
+   "year": 2019,
+   "month": 6,
+   "sha256_decoded_native_float32": "27d926fef3013ff38b74d023b2fe021baf4ff7e44e486dfa85e4f0ade0563ff4"
+  },
+  {
+   "granule_ur": "MOD11C3.A2019182.061.2020357054550",
+   "year": 2019,
+   "month": 7,
+   "sha256_decoded_native_float32": "4b765347ac442eb36a4e3a1719cbbba6ead80da4ff0a00250eb5ac589be1dd10"
+  },
+  {
+   "granule_ur": "MOD11C3.A2019213.061.2020359034216",
+   "year": 2019,
+   "month": 8,
+   "sha256_decoded_native_float32": "5d92c208beffbe3044c11ad62079700d88b726d4680ce1a88ef7e749644a23e3"
+  },
+  {
+   "granule_ur": "MOD11C3.A2020153.061.2021012103333",
+   "year": 2020,
+   "month": 6,
+   "sha256_decoded_native_float32": "0d89b108017f02995ed8ad7129a7dc3b88f37b203ab93724b698240bcf0ed62f"
+  },
+  {
+   "granule_ur": "MOD11C3.A2020183.061.2021013113245",
+   "year": 2020,
+   "month": 7,
+   "sha256_decoded_native_float32": "3a58628b86df108a1447cf2f7efc7332597fb41f92f6e27600bfffe80d435787"
+  },
+  {
+   "granule_ur": "MOD11C3.A2020214.061.2021014160553",
+   "year": 2020,
+   "month": 8,
+   "sha256_decoded_native_float32": "883a5ed981135c61aaf5b1fb73d4115c8bb2e2278a36e789f95fb464120f66ab"
+  },
+  {
+   "granule_ur": "MOD11C3.A2021152.061.2021190161921",
+   "year": 2021,
+   "month": 6,
+   "sha256_decoded_native_float32": "4bf31a9eb809fb50d0d86127a2bfaa9ac58c0dbec0c07d8bbb11966502c31691"
+  },
+  {
+   "granule_ur": "MOD11C3.A2021182.061.2021213130808",
+   "year": 2021,
+   "month": 7,
+   "sha256_decoded_native_float32": "e399cfef1b5c688da5fa2178edb5a68ce51c903d5852bab16edace828cfa9411"
+  },
+  {
+   "granule_ur": "MOD11C3.A2021213.061.2021244114947",
+   "year": 2021,
+   "month": 8,
+   "sha256_decoded_native_float32": "b89f1d0db2fa26a08efffbc7b5867d7e67d1f47c3a34f81489fb233d30ca5818"
+  },
+  {
+   "granule_ur": "MOD11C3.A2022152.061.2022201162837",
+   "year": 2022,
+   "month": 6,
+   "sha256_decoded_native_float32": "5fdd85d90d4a7b0cea8bc050ca63edb1cb5d1c1af79aaaafebe10c963b6c959f"
+  },
+  {
+   "granule_ur": "MOD11C3.A2022182.061.2022227150912",
+   "year": 2022,
+   "month": 7,
+   "sha256_decoded_native_float32": "115fd0ae7aac344616adc97f2644bebe9f81f679a9f832efd164479236a63880"
+  },
+  {
+   "granule_ur": "MOD11C3.A2022213.061.2022244124553",
+   "year": 2022,
+   "month": 8,
+   "sha256_decoded_native_float32": "2f34fcb35a8b0c583aec2653f644c843858a30a07e5caa8ac5907e0c83b8e600"
+  },
+  {
+   "granule_ur": "MOD11C3.A2023152.061.2023193054115",
+   "year": 2023,
+   "month": 6,
+   "sha256_decoded_native_float32": "1f952cffa9b1b6db2f88e148765fd0c5c567d02eb343788af25b7e5e63b2d7fa"
+  },
+  {
+   "granule_ur": "MOD11C3.A2023182.061.2023215224507",
+   "year": 2023,
+   "month": 7,
+   "sha256_decoded_native_float32": "4bc04c7d79904cf8737c72725b59c821e1e9b3b883aad11d792c5bc817ffc46f"
+  },
+  {
+   "granule_ur": "MOD11C3.A2023213.061.2023250152840",
+   "year": 2023,
+   "month": 8,
+   "sha256_decoded_native_float32": "f59583ccec2dd8336c22e9c3affc755f9223ccdd7ad55acc69ae543f95fbe052"
+  },
+  {
+   "granule_ur": "MOD11C3.A2024153.061.2024187024328",
+   "year": 2024,
+   "month": 6,
+   "sha256_decoded_native_float32": "f2696df37ef1db3b92e541e98260774d01f85c46c0609d199f0e73eb42627a6b"
+  },
+  {
+   "granule_ur": "MOD11C3.A2024183.061.2024226150454",
+   "year": 2024,
+   "month": 7,
+   "sha256_decoded_native_float32": "3cec1a2bbf693d5ed0f01028b126bcb65177c07af51d684b44008ee11f25c3cc"
+  },
+  {
+   "granule_ur": "MOD11C3.A2024214.061.2024267190123",
+   "year": 2024,
+   "month": 8,
+   "sha256_decoded_native_float32": "ac55d0718dd5712f11d99937c7ffd8daf76931fe2117d17ad2c71cf2a1cc38e5"
+  },
+  {
+   "granule_ur": "MOD11C3.A2025152.061.2025182145012",
+   "year": 2025,
+   "month": 6,
+   "sha256_decoded_native_float32": "ff0d2910ae09de4e18e325045b96c04a6579ed69d38699b5f75b152776353e43"
+  },
+  {
+   "granule_ur": "MOD11C3.A2025182.061.2025213154157",
+   "year": 2025,
+   "month": 7,
+   "sha256_decoded_native_float32": "875ee1e021940a4175d02ca1cb97f7cb97523aeb17099173c6f7c98b157a2075"
+  },
+  {
+   "granule_ur": "MOD11C3.A2025213.061.2025246014643",
+   "year": 2025,
+   "month": 8,
+   "sha256_decoded_native_float32": "b74c7de34358d41f9f4ba3361ae38d8ac2d7b727b2c872f2ac5053ee4afbd136"
+  }
+ ],
+ "sha256_note": "sha256 of the decoded native-grid float32 array (140 x 290, south-north, C order) of each granule; raw HDF4 files were not downloaded.",
+ "power": {
+  "urls": [
+   "https://power.larc.nasa.gov/api/temporal/monthly/regional?parameters=TS&community=RE&latitude-min=30&latitude-max=37&longitude-min=-90&longitude-max=-80&start=2001&end=2025&format=JSON",
+   "https://power.larc.nasa.gov/api/temporal/monthly/regional?parameters=TS&community=RE&latitude-min=30&latitude-max=37&longitude-min=-80&longitude-max=-75.5&start=2001&end=2025&format=JSON",
+   "https://power.larc.nasa.gov/api/temporal/monthly/regional?parameters=T2M&community=RE&latitude-min=30&latitude-max=37&longitude-min=-90&longitude-max=-80&start=2001&end=2025&format=JSON",
+   "https://power.larc.nasa.gov/api/temporal/monthly/regional?parameters=T2M&community=RE&latitude-min=30&latitude-max=37&longitude-min=-80&longitude-max=-75.5&start=2001&end=2025&format=JSON"
+  ],
+  "retrieved_utc": "2026-11-14T17:26:35.030460+00:00"
+ },
+ "files": {
+  "C-A_view_time.npz": "cbec880632238873b6005ce5dd015d913ba81d5cd36c3cb193087633e76f8489",
+  "C-A.json": "1a66e2cac7e67f86a10c6caa0400a257cb8c4a43d5cb95d25d3eece777b337f5"
+ },
+ "built_utc": "2026-11-14T17:26:54+00:00"
+}

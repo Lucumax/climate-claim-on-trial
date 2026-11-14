@@ -1,52 +1,84 @@
-import { h, download } from "../util.js";
+// How it works (Method, Measurements; the False-Alarm Planet is its own view) and Data & provenance.
+import { h, download, U } from "../util.js";
+import { kindChip, disc } from "./common.js";
+
+// Set this once the public repository exists; until then the reproduction steps name the folders and commands only.
+const REPO_URL = "";
+
+const HOW = [["method", "Method", "#/method"], ["false-alarm", "False-Alarm Planet", "#/false-alarm"], ["glossary", "Measurements", "#/glossary"]];
+export function howShell(active, node) {
+  return h("div", {}, h("nav", { class: "subnav", "aria-label": "How it works" }, HOW.map(([k, label, href]) => h("a", { href, "aria-current": k === active ? "page" : null }, label))), node);
+}
+
+const why = (...kids) => h("p", { class: "why" }, h("b", {}, "Why it matters. "), ...kids);
 
 export function method(b) {
   const q = b.declared_q != null ? b.declared_q : 0.10, a = b.alpha != null ? b.alpha : 0.05;
-  return { title: "Method", node: h("div", { class: "prose" },
-    h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Method"),
-    h("h1", { id: "page-title", tabindex: "-1" }, "How the trial works"),
-    h("p", { class: "lede" }, "Case files are computed in advance: Python code ran on archived NASA data and stored the results in a bundle, and the page only reads and draws that bundle. Detective mode is different: it fetches NASA POWER data and runs the statistics live in your browser. We run no server, and no AI model writes any result."),
-    h("h2", {}, "What a trend test asks"),
-    h("p", {}, "A trend test asks whether a series of values changes over time by more than chance would explain. The answer is a p-value. Below ", String(a), " is called significant. Above it does not prove there is no trend and does not mean the change is unimportant. A longer record often makes a real trend easier to see."),
-    h("h2", {}, "The tests we use, in plain words"),
-    h("ul", {},
-      h("li", {}, h("b", {}, "Least squares and t-test."), " Fits a straight line and checks whether its slope is zero. This is the version most people meet first, so we show it as context."),
-      h("li", {}, h("b", {}, "Mann-Kendall."), " Compares every pair of values and counts whether later ones tend to be higher or lower. It does not assume a straight line."),
-      h("li", {}, h("b", {}, "Sen slope."), " The median of all pairwise slopes. It is the rate of change that goes with Mann-Kendall and is hard to pull off course by one odd year."),
-      h("li", {}, h("b", {}, "Autocorrelation corrections (Hamed-Rao, Yue-Wang)."), " Years that are close often resemble each other. Ignoring that makes p-values too small and trends look more certain than they are. A correction widens the test to allow for it. We registered Hamed-Rao first. Before any result, a simulation on synthetic series picked the correction that kept false alarms closest to 5% for each claim. For the Alaska case that is Yue-Wang. For the Sahel case it is the plain Mann-Kendall test, because the years there barely resemble each other. Hamed-Rao is shown as context."),
-      h("li", {}, h("b", {}, "Benjamini-Hochberg."), " Used on the maps. When you test thousands of grid cells, some will look significant by luck. This rule limits the expected share of false alarms among the flagged cells.")),
-    h("h2", {}, "The ladder"),
-    h("p", {}, "Each rung changes one thing and keeps everything else the same: (1) raw Mann-Kendall assuming independence, (2) values compared with each cell's own seasonal normal, (3) the autocorrelation correction chosen for the claim, (4) the Benjamini-Hochberg false-discovery step at q = ", String(q), " applied to the rung 3 p-values. Rung 3 flags a cell when its corrected p-value is below ", String(a), ". Rung 4 asks a different question (what share of flagged cells we would expect to be false alarms), at a different cut, so it can add flags as well as remove them. It is not simply a tougher test. The ladder is not built to make red disappear. A rung can change nothing, remove flagged cells, or add them. We show what happened."),
-    h("div", { class: "callout info" }, h("b", {}, "See it on a planet with no trend. "), "Exhibit 0 runs the raw test, the memory correction and the Benjamini-Hochberg step on a synthetic planet where every cell has zero true trend, so every flag is a false alarm. ", h("a", { href: "#/false-alarm" }, "Meet Planet Null"), "."),
-    h("div", { class: "callout info" }, h("b", {}, "About the false discovery rate. "), `We declared q = ${q} before seeing any result. Benjamini-Hochberg controls the expected share of false discoveries among flagged cells when cells are independent or positively dependent. Neighbouring grid cells are correlated, so that condition is not guaranteed, and we checked the rate on correlated synthetic fields. It does not control the share of the map area that is wrong and does not confirm any single hotspot. The flagged share of the map is a description, not an error rate.`),
-    h("h2", {}, "Reading the interval, the band and the verdict"),
-    h("ul", {},
-      h("li", {}, h("b", {}, "The interval."), " A 95% interval for the Sen slope. For the Alaska case it is the analytic Sen interval, and in simulations it passed a coverage check (it must catch the true slope at least 90% of the time; the nominal level is 95%). It describes the slope, not individual years."),
-      h("li", {}, h("b", {}, "The band on the chart."), " The Sen line tilted between the lower and upper ends of that slope interval, pivoting at the middle year. It shows how steep the trend could plausibly be. It does not show uncertainty about the level, so it is not a full confidence band."),
-      h("li", {}, h("b", {}, "The cell share and the area share."), " The cell share counts every grid cell once. The area share weights cells by the cosine of latitude, because high-latitude cells cover less ground. Alaska, rung 4: 750 of 861 cells (87.1%), 85.2% of the area. Neither is the chance that the claim is true."),
-      h("li", {}, h("b", {}, "The verdict labels."), " \"Supported\" is scoped to one dataset, one box and one period. The 25% and 5% flagged-area thresholds between supported and partly supported are conventions we chose before seeing results, not a calibrated scale. The map and the regional series come from the same data, so they are not independent evidence."),
-      h("li", {}, h("b", {}, "A p-value."), " A p-value below 0.05 means a pattern this strong would be rare if there were no trend, under the test's assumptions. It is not the probability that chance produced the pattern. P-values from persistent series tend to be too small, which is why we apply a correction.")),
-    h("h2", { id: "registration" }, "Registration and amendments"),
-    h("p", {}, h("b", {}, "Registered before data download (10:29 AM ET), with two dated method amendments made on simulated data before results, and one disclosed cell-rule correction."), " In plain terms, this is what happened and when, all on Saturday, November 14, 2026."),
-    h("ul", {},
-      h("li", {}, h("b", {}, "10:29 AM ET: the registration."), " Before any claim data were downloaded, we wrote down three claims with their regions, seasons and periods (Alaska air temperature, Sahel rainfall, southeastern US land surface temperature). We also wrote down the methods: Mann-Kendall with the Hamed-Rao correction as the one regional test, the four-rung ladder for the map, and Benjamini-Hochberg at q = 0.10. A fourth claim, Wisconsin smoke and haze, was added at 10:35 AM ET, also before any of its data."),
-      h("li", {}, h("b", {}, "Amendment 1: the regional test (addendum 2, countersigned 11:22 AM ET)."), " Simulations on synthetic series, run before any claim result, showed Hamed-Rao raised too many false alarms (about 7% instead of 5%) at the persistence of the Alaska series. We changed the rule: the shipped test is the candidate that passes the false-alarm check and has the most power. For the Alaska case that is Yue-Wang. The registered Hamed-Rao and the raw test stay on the page as context."),
-      h("li", {}, h("b", {}, "Amendment 2: the bias bar."), " The pass bar for bias in the Sen slope was relaxed (bias within 3 Monte Carlo standard errors, or within 0.025 standard deviations per decade) before the other claims were run, because the stricter bar would fail about two scenarios by chance alone and five failed, all negligible in size. The original bar and its failures stay published. The Alaska case is unaffected."),
-      h("li", {}, h("b", {}, "One correction after the first result: the cell-test rule."), " The first run chose the cell test with the highest false-discovery power instead of following the written rule (keep the shipped test if it keeps false-discovery control). We corrected it after seeing the first Alaska result. Both runs are kept and disclosed. It changes the map (rungs 3 and 4), not the regional test.")),
-    h("p", {}, "So the question, region, season and period were registered before the data, and not changed. The methods were not run once, exactly as registered: they were amended twice on simulated data before results, and one cell rule was corrected afterwards. A registered question with amended methods is not an unchanged preregistered analysis, and we do not claim it is. The full text is in event_record/WP0_CLAIM_REGISTRATION.md and event_record/STATS_LOG.md in the project repository."),
-    h("h2", {}, "What we do not claim"),
-    h("ul", {}, h("li", {}, "We do not say what caused a change, and we do not forecast."), h("li", {}, "A regional number is not a number for any single hotspot cell."), h("li", {}, "The interval on a headline result is not adjusted for the fact that we picked that headline."), h("li", {}, "A model-based variable (reanalysis) is labelled as model output, not a measurement.")),
-    h("h2", {}, "Detective mode versus case files"),
-    h("p", {}, "In Detective mode you choose everything, and the result is labelled as your own exploration, not pre-registered. Case files are claims, regions and seasons written down before any data were downloaded, so the question could not be bent to fit the answer. Their methods were registered too, with the amendments listed above under Registration and amendments."),
-    h("h2", {}, "Tools, data and credits"),
-    h("p", {}, "NASA Earth data products named on each case (product, version and DOI are on the finding card). Maps: coastlines and country borders from Natural Earth (public domain) via the world-atlas package 2.0.2 (ISC licence); US state outlines from the US Census Bureau cartographic boundary files via the us-atlas package 3.0.1 (ISC licence). Live data in Detective mode: NASA POWER (MERRA-2 and CERES based parameters), fetched from your browser to NASA. Statistics checked against the pymannkendall package. Code is original to this entry except the generic starter theme, disclosed as pre-existing and MIT licensed. Parts of the code and the sentence templates were produced with LLM assistance that Walter Guevara directed and checked. Not endorsed by NASA."),
-    h("p", { class: "muted small" }, b.synthetic ? "This build is currently running on synthetic placeholder data." : "")) };
+  const stage = (n, title, ...kids) => h("section", { class: "stage", "aria-labelledby": "st" + n }, h("span", { class: "stage-n", "aria-hidden": "true" }, String(n)), h("div", {}, h("h2", { id: "st" + n }, title), ...kids));
+  return { title: "Method", node: howShell("method", h("div", { class: "prose" },
+    h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "How a trend gets tested"),
+      h("p", { class: "lede" }, "A trend is a claim about the past. Four stages decide how far to believe it, and each one can make the answer stronger or weaker.")),
+    stage(1, "Fix the question first",
+      h("p", {}, "A case file begins with a written claim: a variable, a region, a season and a period. We wrote ours down before downloading any claim data, so the question could not be bent to fit the answer."),
+      why("If you may choose the years after seeing the data, you may choose the answer. The Home page shows one record that supports opposite headlines."),
+      h("p", {}, "Investigate works the other way round: you choose everything, so its result is labelled exploratory. Case files are not unchanged preregistered analyses either: two methods were amended on simulated data before any result. ", h("a", { href: "#/data/registration" }, "Read what changed and when"), ".")),
+    stage(2, "Measure how much changed",
+      h("p", {}, "The Sen slope is the median of the slopes between every pair of years. One odd year barely moves it. We report it per decade with a 95% interval, and draw the ordinary least squares line beside it as the familiar baseline."),
+      why("A slope with no range is not a finding. The interval says how steep the trend could plausibly be."),
+      disc("Technical details: the interval and the band",
+        h("p", {}, "For the Alaska case the interval is the analytic Sen interval. In simulations it passed a coverage check: it must catch the true slope at least 90% of the time, against a nominal 95%. It describes the slope, not individual years."),
+        h("p", {}, "The band on the chart is the Sen line tilted between the lower and upper ends of that interval, pivoting at the middle year. It shows how steep the trend could be. It says nothing about the level, so it is not a full confidence band."))),
+    stage(3, "Ask whether chance could explain it",
+      h("p", {}, "The Mann-Kendall test asks whether later years tend to be higher or lower than earlier ones, with no straight-line assumption. The answer is a p-value. A p-value below ", String(a), " is called significant. It means a pattern this strong would be rare if there were no trend, under the test's assumptions. It is not the probability that chance produced the pattern, and a larger p-value does not prove there is no trend."),
+      why("Neighbouring years often resemble each other. Ignoring that makes p-values too small and trends look more certain than they are. A correction widens the test to allow for it."),
+      disc("Technical details: which correction",
+        h("p", {}, "We registered Hamed-Rao first. Before any result, a simulation on synthetic series picked the correction that kept false alarms closest to 5% for each claim. At the persistence of the Alaska series Hamed-Rao raised too many false alarms (about 7% instead of 5%), so Alaska uses Yue-Wang. For the Sahel case it is plain Mann-Kendall, because the years there barely resemble each other. Hamed-Rao stays on the page as context."),
+        h("p", {}, "A p-value is a convention-bound summary: the 0.05 line is not a calibrated scale."))),
+    stage(4, "Test every grid cell, then count",
+      h("p", {}, "The map repeats the test in every grid cell. Four hearings change one thing each: (1) raw Mann-Kendall, treating every year as independent; (2) each cell compared with its own seasonal normal; (3) the memory correction chosen for the claim; (4) the Benjamini-Hochberg false-discovery step at q = ", String(q), " applied to the hearing 3 p-values."),
+      why("Test thousands of cells and some will look significant by luck. The hearings show how much of a map survives stricter questions. A hearing can remove flags, add flags or change nothing. We show what happened."),
+      h("div", { class: "callout info" }, h("p", {}, h("b", {}, "Hearing 4 is a different question, not a tougher test. "), `It limits the expected share of false alarms among flagged cells at q = ${q}, a different cut from ${a}, so it can add flags as well as remove them. It does not control the share of the map area that is wrong, and it does not confirm any single hotspot.`)),
+      disc("Technical details: cell share and area share",
+        h("p", {}, "The cell share counts every grid cell once. The area share weights cells by the cosine of latitude, because high-latitude cells cover less ground. Alaska, hearing 4: 750 of 861 cells (87.1%), 85.2% of the area. Neither is the chance that the claim is true."),
+        h("p", {}, `We declared q = ${q} before seeing any result. Benjamini-Hochberg is guaranteed for independent or positively dependent cells. Neighbouring cells are correlated, so we checked the rate on correlated synthetic fields.`))),
+    h("section", { class: "section", "aria-labelledby": "verdict-h" }, h("h2", { id: "verdict-h" }, "Reading a verdict"),
+      h("ul", {}, h("li", {}, h("b", {}, "A verdict is scoped. "), "\"Supported\" always names one dataset, one box and one period."),
+        h("li", {}, h("b", {}, "The thresholds are conventions. "), "The 25% and 5% flagged-area cut-offs between supported and partly supported were chosen before results. They are not a calibrated scale."),
+        h("li", {}, h("b", {}, "The map and the series are one source. "), "They come from the same data, so they are not independent evidence."),
+        h("li", {}, h("b", {}, "What we do not claim. "), "We do not say what caused a change or forecast one. A regional number is not a number for a single cell. The interval on a headline result is not adjusted for our having picked that headline. A model-based variable is model output, not a measurement."))),
+    h("div", { class: "cta-band" }, h("p", {}, h("b", {}, "See it on a planet with no trend. "), "Every flag there is a false alarm, so you can count how many each stage lets through."), h("a", { class: "btn", href: "#/false-alarm" }, "Try the False-Alarm Planet")),
+    b.synthetic ? h("p", { class: "muted small", style: "margin-top:24px" }, "This build is currently running on synthetic placeholder data.") : null)) };
 }
 
+// ------------------------------------------------------------------ Measurements
+const GROUPS = [
+  ["Temperature", ["t2m", "t2m_max", "t2m_min", "frost"]],
+  ["Water", ["precip", "rh", "soil_root", "soil_top", "snow"]],
+  ["Sun and sky", ["solar", "cloud"]],
+  ["Wind", ["wind"]],
+];
+export function groupVariables(cat) {
+  const live = cat.variables.filter(v => v.live !== false), seen = new Set();
+  const out = GROUPS.map(([name, keys]) => ({ name, items: keys.map(k => live.find(v => v.key === k)).filter(Boolean) })).filter(g => g.items.length);
+  out.forEach(g => g.items.forEach(v => seen.add(v.key)));
+  const rest = live.filter(v => !seen.has(v.key)); if (rest.length) out.push({ name: "Other", items: rest });
+  return out;
+}
+
+export function glossary(cat) {
+  return { title: "Measurements", node: howShell("glossary", h("div", { class: "prose" },
+    h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "Measurements you can investigate"),
+      h("p", { class: "lede" }, "Plain definitions of the NASA POWER measurements that Investigate can fetch. All twelve are model-based: a computer model blends satellite and ground observations to fill the whole map.")),
+    groupVariables(cat).map(g => h("section", { class: "glossary-group", "aria-labelledby": "g-" + g.name.replace(/\W/g, "") }, h("h2", { id: "g-" + g.name.replace(/\W/g, "") }, g.name),
+      h("dl", { class: "gloss" }, g.items.map(v => h("div", {}, h("dt", {}, v.name), h("dd", {}, v.one_line, h("span", { class: "gl-meta" }, `Unit: ${U(v.units)} · record starts ${v.since}`, " · ", v.kind === "model_reanalysis" ? "model-based" : "satellite observation"))))))),
+    h("p", { class: "note", style: "margin-top:32px" }, "A model-based series (a reanalysis) is useful for trends but is not a direct measurement. A trend in it can reflect changes in the data that feed the model as well as the climate."))) };
+}
+
+// ------------------------------------------------------------------ Data & provenance
 function csvEscape(v) { return v == null ? "" : /[",\n]/.test(String(v)) ? '"' + String(v).replace(/"/g, '""') + '"' : String(v); }
-export function cellsCsv(b) {
+export function cellsCsv(claims) {
   const rows = ["claim,lat,lon,sen_slope_per_decade,rung1_flag,rung2_flag,rung3_flag,rung4_flag"];
-  for (const c of b.claims) {
+  for (const c of claims) {
     const g = c.grid;
     for (let i = 0; i < g.n_lat; i++) for (let j = 0; j < g.n_lon; j++) {
       const k = i * g.n_lon + j; if (c.ladder[0].flags[k] == null) continue;
@@ -55,31 +87,86 @@ export function cellsCsv(b) {
   }
   return rows.join("\n");
 }
-export function seriesCsv(b) {
+export function seriesCsv(claims) {
   const rows = ["claim,year,anomaly,band_lo,band_hi"];
-  for (const c of b.claims) c.regional.years.forEach((y, i) => rows.push([c.id, y, c.regional.anomaly[i], c.regional.band_lo[i], c.regional.band_hi[i]].join(",")));
+  for (const c of claims) c.regional.years.forEach((y, i) => rows.push([c.id, y, c.regional.anomaly[i], c.regional.band_lo ? c.regional.band_lo[i] : "", c.regional.band_hi ? c.regional.band_hi[i] : ""].join(",")));
   return rows.join("\n");
 }
-export function ladderCsv(b) {
+export function ladderCsv(claims) {
   const rows = ["claim,rung,label,n_cells,n_flagged_claimed,n_flagged_any,flagged_fraction_claimed,flagged_fraction_any"];
-  for (const c of b.claims) for (const r of c.ladder) rows.push([c.id, r.rung, r.label, r.n_cells, r.n_flagged_claimed, r.n_flagged_any, r.flagged_fraction_claimed, r.flagged_fraction_any].map(csvEscape).join(","));
+  for (const c of claims) for (const r of c.ladder) rows.push([c.id, r.rung, r.label, r.n_cells, r.n_flagged_claimed, r.n_flagged_any, r.flagged_fraction_claimed, r.flagged_fraction_any].map(csvEscape).join(","));
   return rows.join("\n");
 }
+const kb = n => n < 1024 ? n + " B" : n < 1048576 ? (n / 1024).toFixed(n < 10240 ? 1 : 0) + " KB" : (n / 1048576).toFixed(1) + " MB";
+const rawFor = (b, id) => b._raws.find(r => (r.claim && r.claim.claim_id === id) || (r.claims && r.claims.some(c => c.id === id)));
 
-export function evidence(b) {
-  const btn = (label, fn) => h("button", { class: "btn-quiet", type: "button", onclick: fn }, label);
-  const files = [
-    ["Evidence bundle (JSON)", "Everything the site shows: claims, ladders, series, verdicts, run IDs.", () => download("climate_claim_on_trial_bundle.json", JSON.stringify(b._raws.length === 1 ? b._raws[0] : { bundles: b._raws }, null, 2), "application/json")],
-    ["Ladder summary (CSV)", "One row per claim and rung: cells tested, cells flagged, shares.", () => download("climate_claim_on_trial_ladder.csv", ladderCsv(b), "text/csv")],
-    ["Cell table (CSV)", "One row per grid cell with data: position, Sen slope, flag on each rung.", () => download("climate_claim_on_trial_cells.csv", cellsCsv(b), "text/csv")],
-    ["Regional series (CSV)", "Yearly regional anomaly and uncertainty band for each claim.", () => download("climate_claim_on_trial_series.csv", seriesCsv(b), "text/csv")],
-  ];
-  return { title: "Evidence", node: h("div", {},
-    h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Evidence"),
-    h("h1", { id: "page-title", tabindex: "-1" }, "Download the evidence"),
-    h("p", { class: "lede" }, "Everything on this site comes from one bundle. Download it and check any number yourself."),
-    b.synthetic ? h("p", { class: "callout" }, h("b", {}, "Synthetic data. "), b.notice || "These files hold placeholder numbers, not results.") : null,
-    h("p", { class: "muted small" }, "Run ID: ", h("span", { class: "mono" }, b.run_id || "n/a"), "  ·  Schema: ", h("span", { class: "mono" }, b.schema_version || "n/a")),
-    h("div", { class: "grid g2", style: "margin-top:16px" }, files.map(f => h("div", { class: "card" }, h("h2", { style: "font-size:1.1rem" }, f[0]), h("p", { class: "muted" }, f[1]), btn("Download", f[2])))),
-    h("div", { class: "card", style: "margin-top:16px" }, h("h2", { style: "font-size:1.1rem" }, "Reproduce it"), h("p", { class: "muted" }, "The Python code that made the bundle is in the project repository, with instructions to rerun it from the downloaded NASA files."))) };
+export function provenance(b, pick) {
+  const ids = b.claims.map(c => c.id);
+  let sel = ids.includes(pick) ? pick : "all";
+  const body = h("div", {});
+  const label = c => `${c.id} · ${c.region.name} · ${c.variable.name.split(" (")[0].toLowerCase()}`;
+  const select = h("select", { id: "prov-case", onchange: e => { sel = e.target.value; draw(); } },
+    h("option", { value: "all" }, "All archived cases"), b.claims.map(c => h("option", { value: c.id }, label(c))));
+  select.value = sel;
+  const btn = (text, fn) => h("button", { class: "btn-quiet", type: "button", onclick: fn }, text);
+
+  function draw() {
+    const claims = sel === "all" ? b.claims : b.claims.filter(c => c.id === sel), tag = sel === "all" ? "all_cases" : sel;
+    const raws = sel === "all" ? b._raws : [rawFor(b, sel)].filter(Boolean);
+    const bundleText = () => JSON.stringify(raws.length === 1 ? raws[0] : { bundles: raws });
+    const files = [
+      ["Case bundle", "Everything the page shows for the case: claim, ladder, series, verdict, run identifiers.", "JSON", bundleText, `climate_claim_on_trial_${tag}_bundle.json`, "application/json", "Download case bundle"],
+      ["Ladder summary", "One row per claim and hearing: cells tested, cells flagged, shares.", "CSV", () => ladderCsv(claims), `climate_claim_on_trial_${tag}_ladder.csv`, "text/csv", "Download ladder summary"],
+      ["Cell table", "One row per grid cell with data: position, Sen slope, flag at each hearing.", "CSV", () => cellsCsv(claims), `climate_claim_on_trial_${tag}_cells.csv`, "text/csv", "Download cell table"],
+      ["Regional series", "Yearly regional anomaly and slope-range band.", "CSV", () => seriesCsv(claims), `climate_claim_on_trial_${tag}_series.csv`, "text/csv", "Download regional series"],
+    ];
+    const sizes = files.map(f => { try { return kb(new Blob([f[3]()]).size); } catch (e) { return "n/a"; } });
+    const run = raws.length === 1 && raws[0].run ? raws[0].run : null;
+    const one = sel !== "all" ? claims[0] : null;
+    const first = claims[0];
+    const rows = [h("div", { class: "file-row head", "aria-hidden": "true" }, h("span", {}, "File"), h("span", {}, "Purpose"), h("span", {}, "Format"), h("span", {}, "Size"), h("span", {}, ""))]
+      .concat(files.map((f, i) => h("div", { class: "file-row" }, h("span", { class: "fname" }, f[0]), h("span", { class: "fpurpose" }, f[1]), h("span", { class: "fnum ffmt" }, f[2]), h("span", { class: "fnum fsize" }, sizes[i]),
+        h("span", { class: "fact" }, i === 0 ? h("button", { class: "btn", type: "button", onclick: () => download(f[4], f[3](), f[5]) }, f[6]) : btn(f[6], () => download(f[4], f[3](), f[5]))))));
+    const cmd = one ? one.id : "C-C";
+    body.replaceChildren(...[
+      h("p", { class: "ids" }, run ? [h("span", {}, "Run ", h("b", { class: "mono" }, run.run_id)), h("span", {}, "Schema ", h("b", { class: "mono" }, raws[0].schema_version || "n/a")),
+        h("span", {}, "Code ", h("b", { class: "mono" }, run.code_version || "n/a")), h("span", {}, "Seed ", h("b", { class: "mono" }, String(run.seed))), h("span", {}, "Generated ", h("b", {}, run.generated_at ? run.generated_at.replace("T", " ").slice(0, 16) + " ET" : "n/a"))]
+        : h("span", {}, `${claims.length} archived cases; pick one case to see its run identifiers.`)),
+      one && run && run.input_sha256 ? h("p", { class: "ids" }, h("span", {}, "Input hashes (SHA-256) · claim ", h("b", { class: "mono" }, run.input_sha256.claim_json.slice(0, 12)), " · monthly values ", h("b", { class: "mono" }, run.input_sha256.monthly_npz.slice(0, 12)))) : null,
+      one ? h("p", { class: "muted small" }, one.product.name, ", version ", one.product.version, ", DOI ", one.product.doi, " · ", kindChip(one.data_kind).textContent) : null,
+      h("div", { class: "file-rows", role: "group", "aria-label": "Files for the selected case" }, rows),
+      h("h2", { class: "section", id: "reproduce" }, "Reproduce a case"),
+      h("p", { class: "muted", style: "max-width:68ch" }, `These steps rebuild an archived case from the NASA source files. They do not reproduce a live Investigate session, which runs in your browser and is not stored. ${REPO_URL ? "" : "The public repository link will be added here at submission; the folders below are in the project repository."}`),
+      REPO_URL ? h("p", {}, h("a", { href: REPO_URL }, "Project repository (MIT licence)")) : null,
+      h("h3", {}, "1. Fetch the NASA data"),
+      h("p", { class: "muted small" }, cmd === "C-C" ? "C-C uses NASA POWER and needs no key." : "This case uses NASA Earthdata and needs a free Earthdata token in the EARTHDATA_TOKEN environment variable."),
+      h("pre", { class: "cmd" }, cmd === "C-C" ? "python data/scripts/fetch_power_cc.py\npython data/scripts/make_contract_cc.py" : `data\\.venv\\Scripts\\python.exe -I data\\scripts\\fetch_earthdata.py ${cmd}`),
+      h("h3", {}, "2. Run the statistics"),
+      h("pre", { class: "cmd" }, `cd stats\npython scripts/run_case.py ${cmd}`),
+      h("p", { class: "muted small" }, `This writes stats/out/${cmd}/bundle.json, the file you can download above. The run identifier and input hashes should match.`),
+      h("h3", {}, "3. Check it"),
+      h("pre", { class: "cmd" }, "cd stats\npython -m pytest\n\ncd ..\npython web/tools/serve.py   # then open http://127.0.0.1:8765/"),
+      null].filter(Boolean));
+  }
+  draw();
+
+  const ledger = h("section", { class: "section", id: "registration", "aria-labelledby": "reg-h" },
+    h("h2", { id: "reg-h" }, "Registration and amendments"),
+    h("p", {}, h("b", {}, "Registered before data download (10:29 AM ET), with two dated method amendments made on simulated data before results, and one disclosed cell-rule correction."), " All of it happened on Saturday, November 14, 2026."),
+    h("ol", { class: "ledger" },
+      h("li", {}, h("span", { class: "when" }, "10:29 AM ET"), h("b", {}, "Registration"), "Before any claim data were downloaded, we wrote down three claims with their regions, seasons and periods (Alaska air temperature, Sahel rainfall, southeastern US land surface temperature). We also wrote down the methods: Mann-Kendall with the Hamed-Rao correction as the one regional test, the four-hearing ladder for the map, and Benjamini-Hochberg at q = 0.10. A fourth claim, Wisconsin smoke and haze, was added at 10:35 AM ET, also before any of its data."),
+      h("li", {}, h("span", { class: "when" }, "11:22 AM ET (addendum 2)"), h("b", {}, "Amendment 1: the regional test"), "Simulations on synthetic series, run before any claim result, showed Hamed-Rao raised too many false alarms (about 7% instead of 5%) at the persistence of the Alaska series. The shipped test became the candidate that passes the false-alarm check and has the most power. For Alaska that is Yue-Wang. The registered Hamed-Rao and the raw test stay on the page as context."),
+      h("li", {}, h("span", { class: "when" }, "Before the other claims were run"), h("b", {}, "Amendment 2: the bias bar"), "The pass bar for bias in the Sen slope was relaxed (bias within 3 Monte Carlo standard errors, or within 0.025 standard deviations per decade), because the stricter bar would fail about two scenarios by chance alone and five failed, all negligible in size. The original bar and its failures stay published. The Alaska case is unaffected."),
+      h("li", {}, h("span", { class: "when" }, "After the first Alaska result"), h("b", {}, "One correction: the cell-test rule"), "The first run chose the cell test with the highest false-discovery power instead of following the written rule (keep the shipped test if it keeps false-discovery control). We corrected it after seeing the first Alaska result. Both runs are kept and disclosed. It changes the map (hearings 3 and 4), not the regional test.")),
+    h("p", {}, "So the question, region, season and period were registered before the data and not changed. The methods were not run once, exactly as registered: they were amended twice on simulated data before results, and one cell rule was corrected afterwards. A registered question with amended methods is not an unchanged preregistered analysis, and we do not claim it is. The full text is in event_record/WP0_CLAIM_REGISTRATION.md and event_record/STATS_LOG.md in the project repository."));
+
+  const credits = h("section", { class: "section", "aria-labelledby": "cr-h" }, h("h2", { id: "cr-h" }, "Sources, tools and credits"),
+    h("p", { style: "max-width:68ch" }, "NASA Earth data products are named on each case, with product, version and DOI. Maps: coastlines and country borders from Natural Earth (public domain) via the world-atlas package 2.0.2 (ISC licence); US state outlines from the US Census Bureau cartographic boundary files via the us-atlas package 3.0.1 (ISC licence). Live data in Investigate: NASA POWER (MERRA-2 and CERES based parameters), fetched from your browser to NASA. Statistics checked against the pymannkendall package. The project is MIT licensed; the generic starter theme is disclosed as pre-existing and MIT licensed. Parts of the code and the sentence templates were produced with LLM assistance that Walter Guevara directed and checked. Not endorsed by NASA."));
+
+  return { title: "Data & provenance", node: h("div", {},
+    h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "Data & provenance"),
+      h("p", { class: "lede" }, "Download the archived case files and check any number yourself. These files cover registered cases only, not your own Investigate session."),
+      b.synthetic ? h("p", { class: "callout" }, h("b", {}, "Synthetic data. "), b.notice || "These files hold placeholder numbers, not results.") : null),
+    h("div", { class: "prov-select" }, h("label", { for: "prov-case" }, "Case"), select),
+    body, ledger, credits) };
 }

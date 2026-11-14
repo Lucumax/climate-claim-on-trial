@@ -1,0 +1,46 @@
+{
+ "claim": "C-A",
+ "n_granules": 75,
+ "shape_monthly_npz": [
+  75,
+  28,
+  58
+ ],
+ "native_shape": [
+  75,
+  140,
+  290
+ ],
+ "agg_k": 5,
+ "cells_written": 1624,
+ "valid_fraction_all": 0.7784811165845649,
+ "valid_fraction_min_month": 0.7770935960591133,
+ "valid_fraction_by_calendar_month_mean": {
+  "6": 0.7784975369458128,
+  "7": 0.7783743842364532,
+  "8": 0.7785714285714286
+ },
+ "support_cells": 1264,
+ "valid_fraction_within_support": 0.9998417721518987,
+ "min_month_valid_fraction_within_support": 0.9984177215189873,
+ "cells_never_valid": 359,
+ "lat_range": [
+  30.12499999999999,
+  36.874999999999986
+ ],
+ "lon_range": [
+  -89.87499999999999,
+  -75.62499999999999
+ ],
+ "routes": [
+  "opendap"
+ ],
+ "decode_attrs_first_granule": {
+  "units": "K",
+  "valid_range": "[ 7500 65535]",
+  "_FillValue": "0",
+  "scale_factor": "0.02",
+  "add_offset": "0.0"
+ },
+ "note": "Counts of valid cells only; no trend statistic computed."
+}

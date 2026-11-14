@@ -1,0 +1,920 @@
+{
+ "claim": "C-B",
+ "short_name": "GPM_3IMERGM",
+ "version": "07",
+ "doi": "10.5067/GPM/IMERG/3B-MONTH/07",
+ "concept_id": "C2723754851-GES_DISC",
+ "access_route": "Earthdata Login via environment token; OPeNDAP server-side subset where available, else one whole granule at a time, subset locally, raw deleted",
+ "retrieved_utc_start": "2026-11-14T16:30:48.647865+00:00",
+ "retrieved_utc_end": "2026-11-14T16:35:13.752038+00:00",
+ "granules": [
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010601-S000000-E235959.06.V07B.HDF5",
+   "year": 2001,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010701-S000000-E235959.07.V07B.HDF5",
+   "year": 2001,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010801-S000000-E235959.08.V07B.HDF5",
+   "year": 2001,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010901-S000000-E235959.09.V07B.HDF5",
+   "year": 2001,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020601-S000000-E235959.06.V07B.HDF5",
+   "year": 2002,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020701-S000000-E235959.07.V07B.HDF5",
+   "year": 2002,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020801-S000000-E235959.08.V07B.HDF5",
+   "year": 2002,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020901-S000000-E235959.09.V07B.HDF5",
+   "year": 2002,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030601-S000000-E235959.06.V07B.HDF5",
+   "year": 2003,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030701-S000000-E235959.07.V07B.HDF5",
+   "year": 2003,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030801-S000000-E235959.08.V07B.HDF5",
+   "year": 2003,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030901-S000000-E235959.09.V07B.HDF5",
+   "year": 2003,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040601-S000000-E235959.06.V07B.HDF5",
+   "year": 2004,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040701-S000000-E235959.07.V07B.HDF5",
+   "year": 2004,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040801-S000000-E235959.08.V07B.HDF5",
+   "year": 2004,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040901-S000000-E235959.09.V07B.HDF5",
+   "year": 2004,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050601-S000000-E235959.06.V07B.HDF5",
+   "year": 2005,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050701-S000000-E235959.07.V07B.HDF5",
+   "year": 2005,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050801-S000000-E235959.08.V07B.HDF5",
+   "year": 2005,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050901-S000000-E235959.09.V07B.HDF5",
+   "year": 2005,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060601-S000000-E235959.06.V07B.HDF5",
+   "year": 2006,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060701-S000000-E235959.07.V07B.HDF5",
+   "year": 2006,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060801-S000000-E235959.08.V07B.HDF5",
+   "year": 2006,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060901-S000000-E235959.09.V07B.HDF5",
+   "year": 2006,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070601-S000000-E235959.06.V07B.HDF5",
+   "year": 2007,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070701-S000000-E235959.07.V07B.HDF5",
+   "year": 2007,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070801-S000000-E235959.08.V07B.HDF5",
+   "year": 2007,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070901-S000000-E235959.09.V07B.HDF5",
+   "year": 2007,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080601-S000000-E235959.06.V07B.HDF5",
+   "year": 2008,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080701-S000000-E235959.07.V07B.HDF5",
+   "year": 2008,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080801-S000000-E235959.08.V07B.HDF5",
+   "year": 2008,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080901-S000000-E235959.09.V07B.HDF5",
+   "year": 2008,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090601-S000000-E235959.06.V07B.HDF5",
+   "year": 2009,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090701-S000000-E235959.07.V07B.HDF5",
+   "year": 2009,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090801-S000000-E235959.08.V07B.HDF5",
+   "year": 2009,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090901-S000000-E235959.09.V07B.HDF5",
+   "year": 2009,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100601-S000000-E235959.06.V07B.HDF5",
+   "year": 2010,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100701-S000000-E235959.07.V07B.HDF5",
+   "year": 2010,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100801-S000000-E235959.08.V07B.HDF5",
+   "year": 2010,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100901-S000000-E235959.09.V07B.HDF5",
+   "year": 2010,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110601-S000000-E235959.06.V07B.HDF5",
+   "year": 2011,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110701-S000000-E235959.07.V07B.HDF5",
+   "year": 2011,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110801-S000000-E235959.08.V07B.HDF5",
+   "year": 2011,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110901-S000000-E235959.09.V07B.HDF5",
+   "year": 2011,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120601-S000000-E235959.06.V07B.HDF5",
+   "year": 2012,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120701-S000000-E235959.07.V07B.HDF5",
+   "year": 2012,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120801-S000000-E235959.08.V07B.HDF5",
+   "year": 2012,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120901-S000000-E235959.09.V07B.HDF5",
+   "year": 2012,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130601-S000000-E235959.06.V07B.HDF5",
+   "year": 2013,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130701-S000000-E235959.07.V07B.HDF5",
+   "year": 2013,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130801-S000000-E235959.08.V07B.HDF5",
+   "year": 2013,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130901-S000000-E235959.09.V07B.HDF5",
+   "year": 2013,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140601-S000000-E235959.06.V07B.HDF5",
+   "year": 2014,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140701-S000000-E235959.07.V07B.HDF5",
+   "year": 2014,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140801-S000000-E235959.08.V07B.HDF5",
+   "year": 2014,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140901-S000000-E235959.09.V07B.HDF5",
+   "year": 2014,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150601-S000000-E235959.06.V07B.HDF5",
+   "year": 2015,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150701-S000000-E235959.07.V07B.HDF5",
+   "year": 2015,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150801-S000000-E235959.08.V07B.HDF5",
+   "year": 2015,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150901-S000000-E235959.09.V07B.HDF5",
+   "year": 2015,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160601-S000000-E235959.06.V07B.HDF5",
+   "year": 2016,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160701-S000000-E235959.07.V07B.HDF5",
+   "year": 2016,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160801-S000000-E235959.08.V07B.HDF5",
+   "year": 2016,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160901-S000000-E235959.09.V07B.HDF5",
+   "year": 2016,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170601-S000000-E235959.06.V07B.HDF5",
+   "year": 2017,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170701-S000000-E235959.07.V07B.HDF5",
+   "year": 2017,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170801-S000000-E235959.08.V07B.HDF5",
+   "year": 2017,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170901-S000000-E235959.09.V07B.HDF5",
+   "year": 2017,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180601-S000000-E235959.06.V07B.HDF5",
+   "year": 2018,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180701-S000000-E235959.07.V07B.HDF5",
+   "year": 2018,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180801-S000000-E235959.08.V07B.HDF5",
+   "year": 2018,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180901-S000000-E235959.09.V07B.HDF5",
+   "year": 2018,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190601-S000000-E235959.06.V07B.HDF5",
+   "year": 2019,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190701-S000000-E235959.07.V07B.HDF5",
+   "year": 2019,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190801-S000000-E235959.08.V07B.HDF5",
+   "year": 2019,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190901-S000000-E235959.09.V07B.HDF5",
+   "year": 2019,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200601-S000000-E235959.06.V07B.HDF5",
+   "year": 2020,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200701-S000000-E235959.07.V07B.HDF5",
+   "year": 2020,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200801-S000000-E235959.08.V07B.HDF5",
+   "year": 2020,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200901-S000000-E235959.09.V07B.HDF5",
+   "year": 2020,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210601-S000000-E235959.06.V07B.HDF5",
+   "year": 2021,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210701-S000000-E235959.07.V07B.HDF5",
+   "year": 2021,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210801-S000000-E235959.08.V07B.HDF5",
+   "year": 2021,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210901-S000000-E235959.09.V07B.HDF5",
+   "year": 2021,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220601-S000000-E235959.06.V07B.HDF5",
+   "year": 2022,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220701-S000000-E235959.07.V07B.HDF5",
+   "year": 2022,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220801-S000000-E235959.08.V07B.HDF5",
+   "year": 2022,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220901-S000000-E235959.09.V07B.HDF5",
+   "year": 2022,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230601-S000000-E235959.06.V07B.HDF5",
+   "year": 2023,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230701-S000000-E235959.07.V07B.HDF5",
+   "year": 2023,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230801-S000000-E235959.08.V07B.HDF5",
+   "year": 2023,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230901-S000000-E235959.09.V07B.HDF5",
+   "year": 2023,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240601-S000000-E235959.06.V07B.HDF5",
+   "year": 2024,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240701-S000000-E235959.07.V07B.HDF5",
+   "year": 2024,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240801-S000000-E235959.08.V07B.HDF5",
+   "year": 2024,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240901-S000000-E235959.09.V07B.HDF5",
+   "year": 2024,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250601-S000000-E235959.06.V07B.HDF5",
+   "year": 2025,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250701-S000000-E235959.07.V07B.HDF5",
+   "year": 2025,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250801-S000000-E235959.08.V07B.HDF5",
+   "year": 2025,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250901-S000000-E235959.09.V07B.HDF5",
+   "year": 2025,
+   "month": 9,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 33600,
+   "cells": 33600
+  }
+ ],
+ "aggregation": "none (native grid)",
+ "decode": "MODIS: real = scale_factor*(stored - add_offset), fill and out-of-valid-range set to NaN; IMERG: mm/hr x 24 = mm/day, negatives (fill) set to NaN",
+ "files": {
+  "C-B_cmr_granules.json": "84d61201a4d1a789f329202a7af2cc4104149b61eae91ab819bcbd32d4ac907a",
+  "C-B_qc.json": "fd22ff0f0b474573c2ef35a87ef773ae9274ab13157ff372b1409f68c7120a17",
+  "claim.json": "fa961a2438673b9850c26fed4935da8343f44256b68d5b3076cfdc1e43fbdbb9",
+  "monthly.npz": "ccd0548cfd33a7ab869249be889359b70152466e78df27c4c8a39b6a071c2adb"
+ }
+}

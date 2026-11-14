@@ -1,0 +1,30 @@
+{
+ "claim_id": "C-D",
+ "claim_text": "Summer aerosol optical depth over Wisconsin has increased",
+ "variable": "AOD_550_Dark_Target_Deep_Blue_Combined_Mean_Mean (MODIS Aqua aerosol optical depth at 550 nm)",
+ "variable_plain": "summer aerosol optical depth (how much haze particles block the sunlight)",
+ "units": "1 (unitless)",
+ "direction": "increase",
+ "season_months": [
+  6,
+  7,
+  8
+ ],
+ "period": [
+  2003,
+  2025
+ ],
+ "region_name": "Wisconsin",
+ "region_box": {
+  "lat_min": 42.5,
+  "lat_max": 47.1,
+  "lon_min": -92.9,
+  "lon_max": -86.8
+ },
+ "product": {
+  "name": "MYD08_M3 (MODIS/Aqua Aerosol Cloud Water Vapor Ozone Monthly L3 Global 1Deg CMG)",
+  "version": "6.1",
+  "doi": "10.5067/MODIS/MYD08_M3.061"
+ },
+ "is_model_data": false
+}

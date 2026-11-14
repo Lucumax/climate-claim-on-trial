@@ -1,0 +1,696 @@
+{
+ "claim": "C-A",
+ "short_name": "MOD11C3",
+ "version": "061",
+ "doi": "10.5067/MODIS/MOD11C3.061",
+ "concept_id": "C2565788897-LPCLOUD",
+ "access_route": "Earthdata Login via environment token; OPeNDAP server-side subset where available, else one whole granule at a time, subset locally, raw deleted",
+ "retrieved_utc_start": "2026-11-14T16:41:08.166989+00:00",
+ "retrieved_utc_end": "2026-11-14T16:45:11.930376+00:00",
+ "granules": [
+  {
+   "granule_ur": "MOD11C3.A2001152.061.2020094140405",
+   "year": 2001,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31492,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2001182.061.2020097064005",
+   "year": 2001,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31514,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2001213.061.2020099180647",
+   "year": 2001,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31523,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2002152.061.2020118060151",
+   "year": 2002,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2002182.061.2020149191104",
+   "year": 2002,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31523,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2002213.061.2020149193932",
+   "year": 2002,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2003152.061.2020150004137",
+   "year": 2003,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2003182.061.2020150042221",
+   "year": 2003,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2003213.061.2020150191611",
+   "year": 2003,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31516,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2004153.061.2020181195359",
+   "year": 2004,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31512,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2004183.061.2020199042852",
+   "year": 2004,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31514,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2004214.061.2020208024206",
+   "year": 2004,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2005152.061.2020246043059",
+   "year": 2005,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2005182.061.2020247152632",
+   "year": 2005,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31516,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2005213.061.2020248223958",
+   "year": 2005,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31516,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2006152.061.2020292225106",
+   "year": 2006,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31516,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2006182.061.2020285084715",
+   "year": 2006,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31519,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2006213.061.2020286063353",
+   "year": 2006,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31525,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2007152.061.2021068024232",
+   "year": 2007,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31517,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2007182.061.2021070203244",
+   "year": 2007,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2007213.061.2021075030450",
+   "year": 2007,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2008153.061.2021104005726",
+   "year": 2008,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31524,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2008183.061.2021107004534",
+   "year": 2008,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31511,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2008214.061.2021108180626",
+   "year": 2008,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31524,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2009152.061.2021144070554",
+   "year": 2009,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31522,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2009182.061.2021145165618",
+   "year": 2009,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2009213.061.2021148103932",
+   "year": 2009,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2010152.061.2021176021431",
+   "year": 2010,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31523,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2010182.061.2021177070804",
+   "year": 2010,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31517,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2010213.061.2021178214058",
+   "year": 2010,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31524,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2011152.061.2021196175424",
+   "year": 2011,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31515,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2011182.061.2021198053942",
+   "year": 2011,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31517,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2011213.061.2021200015457",
+   "year": 2011,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31525,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2012153.061.2021222115722",
+   "year": 2012,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31521,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2012183.061.2021226214145",
+   "year": 2012,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31511,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2012214.061.2021231123740",
+   "year": 2012,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2013152.061.2021306124435",
+   "year": 2013,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31514,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2013182.061.2021306125010",
+   "year": 2013,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31513,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2013213.061.2021308122542",
+   "year": 2013,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31519,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2014152.061.2021335172331",
+   "year": 2014,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2014182.061.2021338041916",
+   "year": 2014,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2014213.061.2021339145154",
+   "year": 2014,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31512,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2015152.061.2021358204659",
+   "year": 2015,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2015182.061.2021360043245",
+   "year": 2015,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31517,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2015213.061.2021361100124",
+   "year": 2015,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2016153.061.2022016221146",
+   "year": 2016,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31523,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2016183.061.2022018055805",
+   "year": 2016,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31526,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2016214.061.2022019051824",
+   "year": 2016,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31525,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2017152.061.2021306102554",
+   "year": 2017,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31510,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2017182.061.2021308043120",
+   "year": 2017,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31513,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2017213.061.2021309131707",
+   "year": 2017,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2018152.061.2021350141459",
+   "year": 2018,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31521,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2018182.061.2021350141511",
+   "year": 2018,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31512,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2018213.061.2021350141511",
+   "year": 2018,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2019152.061.2020355101541",
+   "year": 2019,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31515,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2019182.061.2020357054550",
+   "year": 2019,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31523,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2019213.061.2020359034216",
+   "year": 2019,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2020153.061.2021012103333",
+   "year": 2020,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31519,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2020183.061.2021013113245",
+   "year": 2020,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2020214.061.2021014160553",
+   "year": 2020,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2021152.061.2021190161921",
+   "year": 2021,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31519,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2021182.061.2021213130808",
+   "year": 2021,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31517,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2021213.061.2021244114947",
+   "year": 2021,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2022152.061.2022201162837",
+   "year": 2022,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31523,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2022182.061.2022227150912",
+   "year": 2022,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31516,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2022213.061.2022244124553",
+   "year": 2022,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31510,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2023152.061.2023193054115",
+   "year": 2023,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31520,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2023182.061.2023215224507",
+   "year": 2023,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31517,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2023213.061.2023250152840",
+   "year": 2023,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31522,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2024153.061.2024187024328",
+   "year": 2024,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31513,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2024183.061.2024226150454",
+   "year": 2024,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31504,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2024214.061.2024267190123",
+   "year": 2024,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31519,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2025152.061.2025182145012",
+   "year": 2025,
+   "month": 6,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31519,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2025182.061.2025213154157",
+   "year": 2025,
+   "month": 7,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31518,
+   "cells": 40600
+  },
+  {
+   "granule_ur": "MOD11C3.A2025213.061.2025246014643",
+   "year": 2025,
+   "month": 8,
+   "route": "opendap",
+   "sha256_raw": null,
+   "valid_cells": 31512,
+   "cells": 40600
+  }
+ ],
+ "aggregation": "block mean 5x5, block valid if >= 50% cells valid",
+ "decode": "C-A: LST_Day_CMG stored uint16, real K = 0.02*stored, stored 0 (fill) and outside valid_range 7500-65535 set to NaN, then minus 273.15 = degC; MODIS: real = scale_factor*(stored - add_offset), fill and out-of-valid-range set to NaN; IMERG: mm/hr x 24 = mm/day, negatives (fill) set to NaN",
+ "files": {
+  "C-A_cmr_granules.json": "5b2d055f8c3bb139c330c4a4381b25a820726bef9e74531920fcba2c6e2d9f31",
+  "C-A_qc.json": "7433ada6b0a477c1e49808ce143a359c3e6515dbdbb25bf86ffbb45f67f31bd5",
+  "C-A_subset_native.npz": "b17e82aeb5d1e71c256851c7110fcdeea22f6108eb1753f5dbbf0c47f17f33d6",
+  "claim.json": "c0ada91ac00168d0c1b24eb9fee5aa3a77773ce2e6bd7d5ffeead85d492e4df3",
+  "monthly.npz": "6b0c273d999b46c404dda083429a902335b2142c81f8bddadb400771855c250e"
+ }
+}

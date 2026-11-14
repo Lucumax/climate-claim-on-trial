@@ -1,0 +1,31 @@
+{
+ "claim_id": "C-B",
+ "claim_text": "Wet-season rainfall over the central Sahel has increased",
+ "variable": "precipitation (GPM IMERG Final Run monthly mean rain rate, converted to mm/day)",
+ "variable_plain": "wet-season rainfall",
+ "units": "mm/day",
+ "direction": "increase",
+ "season_months": [
+  6,
+  7,
+  8,
+  9
+ ],
+ "period": [
+  2001,
+  2025
+ ],
+ "region_name": "the central Sahel",
+ "region_box": {
+  "lat_min": 10,
+  "lat_max": 18,
+  "lon_min": -17,
+  "lon_max": 25
+ },
+ "product": {
+  "name": "GPM_3IMERGM (GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07 (GPM_3IMERGM))",
+  "version": "07",
+  "doi": "10.5067/GPM/IMERG/3B-MONTH/07"
+ },
+ "is_model_data": false
+}

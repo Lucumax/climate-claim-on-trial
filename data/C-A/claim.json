@@ -1,0 +1,30 @@
+{
+ "claim_id": "C-A",
+ "claim_text": "Summer daytime land surface temperature over the Southeastern United States has risen",
+ "variable": "LST_Day_CMG (MODIS Terra daytime land surface temperature)",
+ "variable_plain": "summer daytime land surface temperature",
+ "units": "degC",
+ "direction": "increase",
+ "season_months": [
+  6,
+  7,
+  8
+ ],
+ "period": [
+  2001,
+  2025
+ ],
+ "region_name": "the Southeastern United States",
+ "region_box": {
+  "lat_min": 30,
+  "lat_max": 37,
+  "lon_min": -90,
+  "lon_max": -75.5
+ },
+ "product": {
+  "name": "MOD11C3 (MODIS/Terra Land Surface Temperature/Emissivity Monthly L3 Global 0.05Deg CMG V061)",
+  "version": "061",
+  "doi": "10.5067/MODIS/MOD11C3.061"
+ },
+ "is_model_data": false
+}

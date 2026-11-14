@@ -36,7 +36,7 @@ def _load_token_helper():
 CLAIMS = {
     "C-A": dict(text="Summer daytime land surface temperature over the Southeastern United States has risen",
                 variable="LST_Day_CMG (MODIS Terra daytime land surface temperature)", plain="summer daytime land surface temperature",
-                units="K", months=[6, 7, 8], period=[2001, 2025], region="the Southeastern United States",
+                units="degC", months=[6, 7, 8], period=[2001, 2025], region="the Southeastern United States",
                 box=dict(lat_min=30, lat_max=37, lon_min=-90, lon_max=-75.5), agg=5, model=False),
     "C-B": dict(text="Wet-season rainfall over the central Sahel has increased",
                 variable="precipitation (GPM IMERG Final Run monthly mean rain rate, converted to mm/day)", plain="wet-season rainfall",
@@ -158,7 +158,7 @@ def opendap_subset(session, g, claim):
     with netCDF4.Dataset("mem.nc", memory=r.content) as ds:
         node = ds
         for part in p.strip("/").split("/")[:-1]: node = node[part]
-        v = node[var]; v.set_auto_mask(False); raw = np.array(v[:]); dims = list(v.dimensions)
+        v = node[var]; v.set_auto_maskandscale(False); raw = np.array(v[:]); dims = list(v.dimensions)  # raw stored ints; decode explicitly below (netCDF4 would otherwise auto-scale)
         attrs = {k: str(v.getncattr(k)) for k in v.ncattrs() if k in ("scale_factor", "add_offset", "_FillValue", "valid_range", "units")}
     if claim == "C-B":
         la, lo = b_axes(); return dict(values=b_finish(raw, dims, la, lo), lat=la, lon=lo, attrs=attrs, extra={})
@@ -237,9 +237,21 @@ def main():
         finally:
             p.unlink(missing_ok=True)
 
+    pre = {}
+    if not test and state["opendap"]:  # OPeNDAP requests are server-bound (about 40 s each for C-D), so fetch them in parallel; the download fallback stays sequential
+        from concurrent.futures import ThreadPoolExecutor
+        def _pf(g):
+            try: return opendap_subset(session, g, claim)
+            except AuthError: raise
+            except Exception as e: print("prefetch failed", g["year"], g["month"], type(e).__name__, str(e)[:100], flush=True); return None
+        with ThreadPoolExecutor(max_workers=int(arg("--workers", 6))) as ex:
+            for i, r in enumerate(ex.map(_pf, gl)):
+                pre[i] = r
+                if i % 10 == 0: print("prefetched", i, flush=True)
     for gi, g in enumerate(gl):
         res, how, h = None, "download", None
-        if state["opendap"]:
+        if pre.get(gi) is not None: res, how = pre[gi], "opendap"
+        elif state["opendap"] and not pre:
             try:
                 res = opendap_subset(session, g, claim); how = "opendap"
                 if test and gi == 0:  # cross-check against the whole-granule route
@@ -262,11 +274,14 @@ def main():
     assert all(np.allclose(v["lat"], lat) and np.allclose(v["lon"], lon) for v in vals), "grid changed between granules"
     cube = np.stack([v["values"] for v in vals]).astype(np.float32)
     year = np.array([g["year"] for g in gl], np.int16); month = np.array([g["month"] for g in gl], np.int8)
+    if claim == "C-A": cube = (cube.astype(np.float64) - 273.15).astype(np.float32)  # K -> degC (a unit change, not a claim change)
     native = cube
     if K > 1:
         cube = block_mean(native.astype(np.float64), K).astype(np.float32); lat, lon = block_axis(lat, K), block_axis(lon, K)
         np.savez_compressed(outdir / f"{claim}_subset_native.npz", values=native, lat=vals[0]["lat"], lon=vals[0]["lon"], year=year, month=month)
-    np.savez_compressed(outdir / "monthly.npz", values=cube, lat=lat, lon=lon, year=year, month=month)
+    # support mask: cells valid (after QC and aggregation) in at least half of the granules; cells outside it (ocean/water for LST) are not counted as missing
+    support = np.isfinite(cube).mean(axis=0) >= 0.5
+    np.savez_compressed(outdir / "monthly.npz", values=cube, lat=lat, lon=lon, year=year, month=month, support=support)
 
     c = meta["collection"]
     claim_json = {"claim_id": claim, "claim_text": C["text"], "variable": C["variable"], "variable_plain": C["plain"], "units": C["units"],
@@ -281,14 +296,14 @@ def main():
           "cells_written": int(cube.shape[1] * cube.shape[2]), "valid_fraction_all": float(np.isfinite(cube).mean()),
           "valid_fraction_min_month": float(min(np.isfinite(cube[i]).mean() for i in range(len(year)))),
           "valid_fraction_by_calendar_month_mean": {str(k): float(np.mean(v)) for k, v in sorted(per_month.items())},
-          "cells_never_valid": int((~np.isfinite(cube).any(axis=0)).sum()), "lat_range": [float(lat.min()), float(lat.max())], "lon_range": [float(lon.min()), float(lon.max())],
+          "support_cells": int(support.sum()), "valid_fraction_within_support": float(np.isfinite(cube[:, support]).mean()), "min_month_valid_fraction_within_support": float(min(np.isfinite(cube[i][support]).mean() for i in range(len(year)))), "cells_never_valid": int((~np.isfinite(cube).any(axis=0)).sum()), "lat_range": [float(lat.min()), float(lat.max())], "lon_range": [float(lon.min()), float(lon.max())],
           "routes": sorted({x["route"] for x in got}), "decode_attrs_first_granule": {k: str(v) for k, v in vals[0]["attrs"].items()},
           "note": "Counts of valid cells only; no trend statistic computed."}
     (outdir / f"{claim}_qc.json").write_text(json.dumps(qc, indent=1))
     prov = {"claim": claim, "short_name": c["short_name"], "version": c["version"], "doi": c["doi"], "concept_id": c["concept_id"],
             "access_route": "Earthdata Login via environment token; OPeNDAP server-side subset where available, else one whole granule at a time, subset locally, raw deleted",
             "retrieved_utc_start": t0.isoformat(), "retrieved_utc_end": t1.isoformat(), "granules": got, "aggregation": f"block mean {K}x{K}, block valid if >= 50% cells valid" if K > 1 else "none (native grid)",
-            "decode": "MODIS: real = scale_factor*(stored - add_offset), fill and out-of-valid-range set to NaN; IMERG: mm/hr x 24 = mm/day, negatives (fill) set to NaN",
+            "decode": "C-A: LST_Day_CMG stored uint16, real K = 0.02*stored, stored 0 (fill) and outside valid_range 7500-65535 set to NaN, then minus 273.15 = degC; MODIS: real = scale_factor*(stored - add_offset), fill and out-of-valid-range set to NaN; IMERG: mm/hr x 24 = mm/day, negatives (fill) set to NaN",
             "files": {p.name: sha_file(p) for p in sorted(outdir.glob("*")) if p.suffix in (".npz", ".json") and "provenance" not in p.name}}
     (outdir / f"{claim}_provenance.json").write_text(json.dumps(prov, indent=1))
     print("wrote", outdir, "monthly.npz", (outdir / "monthly.npz").stat().st_size / 1e6, "MB; cells", cube.shape[1:], "valid frac", round(qc["valid_fraction_all"], 4))

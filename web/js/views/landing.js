@@ -1,14 +1,25 @@
-// Home: one question, one worked example, one action. The example computes two selected-window slopes and the full-record slope in the browser
-// from the archived regional series (the C-C bundle), with the same least squares routine the Investigate page uses.
-import { h, fmtNum, minus, U, range } from "../util.js";
+// Home: lead with the scientific surprise. One NASA record, two short windows, two opposite headlines, and the whole record beside them.
+// The opener computes the two selected-window slopes and the full-record slope in the browser from the archived regional series (the C-C bundle),
+// with the same least squares routine the Investigate page uses. Showcase bands below it mount when they come near the viewport.
+import { h, fmtNum, U, range } from "../util.js";
 import { olsTest } from "../stats.js";
 import { windowsChart } from "../chart.js";
 
-// Home hero, right half: "where the trials are held". One Earth with all registered case regions, each drawn by its per-cell trend per decade;
-// withheld cases are hatched. It starts paused and never turns by itself. Phones and browsers without WebGL get a labelled static poster
+// "Where the trials are held": one Earth with all registered case regions, each drawn by its per-cell trend per decade; withheld cases are hatched.
+// It starts paused and never turns by itself. Browsers without WebGL get a labelled static poster
 // (web/img/globe-trials-light.jpg and -dark.jpg, a screenshot of this same globe) with the same case list under it.
 const POSTER_ALT = "Earth seen from above North America, with four outlined case regions. Interior and western Alaska and the central Sahel are coloured by each cell's trend per decade; the Southeastern United States is hatched because its ruling is withheld, and Wisconsin is shown with its trend colours and a not-supported ruling.";
 const hasWebGL = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } };
+const phone = () => window.matchMedia("(max-width: 700px)").matches;
+
+// Run start() once node is near the viewport (or at once without IntersectionObserver). Returns a cancel function.
+export function whenNear(node, start, margin = "300px") {
+  if (!("IntersectionObserver" in window)) { start(); return () => {}; }
+  const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: margin });
+  io.observe(node);
+  return () => io.disconnect();
+}
+
 function heroGlobe(claims) {
   const host = h("div", { class: "hero-globe-host" });
   const cap = h("figcaption", { class: "hero-cap" }, h("b", {}, "Where the trials are held."), " Four registered regions, each drawn by its per-cell trend per decade. Click a region or a case below to open it. Imagery: NASA Blue Marble, muted.");
@@ -19,8 +30,8 @@ function heroGlobe(claims) {
   async function start() {
     const mod = await import("../viz/globe-trials.js").catch(() => null); if (!mod || dead) return;
     const still = async () => { host.replaceChildren(); handle = await mod.render(host, claims, { poster: poster(), caption: cap }); };
-    if (window.matchMedia("(max-width: 700px)").matches || !hasWebGL()) { await still(); return; }
-    try { handle = await mod.render(host, claims, { caption: cap, height: "clamp(340px, 38vw, 500px)" }); if (dead && handle) handle.destroy(); }
+    if (!hasWebGL()) { await still(); return; }
+    try { handle = await mod.render(host, claims, { caption: cap, height: phone() ? "280px" : "clamp(340px, 38vw, 500px)", touchRotate: !phone() }); if (dead && handle) handle.destroy(); }
     catch (e) { console.error(e); if (!dead) { host.replaceChildren(); await still(); } }
   }
   return { node: fig, start, dispose() { dead = true; if (handle) { try { handle.destroy(); } catch (e) { /* ignore */ } handle = null; } } };
@@ -46,51 +57,58 @@ function example(b) {
 }
 
 const ds = c => /MERRA-2/.test(c.product.name) ? "NASA MERRA-2" : c.product.name;
-const place = c => c.region.name.charAt(0).toLowerCase() + c.region.name.slice(1);
-const headline = (c, slope) => { const p = c.region.name.charAt(0).toUpperCase() + c.region.name.slice(1); return slope < 0 ? `${p} is cooling` : `${p} is warming fast`; };
+const kindWord = c => (c.data_kind === "model_reanalysis" ? "model-based" : "satellite observation");
+const placeShort = c => (/Alaska/.test(c.region.name) ? "Alaska" : c.region.name.charAt(0).toUpperCase() + c.region.name.slice(1));
+const headline = (c, slope) => (slope < 0 ? "Cooling" : "Warming fast");
+const signedFmt = v => fmtNum(v, 2).replace(/^(\d)/, "+$1");
 
 export function landing(b) {
   const ex = example(b);
-  const globe = ex ? heroGlobe(b.claims) : null;
+  const handles = [], cancels = [];
   const u = ex ? U(ex.c.regional.units) : "";
-  const card = x => h("article", { class: "hl-card " + x.cls },
-    h("p", { class: "hl-window" }, "Selected window ", range(x.a, x.b)),
-    h("h3", {}, headline(ex.c, x.slope)),
-    h("p", { class: "hl-num num" }, fmtNum(x.slope, 2).replace(/^(\d)/, "+$1"), " ", u, h("small", {}, `per decade, ${x.n} years`)),
-    h("span", { class: "hl-mark", "aria-hidden": "true" }, "selected window"));
-  const panel = h("div", { class: "reveal-panel", id: "reveal-panel", hidden: true, tabindex: "-1" });
-  let revealBtn;
+  let opener = null;
   if (ex) {
-    const f = ex.full, [a, bb] = ex.w;
-    panel.append(h("div", { class: "fig" }, windowsChart({
-      x: b.claims.find(q => q === ex.c).regional.years, y: ex.c.regional.anomaly, units: u, windows: ex.w.map(x => ({ ...x, label: range(x.a, x.b) })),
-      full: { slope: f.slope, intercept: f.intercept, label: `Whole record ${range(f.y0, f.y1)}: ${fmtNum(f.slope, 2).replace(/^(\d)/, "+$1")} ${u} per decade` },
-      describe: `Yearly regional temperature anomaly for ${ex.c.region.name}, ${f.y0} to ${f.y1}. The ${range(a.a, a.b)} window slopes ${fmtNum(a.slope, 2)} ${u} per decade and the ${range(bb.a, bb.b)} window slopes ${fmtNum(bb.slope, 2)} ${u} per decade. The whole record slopes ${fmtNum(f.slope, 2)} ${u} per decade.`,
-    })),
-    h("p", { class: "verdict-line" }, `Both headlines are arithmetic on real data. Over all ${f.n} years the trend is ${fmtNum(f.slope, 2).replace(/^(\d)/, "+$1")} ${u} per decade, and neither short window is the record.`),
-    h("p", { class: "note" }, `Least squares slopes of the yearly regional anomaly (${ds(ex.c)}, ${ex.c.season.toLowerCase()}). The case file tests the whole record with a different method, chosen by simulation.`),
-    h("a", { class: "btn-text", href: "#/case/" + ex.c.id }, "See how the registered case tests it"));
-    revealBtn = h("button", { class: "btn-quiet", type: "button", "aria-expanded": "false", "aria-controls": "reveal-panel", onclick: e => {
-      const open = panel.hidden; panel.hidden = !open; e.currentTarget.setAttribute("aria-expanded", String(open));
-      e.currentTarget.textContent = open ? "Hide the full record" : "Reveal the full record";
-      if (open) panel.focus({ preventScroll: false });
-    } }, "Reveal the full record");
-  }
-  return { title: "How strong is the evidence for climate change here?", node: h("div", {},
-    h("section", { class: "hero" + (globe ? " hero-split" : "") },
-      h("div", { class: "hero-text" },
+    const c = ex.c, f = ex.full, [wa, wb] = ex.w, p = placeShort(c), per = range(f.y0, f.y1);
+    const chart = windowsChart({
+      x: c.regional.years, y: c.regional.anomaly, units: u, compact: true, windows: ex.w.map(x => ({ ...x, label: range(x.a, x.b) })),
+      full: { slope: f.slope, intercept: f.intercept, label: `Whole record ${per}: ${signedFmt(f.slope)} ${u} per decade` },
+      describe: `Yearly regional temperature anomaly for ${c.region.name}, ${f.y0} to ${f.y1}. The ${range(wa.a, wa.b)} window slopes ${fmtNum(wa.slope, 2)} ${u} per decade and the ${range(wb.a, wb.b)} window slopes ${fmtNum(wb.slope, 2)} ${u} per decade. The whole record slopes ${fmtNum(f.slope, 2)} ${u} per decade.`,
+    });
+    const radios = [];
+    const pick = (x, on) => { chart.setActive(on ? x.cls : null); radios.forEach(r => r.closest("label").classList.toggle("on", r.checked)); clear.hidden = !on; };
+    const choice = x => {
+      const input = h("input", { type: "radio", name: "hl-window", value: x.cls, onchange: () => pick(x, true) });
+      radios.push(input);
+      return h("label", { class: "hl-choice " + x.cls }, input,
+        h("span", { class: "hl-card" },
+          h("span", { class: "hl-head" }, h("b", {}, headline(c, x.slope)), h("span", { class: "hl-window" }, range(x.a, x.b))),
+          h("span", { class: "hl-num num" }, signedFmt(x.slope), h("small", {}, ` ${u} per decade`))));
+    };
+    const clear = h("button", { class: "btn-text hl-clear", type: "button", hidden: true, onclick: () => { radios.forEach(r => { r.checked = false; }); pick(null, false); } }, "Show both windows");
+    opener = h("section", { class: "opener", "aria-labelledby": "page-title" },
+      h("div", { class: "opener-text" },
         h("p", { class: "eyebrow brass" }, "NASA Earth data · trend detective"),
-        h("h1", { id: "page-title", tabindex: "-1" }, "How strong is the evidence for climate change here?"),
-        h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and ask different questions of the same record, and see whether the trend holds. The answer depends on how you ask."),
-        h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))),
-      globe ? globe.node : null),
-    ex ? h("section", { class: "example", "aria-labelledby": "ex-h" },
-      h("p", { class: "eyebrow" }, "A worked example"),
-      h("h2", { id: "ex-h" }, "Same NASA record, opposite headlines"),
-      h("p", { class: "example-sub" }, `One yearly series: ${ds(ex.c)} air temperature over ${place(ex.c)}, ${range(ex.c.period.start, ex.c.period.end)}. Choose the start and end years, and you choose the headline.`),
-      h("p", { class: "hl-label", role: "note" }, "Two headlines you could write from selected years"),
-      h("div", { class: "hl-pair" }, ex.w.map(card)),
-      h("p", { class: "hl-foot" }, "Illustrative headlines written from the numbers, not real news items."),
-      h("div", { class: "reveal" }, revealBtn), panel) : null),
-    afterMount: globe ? globe.start : null, dispose: globe ? globe.dispose : null };
+        h("h1", { id: "page-title", tabindex: "-1" }, "Same NASA record. Opposite headlines."),
+        h("p", { class: "lede" }, `${p}'s air temperature, ${per}. Two short windows tell different stories. The full record puts both in context.`),
+        h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))),
+      h("div", { class: "opener-ex", role: "group", "aria-labelledby": "ex-h" },
+        h("h2", { id: "ex-h" }, `Has ${p}'s air temperature risen?`),
+        h("p", { class: "opener-src" }, `${ds(c)} · ${kindWord(c)} · ${per}`),
+        h("div", { class: "fig" }, chart),
+        h("fieldset", { class: "hl-pick" }, h("legend", {}, "Choose a window to write its headline", clear), h("div", { class: "hl-pair" }, ex.w.map(choice))),
+        h("p", { class: "hl-whole" }, h("b", {}, "Whole record: "), h("span", { class: "num" }, `${signedFmt(f.slope)} ${u} per decade`), `, ${f.n} years. Neither short window is the record: selecting years changes the headline.`),
+        h("p", { class: "hl-foot" }, "Illustrative headlines, not news quotations. Slopes are least squares on the yearly anomaly; the registered case tests the whole record with a different method. ", h("a", { href: "#/case/" + c.id }, "See the case"))));
+  }
+  const globe = ex ? heroGlobe(b.claims) : null;
+  const globeBand = globe ? h("section", { class: "band band-globe", "aria-labelledby": "globe-h" },
+    h("div", { class: "band-head" }, h("h2", { id: "globe-h" }, "Four questions. Four case files."), h("p", {}, "Each registered claim was put on trial with its own NASA record. The globe shows where, and what each region's data did.")),
+    globe.node) : null;
+  const invite = h("section", { class: "band band-invite", "aria-labelledby": "inv-h" },
+    h("h2", { id: "inv-h" }, "Now ask your own question"),
+    h("p", {}, "Pick a NASA measurement, a place and a period. The answer updates as you choose, and the page keeps count of how many questions you have tried."),
+    h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/method" }, "How it works"), h("a", { class: "btn-text", href: "#/data" }, "Data and provenance")));
+  const fallbackHead = ex ? null : h("section", { class: "hero" }, h("h1", { id: "page-title", tabindex: "-1" }, "Same NASA record. Opposite headlines."), h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and ask different questions of the same record."), h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question")));
+  return { title: "Same NASA record, opposite headlines", node: h("div", { class: "home" }, opener, fallbackHead, globeBand, invite),
+    afterMount() { if (globe) cancels.push(whenNear(globe.node, globe.start)); },
+    dispose() { cancels.forEach(c => c()); if (globe) globe.dispose(); handles.forEach(x => x && x.destroy && x.destroy()); } };
 }

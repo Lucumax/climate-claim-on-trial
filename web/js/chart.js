@@ -108,7 +108,7 @@ export function trendChart(o) {
 export function windowsChart(o) {
   const yrs = o.x, n = yrs.length, y = o.y;
   const build = W => {
-    const narrow = W < 480, H = Math.round(Math.max(260, Math.min(380, W * 0.5))), m = { l: 48, r: 16, t: 28, b: 40 };
+    const narrow = W < 480, H = o.compact ? (narrow ? 200 : 260) : Math.round(Math.max(260, Math.min(380, W * 0.5))), m = { l: 48, r: 16, t: o.compact ? 40 : 28, b: 40 };
     const t0 = yrs.map(v => v - yrs[0]);
     const fitLine = w => {
       const idx = yrs.map((v, i) => i).filter(i => yrs[i] >= w.a && yrs[i] <= w.b);
@@ -122,7 +122,8 @@ export function windowsChart(o) {
     const svg = s("svg", { class: "chart", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": o.describe });
     const { ticks } = niceTicks(lo, hi, 5);
     for (const t of ticks) svg.append(s("line", { class: "grid", x1: m.l, x2: W - m.r, y1: ys(t), y2: ys(t) }), s("text", { x: m.l - 8, y: ys(t) + 4, "text-anchor": "end" }, ticksText(t)));
-    for (const yr of yrs) if (yr % 10 === 5 || yr === yrs[0] || yr === yrs[n - 1]) svg.append(s("text", { x: xs(yr), y: H - m.b + 20, "text-anchor": "middle" }, String(yr)), s("line", { class: "axis", x1: xs(yr), x2: xs(yr), y1: H - m.b, y2: H - m.b + 4 }));
+    const firstOk = xs(Math.ceil((yrs[0] + 1) / 10) * 10 - 5 > yrs[0] ? Math.ceil((yrs[0] + 1) / 10) * 10 - 5 : yrs[0] + 10) - xs(yrs[0]) >= 44;
+    for (const yr of yrs) if (yr % 10 === 5 || (yr === yrs[0] && firstOk) || yr === yrs[n - 1]) svg.append(s("text", { x: xs(yr), y: H - m.b + 20, "text-anchor": "middle" }, String(yr)), s("line", { class: "axis", x1: xs(yr), x2: xs(yr), y1: H - m.b, y2: H - m.b + 4 }));
     svg.append(s("line", { class: "axis", x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b }));
     if (lo < 0 && hi > 0) svg.append(s("line", { class: "zero", x1: m.l, x2: W - m.r, y1: ys(0), y2: ys(0) }));
     svg.append(s("text", { x: 12, y: (m.t + H - m.b) / 2, transform: `rotate(-90 12 ${(m.t + H - m.b) / 2})`, "text-anchor": "middle" }, `Anomaly (${o.units})`));
@@ -131,9 +132,14 @@ export function windowsChart(o) {
     svg.append(s("line", { class: "full-line", x1: xs(yrs[0]), x2: xs(yrs[n - 1]), y1: ys(fullY(yrs[0])), y2: ys(fullY(yrs[n - 1])) }));
     fl.forEach((f, i) => svg.append(s("line", { class: "win-line-" + o.windows[i].cls, x1: xs(f.x1), x2: xs(f.x2), y1: ys(f.y1), y2: ys(f.y2) })));
     for (let i = 0; i < n; i++) svg.append(s("circle", { class: "pt", cx: xs(yrs[i]), cy: ys(y[i]), r: narrow ? 3 : 3.4 }));
-    o.windows.forEach(w => svg.append(s("text", { class: "lbl-" + w.cls, x: (xs(w.a) + xs(w.b)) / 2, y: m.t - 10, "text-anchor": "middle" }, w.label)));
+    const cx = o.windows.map(w => (xs(w.a) + xs(w.b)) / 2), stagger = o.compact && cx.length > 1 && Math.abs(cx[0] - cx[1]) < 120;
+    o.windows.forEach((w, i) => svg.append(s("text", { class: "lbl-" + w.cls, x: cx[i], y: m.t - 10 - (stagger && i === 1 ? 16 : 0), "text-anchor": "middle" }, w.label)));
     return svg;
   };
   const key = h("div", { class: "chartkey", "aria-hidden": "true" }, [["k-pt", "Yearly regional anomaly"], ["k-ols", o.full.label]].map(([c, t]) => h("span", { class: c }, t)));
-  return h("div", {}, responsive(build), key);
+  // activeWindow ("a", "b" or none) emphasises one selected window and dims the other; the full record always stays visible. setActive() changes it at once.
+  const node = h("div", { class: "wchart" }, responsive(build), key);
+  node.setActive = cls => { if (cls) node.dataset.active = cls; else delete node.dataset.active; };
+  node.setActive(o.activeWindow);
+  return node;
 }

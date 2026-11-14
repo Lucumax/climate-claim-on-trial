@@ -149,6 +149,7 @@ export async function render(container, claims, options = {}) {
     globe = g;
     try { g.renderer().setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); } catch (e) { /* default ratio */ }
     const c = g.controls(); c.enablePan = false; c.autoRotate = false; c.minDistance = 110; c.maxDistance = 520; c.rotateSpeed = 0.55; c.zoomSpeed = 0.7;
+    if (options.touchRotate === false) { c.enableRotate = false; c.enableZoom = false; host.style.touchAction = "pan-y"; host.querySelectorAll("canvas").forEach((cv) => { cv.style.touchAction = "pan-y"; }); }   // phones: a finger on the globe scrolls the page
     tex = await new Promise((res) => { let n = 0; const iv = setInterval(() => { const m = g.globeMaterial().map; if (m) { clearInterval(iv); res(m); } else if (++n > 150) { clearInterval(iv); res(null); } }, 25); });
     if (!tex || destroyed) return;
     tex.dispose(); tex.image = texCanvas; tex.generateMipmaps = false; tex.minFilter = 1006;

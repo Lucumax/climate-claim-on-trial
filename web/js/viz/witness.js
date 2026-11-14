@@ -1,6 +1,6 @@
 // Witness check for C-A ("Cross-examine the witness"): when did the satellite look, and what did that do to its readings?
 // Two panels from data/witness/C-A.json: (a) local solar time of the MODIS Terra daytime overpass by year;
-// (b) daytime land surface temperature against two independent NASA POWER (MERRA-2) records, with the gap between the satellite and the skin temperature.
+// (b) daytime land surface temperature against two NASA POWER (MERRA-2) records, with the gap between the satellite and the skin temperature.
 // Exploratory check, not the registered test: nothing here replaces the case's ruling. Hand SVG, no dependencies.
 // render(container, data) -> {destroy, el}
 import { el, sv, tok, onTheme, sizeObserver, clamp, signed, plain, dataTable, nextId } from "./common.js";
@@ -22,14 +22,14 @@ export async function render(container, data) {
   const readout = el("p", { class: "viz-readout viz-num", "aria-live": "polite" });
   const wrap = el("div", { class: "viz-wit", tabindex: "0", role: "group", "aria-describedby": summaryId, "aria-label": "Witness check charts. Left and right arrow keys move between years." },
     el("div", {}, el("h3", {}, "(a) When Terra looked"), el("p", {}, "Local solar time of the daytime overpass, summer average, by year"), svgA),
-    el("div", {}, el("h3", {}, "(b) What it read, against two independent records"), el("p", {}, "Daytime land surface temperature, summer average, with NASA POWER skin and air temperature"), svgB,
+    el("div", {}, el("h3", {}, "(b) What it read, against a second NASA record"), el("p", {}, "Daytime land surface temperature, summer average, with NASA POWER skin and air temperature (a second NASA record, model-based, not fully independent)"), svgB,
       el("h3", { style: "margin-top:16px" }, "The gap: satellite minus POWER skin temperature"), svgC));
   const link = el("a", { href: SOURCE, target: "_blank", rel: "noopener" }, "NASA Science, “Terra: The End of An Era”, 2025");
   const lstGap = sm.sen_per_decade.lst_minus_ts, p = lstGap.mann_kendall_p;
   const text = el("div", { class: "viz-wit__text" },
-    el("p", {}, "NASA stopped adjusting Terra's orbit in 2020 and it now passes earlier in the morning (", link, "). Its daytime readings cooled relative to independent records by about ", plain(Math.abs(lstGap.per_decade), 2), " °C per decade (p = ", p < 0.01 ? p.toFixed(3) : p.toFixed(2), "), in step with the overpass time. After allowing for the drift, the record shows no clear trend either way (two adjustment methods disagree on sign)."),
+    el("p", {}, "NASA stopped adjusting Terra's orbit in 2020 and it now passes earlier in the morning (", link, "). Its daytime readings fell relative to the POWER skin temperature by about ", plain(Math.abs(lstGap.per_decade), 2), " °C per decade (p = ", p < 0.01 ? p.toFixed(3) : p.toFixed(2), "). The gap tracks the overpass time (r = ", plain(sm.gap_vs_view_time.pearson_r, 2), ", n = ", String(sm.gap_vs_view_time.n), " years), which fits an earlier overpass reading cooler, but year and overpass time move together here, so the cause is not proven. After allowing for the drift, the record shows no clear trend either way (two adjustment methods disagree on sign)."),
     el("p", { class: "viz-note" }, `The two adjustments give ${signed(ad.ols_with_view_time.slope_year_per_decade, 2)} °C per decade (regression on overpass time, 95% range ${signed(ad.ols_with_view_time.slope_ci95_per_decade[0], 2)} to ${signed(ad.ols_with_view_time.slope_ci95_per_decade[1], 2)}) and ${signed(ad.alternative_correction.sen.per_decade, 2)} (correction from the gap, 95% range ${signed(ad.alternative_correction.sen.ci95_low, 2)} to ${signed(ad.alternative_correction.sen.ci95_high, 2)}); both ranges include zero. The overpass time and the year move together, so this shows size and direction, not an exact correction.`),
-    el("p", { class: "viz-note" }, "POWER skin (TS) and air (T2M) temperatures are MERRA-2 model output, not observations. MODIS sees clear skies only, so a steady offset from POWER is expected; a changing one is what panel (b) looks at. Exploratory check, not the registered test: the registered result and the withheld ruling above stay as they are."));
+    el("p", { class: "viz-note" }, "POWER skin (TS) and air (T2M) temperatures are MERRA-2 model output, not observations, and both come from the same model: a second NASA record, model-based, not fully independent of the satellite or of each other. MODIS sees clear skies only, so a steady offset from POWER is expected; a changing one is what panel (b) looks at. Exploratory check, not the registered test: the registered result and the withheld ruling above stay as they are."));
   const rows = Y.map((y, i) => [String(y), hm(T[i]), LST[i].toFixed(2), TS[i].toFixed(2), T2[i].toFixed(2), GAP[i].toFixed(2)]);
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Values by year (table)"),
     dataTable(["Year", "Overpass, local solar time", "Satellite day LST (°C)", "POWER skin TS (°C)", "POWER air T2M (°C)", "Satellite minus skin (°C)"], rows, "Terra overpass time and temperatures by year, summer average"));

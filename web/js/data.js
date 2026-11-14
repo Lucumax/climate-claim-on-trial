@@ -69,11 +69,30 @@ function pickRegional(reg, T, gate, val) {
   if (sel && gate.interval_enabled !== false && Number.isFinite(sel.low) && Number.isFinite(sel.high)) {
     const cov = sel.coverage_achieved && sel.coverage_achieved.headline && sel.coverage_achieved.headline.value;
     interval = { lo: sel.low, hi: sel.high, level: sel.level_nominal || 0.95, method: sel.method, coverage: cov != null ? cov : null, meaning: sel.meaning || null,
-      label: `95% interval (${INTERVAL_WORD[sel.method] || sel.method}${cov != null ? `; in simulations it contained the true slope ${(cov * 100).toFixed(0)}% of the time` : ""})` };
+      label: `nominal 95% interval (${INTERVAL_WORD[sel.method] || sel.method}${cov != null ? `; measured coverage ${(cov * 100).toFixed(0)}% at this setting` : ""})` };
   }
   const band = interval && reg.band && Array.isArray(reg.band.lo) && Array.isArray(reg.band.hi) ? { lo: reg.band.lo, hi: reg.band.hi, meaning: reg.band.band_meaning || null } : null;
   const ctx = { hr: T.mk_hr ? { p: T.mk_hr.p, factor: T.mk_hr.hr_factor, factor_raw: T.mk_hr.hr_factor_raw } : null, raw: T.mk_independent ? { p: T.mk_independent.p } : null };
   return { test, interval, band, ctx };
+}
+
+
+// A bundle may still say that skewness alone explains a failed calibration. The validation only shows that one joint scenario
+// (skewed noise with year-to-year persistence) failed, so the page words it that way whatever the bundle text says.
+const SKEW_ALONE = /this series is strongly lopsided \(skewness above ([\d.]+)\), where every test was too liberal in simulation\.?/;
+const softReason = x => String(x).replace(SKEW_ALONE, "in the simulated scenario closest to this series (skewed noise with year-to-year persistence, skewness above $1), every test was too liberal. The simulations cannot say whether skewness or persistence caused that, so we do not claim a cause.");
+const softReasons = a => (a || []).map(softReason);
+
+// Calibration lines shown next to the interval and next to a released verdict. The stats worker ships them as validation.display
+// (interval_text, false_positive_text); when absent they are built from validation.adaptive, and hidden when neither exists.
+function displayTexts(val, iv) {
+  const d = val.display || {}, ad = val.adaptive || {};
+  const pc = o => (o && Number.isFinite(o.value) ? `${(o.value * 100).toFixed(1).replace(/\.0$/, "")}%` : null);
+  let interval = iv ? (d.interval_text || null) : null;
+  if (iv && !interval && ad.status === "run" && pc(ad.interval_coverage_null)) interval = `nominal 95% interval; measured coverage ${pc(ad.interval_coverage_null)} (trendless) / ${pc(ad.interval_coverage_trend) || "n/a"} (with a trend) at this setting`;
+  let fp = d.false_positive_text || null;
+  if (!fp && ad.status === "run" && pc(ad.size_given_release)) fp = `false-positive rate among released verdicts at this setting: ${pc(ad.size_given_release)}${pc(ad.size_unconditional) ? ` (overall ${pc(ad.size_unconditional)})` : ""}`;
+  return { interval, falsePositive: fp };
 }
 
 function fromReal(r) {
@@ -135,8 +154,9 @@ function fromReal(r) {
       sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },
     },
-    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [], reasons_interval: gate.reasons_interval || [], adaptive_notes: gate.adaptive_notes || [] },
-    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
+    display: displayTexts(val, iv),
+    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: softReasons(gate.reasons_blocking_verdict || gate.reasons), reasons_interval: softReasons(gate.reasons_interval), adaptive_notes: gate.adaptive_notes || [] },
+    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: softReasons(v.withheld_reasons) },
     finding, method_notes: r.method_notes, sensitivity: r.sensitivity, coverage: r.coverage,
   };
 }

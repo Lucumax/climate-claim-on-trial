@@ -33,10 +33,10 @@ const pctWhole = f => pct(f, 0);
 export function supports(c, info) {
   const r = c.regional, u = U(r.units), v = c.verdict, ivl = r.interval, last = c.ladder[c.ladder.length - 1];
   const noun = (info && info.noun) || c.finding.variable.replace(/\s*\(.*?\)/g, ""), S = `${cap(noun)} in ${c.region.name}`, s0 = `${noun} in ${c.region.name}`, per = range(c.period.start, c.period.end);
-  const slope = `${signed(r.sen.slope_per_decade, 2)}${u ? " " + u : ""} per decade`, interval = ivl ? ` (95% interval ${signed(ivl.lo, 2)} to ${signed(ivl.hi, 2)})` : "";
+  const slope = `${signed(r.sen.slope_per_decade, 2)}${u ? " " + u : ""} per decade`, interval = ivl ? ` (nominal 95% interval ${signed(ivl.lo, 2)} to ${signed(ivl.hi, 2)})` : "";
   const share = c.gate.cells && last ? `${pctWhole(last.flagged_fraction_claimed)} of the mapped area is flagged in the claimed direction` : null;
   const dataset = (c.product && c.product.name.replace(/\s*\(.*$/, "").replace(/,.*$/, "")) || "this dataset";
-  const lead = txt => h("span", {}, h("b", {}, v.label + ". "), txt);
+  const lead = txt => h("span", {}, h("b", {}, (v.scoped || v.label) + ". "), txt);
   if (v.branch === "withheld") return h("span", {}, h("b", {}, "This record cannot settle it. "), `Here is what it shows descriptively: ${s0} moved ${slope}, ${per}, with no significance statement. It is a description, not a verdict.`);
   if (v.id === "supported") return lead(`${S} changed by ${slope}, ${per}${interval}, and ${share || "the regional test is significant"}. This is a ${c.period.n}-year trend in one dataset. It does not explain any single year or event, or why it changed.`);
   if (v.id === "partly_supported") return lead(`${S} changed by ${slope}, ${per}${interval}, but ${share ? "only " + share : "the map does not clearly agree"}. A regional average moved; the rest of the map did not clearly show it. It does not describe any single event.`);

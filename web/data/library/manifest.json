@@ -655,7 +655,7 @@
    "concept_id": "C2565794044-LPCLOUD",
    "doi": "https://doi.org/10.5067/MODIS/MYD11C3.061",
    "agency": "NASA LP DAAC",
-   "kind": "satellite observation",
+   "kind": "satellite observation", "quality_end": "2021-12", "quality_label": "Aqua overpass drift: reads too cool", "quality_reason": "Aqua's overpass time was steady until 2021 and then drifted later, and a later daytime pass reads cooler. Months after this date are biased low, so they are left out by default and no verdict is given if you include them.",
    "source_variable": "LST_Day_CMG (K x 0.02 minus 273.15)",
    "period": {
     "first_month": "2003-01",
@@ -1561,7 +1561,7 @@
    "scale": 0.1,
    "offset": 0.0,
    "nodata_int16": -32768,
-   "caveats": "Retrieved from the infrared sounder AIRS on Aqua together with microwave data, for scenes it can see through partly cloudy skies, so very cloudy places are under-sampled. The surface air temperature here is the mean of the afternoon (about 1:30 PM) and night (about 1:30 AM) overpasses, and is a retrieved value, not a weather-station reading. Aqua's overpass times have drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), which can shift both the day and night views a little after 2021. Version 7 replaces older versions, so do not splice with Version 6 values.",
+   "caveats": "Retrieved from the infrared sounder AIRS on Aqua together with microwave data, for scenes it can see through partly cloudy skies, so very cloudy places are under-sampled. The water vapour column here is the mean of the afternoon (about 1:30 PM) and night (about 1:30 AM) overpasses, and is a retrieved value, not a measurement from the ground. Aqua's overpass times have drifted later since July 2021 (NSIDC data announcement, 28 Oct 2021), which can shift both the day and night views a little after 2021. Version 7 replaces older versions, so do not splice with Version 6 values.",
    "tiles": [
     [
      0,

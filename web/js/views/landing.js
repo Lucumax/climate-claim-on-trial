@@ -68,7 +68,7 @@ export function landing(b) {
       describe: `Yearly regional temperature anomaly for ${ex.c.region.name}, ${f.y0} to ${f.y1}. The ${range(a.a, a.b)} window slopes ${fmtNum(a.slope, 2)} ${u} per decade and the ${range(bb.a, bb.b)} window slopes ${fmtNum(bb.slope, 2)} ${u} per decade. The whole record slopes ${fmtNum(f.slope, 2)} ${u} per decade.`,
     })),
     h("p", { class: "verdict-line" }, `Both headlines are arithmetic on real data. Over all ${f.n} years the trend is ${fmtNum(f.slope, 2).replace(/^(\d)/, "+$1")} ${u} per decade, and neither short window is the record.`),
-    h("p", { class: "note" }, `Least squares slopes of the yearly regional anomaly (${ds(ex.c)}, ${ex.c.season.toLowerCase()}). The case file tests the whole record with a stricter method.`),
+    h("p", { class: "note" }, `Least squares slopes of the yearly regional anomaly (${ds(ex.c)}, ${ex.c.season.toLowerCase()}). The case file tests the whole record with a different method, chosen by simulation.`),
     h("a", { class: "btn-text", href: "#/case/" + ex.c.id }, "See how the registered case tests it"));
     revealBtn = h("button", { class: "btn-quiet", type: "button", "aria-expanded": "false", "aria-controls": "reveal-panel", onclick: e => {
       const open = panel.hidden; panel.hidden = !open; e.currentTarget.setAttribute("aria-expanded", String(open));
@@ -81,7 +81,7 @@ export function landing(b) {
       h("div", { class: "hero-text" },
         h("p", { class: "eyebrow brass" }, "NASA Earth data · trend detective"),
         h("h1", { id: "page-title", tabindex: "-1" }, "How strong is the evidence for climate change here?"),
-        h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and test whether the trend survives tougher questions. The answer depends on how you ask."),
+        h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and ask different questions of the same record, and see whether the trend holds. The answer depends on how you ask."),
         h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))),
       globe ? globe.node : null),
     ex ? h("section", { class: "example", "aria-labelledby": "ex-h" },

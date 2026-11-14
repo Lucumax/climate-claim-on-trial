@@ -322,6 +322,8 @@ button.btn-text { background: none; border: 0; padding: 0; font: inherit; cursor
 .range2 input[type="range"]:focus-visible { outline: none; }
 .range2 input[type="range"]:focus-visible::-webkit-slider-thumb { outline: 3px solid var(--focus); outline-offset: 2px; background: var(--brass-soft); }
 .range2 input[type="range"]:focus-visible::-moz-range-thumb { outline: 3px solid var(--focus); outline-offset: 2px; background: var(--brass-soft); }
+.range2-q { position: absolute; right: 0; top: -5px; bottom: -5px; border-radius: 2px; border: 1px solid var(--warn); background: repeating-linear-gradient(135deg, var(--warn) 0 2px, transparent 2px 6px); opacity: .85; pointer-events: none; }
+.q-swatch { display: inline-block; width: 18px; height: 10px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--warn); background: repeating-linear-gradient(135deg, var(--warn) 0 2px, transparent 2px 6px); }
 .range-ends { display: flex; justify-content: space-between; font-size: .75rem; color: var(--muted); padding: 0 var(--sp-1); margin-top: -4px; }
 .quicks { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
 .btn-quiet.quick { min-height: 36px; font-size: .8125rem; padding: 0 var(--sp-3); }
@@ -651,3 +653,12 @@ footer.foot .links { display: flex; gap: var(--sp-5); flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media print { .top, .skip, footer { display: none; } }
+
+/* Large text and narrow screens: long words and identifiers wrap instead of widening the page. */
+main h1, main h2, main h3, main p, main li, main dd, main dt, main summary, main label { overflow-wrap: break-word; }
+@media (max-width: 30em) {
+  .analogy-table, .analogy-table tbody, .analogy-table tr, .analogy-table th, .analogy-table td { display: block; width: auto; }
+  .analogy-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .analogy-table tbody th { width: auto; padding-bottom: 0; border-bottom: 0; }
+  .analogy-table td { padding-top: var(--sp-1); }
+}

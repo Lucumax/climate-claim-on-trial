@@ -31,12 +31,37 @@ const PICK = {
   aod_myd08: { name: "Smoke and haze", group: "Air" },
 };
 
+// Optional "quality_end" ("YYYY-MM") in the manifest marks the last month a product can be trusted for trends. Months after it are flagged,
+// left out of default periods and never given a verdict. goodLast is the last year that lies wholly on the good side.
+function quality(v, last) {
+  const q = /^(\d{4})-(\d{1,2})$/.exec(String(v.quality_end || ""));
+  if (!q) return {};
+  const y = +q[1], m = +q[2], MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const goodLast = m === 12 ? y : y - 1;
+  if (goodLast >= last.y) return {};
+  return { qualityEnd: { y, m }, qualityEndText: `${MON[m - 1]} ${y}`, qualityLabel: v.quality_label || "Flagged: unreliable for trends", qualityReason: v.quality_reason || "", goodLast };
+}
+export const pastQuality = (v, y1) => !!(v && v.goodLast != null && y1 > v.goodLast);
+
+// One visible line on what each product cannot see, so the type of evidence is clear before any result (the full notes stay in the manifest caveats).
+const LIMITS = {
+  lst_day_myd11: "Clear-sky retrieval: cloudy days are not sampled, and this is skin temperature, not air temperature.",
+  snow_mod10cm: "Clear-sky retrieval: clouds hide the ground, and polar night has no data.",
+  airs_tair: "Retrieval, not a station reading: very cloudy scenes are under-sampled.",
+  airs_h2o: "Retrieval: very cloudy scenes are under-sampled.",
+  tws_grace: "Gravity sensing at about 300 km resolution: total water, not groundwater alone.",
+  precip_imerg: "Gauge-calibrated satellite estimate: weaker at high latitudes, over snow and in steep terrain.",
+  soil_gldas: "Model output: it follows the model's weather inputs, which changed over time.",
+  et_gldas: "Model output: it follows the model's weather inputs, which changed over time.",
+};
+
 export function loadLibrary() {
   if (!manifestP) manifestP = fetch(BASE + "manifest.json").then(r => { if (!r.ok) throw new Error("no manifest"); return r.json(); }).then(m => (m.variables || []).filter(v => v && v.id && v.period && v.tiles && v.tiles.length).map(v => {
     const a = ym(v.period.first_month), b = ym(v.period.last_month), meta = PICK[v.id] || { name: v.name.replace(/\s*\(.*\)$/, ""), group: "Other" }, model = !/^satellite/i.test(String(v.kind || ""));
     return {
       key: v.id, src: "library", name: meta.name, group: meta.group, one_line: v.definition, units: String(v.units).replace(/\s*\(equivalent water height\)$/, ""), since: a.y, last: b.y, lastMonth: b.m, firstMonth: a.m, t0: v.period.t0, nAxis: v.period.n_months_axis,
-      missing: v.period.months_all_missing || [], kind: model ? "model_output" : "satellite_observation", chip: model ? `Model (NASA ${/GLDAS/i.test(v.product) ? "GLDAS" : "model"}, precomputed)` : "Satellite (NASA, precomputed)", chipShort: model ? "Model" : "Satellite", source: `${v.product} (${v.agency})`, product: v.product, doi: v.doi, caveats: v.caveats, scale: v.scale, offset: v.offset || 0,
+      missing: v.period.months_all_missing || [], kind: model ? "model_output" : "satellite_observation", chip: model ? `Model (NASA ${/GLDAS/i.test(v.product) ? "GLDAS" : "model"}, precomputed)` : /retrieval/i.test(String(v.kind)) ? "Satellite retrieval (NASA, precomputed)" : "Satellite (NASA, precomputed)", chipShort: model ? "Model" : "Satellite", limit: LIMITS[v.id] || null,
+      ...quality(v, b), source: `${v.product} (${v.agency})`, product: v.product, doi: v.doi, caveats: v.caveats, scale: v.scale, offset: v.offset || 0,
       tileSet: new Set(v.tiles.map(([r, c]) => r + "_" + c)), full: v.name,
     };
   })).catch(() => []);

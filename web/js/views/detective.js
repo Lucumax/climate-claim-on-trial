@@ -10,7 +10,7 @@ import { trendChart } from "../chart.js";
 import { disc, copyButton } from "./common.js";
 import { monthlyData } from "../viz/monthly.js";
 import { groupVariables } from "./pages.js";
-import { loadLibrary, libraryPlan, libraryRegional, completeSeasons, isWorld, periodNote, WORLD } from "../library.js";
+import { loadLibrary, libraryPlan, libraryRegional, completeSeasons, isWorld, periodNote, pastQuality, WORLD } from "../library.js";
 import { pWords, trendWords, stepWords, sigClass, sigLabel, ALPHA, fixVerdict, PERSISTENCE_CAVEAT, INTERVAL_EXPLORATORY } from "../words.js";
 
 const LAST_YEAR = 2025, DEMO_TIMEOUT_MS = 25000, DEBOUNCE_MS = 450;
@@ -19,8 +19,9 @@ const SRC = {
   library: { short: "Satellite", full: "Satellite (NASA, precomputed)" },
   power: { short: "Model", full: "Model (NASA POWER, live)" },
 };
+const endYear = v => (v.goodLast != null ? v.goodLast : v.last); // default end of a period: the last year the product can be trusted for trends
 const sinfo = v => v.src === "library" ? { short: v.chipShort, full: v.chip, cls: v.kind === "model_output" ? "power" : "library" } : { ...SRC.power, cls: "power" };
-const state = { src: "library", key: "lst_day_myd11", presetKey: "world", box: { ...WORLD }, y0: 2003, y1: 2025, season: "all", view: "values", chart: "yearly", status: "idle", err: "", result: null, last: null, stale: false };
+const state = { src: "power", key: "t2m", presetKey: "wisconsin", box: { s: 42.5, n: 47.1, w: -92.9, e: -86.8 }, y0: 1981, y1: 2025, season: "jja", view: "values", chart: "yearly", status: "idle", err: "", result: null, last: null, stale: false };
 
 // The five steps are the challenge author's, in the author's words.
 const STEPS = [
@@ -51,7 +52,7 @@ const shareHash = R => "#/investigate?" + shareQuery(R);
 const shareUrl = R => location.origin + location.pathname + location.search + shareHash(R);
 function syncUrl(hash) { try { if (location.hash.startsWith("#/investigate") && location.hash !== hash) history.replaceState(null, "", hash); } catch (e) { /* ignore */ } }
 const triesLine = () => { const n = triesNow(); if (!n) return null;
-  return h("p", { class: "tries", id: "tries" }, h("b", {}, `You have tested ${n} question${n === 1 ? "" : "s"} this visit.`), " Testing many questions raises the chance that at least one looks significant by chance alone; treat a single striking result as a lead, not a finding."); };
+  return h("p", { class: "tries", id: "tries" }, h("b", {}, `You have tested ${n} question${n === 1 ? "" : "s"} this visit.`), " Each extra question gives another chance for something to look significant by luck. The questions here overlap (nearby periods, boxes and variables share data), so we cannot put an exact number on that chance. Keep every attempt in view, not just the striking one, and treat a single striking result as a lead, not a finding."); };
 
 let libVars = null; // the manifest's variables, once read
 
@@ -147,7 +148,8 @@ export function detective(cat, bundle, query = "") {
     const model = cur.src === "power" || cur.kind === "model_output";
     measureBody.replaceChildren(list,
       h("div", { class: "defpanel", "aria-live": "polite" },
-        h("div", { class: "chips" }, h("span", { class: "chip src " + sinfo(cur).cls }, sinfo(cur).full), h("span", { class: "chip" }, `${cur.since}–${cur.last}`), h("span", { class: "chip" }, U(cur.units))),
+        h("div", { class: "chips" }, h("span", { class: "chip src " + sinfo(cur).cls }, sinfo(cur).full), h("span", { class: "chip" }, `${cur.since}–${cur.last}`), cur.goodLast != null ? h("span", { class: "chip warn" }, `Trusted to ${cur.qualityEndText}`) : null, h("span", { class: "chip" }, U(cur.units))),
+        cur.limit ? h("p", { class: "small muted", style: "margin:8px 0 0" }, h("b", {}, "Limit. "), cur.limit) : null,
         disc("What is this measurement?", h("p", { class: "small" }, cur.one_line), h("p", { class: "small" }, h("b", {}, "Source. "), cur.source, cur.doi ? [" · ", h("a", { href: cur.doi, target: "_blank", rel: "noopener" }, "NASA product page")] : ""),
           h("p", { class: "small" }, model ? (cur.src === "power" ? "A computer model blended many measurements to fill the whole map. It is useful for trends but is not a direct measurement. A trend can reflect changes in the data that feed the model as well as the climate." : cur.caveats) : cur.caveats))),
       aod ? h("p", { class: "other-case" }, `${aod.name} is a registered case, not a live measurement. `, h("a", { href: aod.case_link }, "Open case " + aod.case_id)) : null);
@@ -198,15 +200,17 @@ export function detective(cat, bundle, query = "") {
   // ======================================================== panel 3: period (dual-handle slider, season chips, numeric years collapsed)
   function clampYears() {
     const v = curVar(); state.y0 = Math.max(v.since, Math.min(state.y0, v.last - 1)); state.y1 = Math.min(v.last, Math.max(state.y1, state.y0 + 1));
-    if (state.y1 <= state.y0) { state.y0 = v.since; state.y1 = v.last; }
+    if (state.y1 > endYear(v) && !state.keepFlagged) state.y1 = Math.max(endYear(v), state.y0 + 1);
+    if (state.y1 <= state.y0) { state.y0 = v.since; state.y1 = endYear(v); }
   }
   const periodBody = h("div", { class: "period-body" });
   function drawPeriod() {
     const v = curVar();
-    const readout = h("p", { class: "range-read", "aria-live": "off" }), warn = h("p", { class: "small muted", id: "period-note", style: "margin:0" });
+    const qNote = h("p", { class: "callout", role: "note", hidden: true }), readout = h("p", { class: "range-read", "aria-live": "off" }), warn = h("p", { class: "small muted", id: "period-note", style: "margin:0" });
     const lo = h("input", { type: "range", class: "r-lo", id: "y0r", "aria-label": "First year", min: v.since, max: v.last, step: 1, value: state.y0 });
     const hi = h("input", { type: "range", class: "r-hi", id: "y1r", "aria-label": "Last year", min: v.since, max: v.last, step: 1, value: state.y1 });
-    const rng = h("div", { class: "range2" }, h("div", { class: "range2-track" }, h("i", { class: "range2-fill" })), lo, hi);
+    const qPct = v.goodLast != null ? ((v.goodLast - v.since) / Math.max(1, v.last - v.since) * 100).toFixed(2) : null;
+    const rng = h("div", { class: "range2" }, h("div", { class: "range2-track" }, h("i", { class: "range2-fill" }), qPct != null ? h("i", { class: "range2-q", style: `left:${qPct}%` }) : null), lo, hi);
     const y0n = h("input", { type: "number", id: "y0", min: v.since, max: v.last, value: state.y0 }), y1n = h("input", { type: "number", id: "y1", min: v.since, max: v.last, value: state.y1 });
     const paint = () => {
       const span = Math.max(1, v.last - v.since);
@@ -216,6 +220,8 @@ export function detective(cat, bundle, query = "") {
       lo.setAttribute("aria-valuetext", String(state.y0)); hi.setAttribute("aria-valuetext", String(state.y1));
       const n = state.y1 - state.y0 + 1;
       readout.replaceChildren(h("span", { class: "num" }, `${state.y0}–${state.y1}`), h("span", { class: "range-n" }, ` ${n} years`));
+      state.keepFlagged = pastQuality(v, state.y1);
+      qNote.hidden = !state.keepFlagged; qNote.replaceChildren(...(state.keepFlagged ? [h("b", {}, "Flagged months included. "), `This window reaches past ${v.qualityEndText} (${v.qualityLabel}). The result is marked uncalibrated and no verdict is given.`] : []));
       warn.textContent = n < 10 ? `That is ${n} years. Short records make trend tests weak.` : n < 25 ? "Twenty-five years or more is a better start." : "";
       warn.hidden = !warn.textContent;
     };
@@ -229,10 +235,12 @@ export function detective(cat, bundle, query = "") {
     const seasonText = x => x.key === "all" ? "All twelve months of each year." : `${x.name.split(" (")[0]}: ` + x.months.map(m => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]).join(", ") + ". Only these months count each year.";
     const seasonNote = h("p", { class: "muted small", style: "margin:0" }, seasonText(curSeason()));
     const quick = (label, a, b) => h("button", { class: "btn-quiet quick", type: "button", onclick: () => apply(Math.max(v.since, a), b, true) }, label);
+    const goodEnd = endYear(v);
+    const qLegend = v.goodLast != null ? h("p", { class: "small muted q-legend", style: "margin:6px 0 0" }, h("span", { class: "q-swatch", "aria-hidden": "true" }), `Hatched: after ${v.qualityEndText}. ${v.qualityLabel}. ${v.qualityReason}`) : null;
     periodBody.replaceChildren(
       h("div", { class: "field", role: "group", "aria-labelledby": "yr-l" }, h("p", { class: "field-l", id: "yr-l" }, "Years"), readout, rng,
         h("div", { class: "range-ends", "aria-hidden": "true" }, h("span", {}, String(v.since)), h("span", {}, String(v.last))),
-        h("div", { class: "quicks" }, quick("Full record", v.since, v.last), quick("Last 20 years", v.last - 19, v.last)), warn),
+        h("div", { class: "quicks" }, quick(v.goodLast != null ? "Full trusted record" : "Full record", v.since, goodEnd), quick("Last 20 years", goodEnd - 19, goodEnd), v.goodLast != null ? quick("Include flagged months", v.since, v.last) : null), qLegend, qNote, warn),
       h("div", { class: "field" }, h("p", { class: "field-l", id: "se-l" }, "Season"), seasons, seasonNote),
       h("p", { class: "muted small", style: "margin:0" }, v.src === "library" ? periodNote(v) : `${v.name} is available from ${v.since}.`),
       h("details", { class: "quiet" }, h("summary", {}, "Type the years instead"), h("div", { class: "boxrow", style: "max-width:18rem" }, h("label", { for: "y0" }, "First year", y0n), h("label", { for: "y1" }, "Last year", y1n))));
@@ -241,16 +249,17 @@ export function detective(cat, bundle, query = "") {
 
   // ======================================================== running the fetch and the tests
   // Guided examples try NASA POWER live first; if that fails or takes too long, they use a saved copy of the same request (data/demo_cache/), clearly labelled.
+  const CACHES = [{ key: "t2m", preset: "wisconsin", cache: "wi" }, { key: "precip", preset: "sahel", cache: "sahel" }];
   async function fetchOrCache(args) {
-    if (!demo || !demo.d.cache) return fetchMonthly(args);
-    const d = demo.d, preset = P.find(q => q.key === d.preset), same = args.variable.key === d.key && preset && sameBox(preset.box, args.box) && args.startYear === 1981 && args.endYear === 2025;
+    // The two saved requests (Wisconsin air temperature, Sahel rainfall; both 1981-2025) back up the live request for guided examples and for the default view.
+    const hit = CACHES.find(d => { const preset = P.find(q => q.key === d.preset); return args.variable.key === d.key && preset && sameBox(preset.box, args.box) && args.startYear === 1981 && args.endYear === 2025; });
+    if (!hit) return fetchMonthly(args);
     try { return await Promise.race([fetchMonthly(args), new Promise((_, rej) => setTimeout(() => rej(new Error("NASA POWER took too long.")), DEMO_TIMEOUT_MS))]); }
     catch (e) {
-      if (!same) throw e;
-      let c; try { const r = await fetch(`data/demo_cache/${d.cache}.json`); if (!r.ok) throw new Error("no cache"); c = await r.json(); } catch (e2) { throw e; }
+      let c; try { const r = await fetch(`data/demo_cache/${hit.cache}.json`); if (!r.ok) throw new Error("no cache"); c = await r.json(); } catch (e2) { throw e; }
       if (args.onProgress) args.onProgress({ done: 1, total: 1 });
       const rows = c.rows.map(([year, month, value]) => ({ year, month, value }));
-      return { stub: false, source: args.variable.source, units: c.units, rows, note: c.note, method: c.method, n_tiles: c.n_tiles, n_cells: c.n_cells, first_year: c.first_year, last_year: c.last_year, cached: true, cachedLabel: `The live NASA POWER request did not work just now, so this example shows the identical request, saved on ${c.fetched_label}, 2026. Live data is tried first every time.` };
+      return { stub: false, source: args.variable.source, units: c.units, rows, note: c.note, method: c.method, n_tiles: c.n_tiles, n_cells: c.n_cells, first_year: c.first_year, last_year: c.last_year, cached: true, cachedLabel: `The live NASA POWER request did not work just now, so this shows the identical request, saved on ${c.fetched_label}, 2026. Live data is tried first every time.` };
     }
   }
   const cachedBadge = R => R && R.data && R.data.cached ? h("p", { class: "callout", role: "note" }, h("b", {}, "Cached copy from Nov 14. "), R.data.cachedLabel) : null;
@@ -269,7 +278,7 @@ export function detective(cat, bundle, query = "") {
       if (my !== runId) return false; // the user changed a choice while the data was coming
       let rows, skipped = [];
       if (v.src === "library") { const c = completeSeasons(data.rows, season.months, state.y0, state.y1); rows = c.rows; skipped = c.skipped; } else rows = data.rows.filter(r => season.months.includes(r.month));
-      const R = { v, season, data, rows, skipped, box: { ...state.box }, y0: state.y0, y1: state.y1 };
+      const R = { v, season, data, rows, skipped, box: { ...state.box }, y0: state.y0, y1: state.y1, flagged: v.src === "library" && pastQuality(v, state.y1) };
       state.result = R; state.last = analyze(R); state.status = "ready"; state.stale = false;
       if (!demo) { if (counted && !state.last.W.tooShort) noteTry(R); if (!state.last.W.tooShort) syncUrl(shareHash(R)); }
       drawResult(); drawProgress();
@@ -287,6 +296,11 @@ export function detective(cat, bundle, query = "") {
     const t0 = W.years[0], span = W.years[W.years.length - 1] - t0 + 1, full = new Array(span).fill(null);
     W.years.forEach((yr, i) => { full[yr - t0] = W.anomaly[i]; });
     try { W.gate = exploratoryGate(Array.from({ length: span }, (_, i) => t0 + i), full); } catch (e) { /* keep the module's own gate */ }
+    // Notes that make a run uncalibrated: years missing from the series, and months a product flags as unreliable.
+    const g0 = W.gate, miss = g0 && Array.isArray(g0.missingYears) ? g0.missingYears : [], notes = [];
+    if (miss.length) notes.push(`${miss.length} year${miss.length === 1 ? "" : "s"} missing: ${miss.join(", ")}. A gap changes the spacing of the series, so the calibration check cannot vouch for it.`);
+    if (R.flagged) notes.push(`This window includes months after ${R.v.qualityEndText} (${R.v.qualityLabel}). ${R.v.qualityReason}`);
+    if (notes.length) W.gate = { ...(g0 || {}), calibrated: false, caveat: notes.join(" ") + (g0 && g0.caveat && !miss.length ? " " + g0.caveat : ""), missingYears: miss };
     const corr = stepInfo("autocorr", W.A_an.mk), corrBase = stepInfo("autocorr");
     const rungs = [
       { n: 1, ...stepInfo("raw"), p: W.A_raw.mkIndependent.p, slope: W.A_raw.sen.slopePerDecade },
@@ -314,13 +328,19 @@ export function detective(cat, bundle, query = "") {
 
   function rulingLabel(L) {
     const { W, rungs } = L, pRaw = rungs[0].p, pFin = rungs[2].p, sig = pFin < ALPHA, weak = pRaw < ALPHA && !sig;
+    if (L.R.flagged) return { label: "No verdict given", tone: "warn", sig: false, weak: false, noVerdict: true, pRaw, pFin, W };
     return { label: sig ? "Significant at 0.05" : weak ? "Weakened by the trial" : "Not significant at 0.05", tone: sig ? "ok" : weak ? "warn" : "", sig, weak, pRaw, pFin, W };
   }
   // The ruling is a compact aside. The word comes from the same rule as before; the longer reading notes are in a disclosure.
   function rulingLite(L) {
     const { W, R, rungs } = L, A = W.A_an, g = rulingLabel(L), { sig, weak, pRaw, pFin } = g, gate = W.gate, u = U(R.v.units), slope = A.sen.slopePerDecade, ci = A.sen.intervalPerDecade;
+    if (g.noVerdict) return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
+      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Not calibrated")),
+      h("h3", { class: "ruling-h" }, g.label),
+      h("p", { class: "callout", role: "note" }, h("b", {}, "No verdict. "), gate.caveat, " Shorten the period to end in ", String(R.v.goodLast), " to get a ruling."),
+      h("p", { class: "muted" }, `Described only: the Sen slope is ${signed(slope, 3)} ${u} per decade. It is not a basis for a conclusion.`));
     const lines = [h("p", {}, fixVerdict(A.verdict.text))];
-    if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the trial it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until tougher questions are asked.`));
+    if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the trial it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until the record is asked different questions.`));
     else if (sig && Math.max(pRaw, pFin) < 0.001) lines.push(h("p", {}, "It held up clearly: p is below 0.001 at the start and still below 0.001 after the correction."));
     else if (sig && pFin > pRaw * 1.5) lines.push(h("p", {}, `It held up, but less strongly: p went from ${fmtP(pRaw)} to ${fmtP(pFin)} over the three hearings.`));
     else if (sig) lines.push(h("p", {}, Math.abs(pFin - pRaw) < 0.0005 ? `It held up, and none of the three hearings moved the p-value (p ${fmtP(pFin)}).` : `It held up through all three hearings (p ${fmtP(pRaw)} at the start, ${fmtP(pFin)} at the end).`));
@@ -425,11 +445,12 @@ export function detective(cat, bundle, query = "") {
   function outcome(L) { // the sentence about the trial, written from the numbers actually computed
     const g = rulingLabel(L), a = fmtP(g.pRaw), b = fmtP(g.pFin);
     let t;
+    if (g.noVerdict) return "No verdict is given: this window includes months the data product flags as unreliable.";
     if (g.sig && Math.max(g.pRaw, g.pFin) < 0.001) t = `It holds, clearly: p is below 0.001 at the start and still below 0.001 after the correction.`;
     else if (g.sig && Math.abs(g.pFin - g.pRaw) < 0.0005) t = `It holds, and the trial changes nothing: all three hearings give p ${b}.`;
     else if (g.sig && g.pFin > g.pRaw * 1.5) t = `It holds, but less strongly: p goes from ${a} to ${b}.`;
     else if (g.sig) t = `It holds through all three hearings: p goes from ${a} to ${b}.`;
-    else if (g.weak) t = `The trial weakens it: the first look was significant (p ${a}), the last is not (p ${b}).`;
+    else if (g.weak) t = `The trial weakens it: the first look was significant (p ${a}), but the test that allows for year-to-year persistence is not (p ${b}).`;
     else t = `It is not significant at the start (p ${a}) and still is not at the end (p ${b}).`;
     return t;
   }
@@ -451,10 +472,11 @@ export function detective(cat, bundle, query = "") {
       s1: "A familiar question: how warm is the air in summer? This is the temperature a weather station reads, about 2 metres up. It comes from a NASA model that blends many measurements, so it is labelled model-based, not a direct measurement.",
       s2: "Wisconsin is a good size: big enough to average out one hot town, small enough that a single summer still shows. The box is a rectangle around the state.",
       s3: "1981 to 2025 is 45 summers. We keep June, July and August so that winter does not drown out the summer signal. Longer records make a real trend easier to see." },
-    { id: "sahel", title: "Sahel wet-season rainfall", tag: "Satellite, IMERG", src: "library", key: "precip_imerg", preset: "sahel", y0: 2001, y1: 2025, season: "jjas",
-      s1: "Next, rain from space. NASA's IMERG blends the rain-measuring satellites and calibrates them to rain gauges, giving rain and melted snow as millimetres per day. This one is a satellite observation read from the precomputed library.",
+    { id: "sahel", title: "Sahel wet-season rainfall", tag: "Model, NASA POWER", src: "power", key: "precip", preset: "sahel", y0: 1981, y1: 2025, season: "jjas", cache: "sahel",
+      s1: "Next, rainfall. This is NASA POWER's corrected precipitation (PRECTOTCORR), in millimetres per day. It blends satellite and rain-gauge information in a model, so it is labelled model-based, not a direct measurement.",
       s2: "The Sahel is the dry belt south of the Sahara. Its rain falls in one season, so the box is wide: 42 degrees of longitude, averaged cell by cell and weighted by area.",
-      s3: "We keep June to September, the wet season, for 2001 to 2025, the whole IMERG record. Rain swings a lot from year to year, so a long record matters here." },
+      s3: "We keep June to September, the wet season, for 1981 to 2025: 45 wet seasons. Rain swings a lot from year to year, so a long record matters here.",
+      after: () => h("span", {}, " The satellite rainfall record (IMERG, 2001 to 2025) is a different, shorter record of the same region. It is examined in ", h("a", { href: "#/case/C-B" }, "Case file C-B"), ".") },
     { id: "india", title: "Northern India water storage", tag: "Satellite, GRACE", src: "library", key: "tws_grace", box: { s: 24, n: 32, w: 72, e: 82 }, boxName: "northern India", y0: 2002, y1: 2026, season: "mam",
       s1: "Now something no weather station can read: how much water is stored on and under the ground. The GRACE satellites sense it from tiny changes in gravity. Soil, snow, rivers and groundwater all count together.",
       s2: "A box over northern India, from 24 to 32 degrees north and 72 to 82 east. GRACE sees areas of about 300 km, so a box this size is the right scale.",
@@ -466,14 +488,14 @@ export function detective(cat, bundle, query = "") {
       const ok = DEMOS.filter(d => d.src === "power" || M.some(v => v.src === "library" && v.key === d.key));
       demoHost.replaceChildren();
       launchHost.replaceChildren(h("details", { class: "quiet guided", id: "demo" }, h("summary", {}, "Try a guided example"),
-        h("p", { class: "muted small", style: "margin:8px 0 0;max-width:62ch" }, "Three real questions with three different outcomes. Each one fills in the five steps and runs the real computation: nothing is scripted. If NASA POWER cannot be reached, a clearly labelled saved copy from Nov 14 is used for the first one."),
+        h("p", { class: "muted small", style: "margin:8px 0 0;max-width:62ch" }, "Three real questions with different outcomes. Each one fills in the five steps and runs the real computation: nothing is scripted. If NASA POWER cannot be reached, a clearly labelled saved copy from Nov 14 is used for the two POWER examples."),
         h("div", { class: "btns" }, ok.map(d => h("button", { class: "btn-quiet", type: "button", onclick: () => startDemo(d) }, d.title, h("span", { class: "btn-tag" }, d.tag))))));
       return;
     }
     launchHost.replaceChildren(h("p", { class: "muted small", style: "margin:0 0 var(--sp-4)" }, `Guided example running: ${demo.d.title}. Use the card at the bottom of the screen, or change any input to end it.`));
     const { d, k } = demo, R = state.result, L = state.last, ready = L && !L.W.tooShort && state.status === "ready" && !pending && R && R.v.key === d.key && R.y0 === d.y0;
     const wait = state.status === "error" ? "The data could not be fetched just now. Try the example again, or skip it." : "Running the real computation.";
-    const caps = [null, d.s1, d.s2, d.s3, ready ? recordCaption(L) : wait, ready ? trialCaption(L) : wait];
+    const caps = [null, d.s1, d.s2, d.s3, ready ? recordCaption(L) : wait, ready ? h("span", {}, trialCaption(L), d.after ? d.after() : null) : wait];
     const titles = ["", "Choose variable", "Pick region", "Set period", "Examine the series", "Test significance"];
     demoHost.replaceChildren(h("section", { class: "demo-card", id: "demo", "aria-labelledby": "demo-h" },
       h("div", {}, h("p", { class: "eyebrow brass" }, `Guided example: ${d.title}`, R && R.data && R.data.cached ? " · cached copy from Nov 14" : ""), h("h2", { id: "demo-h", tabindex: "-1" }, `Step ${k} of 5: ${titles[k]}`), h("p", { id: "demo-cap", "aria-live": "polite", class: "demo-cap" }, caps[k])),
@@ -520,7 +542,7 @@ export function detective(cat, bundle, query = "") {
     if (replay) { // a replay link wins over whatever this tab was doing: apply the valid parts, rerun only when all are valid
       const o = replay.out;
       if (o.v) { state.src = o.v.src; state.key = o.v.key; }
-      if (o.y0) { state.y0 = o.y0; state.y1 = o.y1; } if (o.season) state.season = o.season; if (o.box) state.box = { ...o.box };
+      if (o.y0) { state.y0 = o.y0; state.y1 = o.y1; state.keepFlagged = !!(o.v && pastQuality(o.v, o.y1)); } if (o.season) state.season = o.season; if (o.box) state.box = { ...o.box };
       state.last = null; state.result = null; state.status = "idle"; runId++;
       replayOk = !replay.bad.length;
       if (!replayOk) { replayNote.hidden = false; replayNote.replaceChildren(h("p", { class: "callout", role: "note" }, h("b", {}, "This link could not be fully read. "), `The ${(replay.bad.length > 1 ? replay.bad.slice(0, -1).join(", ") + " and " + replay.bad[replay.bad.length - 1] : replay.bad[0])} in it could not be used, so we kept your earlier choice there. Check the settings; the result below follows them.`)); }

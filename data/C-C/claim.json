@@ -1,0 +1,39 @@
+{
+ "claim_id": "C-C",
+ "claim_text": "Near-surface air temperature over interior and western Alaska has risen",
+ "variable": "T2M (MERRA-2 2 m air temperature via NASA POWER)",
+ "variable_plain": "yearly average air temperature about 2 m above the ground",
+ "units": "degC",
+ "direction": "increase",
+ "season_months": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "period": [
+  1981,
+  2025
+ ],
+ "region_name": "interior and western Alaska",
+ "region_box": {
+  "lat_min": 60,
+  "lat_max": 70,
+  "lon_min": -165,
+  "lon_max": -140
+ },
+ "product": {
+  "name": "NASA POWER Monthly API, MERRA-2 T2M (reanalysis model output)",
+  "version": "POWER v2.10.0 (MERRA-2)",
+  "doi": "10.5067/AP1B0BA5PD2K"
+ },
+ "is_model_data": true
+}

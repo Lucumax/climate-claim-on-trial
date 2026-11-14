@@ -271,4 +271,58 @@ footer.foot strong { color: var(--accent); }
 @media print { .top, .skip, footer { display: none; } }
 
 .demo-focus { outline: 3px solid var(--accent); outline-offset: 4px; }
-#demo { border-top: 4px solid var(--accent); }
+
+/* Detective: "Open a new case". Reuses the docket header, rail, panels and ruling; only what is new is below. */
+.slot { color: var(--accent); border-bottom: 2px solid var(--accent); font-style: italic; }
+.demo-bar { display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap; border: 1px solid var(--line); border-top: 4px solid var(--accent); background: var(--surface); padding: 12px 18px; margin-bottom: 18px; border-radius: 3px; }
+.demo-bar .demo-intro h2 { margin: 0; font-size: 1.25rem; }
+.demo-bar .demo-intro .eyebrow { margin-bottom: 2px; }
+.demo-bar .demo-copy { margin: 0; flex-basis: 100%; }
+.demo-bar.active { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; background: var(--brass-soft); }
+.demo-nav { margin: 0; align-self: center; }
+.demo-bar.active h2 { font-size: 1.25rem; margin: 0; }
+.demo-cap { font-size: 1.05rem; max-width: 60rem; margin: 8px 0 0; }
+.demo-focus { outline: 3px solid var(--accent); outline-offset: 4px; }
+.stepper .hearing-sum { display: block; margin-top: 8px; font: 700 .85rem/1.25 var(--font-mono); }
+.stepper .hearing .short { display: none; }
+.exhibit-panel .choice { margin-bottom: 4px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pills label { cursor: pointer; }
+.pills input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.pills span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--edge); border-radius: 22px; background: var(--surface); font-size: .9rem; }
+.pills label:hover span { background: var(--surface-2); }
+.pills input:checked + span { background: var(--primary); color: var(--on-primary); border-color: var(--primary); font-weight: 700; }
+.pills input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.trial-list { list-style: none; margin: 0 0 4px; padding: 0; display: grid; gap: 12px; counter-reset: none; }
+.trial-step { border: 1px solid var(--line); border-left: 5px solid var(--accent); background: var(--surface-2); padding: 14px 16px; border-radius: 3px; }
+.trial-step .hearing-top { align-items: center; color: var(--muted); }
+.trial-step h3 { font: 600 1.1rem/1.2 var(--font-serif); margin: 6px 0 4px; }
+.trial-step .explain { font-size: .88rem; color: var(--muted); margin: 0; }
+.pbar-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.pbar-row strong { font: 700 1.2rem/1 var(--font-mono); letter-spacing: -.04em; white-space: nowrap; }
+.pbar-row .delta { font: .75rem var(--font-mono); white-space: nowrap; color: var(--muted); }
+.pbar { position: relative; flex: 1; height: 8px; background: var(--surface); border: 1px solid var(--edge); border-radius: 1px; }
+.pbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--primary); }
+.pbar em { position: absolute; top: -5px; bottom: -5px; width: 0; border-left: 2px solid var(--accent); }
+.ruling-chips { display: flex; gap: 6px; flex-wrap: wrap; margin: -2px 0 12px; }
+.ruling .stamp { transform: none; }
+.tip-slot .tip { margin: 0; }
+.workspace, .demo-bar { scroll-margin-top: 150px; }
+
+@media (max-width: 70rem) {
+  /* the rail becomes a compact five-step stepper at the top */
+  .hearings.stepper { background: transparent; box-shadow: none; overflow: visible; }
+  .stepper .hearings-head, .stepper .hearing-note, .stepper .explain, .stepper .hearing-sum { display: none; }
+  .stepper .hearing-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; background: var(--rail); padding: 4px; border-radius: 3px; }
+  .stepper .hearing-list li { min-width: 0; }
+  .stepper .hearing { padding: 8px 2px; text-align: center; border: 0; min-height: 56px; border-radius: 2px; }
+  .stepper .hearing-top { justify-content: center; gap: 4px; font-size: .8rem; }
+  .stepper .hearing-top .lbl { display: none; }
+  .stepper .hearing .status .st-text { display: none; }
+  .stepper .hearing .status { font-size: .85rem; }
+  .stepper .hearing h3 { margin: 2px 0 0; font: 600 .78rem/1.15 var(--font-ui); }
+  .stepper .hearing .full { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .stepper .hearing .short { display: block; }
+  .demo-bar { padding: 12px 14px; }
+  .demo-bar.active { grid-template-columns: 1fr; }
+}

@@ -5,6 +5,7 @@ import * as TT from "./vendor/trendtrial.js";
 export const STATS_VERSION = TT.VERSION;
 export const analyzeSeries = TT.analyzeSeries;
 export const seasonalSeries = TT.seasonalSeries;
+export const detectiveVerdict = TT.detectiveVerdict;
 
 // Names and notes of the trial steps. If the module publishes its own (LADDER_STEPS, an array of {id, name, note}),
 // those win, so a change to the correction in stats/js/trendtrial.js shows up here with no edit. The module may also

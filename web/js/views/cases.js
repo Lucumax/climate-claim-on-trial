@@ -2,7 +2,7 @@
 import { h, s, pct, signed, fmtP, boxStr, download } from "../util.js";
 import { renderMap, legend } from "../map.js";
 import { seriesChart } from "../chart.js";
-import { KIND, tone, withheldNote, regionThumb } from "./common.js";
+import { KIND, tone, withheldNote, regionThumb, gavelIcon, honestNull } from "./common.js";
 import { sigClass, sigLabel } from "../words.js";
 
 const NA = () => h("span", { class: "muted" }, "Not in this bundle yet.");
@@ -64,7 +64,7 @@ export function caseDocket(b, c) {
   const text = [v.label, v.headline, ...v.sentences, `${f.place}; ${f.variable}; ${f.period}; ${f.change_per_decade.text}; interval ${f.interval.lo} to ${f.interval.hi}; ${f.product.name} ${f.product.version} ${f.product.doi}; run ${f.run_id}; ledger ${f.ledger_ref || "n/a"}`].join("\n");
   const copy = h("button", { class: "btn-quiet", type: "button", onclick: e => { (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => { e.target.textContent = "Copied"; }, () => download(`finding_${c.id}.txt`, text, "text/plain")); } }, "Copy the finding as text");
   const withheld = v.branch === "withheld";
-  const gavel = s("svg", { class: "gavel", viewBox: "0 0 48 48", "aria-hidden": "true", fill: "none", stroke: "currentColor", "stroke-width": "2" }, s("g", { transform: "rotate(-38 24 21)" }, s("rect", { x: 11, y: 9, width: 23, height: 12, rx: 2 }), s("path", { d: "M15 9v12m15-12v12M21 21v17h5V21" })), s("path", { d: "M27 40h15v4H27z" }));
+  const gavel = gavelIcon();
   const ruling = h("section", { class: "panel ruling", role: "status", "aria-labelledby": "ruling-h" },
     h("div", { class: "ruling-head" }, h("p", { class: "eyebrow" }, "The ruling"), gavel),
     h("h2", { id: "ruling-h" }, v.label), h("div", { class: "stamp" }, withheld ? "Checks did not pass" : `Final, after rung ${L.length}`),
@@ -72,7 +72,7 @@ export function caseDocket(b, c) {
     h("p", { class: "caveat" }, h("b", {}, "Caveat. "), f.not_supported ? f.not_supported.join(" ") : "A trend alone does not say what caused it or what comes next."),
     h("small", {}, f.interval.meaning));
   const checks = h("section", { class: "panel record", "aria-labelledby": "chk-h" }, h("h3", { id: "chk-h" }, "Evidence checklist"), h("ul", { class: "ticks" }, v.checklist.map(i => h("li", { class: i.ok ? "yes" : "no" }, h("span", { class: "mark", "aria-hidden": "true" }, i.ok ? "✓" : "–"), h("span", {}, i.text, h("span", { class: "sr-only" }, i.ok ? " (yes)" : " (no)"))))));
-  const honest = h("section", { class: "panel record" }, h("h3", {}, "An honest null belongs here."), h("p", {}, "Not flagged means too little evidence, not no change. A result that is not significant is still a finding and can be reported."), h("div", { class: "evidence-tags" }, h("span", {}, "TRACEABLE"), h("span", {}, "REVISABLE")));
+  const honest = honestNull();
 
   const stat = (k, val, sub) => h("div", { class: "stat" }, h("div", { class: "k" }, k), h("div", { class: "v" }, val), h("div", { class: "s" }, sub));
   const field = (k, ...kids) => [h("dt", {}, k), h("dd", {}, ...kids)];

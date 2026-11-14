@@ -23,3 +23,7 @@ export function tone(v) {
 }
 
 export const tip = (...kids) => h("div", { class: "tip" }, h("b", {}, "Detective tip"), h("p", {}, ...kids));
+
+// Shared by the case docket and Detective so both rulings look the same.
+export const gavelIcon = () => s("svg", { class: "gavel", viewBox: "0 0 48 48", "aria-hidden": "true", fill: "none", stroke: "currentColor", "stroke-width": "2" }, s("g", { transform: "rotate(-38 24 21)" }, s("rect", { x: 11, y: 9, width: 23, height: 12, rx: 2 }), s("path", { d: "M15 9v12m15-12v12M21 21v17h5V21" })), s("path", { d: "M27 40h15v4H27z" }));
+export const honestNull = () => h("section", { class: "panel record" }, h("h3", {}, "An honest null belongs here."), h("p", {}, "Not flagged means too little evidence, not no change. A result that is not significant is still a finding and can be reported."), h("div", { class: "evidence-tags" }, h("span", {}, "TRACEABLE"), h("span", {}, "REVISABLE")));

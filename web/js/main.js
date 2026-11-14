@@ -3,7 +3,7 @@ import { h, announce } from "./util.js";
 import { loadBundle, claimById } from "./data.js";
 import { landing } from "./views/landing.js";
 import { detective } from "./views/detective.js";
-import { caseList, caseClaim, caseLadder, caseSeries, caseVerdict } from "./views/cases.js";
+import { caseList, caseDocket } from "./views/cases.js";
 import { method, evidence } from "./views/pages.js";
 
 const view = document.getElementById("view");
@@ -31,8 +31,7 @@ function resolve(hash) {
   if (a === "cases") return { nav: "cases", v: caseList(bundle) };
   if (a === "case") {
     const c = claimById(bundle, id); if (!c) return { nav: "cases", v: notFound() };
-    const fn = { undefined: caseClaim, ladder: caseLadder, series: caseSeries, verdict: caseVerdict }[sub]; if (!fn) return { nav: "cases", v: notFound() };
-    return { nav: "cases", v: fn(bundle, c) };
+    return { nav: "cases", v: caseDocket(bundle, c) }; // older sub-page links (/ladder, /series, /verdict) land on the same docket
   }
   if (a === "method") return { nav: "method", v: method(bundle) };
   if (a === "evidence") return { nav: "evidence", v: evidence(bundle) };
@@ -43,6 +42,7 @@ function route(moved) {
   let r;
   try { r = resolve(location.hash); } catch (e) { console.error(e); r = { nav: "", v: { title: "Error", node: h("div", { class: "err" }, h("h1", { id: "page-title", tabindex: "-1" }, "Something went wrong drawing this page"), h("p", { class: "muted" }, String(e && e.message || e))) } }; }
   view.replaceChildren(r.v.node);
+  const sb = document.getElementById("synth"); if (sb && bundle.synthetic) sb.hidden = r.nav === "detective"; // the banner is about the case-file bundle, not live data
   document.title = r.v.title + " · Climate Claim on Trial";
   document.querySelectorAll("nav.main a").forEach(a => a.getAttribute("data-nav") === r.nav ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   window.scrollTo(0, 0);

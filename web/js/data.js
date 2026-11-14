@@ -29,7 +29,7 @@ function normalizeAll(raws) {
   const claims = [];
   let meta = {};
   for (const raw of raws) {
-    if (raw.claims) { claims.push(...raw.claims); meta = { ...meta, placeholder: !!raw.placeholder, synthetic: !!(raw.synthetic || raw.placeholder), notice: raw.notice, declared_q: raw.declared_q, alpha: raw.alpha, run_id: raw.run_id, schema_version: raw.schema_version }; }
+    if (raw.claims) { claims.push(...raw.claims.map(c => ({ gate: { regional: true, interval: true, cells: true, reasons: [] }, synthetic: true, ...c }))); meta = { ...meta, placeholder: !!raw.placeholder, synthetic: !!(raw.synthetic || raw.placeholder), notice: raw.notice, declared_q: raw.declared_q, alpha: raw.alpha, run_id: raw.run_id, schema_version: raw.schema_version }; }
     else {
       const c = fromReal(raw); claims.push(c);
       meta = { ...meta, synthetic: meta.synthetic || c.synthetic, notice: meta.notice || (c.synthetic ? "SYNTHETIC test data from the stats pipeline. Not NASA data and not a result." : ""), declared_q: raw.params.bh_q, alpha: raw.params.alpha, run_id: raw.run.run_id, schema_version: raw.schema_version };

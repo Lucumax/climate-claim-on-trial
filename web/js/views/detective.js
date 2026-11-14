@@ -1,9 +1,10 @@
 // Detective mode: the five steps from the challenge brief. 1 variable, 2 region, 3 period, 4 time series, 5 significance, then "put it on trial".
 import { h, boxStr, signed, fmtP, announce, download } from "../util.js";
 import { worldMap } from "../worldmap.js";
-import { fetchMonthly, validateBox, LIVE_IS_STUB } from "../live.js";
+import { fetchMonthly, validateBox, planBox } from "../live.js";
 import { analyze, deseasonalize, STATS_IS_STUB } from "../stats.js";
 import { trendChart } from "../chart.js";
+import { tip } from "./common.js";
 import { pWords, trendWords, stepWords, sigClass, sigLabel } from "../words.js";
 
 const LAST_YEAR = 2025;
@@ -17,16 +18,16 @@ export function detective(cat) {
   const curVar = () => V.find(v => v.key === state.varKey);
 
   // ---- Step 1: variable
-  const s1 = h("section", { class: "card", "aria-labelledby": "s1-h" }, h("p", { class: "eyebrow" }, "Step 1"), h("h2", { id: "s1-h" }, "Choose what to investigate"), h("p", { class: "muted" }, "Each clue is a NASA Earth measurement. Pick one."));
+  const s1 = h("section", { class: "card", "aria-labelledby": "s1-h" }, h("p", { class: "eyebrow" }, "Step 1"), h("h2", { id: "s1-h" }, "Choose what to investigate"), h("p", { class: "muted" }, "Each clue is a NASA Earth measurement. Pick one."), tip("Start with something you can picture, like the air temperature where you live. “Model-based” means a computer model blended many measurements to fill the whole map."));
   const varBox = h("fieldset", { class: "choice" }, h("legend", { class: "sr-only" }, "Variable"));
   function drawVars() {
-    varBox.replaceChildren(h("legend", { class: "sr-only" }, "Variable"), ...V.map(v => h("label", {}, h("input", { type: "radio", name: "variable", value: v.key, checked: v.key === state.varKey, onchange: () => { state.varKey = v.key; clampYears(); drawVars(); drawPeriod(); } }),
-      h("span", { class: "opt" }, h("strong", {}, v.name), h("span", { class: "muted small", style: "display:block;margin:2px 0 6px" }, v.one_line), h("span", { class: "chip " + (v.kind === "model_reanalysis" ? "warn" : "neutral") }, v.kind === "model_reanalysis" ? "Model output" : "Satellite observation"), h("span", { class: "muted small", style: "display:block;margin-top:6px" }, `Record starts ${v.since}`)))));
+    varBox.replaceChildren(h("legend", { class: "sr-only" }, "Variable"), ...V.map(v => v.live === false ? h("div", {}, h("div", { class: "off" }, h("strong", {}, v.name), h("span", { class: "muted small", style: "display:block;margin:2px 0 6px" }, v.one_line), h("span", { class: "chip neutral" }, "Case files only"), h("span", { class: "small", style: "display:block;margin-top:6px" }, v.not_live_note + " ", h("a", { href: v.case_link }, "Open case C-D")))) : h("label", {}, h("input", { type: "radio", name: "variable", value: v.key, checked: v.key === state.varKey, onchange: () => { state.varKey = v.key; clampYears(); drawVars(); drawPeriod(); } }),
+      h("span", { class: "opt" }, h("strong", {}, v.name), h("span", { class: "muted small", style: "display:block;margin:2px 0 6px" }, v.one_line), h("span", { class: "chip " + (v.kind === "model_reanalysis" ? "warn" : "neutral") }, v.kind === "model_reanalysis" ? "Model-based" : "Satellite observation"), h("span", { class: "muted small", style: "display:block;margin-top:6px" }, `Unit: ${v.units}. Record starts ${v.since}`)))));
   }
   s1.append(varBox);
 
   // ---- Step 2: region
-  const s2 = h("section", { class: "card", "aria-labelledby": "s2-h" }, h("p", { class: "eyebrow" }, "Step 2"), h("h2", { id: "s2-h" }, "Choose a region"), h("p", { class: "muted" }, "Start from a preset, drag a box on the map, or type the edges. The whole world is allowed."));
+  const s2 = h("section", { class: "card", "aria-labelledby": "s2-h" }, h("p", { class: "eyebrow" }, "Step 2"), h("h2", { id: "s2-h" }, "Choose a region"), h("p", { class: "muted" }, "Start from a preset, drag a box on the map, or type the edges."), tip("A box about the size of a state or a small country works well. A tiny box can be jumpy, and a very large one is slow to fetch."));
   const sel = h("select", { id: "preset", onchange: e => { const p = P.find(q => q.key === e.target.value); if (p) { state.presetKey = p.key; setBox({ ...p.box }); } } },
     ...P.map(p => h("option", { value: p.key }, p.name)), h("option", { value: "custom" }, "Custom box"));
   const inputs = {}; const err = h("p", { class: "small", style: "color:var(--bad);min-height:1.4em", role: "alert" });
@@ -36,17 +37,22 @@ export function detective(cat) {
   }));
   const wm = worldMap({ box: state.box, onChange: b => { state.presetKey = "custom"; setBox(b); } });
   const boxLabel = h("p", { class: "muted small" });
+  const planNote = h("div", { class: "small", "aria-live": "polite" });
   function setBox(b, fromInput) {
     const errs = validateBox(b); err.textContent = errs.join(" ");
     if (!errs.length) { state.box = b; wm.setBox(b); }
     for (const k of "nswe") if (!fromInput || errs.length === 0) inputs[k].value = state.box[k];
     const match = P.find(p => JSON.stringify(p.box) === JSON.stringify(state.box)); sel.value = match ? match.key : "custom";
     boxLabel.textContent = "Selected: " + boxStr(state.box);
+    if (!validateBox(state.box).length) {
+      const pl = planBox(state.box); planNote.replaceChildren(h("p", { class: pl.kind === "regional" ? "muted" : "callout" }, pl.message));
+      if (pl.kind === "too_big") planNote.append(h("div", { class: "flow-nav", style: "margin-top:0" }, h("button", { class: "btn-quiet", type: "button", onclick: () => { state.presetKey = "custom"; setBox({ ...pl.alt }); } }, `Use the largest allowed box (${boxStr(pl.alt)})`), h("span", { class: "muted small", style: "align-self:center" }, "or pick a preset region above")));
+    } else planNote.replaceChildren();
   }
-  s2.append(h("div", { class: "field" }, h("label", { for: "preset" }, "Preset"), sel), wm.node, h("p", { class: "muted small" }, "Drag on the map to draw a box. The map shows land only; boxes are rectangles of latitude and longitude."), boxRow, err, boxLabel);
+  s2.append(h("div", { class: "field" }, h("label", { for: "preset" }, "Preset"), sel), wm.node, h("p", { class: "muted small" }, "Drag on the map to draw a box. Boxes are rectangles of latitude and longitude. On a phone, typing the four edges is easier than dragging."), boxRow, err, boxLabel, planNote);
 
   // ---- Step 3: period
-  const s3 = h("section", { class: "card", "aria-labelledby": "s3-h" }, h("p", { class: "eyebrow" }, "Step 3"), h("h2", { id: "s3-h" }, "Choose the time period"));
+  const s3 = h("section", { class: "card", "aria-labelledby": "s3-h" }, h("p", { class: "eyebrow" }, "Step 3"), h("h2", { id: "s3-h" }, "Choose the time period"), tip("Longer records give the test more to work with. Ten years or fewer can show a trend by chance alone. Twenty-five years or more is a better start."));
   const periodBody = h("div", {});
   function clampYears() { const v = curVar(); state.y0 = Math.max(state.y0, v.since); if (state.y1 < state.y0) state.y1 = state.y0; }
   function drawPeriod() {
@@ -67,9 +73,12 @@ export function detective(cat) {
   async function run() {
     const errs = validateBox(state.box); if (errs.length) { err.textContent = errs.join(" "); return; }
     const v = curVar(), season = S.find(x => x.key === state.season);
-    runBtn.disabled = true; out.replaceChildren(h("p", { class: "loading muted" }, "Fetching the series."));
+    if (planBox(state.box).kind === "too_big") { out.replaceChildren(h("p", { class: "callout" }, planBox(state.box).message)); return; }
+    runBtn.disabled = true;
+    const bar = h("progress", { max: 1, value: 0, style: "width:100%;height:14px", "aria-label": "Download progress" }), cap = h("p", { class: "muted small" }, "Contacting NASA POWER.");
+    out.replaceChildren(h("div", { class: "card" }, h("p", {}, h("b", {}, "Getting " + v.name.toLowerCase() + " from NASA POWER.")), bar, cap));
     try {
-      const data = await fetchMonthly({ variable: v, box: state.box, startYear: state.y0, endYear: state.y1 });
+      const data = await fetchMonthly({ variable: v, box: state.box, startYear: state.y0, endYear: state.y1, onProgress: ({ done, total }) => { bar.value = total ? done / total : 0; cap.textContent = `${done} of ${total} request${total === 1 ? "" : "s"} done.`; } });
       const rows = data.rows.filter(r => season.months.includes(r.month));
       if (rows.length < 8) { out.replaceChildren(h("p", { class: "callout" }, "Too few values to test. Choose a longer period or more months.")); return; }
       state.result = { v, season, data, rows, box: { ...state.box }, y0: state.y0, y1: state.y1 };
@@ -77,7 +86,7 @@ export function detective(cat) {
       announce("Results ready. Time series and significance tests are below.");
       const t = document.getElementById("res-h"); if (t) t.focus();
     } catch (e) {
-      out.replaceChildren(h("p", { class: "callout" }, "Could not get the series: " + (e && e.message || e)));
+      out.replaceChildren(h("p", { class: "callout", role: "alert" }, "Could not get the series. " + (e && e.message || e)));
     } finally { runBtn.disabled = false; }
   }
 
@@ -123,6 +132,7 @@ export function detective(cat) {
           h("td", {}, signed(r.slope, 3)), h("td", {}, fmtP(r.p)), h("td", { style: "text-align:left" }, h("span", { class: "chip " + sigClass(r.p) }, sigLabel(r.p))), h("td", { style: "text-align:left;max-width:16rem" }, stepWords(rungs[i - 1], r))))))));
     const stub = [];
     if (R.data.stub) stub.push(h("p", { class: "callout" }, h("b", {}, "Preview numbers. "), R.data.note));
+    else stub.push(h("p", { class: "callout info small" }, h("b", {}, "About this data. "), R.data.note));
     if (STATS_IS_STUB) stub.push(h("p", { class: "callout info small" }, "Preview statistics: standard formulas in this page. The final version uses the project's tested statistics module."));
     const csv = () => download(`detective_${R.v.key}_${R.y0}-${R.y1}.csv`, "year,month,value,anomaly\n" + R.rows.map((r, i) => `${r.year},${r.month},${r.value},${anom[i].toFixed(5)}`).join("\n"), "text/csv");
     out.replaceChildren(
@@ -130,8 +140,8 @@ export function detective(cat) {
         h("div", { class: "casehead" }, h("h2", { id: "res-h", tabindex: "-1" }, "Your time series"), h("span", { class: "chip warn" }, "Your own exploration, not pre-registered")),
         h("p", { class: "meta" }, h("span", {}, h("b", {}, "Variable: "), R.v.name), h("span", {}, h("b", {}, "Region: "), boxStr(R.box)), h("span", {}, h("b", {}, "Period: "), `${R.season.name}, ${R.y0} to ${R.y1}`), h("span", {}, h("b", {}, "Values: "), String(R.rows.length)), h("span", {}, h("b", {}, "Source: "), R.v.source)),
         ...stub,
-        h("div", { class: "card" }, h("p", { class: "eyebrow" }, "Step 4"), h("h3", {}, "Look at the series. Does it look like a trend?"), toggle, h("div", { style: "margin-top:12px" }, chart.node)),
-        h("p", { class: "eyebrow", style: "margin-top:24px" }, "Step 5"), h("h3", {}, "Is the trend significant?"),
+        h("div", { class: "card" }, h("p", { class: "eyebrow" }, "Step 4"), h("h3", {}, "Look at the series. Does it look like a trend?"), tip("Does the line rise and fall in a steady yearly wave? That wave is the seasonal cycle. Switch on “Seasonal cycle removed” to see what is left once it is taken out."), toggle, h("div", { style: "margin-top:12px" }, chart.node)),
+        h("p", { class: "eyebrow", style: "margin-top:24px" }, "Step 5"), h("h3", {}, "Is the trend significant?"), tip("A p-value below 0.05 is called significant. A p-value above 0.05 does not mean there is no trend. It means this record is not clear enough yet."),
         h("p", { class: "muted" }, trendWords(R.v.name, A.sen.slope_per_decade, A.sen.lo, A.sen.hi, u)),
         h("div", { class: "grid g2" }, mkCard, olsCard),
         h("div", { style: "margin-top:16px" }, trial),

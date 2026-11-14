@@ -1,49 +1,63 @@
-/* Neutral tokens (pre-mockup). One token set per theme. Light is the default; dark follows the system setting or the
-   manual toggle (data-theme). The two dark blocks must match. After changing any colour run, from web/:
-   python tools/check_contrast.py */
+/* Courtroom theme: parchment, navy and brass (light); deep navy and warm brass (dark). One token set per theme.
+   Dark follows the system setting or the manual toggle (data-theme); the two dark blocks must match.
+   After any colour change run, from web/:  python tools/check_contrast.py */
 
 :root {
   color-scheme: light;
-  --bg: #F6F7F9;        --surface: #FFFFFF;   --surface-2: #EEF0F4;  --ink: #171A1F;   --muted: #565D68;  --ink-soft: #6B7280;
-  --line: #E3E6EB;      --edge: #7B838F;
-  --accent: #2F3FBF;    --on-accent: #FFFFFF; --focus: #2F3FBF;
-  --ok: #0B7A47;        --warn: #9A4205;      --bad: #B5231A;
-  --ok-bg: #E4F3EB;     --warn-bg: #FCEEDD;   --bad-bg: #FBE9E7;
-  /* map categories: increase / decrease flagged, not flagged */
-  --up: #C2410C;        --down: #2F5FD0;      --nf: #DDE1E7;
-  --up-text: #A8380A;   --down-text: #2450BA;
-  /* chart palette */
-  --c1: #2F5FD0; --c2: #C2410C; --c3: #0F766E; --c4: #A21CAF; --c5: #8A5A00; --c6: #4D7C0F;
-  --radius: 10px;
-  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --shadow-1: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+  --bg: #F3EFE5;       --surface: #FFFDF7;  --surface-2: #EAE4D5;  --ink: #192D40;   --muted: #56616A;  --ink-soft: #56616A;
+  --line: #C9C3B5;     --edge: #7D7868;
+  --accent: #7D5A15;   --focus: #7D5A15;
+  --primary: #203345;  --on-primary: #FCF8ED;
+  --brass-soft: #F0E1B9;
+  --ok: #1F6B45;       --warn: #8A5200;     --bad: #A3261C;
+  --ok-bg: #E2F1E8;    --warn-bg: #F7E8C8;  --bad-bg: #F9E6E3;
+  /* rail (Order of hearings) */
+  --rail: #203345;     --rail-text: #FCF8ED; --rail-muted: #C7D1D8; --rail-line: #5D6D79; --current: #F0D89B; --current-ink: #263545;
+  /* map: flagged rising, flagged falling, not flagged, no data; marks are the glyph colours drawn on each */
+  --up: #203E57;       --up-mark: #FFFAF0;  --down: #38766E;     --down-mark: #FFFFFF;
+  --nf: #E7CD8B;       --nf-line: #80601E;  --nodata: #E2E3DF;   --nodata-mark: #626D72;
+  --ocean: #DCE5E8;    --land: #F7F2E4;     --coast: #6F6A5A;    --border: #8E8878;  --state: #8E8878;
+  /* chart */
+  --band: #DFCFAA;     --slope: #8A5915;    --ols: #38766E;      --dot: #203E57;     --plot-grid: #D5D0C4;
+  --radius: 4px;
+  --font-ui: Arial, Helvetica, "Segoe UI", sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: Consolas, "Courier New", monospace;
+  --shadow-1: 0 3px 0 rgba(25, 45, 64, .04);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #0C0D10;      --surface: #15171B; --surface-2: #1E2127; --ink: #ECEDEF;   --muted: #A1A6AF;  --ink-soft: #8D939D;
-    --line: #2A2D34;    --edge: #6B7079;
-    --accent: #9AA6FF;  --on-accent: #0C0D10; --focus: #9AA6FF;
-    --ok: #4FD196;      --warn: #FFB060;    --bad: #FF8A80;
-    --ok-bg: #0F2A1D;   --warn-bg: #2E1F0C; --bad-bg: #341615;
-    --up: #FF9A5C;      --down: #7AA2FF;    --nf: #2B2F36;
-    --up-text: #FF9A5C; --down-text: #8DB0FF;
-    --c1: #7AA2FF; --c2: #FF9A5C; --c3: #4FD1C5; --c4: #E58BFF; --c5: #F2C14E; --c6: #A3D65C;
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
+    --bg: #101D29;     --surface: #192B3A;  --surface-2: #223646;  --ink: #F4EDDE;   --muted: #BEC9CE;  --ink-soft: #BEC9CE;
+    --line: #52616A;   --edge: #7E8E98;
+    --accent: #E0BD72; --focus: #E0BD72;
+    --primary: #E0BD72; --on-primary: #152534;
+    --brass-soft: #3E3726;
+    --ok: #7FD1A4;     --warn: #F0BE6A;     --bad: #FF9A90;
+    --ok-bg: #123022;  --warn-bg: #3A2D12;  --bad-bg: #3B1B19;
+    --rail: #0B1620;   --rail-text: #F4EDDE; --rail-muted: #B7C7D0; --rail-line: #485A68; --current: #D8B66F; --current-ink: #152534;
+    --up: #E5C17B;     --up-mark: #1B2C3B;  --down: #77BCB0;     --down-mark: #102B2B;
+    --nf: #1C3041;     --nf-line: #B4C6D2;  --nodata: #34424C;   --nodata-mark: #B9C5CA;
+    --ocean: #0C1822;  --land: #1B2D3C;     --coast: #8FA3B0;    --border: #566A78;  --state: #566A78;
+    --band: #485461;   --slope: #EFC67D;    --ols: #77BCB0;      --dot: #E0E7E8;     --plot-grid: #42525E;
+    --shadow-1: 0 3px 0 rgba(0, 0, 0, .2);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0C0D10;      --surface: #15171B; --surface-2: #1E2127; --ink: #ECEDEF;   --muted: #A1A6AF;  --ink-soft: #8D939D;
-  --line: #2A2D34;    --edge: #6B7079;
-  --accent: #9AA6FF;  --on-accent: #0C0D10; --focus: #9AA6FF;
-  --ok: #4FD196;      --warn: #FFB060;    --bad: #FF8A80;
-  --ok-bg: #0F2A1D;   --warn-bg: #2E1F0C; --bad-bg: #341615;
-  --up: #FF9A5C;      --down: #7AA2FF;    --nf: #2B2F36;
-  --up-text: #FF9A5C; --down-text: #8DB0FF;
-  --c1: #7AA2FF; --c2: #FF9A5C; --c3: #4FD1C5; --c4: #E58BFF; --c5: #F2C14E; --c6: #A3D65C;
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, .5);
+  --bg: #101D29;     --surface: #192B3A;  --surface-2: #223646;  --ink: #F4EDDE;   --muted: #BEC9CE;  --ink-soft: #BEC9CE;
+  --line: #52616A;   --edge: #7E8E98;
+  --accent: #E0BD72; --focus: #E0BD72;
+  --primary: #E0BD72; --on-primary: #152534;
+  --brass-soft: #3E3726;
+  --ok: #7FD1A4;     --warn: #F0BE6A;     --bad: #FF9A90;
+  --ok-bg: #123022;  --warn-bg: #3A2D12;  --bad-bg: #3B1B19;
+  --rail: #0B1620;   --rail-text: #F4EDDE; --rail-muted: #B7C7D0; --rail-line: #485A68; --current: #D8B66F; --current-ink: #152534;
+  --up: #E5C17B;     --up-mark: #1B2C3B;  --down: #77BCB0;     --down-mark: #102B2B;
+  --nf: #1C3041;     --nf-line: #B4C6D2;  --nodata: #34424C;   --nodata-mark: #B9C5CA;
+  --ocean: #0C1822;  --land: #1B2D3C;     --coast: #8FA3B0;    --border: #566A78;  --state: #566A78;
+  --band: #485461;   --slope: #EFC67D;    --ols: #77BCB0;      --dot: #E0E7E8;     --plot-grid: #42525E;
+  --shadow-1: 0 3px 0 rgba(0, 0, 0, .2);
 }

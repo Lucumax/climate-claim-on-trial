@@ -32,7 +32,7 @@ export function seriesChart(claim) {
 
 // Generic trend chart. opts: x (numbers), y, units, band {lo,hi}|null, lines [{label,cls,lbl,y}], fmtX, ptR, xTickStep, describe, yLabel, keyItems
 export function trendChart(o) {
-  const narrow = window.innerWidth < 640, yrs = o.x, y = o.y, n = yrs.length, W = narrow ? 400 : 760, H = narrow ? 360 : 380, m = { l: 46, r: narrow ? 86 : 118, t: 16, b: 40 };
+  const narrow = window.innerWidth < 640, yrs = o.x, y = o.y, n = yrs.length, W = narrow ? 380 : 760, H = narrow ? 360 : 380, m = { l: 46, r: narrow ? 100 : 118, t: 16, b: 40 };
   const all = [...y, ...(o.band ? [...o.band.lo, ...o.band.hi] : []), ...o.lines.flatMap(l => l.y)];
   let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.06 || 1; lo -= pad; hi += pad;
   const xs = v => m.l + (v - yrs[0]) / (yrs[n - 1] - yrs[0]) * (W - m.l - m.r);

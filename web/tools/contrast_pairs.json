@@ -1,21 +1,20 @@
 {
-  "_help": "Each pair is [foreground token, background token]. text pairs need 4.5:1 (WCAG AA); graphics pairs (chart marks, map categories, borders) need 3:1. Both themes are checked.",
+  "_help": "Each pair is [foreground token, background token]. text pairs need 4.5:1 (WCAG AA); graphics pairs (chart marks, map categories and glyphs, borders) need 3:1. Both themes are checked.",
   "text": [
     ["ink", "bg"], ["ink", "surface"], ["ink", "surface-2"],
     ["muted", "bg"], ["muted", "surface"], ["muted", "surface-2"],
-    ["accent", "bg"], ["accent", "surface"],
-    ["on-accent", "accent"],
+    ["accent", "bg"], ["accent", "surface"], ["accent", "surface-2"],
+    ["on-primary", "primary"],
+    ["rail-text", "rail"], ["rail-muted", "rail"], ["current-ink", "current"],
     ["ok", "surface"], ["warn", "surface"], ["bad", "surface"],
-    ["ok", "ok-bg"], ["warn", "warn-bg"], ["bad", "bad-bg"],
-    ["ink", "ok-bg"], ["ink", "warn-bg"],
-    ["up-text", "surface"], ["down-text", "surface"]
+    ["ok", "ok-bg"], ["warn", "warn-bg"], ["bad", "bad-bg"], ["ink", "warn-bg"], ["ink", "brass-soft"],
+    ["muted", "land"], ["ink", "land"],
+    ["up-mark", "up"], ["down-mark", "down"]
   ],
   "graphics": [
-    ["c1", "surface"], ["c2", "surface"], ["c3", "surface"],
-    ["c4", "surface"], ["c5", "surface"], ["c6", "surface"],
-    ["up", "surface"], ["down", "surface"],
-    ["up", "nf"], ["down", "nf"],
-    ["edge", "surface"], ["focus", "bg"], ["focus", "surface"],
-    ["ink-soft", "surface"]
+    ["up", "land"], ["down", "land"], ["nf-line", "land"], ["up", "nf"], ["down", "nf"], ["nodata-mark", "land"], ["nodata-mark", "nodata"],
+    ["nf-line", "nf"], ["slope", "surface"], ["ols", "surface"], ["dot", "surface"], ["slope", "band"],
+    ["edge", "surface"], ["focus", "bg"], ["focus", "surface"], ["current", "rail"], ["coast", "land"], ["coast", "ocean"],
+    ["up", "surface"], ["down", "surface"], ["muted", "ocean"]
   ]
 }

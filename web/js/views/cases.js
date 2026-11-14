@@ -45,7 +45,7 @@ export function caseList(b) {
     }))) };
 }
 
-export function caseDocket(b, c) {
+export function caseDocket(b, c, query = "") {
   let sel = c.ladder.length - 1, mode = "claimed", showOls = false;
   const ak = () => (mode === "any" ? "flagged_fraction_any" : "flagged_fraction_claimed"), ck = () => (mode === "any" ? "cell_frac_any" : "cell_frac_claimed"), nk = () => (mode === "any" ? "n_flagged_any" : "n_flagged_claimed");
   const L = c.ladder, v = c.verdict, f = c.finding, r = c.regional, u = U(r.units), t = r.test, iv = r.interval, nL = L.length;
@@ -199,7 +199,8 @@ export function caseDocket(b, c) {
     { key: "distribution", label: "Distribution", title: "Distribution", ask: "Is the whole distribution moving, or only the average? All cells and years in each period.", mount: mountDistribution },
   ];
   views.sort((a, b) => (a.key === "witness") - (b.key === "witness"));
-  const ex = exhibit({ views, initial: "record", rulingNote, tag: h("span", { class: "tag" }, withheld ? "Ruling withheld" : "Regional ruling: final") });
+  const wanted = new URLSearchParams(query).get("view");   // ?view=witness or ?view=witness2 opens that exhibit view; anything not in this docket's list is ignored
+  const ex = exhibit({ views, initial: views.some(v => v.key === wanted) ? wanted : "record", rulingNote, tag: h("span", { class: "tag" }, withheld ? "Ruling withheld" : "Regional ruling: final") });
   const openStatistics = () => { statistics.open = true; statistics.scrollIntoView({ block: "start", behavior: "smooth" }); };
 
   // ---------------------------------------------------------------- collapsible detail: Statistics, Limits of this finding, Provenance

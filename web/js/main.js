@@ -43,7 +43,7 @@ function resolve(hash) {
   if (a === "cases") return { nav: "cases", v: caseList(bundle) };
   if (a === "case") {
     const c = claimById(bundle, id); if (!c) return { nav: "cases", v: notFound() };
-    return { nav: "cases", v: caseDocket(bundle, c) }; // older sub-page links (/ladder, /series, /verdict) land on the same docket
+    return { nav: "cases", v: caseDocket(bundle, c, query) }; // older sub-page links (/ladder, /series, /verdict) land on the same docket
   }
   if (a === "method") return { nav: "how", v: method(bundle) };
   if (a === "glossary") return { nav: "how", v: glossary(catalog) };

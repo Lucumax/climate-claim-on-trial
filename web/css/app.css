@@ -735,3 +735,38 @@ main h1, main h2, main h3, main p, main li, main dd, main dt, main summary, main
   .hl-head { flex-wrap: wrap; row-gap: 0; }
   .hl-pick legend { font-size: .6875rem; }
 }
+
+/* Home showcase bands: the planet and the witness checks, live and compact */
+.band-fa { margin-top: var(--sp-6); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+.band-fa .band-head { margin-bottom: 0; }
+.band-fa .band-head .btn { margin-top: var(--sp-4); }
+.fa-prev-host { min-width: 0; }
+.fa-preview .fa-prev-ws { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); }
+.fa-preview .fa-prev-main { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+.fa-preview .fa-prev-main .fa-stage { order: -1; }
+.fa-preview .hearings { position: static; }
+.fa-preview .hearing-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fa-preview .hearing { border-bottom: 0; border-right: 1px solid var(--rail-line); }
+.fa-preview .hearing .explain { display: none; }
+.fa-preview .fa-stage.is-globe { max-height: 380px; }
+.fa-preview .fa-headline { font: 400 1.25rem/1.3 var(--font-serif); margin: var(--sp-2) 0 0; }
+.fa-preview .fa-sub { margin: 0; color: var(--muted); font-size: .9375rem; }
+.wit-pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }
+.wit-col { min-width: 0; }
+.wit-col .btn-quiet { margin-top: var(--sp-3); }
+.wit-col .viz-wit { display: block; }
+@media (min-width: 1000px) {
+  .band-fa { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--sp-6); align-items: start; }
+  .wit-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--sp-7); }
+}
+@media (max-width: 40rem) {
+  .fa-preview .hearing-list { grid-template-columns: minmax(0, 1fr); }
+  .fa-preview .hearing { border-right: 0; border-bottom: 1px solid var(--rail-line); }
+}
+
+.fa-preview .fa-prev-ws { display: flex; flex-direction: column; gap: var(--sp-3); }
+.fa-preview .fa-prev-main { order: 0; } .fa-preview .hearings { order: 1; }
+main:has(.home) { padding-top: var(--sp-4); }
+.hl-whole { margin-top: var(--sp-2); }
+.band-fa { margin-top: var(--sp-5); }
+.fa-preview .fa-stage { margin-left: 0 !important; margin-right: 0 !important; border-left: 1px solid var(--line) !important; border-right: 1px solid var(--line) !important; max-width: 100%; }

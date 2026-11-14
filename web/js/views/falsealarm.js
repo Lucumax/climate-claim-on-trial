@@ -83,7 +83,10 @@ function sameTrap() {
       cell("Tech", "An A/B test stopped the moment it looks good will “win” more often than 1 time in 20 when nothing changed.")));
 }
 
-export function falseAlarm() {
+// opts.preview: the compact Home version. It keeps the stage, the computed counts, the legend and the three test selectors, starts at the finished
+// naive test, and leaves out the docket, the ensemble check and the controls. destroy() is returned for the caller; it does not listen for navigation.
+export function falseAlarm(opts = {}) {
+  const preview = !!opts.preview;
   const reduced = reducedMotion();
   const webgl = hasWebGL();
   const st = {
@@ -91,7 +94,7 @@ export function falseAlarm() {
     stage: 0, shown: { stage: 0, p: 1 }, playing: false,
     res: null, computing: false, computeMs: null,
     view: window.innerWidth < 700 || !webgl ? "flat" : "globe",
-    rotate: !reduced, ens: null, ensRunning: null, val: null,
+    rotate: !reduced && !preview, ens: null, ensRunning: null, val: null,
   };
   const refs = {};
   let globe = null, globeReady = false, globeFailed = false, token = 0, cancelFlag = { cancelled: false }, ensFlag = { cancelled: false };
@@ -218,9 +221,14 @@ export function falseAlarm() {
   const tipBox = h("div", { class: "tip" }, h("b", {}, "Detective tip"), h("p", {}, "A flagged cell is not a finding. Before you believe a map of significant places, ask what the same test does to a planet where nothing changed."));
   const rulingColumn = h("div", { class: "ruling-column" }, ruling, refs.leak, refs.check, tipBox);
 
-  const node = h("div", { class: "fa-view fa-pending" },
-    h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Exhibit 0"), heading,
-    h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit, sameTrap()), rulingColumn));
+  // the compact version: the three tests on the left, the planet with its headline, count and legend on the right
+  const previewRail = h("aside", { class: "hearings fa-rail", "aria-label": "Choose a test" }, railList);
+  const previewStage = h("div", { class: "fa-prev-main" }, refs.headline, refs.sub, refs.stage, refs.readout, legend, refs.summary);
+  const node = preview
+    ? h("div", { class: "fa-view fa-preview fa-pending" }, h("div", { class: "workspace fa-prev-ws" }, previewRail, previewStage))
+    : h("div", { class: "fa-view fa-pending" },
+      h("p", { class: "crumb" }, h("a", { href: "#/" }, "Home"), " / Exhibit 0"), heading,
+      h("div", { class: "workspace" }, rail, h("div", { class: "exhibits" }, exhibit, sameTrap()), rulingColumn));
 
   // stylesheet: load it with the view, show the page when it is ready
   const css = document.querySelector('link[data-fa-css]') || Object.assign(document.createElement("link"), { rel: "stylesheet", href: "css/falsealarm.css" });
@@ -253,11 +261,11 @@ export function falseAlarm() {
     if (!rank) { rank = new Float32Array(N); let a = 12345; for (let i = 0; i < N; i++) { a = (a * 1664525 + 1013904223) >>> 0; rank[i] = a / 4294967296; } }
     setStatus("", false);
     document.getElementById("fa-seed-chip") && (document.getElementById("fa-seed-chip").textContent = String(st.seed));
-    prepareFlat(); renderLeak(); renderCheck();
+    prepareFlat(); if (!preview) { renderLeak(); renderCheck(); }
     if (globe) { globe.pointsData(cellObjs()); }
-    if (!st.firstDone && !reduced) { st.firstDone = true; st.stage = 0; st.shown = { stage: 0, p: 1 }; render(true); play(); return; }
+    if (!st.firstDone && !reduced && !preview) { st.firstDone = true; st.stage = 0; st.shown = { stage: 0, p: 1 }; render(true); play(); return; }
     st.firstDone = true;
-    const s = st.stage === 0 ? (reduced ? 1 : 3) : st.stage;
+    const s = st.stage === 0 ? (reduced || preview ? 1 : 3) : st.stage;
     st.stage = s; st.shown = { stage: s, p: 1 };
     render(true); settle();
   }
@@ -389,12 +397,12 @@ export function falseAlarm() {
     refs.rulingBody.replaceChildren(...body);
   }
   function settle() {
-    updateRuling(); renderLeak(); renderCheck();
+    updateRuling(); if (!preview) { renderLeak(); renderCheck(); }
     if (st.tableOpen) renderTable();
     const r = st.res; if (!r) return;
     const s = st.shown.stage; clearTimeout(settleTimer);
     settleTimer = setTimeout(() => { if (s > 0) announce(`${RUNG[s - 1].name}: ${fmt(r.counts[s - 1])} of ${fmt(N)} cells flagged. ${s === 3 ? "Ruling on Planet Null: " + fmt(r.counts[2]) + " false " + plural(r.counts[2], "alarm survives", "alarms survive") + "." : ""}`); }, 400);
-    scheduleEnsemble();
+    if (!preview) scheduleEnsemble();
   }
 
   // -------------------------------------------------------------- the honest twist and the check against the validation
@@ -596,7 +604,7 @@ export function falseAlarm() {
       const pal = palette();
       g.backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereColor(pal.accent).atmosphereAltitude(0.16);
       g.globeMaterial().color.set(pal.land);
-      g.pointOfView({ lat: 22, lng: -30, altitude: 2.15 });
+      g.pointOfView({ lat: 22, lng: -30, altitude: preview ? 1.75 : 2.15 });
       const c = g.controls(); c.enableZoom = false; c.enablePan = false; c.autoRotate = st.rotate && !reduced; c.autoRotateSpeed = 0.55;
       g.pointsData([]).pointLat("lat").pointLng("lng").pointResolution(5).pointsMerge(false).pointsTransitionDuration(0)
         .pointLabel((d) => cellLabel(d.i));
@@ -639,11 +647,12 @@ export function falseAlarm() {
     if (io) io.disconnect(); if (ro) ro.disconnect(); if (mo) mo.disconnect();
     if (mq && mq.removeEventListener) mq.removeEventListener("change", themeAll);
     window.removeEventListener("hashchange", onHash);
+    if (preview && node.isConnected) node.remove();
     if (globe) { try { globe.pauseAnimation(); globe._destructor && globe._destructor(); } catch (e) { /* ignore */ } globe = null; }
   }
   function onHash() { if (!/^#\/false-alarm/.test(location.hash)) destroy(); }
   function themeAll() { if (st.view === "flat") drawFlat(); else themeGlobe(); }
-  window.addEventListener("hashchange", onHash);
+  if (!preview) window.addEventListener("hashchange", onHash);
 
   // start once attached
   queueMicrotask(() => {
@@ -656,10 +665,10 @@ export function falseAlarm() {
     mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)"); if (mq && mq.addEventListener) mq.addEventListener("change", themeAll);
     if (window.ResizeObserver) { ro = new ResizeObserver(() => { if (destroyed) return; if (st.view === "flat") { if (flat) { layoutFlat(); drawFlat(); } } else { sizeGlobe(); wake(600); } }); ro.observe(refs.stage); }
     if (window.IntersectionObserver) { io = new IntersectionObserver((en) => { if (!globe || st.view !== "globe") return; if (en[0].isIntersecting) wake(500); else { try { globe.pauseAnimation(); } catch (e) { /* ignore */ } } }); io.observe(refs.stage); }
-    fetch("data/false_alarm_validation.json").then((r) => r.json()).then((v) => { st.val = v; if (st.res) { renderLeak(); renderCheck(); updateRuling(); if (st.tableOpen) renderTable(); } }).catch((e) => console.error(e));
+    if (!preview) fetch("data/false_alarm_validation.json").then((r) => r.json()).then((v) => { st.val = v; if (st.res) { renderLeak(); renderCheck(); updateRuling(); if (st.tableOpen) renderTable(); } }).catch((e) => console.error(e));
     if (st.view === "globe") ensureGlobe().then(() => { applyRotate(); });
     compute();
   });
 
-  return { title: "Exhibit Zero: The False-Alarm Planet", node };
+  return { title: "Exhibit Zero: The False-Alarm Planet", node, destroy };
 }

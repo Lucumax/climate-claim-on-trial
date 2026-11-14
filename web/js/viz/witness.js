@@ -9,7 +9,9 @@ const SOURCE = "https://science.nasa.gov/science-research/earth-science/terra-th
 const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}`; };
 const mean = (a) => a.reduce((s, v) => s + v, 0) / a.length;
 
-export async function render(container, data) {
+// opts.preview: the compact Home version: only the overpass-time chart, its readout, a short qualification and the table.
+export async function render(container, data, opts = {}) {
+  const preview = !!opts.preview;
   const Y = data.years, n = Y.length, S = data.series, sm = data.summary, ad = sm.view_time_adjusted_lst;
   const T = S.view_time_local_solar_h, LST = S.lst_day_degC, TS = S.power_ts_degC, T2 = S.power_t2m_degC, GAP = S.lst_minus_ts_degC;
   const pre = data.years.map((y, i) => i).filter((i) => Y[i] <= 2019), gapPre = mean(pre.map((i) => GAP[i]));
@@ -22,19 +24,21 @@ export async function render(container, data) {
   const readout = el("p", { class: "viz-readout viz-num", "aria-live": "polite" });
   const wrap = el("div", { class: "viz-wit", tabindex: "0", role: "group", "aria-describedby": summaryId, "aria-label": "Witness check charts. Left and right arrow keys move between years." },
     el("div", {}, el("h3", {}, "(a) When Terra looked"), el("p", {}, "Local solar time of the daytime overpass, summer average, by year"), svgA),
-    el("div", {}, el("h3", {}, "(b) What it read, against a second NASA record"), el("p", {}, "Daytime land surface temperature, summer average, with NASA POWER skin and air temperature (a second NASA record, model-based, not fully independent)"), svgB,
-      el("h3", { style: "margin-top:16px" }, "The gap: satellite minus POWER skin temperature"), svgC));
+    ...(preview ? [] : [el("div", {}, el("h3", {}, "(b) What it read, against a second NASA record"), el("p", {}, "Daytime land surface temperature, summer average, with NASA POWER skin and air temperature (a second NASA record, model-based, not fully independent)"), svgB,
+      el("h3", { style: "margin-top:16px" }, "The gap: satellite minus POWER skin temperature"), svgC)]));
   const link = el("a", { href: SOURCE, target: "_blank", rel: "noopener" }, "NASA Science, “Terra: The End of An Era”, 2025");
   const lstGap = sm.sen_per_decade.lst_minus_ts, p = lstGap.mann_kendall_p;
   const text = el("div", { class: "viz-wit__text" },
     el("p", {}, "NASA stopped adjusting Terra's orbit in 2020 and it now passes earlier in the morning (", link, "). Its daytime readings fell relative to the POWER skin temperature by about ", plain(Math.abs(lstGap.per_decade), 2), " °C per decade (p = ", p < 0.01 ? p.toFixed(3) : p.toFixed(2), "). The gap tracks the overpass time (r = ", plain(sm.gap_vs_view_time.pearson_r, 2), ", n = ", String(sm.gap_vs_view_time.n), " years), which fits an earlier overpass reading cooler, but year and overpass time move together here, so the cause is not proven. After allowing for the drift, the record shows no clear trend either way (two adjustment methods disagree on sign)."),
     el("p", { class: "viz-note" }, `The two adjustments give ${signed(ad.ols_with_view_time.slope_year_per_decade, 2)} °C per decade (regression on overpass time, 95% range ${signed(ad.ols_with_view_time.slope_ci95_per_decade[0], 2)} to ${signed(ad.ols_with_view_time.slope_ci95_per_decade[1], 2)}) and ${signed(ad.alternative_correction.sen.per_decade, 2)} (correction from the gap, 95% range ${signed(ad.alternative_correction.sen.ci95_low, 2)} to ${signed(ad.alternative_correction.sen.ci95_high, 2)}); both ranges include zero. The overpass time and the year move together, so this shows size and direction, not an exact correction.`),
     el("p", { class: "viz-note" }, "POWER skin (TS) and air (T2M) temperatures are MERRA-2 model output, not observations, and both come from the same model: a second NASA record, model-based, not fully independent of the satellite or of each other. MODIS sees clear skies only, so a steady offset from POWER is expected; a changing one is what panel (b) looks at. Exploratory check, not the registered test: the registered result and the withheld ruling above stay as they are."));
+  const textPreview = el("div", { class: "viz-wit__text" },
+    el("p", {}, "NASA stopped adjusting Terra's orbit in 2020 and it now passes earlier in the morning (", link, "). The satellite's daytime readings fell relative to a second NASA record by about ", plain(Math.abs(lstGap.per_decade), 2), " °C per decade, in step with the overpass time. That is consistent with an earlier pass reading cooler, but the cause is not proven. Exploratory; the ruling is unchanged."));
   const rows = Y.map((y, i) => [String(y), hm(T[i]), LST[i].toFixed(2), TS[i].toFixed(2), T2[i].toFixed(2), GAP[i].toFixed(2)]);
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Values by year (table)"),
     dataTable(["Year", "Overpass, local solar time", "Satellite day LST (°C)", "POWER skin TS (°C)", "POWER air T2M (°C)", "Satellite minus skin (°C)"], rows, "Terra overpass time and temperatures by year, summer average"));
   const summary = el("p", { class: "viz-summary sr-only", id: summaryId, "aria-live": "off" }, `Terra's daytime overpass was near ${hm(mean(pre.map((i) => T[i])))} local solar time from ${Y[0]} to 2019 and fell to ${hm(T[n - 1])} by ${Y[n - 1]}. The satellite minus skin temperature gap fell from ${gapPre.toFixed(2)} °C (${Y[0]}–2019 average) to ${GAP[n - 1].toFixed(2)} °C in ${Y[n - 1]}.`);
-  const root = el("figure", { class: "viz viz-witness" }, el("p", { class: "viz-note", style: "margin:0 0 12px" }, el("span", { class: "chip" }, "Exploratory check, not the registered test")), wrap, readout, text, summary, details);
+  const root = el("figure", { class: "viz viz-witness" }, el("p", { class: "viz-note", style: "margin:0 0 12px" }, el("span", { class: "chip" }, "Exploratory check, not the registered test")), wrap, readout, preview ? textPreview : text, summary, details);
   container.append(root);
 
   // ---------------------------------------------------------------- charts
@@ -60,20 +64,23 @@ export async function render(container, data) {
     const lab = (o, x, y, txt, anchor = "start", color) => o.surface && sv("text", { x, y, "text-anchor": anchor, "font-size": 14, class: "num", fill: color, ...o.halo }, txt);
     chart(svgA, { w: W, h: 320, yDom: [9.5, 11.25], yTicks: [9.5, 10, 10.5, 11], yFmt: hm, series: [{ v: T, color: ink, dots: true, w: 2.4 }],
       extras: (o) => { svgA.append(sv("text", { x: o.X(2020) - 6, y: o.mt + 14, "text-anchor": "end", "font-size": 14, class: "t-muted", ...o.halo }, "2020: orbit"), sv("text", { x: o.X(2020) - 6, y: o.mt + 30, "text-anchor": "end", "font-size": 14, class: "t-muted", ...o.halo }, "adjustments stop"), lab(o, o.X(Y[n - 1]) - 4, o.V(T[n - 1]) + 24, hm(T[n - 1]) + " in " + Y[n - 1], "end"), lab(o, o.X(2002), o.V(T[0]) - 12, "about " + hm(mean(pre.map((i) => T[i]))) + " until 2019")); } });
+    if (!preview) {
     chart(svgB, { w: W, h: 250, yDom: [23, 32], yTicks: [24, 26, 28, 30], yFmt: (v) => v + "°", xLabels: false,
       series: [{ v: LST, color: warm, w: 2.6 }, { v: TS, color: cool, w: 2 }, { v: T2, color: ghost, w: 2, dash: "6 4" }],
       extras: (o) => { svgB.append(lab(o, o.X(2001.2), o.V(31.5), "Satellite, daytime surface temperature", "start", ink), lab(o, o.X(2001.2), o.V(23.6), "POWER skin (TS), solid blue", "start", ink), lab(o, o.X(2013), o.V(23.6), "POWER air (T2M), dashed", "start", ink)); } });
     chart(svgC, { w: W, h: 170, yDom: [0, 3.6], yTicks: [0, 1, 2, 3], yFmt: (v) => v + "°", series: [{ v: GAP, color: ink, w: 2.4, dots: true }],
       extras: (o) => { svgC.append(sv("line", { x1: o.ml, x2: o.ml + o.pw, y1: o.V(gapPre), y2: o.V(gapPre), stroke: ink, "stroke-dasharray": "6 4", opacity: 0.6 }), lab(o, o.X(2001.2), o.V(0.45), `dashed line: ${Y[0]}–2019 average, ${gapPre.toFixed(1)}°`), lab(o, o.X(Y[n - 1]) - 4, o.V(GAP[n - 1]) - 12, GAP[n - 1].toFixed(1) + "° in " + Y[n - 1], "end")); } });
+    }
     mark(yi);
   }
   const el_ = (x) => x;
   function mark(i) {
     yi = clamp(i, 0, n - 1);
-    for (const s of [svgA, svgB, svgC]) s._draw && s._draw(yi);
+    for (const s of preview ? [svgA] : [svgA, svgB, svgC]) s._draw && s._draw(yi);
+    if (preview) { readout.textContent = `${Y[yi]}: Terra looked at ${hm(T[yi])} local solar time.`; return; }
     readout.textContent = `${Y[yi]}: Terra looked at ${hm(T[yi])} local solar time. Satellite ${LST[yi].toFixed(1)} °C, POWER skin ${TS[yi].toFixed(1)} °C, POWER air ${T2[yi].toFixed(1)} °C; satellite minus skin ${GAP[yi].toFixed(2)} °C.`;
   }
-  for (const s of [svgA, svgB, svgC]) { s.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") mark(s._x(e.clientX)); }); s.addEventListener("pointerdown", (e) => mark(s._x(e.clientX))); }
+  for (const s of preview ? [svgA] : [svgA, svgB, svgC]) { s.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") mark(s._x(e.clientX)); }); s.addEventListener("pointerdown", (e) => mark(s._x(e.clientX))); }
   wrap.addEventListener("keydown", (e) => { if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); mark(yi + 1); } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); mark(yi - 1); } else if (e.key === "Home") { e.preventDefault(); mark(0); } else if (e.key === "End") { e.preventDefault(); mark(n - 1); } });
   draw();
   const offSize = sizeObserver(wrap, () => { if (destroyed) return; const w = clamp(Math.round(svgA.parentNode.clientWidth || 420), 260, 720); if (Math.abs(w - W) > 1) draw(); });

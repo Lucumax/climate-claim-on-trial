@@ -63,7 +63,9 @@ function adapt(d) {
   };
 }
 
-export async function render(container, data) {
+// opts.preview: the compact Home version: the overlay chart, readout, key, the first sentence and the qualification, and the table.
+export async function render(container, data, opts = {}) {
+  const preview = !!opts.preview;
   const A = adapt(data), Y = A.years, n = Y.length, C = A.caseS, Wt = A.witS;
   const lo = Math.min(...C.v, ...Wt.v), hi = Math.max(...C.v, ...Wt.v), pad = (hi - lo) * 0.08 || 1;
   const nice = (span) => { const raw = span / 5, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p; return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * p; };
@@ -82,15 +84,15 @@ export async function render(container, data) {
     el("li", {}, el("span", { class: "w2-key w2-key-case", "aria-hidden": "true" }), `${C.label}: ${signed(C.slope, 2)} ${A.per} (p ${fp(C.p)})`),
     el("li", {}, el("span", { class: "w2-key w2-key-wit", "aria-hidden": "true" }), `${Wt.label}: ${signed(Wt.slope, 2)} ${A.per} (p ${fp(Wt.p)})`),
     el("li", {}, `Correlation between the two: r ${r2(A.r)} (${A.n} years)`));
-  const words = el("div", { class: "viz-w2-text" }, ...A.words.map((t) => el("p", {}, t)),
+  const words = el("div", { class: "viz-w2-text" }, ...(preview ? A.words.slice(0, 1) : A.words).map((t) => el("p", {}, t)),
     el("p", { class: "viz-note" }, "What the second record is. ", A.kind, " ", A.caveat),
-    el("p", { class: "viz-note" }, "Dashed lines are each record's Sen trend. Both series are shown as the difference from their own average over the same years, so only the changes are compared, not the levels."));
+    preview ? null : el("p", { class: "viz-note" }, "Dashed lines are each record's Sen trend. Both series are shown as the difference from their own average over the same years, so only the changes are compared, not the levels."));
   const links = el("p", { class: "viz-note" }, A.prov, " Links: ", ...A.links.flatMap(([t, u], i) => [i ? " · " : "", el("a", { href: u, target: "_blank", rel: "noopener" }, t)]));
   const rows = Y.map((y, i) => [String(y), plain(C.v[i], 2), plain(Wt.v[i], 2), plain(Wt.v[i] - C.v[i], 2)]);
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Values by year (table)"),
     dataTable(["Year", `${C.short} (${A.u})`, `${Wt.short} (${A.u})`, `${Wt.short} minus ${C.short} (${A.u})`], rows, `${C.label} and ${Wt.label}, difference from each record's own average, by year`));
   const root = el("figure", { class: "viz viz-witness2" }, el("p", { class: "viz-note", style: "margin:0 0 12px" }, el("span", { class: "chip" }, "Exploratory check, not the registered test"), " It does not change any ruling."),
-    wrap, readout, legend, words, links, summary, details);
+    wrap, readout, legend, words, preview ? null : links, summary, details);
   container.append(root);
 
   function draw() {

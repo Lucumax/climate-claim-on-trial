@@ -1,0 +1,3631 @@
+{
+ "run": {
+  "kind": "N21_regional",
+  "generated_at": "2026-11-14T16:57:20-05:00",
+  "code_version": "1.2.0",
+  "seed0": 9101,
+  "complete": true,
+  "n_planned": 27,
+  "elapsed_seconds": 634.3
+ },
+ "scenarios": [
+  {
+   "id": "R-null-n21-phi-0.3",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0135,
+      "se": 0.0018246746285297004,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.01275,
+      "se": 0.0017739389434250547,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.013,
+      "se": 0.0017910192628779846,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.01275,
+      "se": 0.0017739389434250547,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.019,
+      "se": 0.002158645408583818,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.067,
+      "se": 0.005590661857061291,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.081,
+      "se": 0.006100778638829638,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.046350650742940605,
+      0.0536493492570594
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04645212211314989,
+      0.053547877886850115
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.046417961474244034,
+      0.05358203852575597
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04645212211314989,
+      0.053547877886850115
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04568270918283237,
+      0.054317290817167636
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03881867628587742,
+      0.06118132371412258
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03779844272234073,
+      0.062201557277659275
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.846,
+     "se": 0.011414201680362933,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9444682522106082
+    },
+    "coverage_analytic_hr": {
+     "value": 0.986,
+     "se": 0.0037153734670958734
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0059410561844762755,
+     "se": 0.004717312374837872
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.009434624749675744
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi-0.5",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.5,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0035,
+      "se": 0.0009337759367214386,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.0035,
+      "se": 0.0009337759367214386,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.0035,
+      "se": 0.0009337759367214386,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.00325,
+      "se": 0.0008999218716088636,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.011,
+      "se": 0.0016491664561226074,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.048,
+      "se": 0.0047799581588126895,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.06,
+      "se": 0.0053103672189407005,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04813244812655713,
+      0.05186755187344288
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04813244812655713,
+      0.05186755187344288
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04813244812655713,
+      0.05186755187344288
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04820015625678228,
+      0.05179984374321773
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.046701667087754785,
+      0.05329833291224522
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.040440083682374624,
+      0.05955991631762538
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.0393792655621186,
+      0.06062073443788141
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.905,
+     "se": 0.009272270487857868,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.8483555125644664
+    },
+    "coverage_analytic_hr": {
+     "value": 0.999,
+     "se": 0.0009994998749374613
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.004394363628353684,
+     "se": 0.004014377644620516
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.008028755289241032
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi-0.7",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.7,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.006,
+      "se": 0.001221065108829173,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.0235,
+      "se": 0.0033873108803297047,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.0255,
+      "se": 0.003524893615415932,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04755786978234166,
+      0.052442130217658346
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04322537823934059,
+      0.056774621760659415
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04295021276916814,
+      0.057049787230831865
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.926,
+     "se": 0.008277922444671728,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.788509835995706
+    },
+    "coverage_analytic_hr": {
+     "value": 1.0,
+     "se": 3.162277660168379e-08
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.007447984270974012,
+     "se": 0.003338171088608064
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.006676342177216128
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi0.0",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0475,
+      "se": 0.003363173724326473,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.047,
+      "se": 0.003346303931205293,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.0465,
+      "se": 0.0033293298875299217,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.04075,
+      "se": 0.003126077314303023,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.05675,
+      "se": 0.0036581907242515393,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.097,
+      "se": 0.006617816860566633,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.13,
+      "se": 0.007519973404208289,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.043273652551347054,
+      0.05672634744865295
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.04330739213758942,
+      0.056692607862410586
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.043341340224940156,
+      0.05665865977505985
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04374784537139396,
+      0.05625215462860605
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.042683618551496924,
+      0.05731638144850308
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.036764366278866735,
+      0.06323563372113326
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03496005319158342,
+      0.06503994680841658
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.849,
+     "se": 0.01132249972400088,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1453978150088708
+    },
+    "coverage_analytic_hr": {
+     "value": 0.944,
+     "se": 0.007270763371201131
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.011248524868557203,
+     "se": 0.00587274091049756
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.01174548182099512
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi0.1",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.07325,
+      "se": 0.004119600632949752,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.0715,
+      "se": 0.0040739339096259285,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.071,
+      "se": 0.004060757318530621,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.05525,
+      "se": 0.0036123897041985932,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.0755,
+      "se": 0.004177312233960971,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.115,
+      "se": 0.007133547504573023,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.1445,
+      "se": 0.007861925654698091,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.0417607987341005,
+      0.05823920126589951
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.041852132180748146,
+      0.05814786781925186
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04187848536293876,
+      0.05812151463706124
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.04277522059160282,
+      0.05722477940839719
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04164537553207806,
+      0.058354624467921945
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03573290499085396,
+      0.06426709500914604
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.034276148690603817,
+      0.06572385130939619
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.812,
+     "se": 0.01235540367612487,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1886164194504494
+    },
+    "coverage_analytic_hr": {
+     "value": 0.929,
+     "se": 0.008121514637061239
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.011549295015096665,
+     "se": 0.0064526232049493286
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.012905246409898657
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi0.2",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.09325,
+      "se": 0.0045976743441657544,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.091,
+      "se": 0.004547499312809184,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.08925,
+      "se": 0.004507894117545353,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.06825,
+      "se": 0.003987227655276282,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.1005,
+      "se": 0.004753939156110436,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.1125,
+      "se": 0.0070655413805312895,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.146,
+      "se": 0.007895695029571494,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.040804651311668494,
+      0.05919534868833151
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04090500137438163,
+      0.05909499862561837
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.040984211764909295,
+      0.05901578823509071
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04202554468944744,
+      0.057974455310552564
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04049212168777913,
+      0.059507878312220874
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.035868917238937426,
+      0.06413108276106258
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03420860994085702,
+      0.06579139005914299
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.82,
+     "se": 0.012149074038789953,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.2664724438998647
+    },
+    "coverage_analytic_hr": {
+     "value": 0.918,
+     "se": 0.008676174272108645
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.002103234714397642,
+     "se": 0.007084338849099876
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.014168677698199753
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi0.3",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.1355,
+      "se": 0.005411555922283351,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.1295,
+      "se": 0.005308713356360466,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.128,
+      "se": 0.005282423686150137,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.08425,
+      "se": 0.0043918087816980375,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.15075,
+      "se": 0.005657394221282445,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.14,
+      "se": 0.00775886589650833,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.177,
+      "se": 0.00853437168161781,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.0391768881554333,
+      0.06082311184456671
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03938257328727907,
+      0.06061742671272093
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03943515262769973,
+      0.06056484737230028
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04121638243660393,
+      0.058783617563396076
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03868521155743511,
+      0.061314788442564896
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.034482268206983344,
+      0.06551773179301666
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03293125663676438,
+      0.06706874336323562
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.766,
+     "se": 0.013388203763014663,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.2984848109066554
+    },
+    "coverage_analytic_hr": {
+     "value": 0.867,
+     "se": 0.010738295954200556
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0023817203804293893,
+     "se": 0.0075840627135553675
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.015168125427110735
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi0.45",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.19675,
+      "se": 0.0062856868658087,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.18175,
+      "se": 0.006097477705986305,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.17825,
+      "se": 0.0060513828481595835,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.1065,
+      "se": 0.0048774416962173925,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.226,
+      "se": 0.0066129418566928284,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.154,
+      "se": 0.008071059410015515,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.1945,
+      "se": 0.00885069912492793,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.0374286262683826,
+      0.0625713737316174
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.037805044588027394,
+      0.06219495541197261
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03789723430368083,
+      0.06210276569631917
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04024511660756522,
+      0.05975488339243479
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.036774116286614346,
+      0.06322588371338567
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03385788117996898,
+      0.06614211882003103
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.032298601750144144,
+      0.06770139824985585
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.747,
+     "se": 0.013747399754135324,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.3606226323235027
+    },
+    "coverage_analytic_hr": {
+     "value": 0.829,
+     "se": 0.011906258858264422
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.009681121570476035,
+     "se": 0.008863265692263813
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.017726531384527625
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi0.6",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.285,
+      "se": 0.0071374890542823255,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.24525,
+      "se": 0.006802617832496545,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.24425,
+      "se": 0.006793230775926871,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.121,
+      "se": 0.005156524992667057,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.335,
+      "se": 0.007462824532306787,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.198,
+      "se": 0.00891055553823666,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.238,
+      "se": 0.00952249967182987,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03572502189143535,
+      0.06427497810856465
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.036394764335006914,
+      0.0636052356649931
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03641353844814626,
+      0.06358646155185374
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03968695001466589,
+      0.06031304998533411
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.035074350935386425,
+      0.06492564906461358
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03217888892352668,
+      0.06782111107647332
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.030955000656340263,
+      0.06904499934365974
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.701,
+     "se": 0.014477534320456644,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.3656376870130182
+    },
+    "coverage_analytic_hr": {
+     "value": 0.77,
+     "se": 0.013307892395116514
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.005909225818776575,
+     "se": 0.009872421124744608
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.019744842249489216
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi-0.3",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.3,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0125,
+      "se": 0.0017566836653193996,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.012,
+      "se": 0.0017216271373325875,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.01225,
+      "se": 0.0017392482212151318,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.01175,
+      "se": 0.001703814653945669,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.0205,
+      "se": 0.0022405217026398114,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.048,
+      "se": 0.0047799581588126895,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.068,
+      "se": 0.005629209535982827,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.046486632669361205,
+      0.0535133673306388
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04655674572533483,
+      0.053443254274665175
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04652150355756974,
+      0.053478496442430266
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04659237069210866,
+      0.05340762930789134
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04551895659472038,
+      0.05448104340527962
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.040440083682374624,
+      0.05955991631762538
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03874158092803435,
+      0.06125841907196566
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.881,
+     "se": 0.010239091756596383,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.7062634319620289
+    },
+    "coverage_analytic_hr": {
+     "value": 0.993,
+     "se": 0.002636474919281427
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.014079402671751987,
+     "se": 0.0034611717385700552
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.0069223434771401105
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi-0.5",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.5,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.00275,
+      "se": 0.0008280153229258501,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.0025,
+      "se": 0.0007895805848676879,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.00225,
+      "se": 0.0007491557748559374,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.0025,
+      "se": 0.0007895805848676879,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.01075,
+      "se": 0.0016305242638489008,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.033,
+      "se": 0.003994433626936364,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.0455,
+      "se": 0.004659922209651144,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.0483439693541483,
+      0.051656030645851704
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04842083883026463,
+      0.05157916116973538
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04850168845028813,
+      0.05149831154971188
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04842083883026463,
+      0.05157916116973538
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.0467389514723022,
+      0.05326104852769781
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04201113274612728,
+      0.05798886725387273
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.040680155580697715,
+      0.05931984441930229
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.899,
+     "se": 0.009528850927577784,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.7169437388179473
+    },
+    "coverage_analytic_hr": {
+     "value": 0.999,
+     "se": 0.0009994998749374613
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0020825335621005693,
+     "se": 0.003204085851986112
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.006408171703972224
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi-0.7",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.7,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.001,
+      "se": 0.0004997499374687304,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.001,
+      "se": 0.0004997499374687304,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.001,
+      "se": 0.0004997499374687304,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.001,
+      "se": 0.0004997499374687304,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.01725,
+      "se": 0.0020586668926759373,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.0215,
+      "se": 0.003243281517229116,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.0235,
+      "se": 0.0033873108803297047,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04900050012506254,
+      0.050999499874937466
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04900050012506254,
+      0.050999499874937466
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04900050012506254,
+      0.050999499874937466
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04900050012506254,
+      0.050999499874937466
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04588266621464813,
+      0.05411733378535188
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.043513436965541774,
+      0.05648656303445823
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04322537823934059,
+      0.056774621760659415
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.917,
+     "se": 0.008724161850859943,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.7467822486105288
+    },
+    "coverage_analytic_hr": {
+     "value": 1.0,
+     "se": 3.162277660168379e-08
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0011551783421538185,
+     "se": 0.0030112698707909723
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.006022539741581945
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi0.0",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.0,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.052,
+      "se": 0.003510555511596419,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.05025,
+      "se": 0.003454161891834255,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.05025,
+      "se": 0.003454161891834255,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.04425,
+      "se": 0.003251612580705149,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.0625,
+      "se": 0.0038273277230987156,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.0945,
+      "se": 0.0065410148295199574,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.121,
+      "se": 0.007292427579345577,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.04297888897680716,
+      0.05702111102319284
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.04309167621633149,
+      0.056908323783668516
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.04309167621633149,
+      0.056908323783668516
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.04349677483858971,
+      0.0565032251614103
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04234534455380257,
+      0.05765465544619743
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03691797034096009,
+      0.06308202965903992
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03541514484130885,
+      0.06458485515869115
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.853,
+     "se": 0.011197812286335219,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.802303343232673
+    },
+    "coverage_analytic_hr": {
+     "value": 0.944,
+     "se": 0.007270763371201131
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.006636103711632719,
+     "se": 0.004134525337554703
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.008269050675109406
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi0.1",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.1,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.08375,
+      "se": 0.004379952553966766,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.08275,
+      "se": 0.004356100248502094,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.08,
+      "se": 0.004289522117905444,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.0675,
+      "se": 0.003966854862482367,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.086,
+      "se": 0.004432944845133988,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.113,
+      "se": 0.0070792301841372555,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.1485,
+      "se": 0.007951344225978398,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04124009489206647,
+      0.05875990510793354
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04128779950299581,
+      0.058712200497004194
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04142095576418912,
+      0.05857904423581089
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.042066290275035265,
+      0.05793370972496474
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.041134110309732026,
+      0.05886588969026798
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03584153963172549,
+      0.06415846036827451
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.034097311548043206,
+      0.06590268845195679
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.847,
+     "se": 0.011383804285035824,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.887454180391549
+    },
+    "coverage_analytic_hr": {
+     "value": 0.917,
+     "se": 0.008724161850859943
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0008604479679724833,
+     "se": 0.004491271777911673
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.008982543555823347
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi0.2",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.2,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.1155,
+      "se": 0.005053705323819346,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.11225,
+      "se": 0.004991240765080362,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.10875,
+      "se": 0.0049224850812369155,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.08175,
+      "se": 0.004332058907147962,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.1155,
+      "se": 0.005053705323819346,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.116,
+      "se": 0.0071604469134265636,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.1495,
+      "se": 0.007973385416496559,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03989258935236131,
+      0.06010741064763869
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04001751846983928,
+      0.059982481530160725
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04015502983752617,
+      0.05984497016247384
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04133588218570408,
+      0.058664117814295924
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03989258935236131,
+      0.06010741064763869
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.035679106173146874,
+      0.06432089382685313
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.034053229167006885,
+      0.06594677083299312
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.839,
+     "se": 0.011622349160131098,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9565900348662647
+    },
+    "coverage_analytic_hr": {
+     "value": 0.899,
+     "se": 0.009528850927577784
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.01872885660212863,
+     "se": 0.005294841890783597
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.010589683781567194
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi0.3",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.3,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.1465,
+      "se": 0.00559101399568987,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.13825,
+      "se": 0.005457493415021222,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.13625,
+      "se": 0.005424157480660015,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.089,
+      "se": 0.004502193909640055,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.158,
+      "se": 0.005767061643506162,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.1335,
+      "se": 0.007605187374417543,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.1715,
+      "se": 0.00842875287334965,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03881797200862026,
+      0.06118202799137974
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03908501316995756,
+      0.06091498683004245
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.039151685038679974,
+      0.06084831496132003
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.04099561218071989,
+      0.059004387819280114
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03846587671298768,
+      0.06153412328701233
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03478962525116491,
+      0.06521037474883509
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.0331424942533007,
+      0.0668575057466993
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.797,
+     "se": 0.012719709116170855,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0618866155103577
+    },
+    "coverage_analytic_hr": {
+     "value": 0.86,
+     "se": 0.010972693379476163
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.02786755782390427,
+     "se": 0.0060238463244098196
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.012047692648819639
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi0.45",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.45,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.2205,
+      "se": 0.006555145879383616,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.19775,
+      "se": 0.006297716600086098,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.1975,
+      "se": 0.006294715045178773,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.113,
+      "se": 0.005005771668783945,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.26525,
+      "se": 0.006980194078605551,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.165,
+      "se": 0.008299849396224006,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.206,
+      "se": 0.009043340090917736,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03688970824123277,
+      0.06311029175876723
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03740456679982781,
+      0.0625954332001722
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.037410569909642456,
+      0.06258943009035756
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.039988456662432115,
+      0.06001154333756789
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.0360396118427889,
+      0.06396038815721111
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03340030120755199,
+      0.06659969879244801
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03191331981816453,
+      0.06808668018183547
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.765,
+     "se": 0.013408019988051927,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.2237722296142806
+    },
+    "coverage_analytic_hr": {
+     "value": 0.821,
+     "se": 0.012122664723566351
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0443755104803032,
+     "se": 0.0074996052984900256
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.014999210596980051
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-skewed-n21-phi0.6",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.6,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.302,
+      "se": 0.007259407689336644,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.2555,
+      "se": 0.00689600880944913,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.2585,
+      "se": 0.006922386691019218,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.14275,
+      "se": 0.005531103811627477,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.38075,
+      "se": 0.007677555559877115,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.2015,
+      "se": 0.008969329685099104,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.243,
+      "se": 0.009590385810800314,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03548118462132671,
+      0.0645188153786733
+     ]
+    },
+    "hr_registered": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03620798238110175,
+      0.06379201761889826
+     ]
+    },
+    "hr_all_lags": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03615522661796157,
+      0.06384477338203844
+     ]
+    },
+    "yue_wang": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03893779237674505,
+      0.061062207623254955
+     ]
+    },
+    "tfpw": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.03464488888024577,
+      0.06535511111975423
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.032061340629801795,
+      0.06793865937019822
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": false,
+     "side": "liberal",
+     "band": [
+      0.030819228378399375,
+      0.06918077162160063
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.689,
+     "se": 0.014638271755914358,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.2691106856990741
+    },
+    "coverage_analytic_hr": {
+     "value": 0.742,
+     "se": 0.013836039895866157
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.06361416243979734,
+     "se": 0.009289305769549729
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.018578611539099458
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi-0.3",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.064,
+      "se": 0.003869883719183304,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.0625,
+      "se": 0.0038273277230987156,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.064,
+      "se": 0.003869883719183304,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.0625,
+      "se": 0.0038273277230987156,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.07625,
+      "se": 0.004196306039244516,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.1905,
+      "se": 0.008780938161722813,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.22,
+      "se": 0.009262828941527529,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.828,
+     "se": 0.011933817494833748,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9391391562102692
+    },
+    "coverage_analytic_hr": {
+     "value": 0.985,
+     "se": 0.0038438262187565153
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.005360458698756136,
+     "se": 0.004791792179507859
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.009583584359015717
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi-0.5",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.5,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.038,
+      "se": 0.0030230779017418655,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.038,
+      "se": 0.0030230779017418655,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.03775,
+      "se": 0.0030135086485689735,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.037,
+      "se": 0.002984585398342624,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.07225,
+      "se": 0.004093590645753432,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.198,
+      "se": 0.00891055553823666,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.2235,
+      "se": 0.009315249594079592,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.883,
+     "se": 0.010164201887015036,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.8535104279133829
+    },
+    "coverage_analytic_hr": {
+     "value": 0.996,
+     "se": 0.0019959959919799443
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.004425473119472537,
+     "se": 0.004051855515341904
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.008103711030683807
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi-0.7",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.7,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.0255,
+      "se": 0.0024924761784217717,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.02525,
+      "se": 0.002480546184814949,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.0255,
+      "se": 0.0024924761784217717,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.02525,
+      "se": 0.002480546184814949,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.10475,
+      "se": 0.004841937564136902,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.1805,
+      "se": 0.008599992732555068,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.216,
+      "se": 0.00920173896608679,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.926,
+     "se": 0.008277922444671728,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.7910168331135642
+    },
+    "coverage_analytic_hr": {
+     "value": 1.0,
+     "se": 3.162277660168379e-08
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0015505837555239038,
+     "se": 0.003355615289560895
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.00671123057912179
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi0.0",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.112,
+      "se": 0.004986381453519175,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.11025,
+      "se": 0.004952144421864128,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.109,
+      "se": 0.004927448629869215,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.1,
+      "se": 0.004743416490252569,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.113,
+      "se": 0.005005771668783945,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.1885,
+      "se": 0.008745505988792188,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.22,
+      "se": 0.009262828941527529,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.853,
+     "se": 0.011197812286335219,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1194940801961597
+    },
+    "coverage_analytic_hr": {
+     "value": 0.955,
+     "se": 0.00655553201502365
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0038855558709541276,
+     "se": 0.005878364898253318
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.011756729796506635
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi0.1",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.143,
+      "se": 0.005535137757996633,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.14075,
+      "se": 0.005498623407272042,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.1395,
+      "se": 0.005478132665425328,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.11475,
+      "se": 0.005039405656920268,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.14175,
+      "se": 0.005514910187391994,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.1835,
+      "se": 0.00865528018032923,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.223,
+      "se": 0.009307819293475782,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.829,
+     "se": 0.011906258858264422,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1910528768699509
+    },
+    "coverage_analytic_hr": {
+     "value": 0.939,
+     "se": 0.007568289106528638
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.006339645432354409,
+     "se": 0.0063958702009197
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.0127917404018394
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi0.2",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.1685,
+      "se": 0.005918355979492954,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.165,
+      "se": 0.005868879790897067,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.16125,
+      "se": 0.005814818086148526,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.1225,
+      "se": 0.005183959635259518,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.164,
+      "se": 0.005854570863863551,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.189,
+      "se": 0.00875439889427024,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.2345,
+      "se": 0.009473904949913736,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.813,
+     "se": 0.012330085157856779,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.241846732517194
+    },
+    "coverage_analytic_hr": {
+     "value": 0.916,
+     "se": 0.008771772910877251
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.007596726783264595,
+     "se": 0.007043535333164089
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.014087070666328179
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi0.3",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.20375,
+      "se": 0.006368593594742877,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.1985,
+      "se": 0.006306697828499476,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.1935,
+      "se": 0.0062461538165498294,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.1335,
+      "se": 0.00537767956464496,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.209,
+      "se": 0.006428821820520459,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.202,
+      "se": 0.008977638887814545,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.2425,
+      "se": 0.00958367753005077,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.811,
+     "se": 0.012380589646701,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.3072243162910977
+    },
+    "coverage_analytic_hr": {
+     "value": 0.88,
+     "se": 0.010276186062932104
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0077454797755240005,
+     "se": 0.0075993909904591385
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.015198781980918277
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi0.45",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.25825,
+      "se": 0.006920204792851148,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.238,
+      "se": 0.006733424091797575,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.235,
+      "se": 0.0067040099940259635,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.14225,
+      "se": 0.005523018592671946,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.27375,
+      "se": 0.0070500166223208295,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.209,
+      "se": 0.009091727008660126,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.2525,
+      "se": 0.009714518773464798,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.753,
+     "se": 0.013637851736985557,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.3727259490477892
+    },
+    "coverage_analytic_hr": {
+     "value": 0.825,
+     "se": 0.012015614840697917
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.002072656882042634,
+     "se": 0.00854545357977923
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.01709090715955846
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi0.6",
+   "kind": "regional",
+   "n": 21,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.33,
+      "se": 0.007434715865451752,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.28875,
+      "se": 0.007165428066417246,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.2895,
+      "se": 0.007170943975516752,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.16625,
+      "se": 0.005886657317612433,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.37375,
+      "se": 0.007649525107808981,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.246,
+      "se": 0.009630264793867301,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.275,
+      "se": 0.00998436277385793,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.669,
+     "se": 0.014880826589944525,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.3671688213498494
+    },
+    "coverage_analytic_hr": {
+     "value": 0.746,
+     "se": 0.013765318739498916
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.009905765809476502,
+     "se": 0.009804772755495638
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.019609545510991276
+     }
+    },
+    "floor_ok": true
+   }
+  }
+ ]
+}

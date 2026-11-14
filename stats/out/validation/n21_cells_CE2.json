@@ -1,0 +1,585 @@
+{
+ "run": {
+  "kind": "N21_cells",
+  "generated_at": "2026-11-14T17:11:05-05:00",
+  "code_version": "1.2.0",
+  "seed0": 9700,
+  "complete": true,
+  "n_planned": 6,
+  "persistence_run": [
+   0.45
+  ],
+  "persistence_grid": [
+   -0.7,
+   -0.5,
+   -0.3,
+   0.0,
+   0.1,
+   0.2,
+   0.3,
+   0.45,
+   0.6
+  ],
+  "elapsed_seconds": 404.1,
+  "het": {
+   "sd": 0.1,
+   "range_nonneg": [
+    -0.1,
+    0.6
+   ],
+   "range_neg": [
+    -0.9,
+    0.6
+   ],
+   "sigma": 4.0
+  }
+ },
+ "families": {
+  "CE2": {
+   "n": 21,
+   "ny": 32,
+   "nx": 52,
+   "sigma": 4.0,
+   "fields": 200,
+   "note": "C-E2, OMI NO2 0.25 deg, Indo-Gangetic box, 1,664 cells"
+  }
+ },
+ "scenarios": [
+  {
+   "id": "CF-CE2-mixed-het0.45",
+   "kind": "cells",
+   "family": "CE2",
+   "n": 21,
+   "phi": 0.45,
+   "hetero": true,
+   "truth": "mixed",
+   "grid": [
+    32,
+    52
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 4.0,
+   "phi_map": {
+    "mean": 0.4491121470835254,
+    "sd": 0.09852087877639362,
+    "min": 0.1834711004949583,
+    "max": 0.6,
+    "share_above_0_1": 1.0,
+    "share_above_0_2": 0.9891826923076923
+   },
+   "candidates": {
+    "mk_independent": {
+     "cell_size": {
+      "value": 0.18837768240343347
+     },
+     "bh_fdr": {
+      "value": 0.4267143638636101,
+      "se": 0.017920881490311465
+     },
+     "bh_power": {
+      "value": 0.1786372745490982,
+      "se": 0.009274159573867354
+     },
+     "B2_passed": false
+    },
+    "hr_registered": {
+     "cell_size": {
+      "value": 0.173
+     },
+     "bh_fdr": {
+      "value": 0.41501159718437053,
+      "se": 0.018688487537232283
+     },
+     "bh_power": {
+      "value": 0.15313627254509019,
+      "se": 0.008551093075677342
+     },
+     "B2_passed": false
+    },
+    "hr_all_lags": {
+     "cell_size": {
+      "value": 0.17124463519313304
+     },
+     "bh_fdr": {
+      "value": 0.4110998005713194,
+      "se": 0.019008451271067595
+     },
+     "bh_power": {
+      "value": 0.14703406813627254,
+      "se": 0.008473722672118383
+     },
+     "B2_passed": false
+    },
+    "yue_wang": {
+     "cell_size": {
+      "value": 0.10080257510729614
+     },
+     "bh_fdr": {
+      "value": 0.2495795295311008,
+      "se": 0.022236978293309655
+     },
+     "bh_power": {
+      "value": 0.044458917835671345,
+      "se": 0.004606723752553386
+     },
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": {
+      "value": 0.211862660944206
+     },
+     "bh_fdr": {
+      "value": 0.4817876973036502,
+      "se": 0.016171220858168762
+     },
+     "bh_power": {
+      "value": 0.2175751503006012,
+      "se": 0.008965106404717428
+     },
+     "B2_passed": false
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "CF-CE2-mixed-phi0.45",
+   "kind": "cells",
+   "family": "CE2",
+   "n": 21,
+   "phi": 0.45,
+   "hetero": false,
+   "truth": "mixed",
+   "grid": [
+    32,
+    52
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 4.0,
+   "phi_map": {
+    "mean": 0.4500000000000001,
+    "sd": 1.1102230246251565e-16,
+    "min": 0.45,
+    "max": 0.45,
+    "share_above_0_1": 1.0,
+    "share_above_0_2": 1.0
+   },
+   "candidates": {
+    "mk_independent": {
+     "cell_size": {
+      "value": 0.1973862660944206
+     },
+     "bh_fdr": {
+      "value": 0.41333370044833523,
+      "se": 0.01937103214349035
+     },
+     "bh_power": {
+      "value": 0.1551002004008016,
+      "se": 0.008281472085569966
+     },
+     "B2_passed": false
+    },
+    "hr_registered": {
+     "cell_size": {
+      "value": 0.183656652360515
+     },
+     "bh_fdr": {
+      "value": 0.4050966636891826,
+      "se": 0.019626878559960065
+     },
+     "bh_power": {
+      "value": 0.1358316633266533,
+      "se": 0.007784248821214073
+     },
+     "B2_passed": false
+    },
+    "hr_all_lags": {
+     "cell_size": {
+      "value": 0.1806351931330472
+     },
+     "bh_fdr": {
+      "value": 0.3973169550440631,
+      "se": 0.019908766238569364
+     },
+     "bh_power": {
+      "value": 0.12978957915831665,
+      "se": 0.0077467324198127845
+     },
+     "B2_passed": false
+    },
+    "yue_wang": {
+     "cell_size": {
+      "value": 0.10668240343347639
+     },
+     "bh_fdr": {
+      "value": 0.25306046823733797,
+      "se": 0.022084748375947347
+     },
+     "bh_power": {
+      "value": 0.044178356713426854,
+      "se": 0.004472517245671768
+     },
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": {
+      "value": 0.22171244635193132
+     },
+     "bh_fdr": {
+      "value": 0.4855685794572258,
+      "se": 0.01755348344344918
+     },
+     "bh_power": {
+      "value": 0.1896693386773547,
+      "se": 0.008388203011870885
+     },
+     "B2_passed": false
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "CF-CE2-none-het0.45",
+   "kind": "cells",
+   "family": "CE2",
+   "n": 21,
+   "phi": 0.45,
+   "hetero": true,
+   "truth": "none",
+   "grid": [
+    32,
+    52
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 4.0,
+   "phi_map": {
+    "mean": 0.4489628796893935,
+    "sd": 0.09822088893962283,
+    "min": 0.20713034109965783,
+    "max": 0.6,
+    "share_above_0_1": 1.0,
+    "share_above_0_2": 1.0
+   },
+   "candidates": {
+    "mk_independent": {
+     "cell_size": {
+      "value": 0.20036057692307693
+     },
+     "p_any_bh_rejection": {
+      "value": 0.625,
+      "se": 0.03423265984407288
+     },
+     "B2_passed": false
+    },
+    "hr_registered": {
+     "cell_size": {
+      "value": 0.1846965144230769
+     },
+     "p_any_bh_rejection": {
+      "value": 0.605,
+      "se": 0.03456696399743547
+     },
+     "B2_passed": false
+    },
+    "hr_all_lags": {
+     "cell_size": {
+      "value": 0.18182992788461538
+     },
+     "p_any_bh_rejection": {
+      "value": 0.585,
+      "se": 0.03484070894801081
+     },
+     "B2_passed": false
+    },
+    "yue_wang": {
+     "cell_size": {
+      "value": 0.10876802884615384
+     },
+     "p_any_bh_rejection": {
+      "value": 0.355,
+      "se": 0.033836001536824645
+     },
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": {
+      "value": 0.2287469951923077
+     },
+     "p_any_bh_rejection": {
+      "value": 0.76,
+      "se": 0.030199337741083
+     },
+     "B2_passed": false
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "CF-CE2-none-phi0.45",
+   "kind": "cells",
+   "family": "CE2",
+   "n": 21,
+   "phi": 0.45,
+   "hetero": false,
+   "truth": "none",
+   "grid": [
+    32,
+    52
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 4.0,
+   "phi_map": {
+    "mean": 0.4500000000000001,
+    "sd": 1.1102230246251565e-16,
+    "min": 0.45,
+    "max": 0.45,
+    "share_above_0_1": 1.0,
+    "share_above_0_2": 1.0
+   },
+   "candidates": {
+    "mk_independent": {
+     "cell_size": {
+      "value": 0.19438401442307693
+     },
+     "p_any_bh_rejection": {
+      "value": 0.605,
+      "se": 0.03456696399743547
+     },
+     "B2_passed": false
+    },
+    "hr_registered": {
+     "cell_size": {
+      "value": 0.1796814903846154
+     },
+     "p_any_bh_rejection": {
+      "value": 0.595,
+      "se": 0.0347113093962184
+     },
+     "B2_passed": false
+    },
+    "hr_all_lags": {
+     "cell_size": {
+      "value": 0.1769951923076923
+     },
+     "p_any_bh_rejection": {
+      "value": 0.585,
+      "se": 0.03484070894801081
+     },
+     "B2_passed": false
+    },
+    "yue_wang": {
+     "cell_size": {
+      "value": 0.10259314903846153
+     },
+     "p_any_bh_rejection": {
+      "value": 0.365,
+      "se": 0.0340422531569225
+     },
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": {
+      "value": 0.21892728365384614
+     },
+     "p_any_bh_rejection": {
+      "value": 0.775,
+      "se": 0.02952752952754429
+     },
+     "B2_passed": false
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "CF-CE2-positive-het0.45",
+   "kind": "cells",
+   "family": "CE2",
+   "n": 21,
+   "phi": 0.45,
+   "hetero": true,
+   "truth": "positive",
+   "grid": [
+    32,
+    52
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 4.0,
+   "phi_map": {
+    "mean": 0.44762996957197915,
+    "sd": 0.09577532490029826,
+    "min": 0.16139719101834643,
+    "max": 0.6,
+    "share_above_0_1": 1.0,
+    "share_above_0_2": 0.9879807692307693
+   },
+   "candidates": {
+    "mk_independent": {
+     "cell_size": {
+      "value": 0.19734763948497855
+     },
+     "bh_fdr": {
+      "value": 0.4236712938617693,
+      "se": 0.020249482560578375
+     },
+     "bh_power": {
+      "value": 0.16668336673346695,
+      "se": 0.010270929153355248
+     },
+     "B2_passed": false
+    },
+    "hr_registered": {
+     "cell_size": {
+      "value": 0.18000858369098713
+     },
+     "bh_fdr": {
+      "value": 0.4120727360475194,
+      "se": 0.020645034720423176
+     },
+     "bh_power": {
+      "value": 0.14344689378757514,
+      "se": 0.009559927317064962
+     },
+     "B2_passed": false
+    },
+    "hr_all_lags": {
+     "cell_size": {
+      "value": 0.17849356223175966
+     },
+     "bh_fdr": {
+      "value": 0.41016979291717226,
+      "se": 0.021126378685108686
+     },
+     "bh_power": {
+      "value": 0.14037074148296594,
+      "se": 0.009607023491781093
+     },
+     "B2_passed": false
+    },
+    "yue_wang": {
+     "cell_size": {
+      "value": 0.10475107296137338
+     },
+     "bh_fdr": {
+      "value": 0.2507077647311891,
+      "se": 0.023078801392744895
+     },
+     "bh_power": {
+      "value": 0.04714428857715431,
+      "se": 0.005665358275574092
+     },
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": {
+      "value": 0.2260901287553648
+     },
+     "bh_fdr": {
+      "value": 0.5016019898422133,
+      "se": 0.018461990023616228
+     },
+     "bh_power": {
+      "value": 0.192625250501002,
+      "se": 0.010446185927849372
+     },
+     "B2_passed": false
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "CF-CE2-positive-phi0.45",
+   "kind": "cells",
+   "family": "CE2",
+   "n": 21,
+   "phi": 0.45,
+   "hetero": false,
+   "truth": "positive",
+   "grid": [
+    32,
+    52
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 4.0,
+   "phi_map": {
+    "mean": 0.4500000000000001,
+    "sd": 1.1102230246251565e-16,
+    "min": 0.45,
+    "max": 0.45,
+    "share_above_0_1": 1.0,
+    "share_above_0_2": 1.0
+   },
+   "candidates": {
+    "mk_independent": {
+     "cell_size": {
+      "value": 0.1988884120171674
+     },
+     "bh_fdr": {
+      "value": 0.42274548413793456,
+      "se": 0.020628475050084367
+     },
+     "bh_power": {
+      "value": 0.16745490981963929,
+      "se": 0.010849558587241388
+     },
+     "B2_passed": false
+    },
+    "hr_registered": {
+     "cell_size": {
+      "value": 0.1836480686695279
+     },
+     "bh_fdr": {
+      "value": 0.40551472615269396,
+      "se": 0.021013466545588742
+     },
+     "bh_power": {
+      "value": 0.1461122244488978,
+      "se": 0.010237114414497523
+     },
+     "B2_passed": false
+    },
+    "hr_all_lags": {
+     "cell_size": {
+      "value": 0.18113304721030044
+     },
+     "bh_fdr": {
+      "value": 0.39055392815668855,
+      "se": 0.02121225430992868
+     },
+     "bh_power": {
+      "value": 0.14119238476953908,
+      "se": 0.010037585443419705
+     },
+     "B2_passed": false
+    },
+    "yue_wang": {
+     "cell_size": {
+      "value": 0.10524892703862661
+     },
+     "bh_fdr": {
+      "value": 0.22587568088101329,
+      "se": 0.022989896395227565
+     },
+     "bh_power": {
+      "value": 0.04464929859719438,
+      "se": 0.005476277880434837
+     },
+     "B2_passed": false
+    },
+    "tfpw": {
+     "cell_size": {
+      "value": 0.22613304721030042
+     },
+     "bh_fdr": {
+      "value": 0.4699483452480894,
+      "se": 0.01993692010473764
+     },
+     "bh_power": {
+      "value": 0.2036573146292585,
+      "se": 0.011411501481497596
+     },
+     "B2_passed": false
+    }
+   },
+   "floor_ok": true
+  }
+ ]
+}

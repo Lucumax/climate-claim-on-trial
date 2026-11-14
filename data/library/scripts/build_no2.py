@@ -1,4 +1,4 @@
-r"""Product 6: OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, 0.25 deg, 720 x 1440, row 0 = 89.875S) tropospheric NO2 column -> monthly.
+r"""Product 6: OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, 0.25 deg, 720 x 1440, row 0 = 89.875S, so the 1 degree library cube is flipped to row 0 = 90N before it is staged) tropospheric NO2 column -> monthly.
 Variable ColumnAmountNO2TropCloudScreened (molecules/cm2). The product's own screening (file Description): solar zenith 0-85, cloud fraction <= 0.30, VcdQualityFlags good,
 XTrackQualityFlagsModified good (this is how the OMI row anomaly is handled: affected pixels are dropped by NASA's flags), terrain reflectivity <= 1.
 Monthly 0.25 deg cell = mean of the daily cells over valid days, kept if >= 5 valid days. Library 1 deg = 4 x 4 block mean of valid monthly 0.25 deg cells (kept if >= 8 of 16). Units here: 1e15 molecules/cm2.
@@ -40,31 +40,41 @@ sel = {k: (np.where((LAT > b[0]) & (LAT < b[1]))[0], np.where((LON > b[2]) & (LO
 def one(g):
     raw, at, content = L.dap4_raw(s, g["opendap_url"], VAR, path=path)
     r = raw.astype(np.float64); r[r < -1e20] = np.nan               # fill is -1.2676506e+30 (float32)
-    return r / 1e15, L.sha_bytes(content), at
+    return (r / 1e15).astype(np.float32), L.sha_bytes(content), at
 
 cube = np.full((len(times), 180, 360), np.nan, np.float32)
 box = {k: np.full((len(times), len(v[0]), len(v[1])), np.nan, np.float32) for k, v in sel.items()}
 ndays = np.zeros(len(times), int); prov = []; t0 = dt.datetime.now(dt.timezone.utc); at0 = None
-cur = None; sm = cnt = None
-def close_month(mi):
-    mean = np.where(cnt >= MIN_DAYS, sm / np.maximum(cnt, 1), np.nan)
-    m1, _ = L.block_mean_valid(mean[None], 4, min_frac=0.5); cube[mi] = m1[0]
-    for k, (ri, ci) in sel.items(): box[k][mi] = mean[np.ix_(ri, ci)]
-with ThreadPoolExecutor(8) as ex:
-    for k, (g, res) in enumerate(zip(gl, ex.map(one, gl))):
-        v, h, at = res
-        if at0 is None: at0 = {a: at[a] for a in ("Units", "Title", "Description", "_FillValue") if a in at}; print(at0, flush=True)
-        mi = idx[ym[k]]
-        if mi != cur:
-            if cur is not None: close_month(cur)
-            cur = mi; sm = np.zeros((720, 1440)); cnt = np.zeros((720, 1440), int)
-        f = np.isfinite(v); sm += np.where(f, v, 0); cnt += f; ndays[mi] += 1
-        prov.append(dict(granule_ur=g["granule_ur"], date=g["begin"][:10], sha256_dap_response=h, valid_cells=int(f.sum())))
-        if k % 250 == 0: print("done", k, g["begin"][:10], flush=True)
-        if k % 500 == 0: L.check_disk()
-close_month(cur)
+CACHE = L.SCRATCH / "no2_cache"; CACHE.mkdir(parents=True, exist_ok=True)   # one small file per month: a killed run resumes; also keeps memory bounded (one month in flight)
+by_month = {}
+for g, t in zip(gl, ym): by_month.setdefault(t, []).append(g)
+with ThreadPoolExecutor(4) as ex:
+    for mi, t in enumerate(times):
+        gs = by_month.get(t, [])
+        cf = CACHE / f"{t[0]}{t[1]:02d}.npz"
+        if cf.exists():
+            z = np.load(cf, allow_pickle=True); cube[mi] = z["m1"]; ndays[mi] = int(z["nd"])
+            for k in sel: box[k][mi] = z[f"box_{k}"]
+            prov += json.loads(str(z["prov"]))
+            if at0 is None and "at0" in z.files: at0 = json.loads(str(z["at0"]))
+            continue
+        sm = np.zeros((720, 1440)); cnt = np.zeros((720, 1440), int); pv = []
+        for g, (v, h, at) in zip(gs, ex.map(one, gs)):
+            if at0 is None: at0 = {a: at[a] for a in ("Units", "Title", "Description", "_FillValue") if a in at}; print(at0, flush=True)
+            f = np.isfinite(v); sm += np.where(f, v, 0); cnt += f; ndays[mi] += 1
+            pv.append(dict(granule_ur=g["granule_ur"], date=g["begin"][:10], sha256_dap_response=h, valid_cells=int(f.sum())))
+        if gs:
+            mean = np.where(cnt >= MIN_DAYS, sm / np.maximum(cnt, 1), np.nan)
+            m1, _ = L.block_mean_valid(mean[None], 4, min_frac=0.5); cube[mi] = m1[0]
+            for k, (ri, ci) in sel.items(): box[k][mi] = mean[np.ix_(ri, ci)]
+        tmp = cf.with_name(cf.stem + ".tmp.npz")   # atomic: write a temp name, then rename, so a killed run never leaves a half file
+        np.savez(tmp, m1=cube[mi], nd=ndays[mi], prov=json.dumps(pv), at0=json.dumps(at0), **{f"box_{k}": box[k][mi] for k in sel})
+        import os; os.replace(tmp, cf)
+        prov += pv
+        if mi % 6 == 0: print("done month", t, flush=True); L.check_disk()
 t1 = dt.datetime.now(dt.timezone.utc)
 L.SCRATCH.mkdir(parents=True, exist_ok=True)
+cube = np.ascontiguousarray(cube[:, ::-1, :])   # OMNO2d raw rows run south to north (row 0 = 89.875S); the library wants row 0 = 90N. Cache and box arrays stay south-up (lat ascending, as make_no2_cases.py documents)
 np.save(L.SCRATCH / f"{PID}_cube.npy", cube)
 np.savez_compressed(L.SCRATCH / "no2_boxes.npz", times=np.array(times), ndays=ndays, **{f"box_{k}": v for k, v in box.items()}, **{f"lat_{k}": LAT[sel[k][0]] for k in sel}, **{f"lon_{k}": LON[sel[k][1]] for k in sel})
 json.dump(dict(collection=col, granules=prov, t0=t0.isoformat(), t1=t1.isoformat(), times=times, script="data/library/scripts/build_no2.py",

@@ -1541,6 +1541,332 @@
    "build_date_utc": "2026-11-14"
   },
   {
+   "id": "no2_omi",
+   "name": "Tropospheric nitrogen dioxide column",
+   "definition": "How much nitrogen dioxide (NO2, a brown gas made when fuel burns in cars, power plants and industry, and by lightning and fires) sits in the lower atmosphere above a spot, counted as molecules above each square centimetre of ground, in units of one thousand million million (10^15). City and industrial areas are the high spots.",
+   "units": "1e15 molecules/cm2",
+   "product": "OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, averaged to monthly)",
+   "version": "004",
+   "short_name": "OMNO2d",
+   "concept_id": "C3333493715-GES_DISC",
+   "doi": "https://doi.org/10.5067/AURA/OMI/DATA3407",
+   "agency": "NASA GES DISC",
+   "kind": "satellite retrieval",
+   "source_variable": "ColumnAmountNO2TropCloudScreened",
+   "period": {
+    "first_month": "2005-01",
+    "last_month": "2026-10",
+    "n_months_axis": 262,
+    "t0": [
+     2005,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "0.25 degree daily, averaged to monthly then block-averaged to 1 degree",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.02,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "A column is all the NO2 gas in the air above a spot, high up and low down, counted as molecules per square centimetre (here in units of 10^15); it is not the concentration you breathe at street level. Cloud-screened: only scenes with cloud fraction at most 30% are kept (NASA's own screening), so cloudy places and seasons are under-sampled, and winter at high latitudes has few or no data. Since 2007 part of the OMI swath has been blocked (the 'row anomaly'); the NASA Level-3 product already drops affected pixels using its own quality flags, so coverage per day is smaller after 2007-2011 and the averages rest on fewer pixels. OMI passes at about 1:45 PM local time, so this is a mid-afternoon value, and NO2 has a strong daily and seasonal cycle. Monthly values here are the average of the daily cloud-screened grids, kept where at least 5 days are valid.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     2,
+     11
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "no2_omi/global_series.json",
+    "tile_means": "no2_omi/tile_means.json"
+   },
+   "limits": "Column amount, not street-level NO2; cloud fraction at most 30% only; OMI row anomaly since 2007 shrinks daily coverage (affected pixels dropped by NASA's own quality flags); monthly cell kept only with at least 5 valid days; small negative values are retrieval noise and are kept, not clipped.",
+   "build_date_utc": "2026-11-14"
+  },
+  {
    "id": "airs_tair",
    "name": "Surface air temperature (day and night mean)",
    "definition": "The temperature of the air near the ground, as estimated by an infrared sounder on the Aqua satellite, averaged over the afternoon and night passes and over the month (degrees Celsius). It works over land and ocean.",

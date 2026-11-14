@@ -50,9 +50,10 @@ PRODUCTS = {
     definition="The share of the ground (in percent) that the satellite saw covered by snow during the month, on days when it could see the ground.",
     caveats=SNOW_CAV, source_var="Coverage of snow", kind="satellite observation", native="0.05 degree, block-averaged to 1 degree", cid="C3050353608-NSIDC_CPRD", agency="NASA NSIDC DAAC"),
 
- "no2_omi": dict(name="Tropospheric nitrogen dioxide column", short="OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, averaged to monthly)", units="10^15 molecules/cm2", scale=0.02, offset=0.0,
+ "no2_omi": dict(name="Tropospheric nitrogen dioxide column", short="OMI/Aura OMNO2d v004 (cloud-screened Level-3 daily, averaged to monthly)", units="1e15 molecules/cm2", scale=0.02, offset=0.0,
     definition="How much nitrogen dioxide (NO2, a brown gas made when fuel burns in cars, power plants and industry, and by lightning and fires) sits in the lower atmosphere above a spot, counted as molecules above each square centimetre of ground, in units of one thousand million million (10^15). City and industrial areas are the high spots.",
-    caveats=NO2_CAV, source_var="ColumnAmountNO2TropCloudScreened", kind="satellite observation", native="0.25 degree daily, averaged to monthly then block-averaged to 1 degree", cid="C3333493715-GES_DISC", agency="NASA GES DISC"),
+    caveats=NO2_CAV, source_var="ColumnAmountNO2TropCloudScreened", kind="satellite retrieval",
+    limits="Column amount, not street-level NO2; cloud fraction at most 30% only; OMI row anomaly since 2007 shrinks daily coverage (affected pixels dropped by NASA's own quality flags); monthly cell kept only with at least 5 valid days; small negative values are retrieval noise and are kept, not clipped.", native="0.25 degree daily, averaged to monthly then block-averaged to 1 degree", cid="C3333493715-GES_DISC", agency="NASA GES DISC"),
  "airs_tair": dict(name="Surface air temperature (day and night mean)", short="AIRS/Aqua L3 monthly standard physical retrieval V7.0 (AIRS3STM)", units="degC", scale=0.1, offset=0.0,
     definition="The temperature of the air near the ground, as estimated by an infrared sounder on the Aqua satellite, averaged over the afternoon and night passes and over the month (degrees Celsius). It works over land and ocean.",
     caveats=AIRS_CAV, source_var="SurfAirTemp_A and SurfAirTemp_D (K, mean of the two minus 273.15)", kind="satellite observation (retrieval)", native="1 degree (native)", cid="C1701805662-GES_DISC", agency="NASA GES DISC"),

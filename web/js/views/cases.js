@@ -148,6 +148,10 @@ export function caseDocket(b, c) {
     return hnd;
   }
 
+  async function mountWitness(body) {
+    const [mod, data] = await Promise.all([import("../viz/witness.js"), getJson("data/witness/C-A.json")]);
+    return mod.render(body, data);
+  }
   async function mountYearly3d(body) {
     const [mod, data] = await Promise.all([import("../viz/cycle.js"), getJson(`data/viz/${c.id}.json`)]);
     return mod.renderCycle(body, data, {});
@@ -158,8 +162,10 @@ export function caseDocket(b, c) {
     { key: "anomaly", label: "Values over time", title: "Values over time", ask: "What changed, and when? Every grid cell, year by year, on one fixed colour scale.", mount: mountAnomaly, frame: true },
     { key: "hearings", label: "Evidence by hearing", title: "Evidence by hearing", ask: withheld ? "Which cells pass each hearing? A description of the tests, not a basis for a verdict." : "Where do the tests flag evidence? Each hearing asks one stricter question of the same cells.", mount: mountHearings, frame: true },
     ...(c.id === "C-C" ? [{ key: "yearly3d", label: "Year by year (3D)", title: "Year by year (3D)", ask: "How did each month change over the years? Every month of every year, wound around the baseline; a descriptive view.", mount: mountYearly3d }] : []),
+    ...(c.id === "C-A" ? [{ key: "witness", label: "Witness check: when did the satellite look?", title: "Witness check: when did the satellite look?", ask: "Did the satellite's observing time change, and did its readings follow?", mount: mountWitness }] : []),
     { key: "distribution", label: "Distribution", title: "Distribution", ask: "Is the whole distribution moving, or only the average? All cells and years in each period.", mount: mountDistribution },
   ];
+  views.sort((a, b) => (a.key === "witness") - (b.key === "witness"));
   const ex = exhibit({ views, initial: "record", rulingNote, tag: h("span", { class: "tag" }, withheld ? "Ruling withheld" : "Regional ruling: final") });
   const openStatistics = () => { statistics.open = true; statistics.scrollIntoView({ block: "start", behavior: "smooth" }); };
 
@@ -200,6 +206,8 @@ export function caseDocket(b, c) {
     f.not_supported ? [h("p", {}, h("b", {}, "What the evidence does not support")), h("ul", {}, f.not_supported.map(x => h("li", {}, x)))] : null,
     withheld ? null : h("p", {}, h("b", {}, "How to read the ruling. "), `The map and the regional series come from the same data, so they are not independent evidence. The ${pct(th.breadth, 0)} and ${pct(th.local, 0)} area thresholds that separate "supported" from "partly supported" are conventions we chose before seeing results, not a calibrated scale.`),
     h("p", {}, h("b", {}, "The views of the map and the distribution. "), "Values over time: each square is one grid cell against its own baseline, with no smoothing in space; colours blend between years only while playing. Distribution: pools every cell in every year of a 10-year period (the last period can be shorter), unweighted, so its mean differs from the area-weighted regional record; neighbouring cells and years are correlated, so these curves describe the data and are not independent observations, and a small share of extreme values can fall outside the drawn range (the figure says how many). None of these views is a test, and none changes the ruling."),
+    c.id === "C-A" ? h("p", {}, h("b", {}, "The satellite's overpass time drifted. "), "Terra's daytime overpass has been getting earlier since NASA stopped adjusting its orbit in 2020 (", h("a", { href: "https://science.nasa.gov/science-research/earth-science/terra-the-end-of-an-era/", target: "_blank", rel: "noopener" }, "NASA Science, 2025"), "), which cools its daytime readings. The Witness check shows this; it is an exploratory check, not the registered test.") : null,
+    c.id === "C-D" ? h("p", {}, h("b", {}, "The satellite's overpass time drifted. "), "Aqua's orbit has drifted to later afternoon overpasses since 2021 (", h("a", { href: "https://nsidc.org/data/user-resources/data-announcements/ongoing-changes-terra-and-aqua-orbits-impacting-modis-snow-and-sea-ice-products", target: "_blank", rel: "noopener" }, "NSIDC, 2021"), ").") : null,
     h("p", {}, h("b", {}, "Cell share and area share. "), "The cell share counts every grid cell once. The area share weights each cell by the cosine of its latitude, because cells near the pole cover less ground. Neither is the chance that the claim is true, and neither says which single cell is right."),
     h("p", {}, h("b", {}, "An honest null belongs here. "), "Not flagged means too little evidence, not no change. A result that is not significant is still a finding and can be reported."),
     f.selection_disclosure ? h("p", {}, h("b", {}, "Selection disclosure. "), f.selection_disclosure, " ", h("a", { href: "#/data/registration" }, "Registration and amendments")) : null);

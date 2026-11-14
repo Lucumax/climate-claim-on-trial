@@ -1,0 +1,2189 @@
+{
+ "id": "precip_imerg",
+ "product": "GPM IMERG Final monthly V07 (GPM_3IMERGM)",
+ "collection": {
+  "concept_id": "C2723754851-GES_DISC",
+  "short_name": "GPM_3IMERGM",
+  "version": "07",
+  "doi": "10.5067/GPM/IMERG/3B-MONTH/07",
+  "title": "GPM IMERG Final Precipitation L3 1 month 0.1 degree x 0.1 degree V07 (GPM_3IMERGM)",
+  "temporal": [
+   {
+    "BeginningDateTime": "1998-01-01T00:00:00.000Z",
+    "EndingDateTime": "2025-09-30T23:59:59.999Z"
+   }
+  ]
+ },
+ "agency_archive": "NASA GES DISC",
+ "source_variable": "/Grid/precipitation (mm/hr x 24)",
+ "access": "Earthdata Login (environment token); GES DISC OPeNDAP DAP4 server-side subset of /Grid/precipitation, one month at a time, in memory (no raw file kept)",
+ "retrieved_utc": [
+  "2026-11-14T17:51:34.872465+00:00",
+  "2026-11-14T17:53:07.787870+00:00"
+ ],
+ "regrid": "mean of valid 0.1 degree cells in each 10 x 10 block (1 degree), kept if >= 50 of 100 valid; mm/hr x 24 = mm/day",
+ "granules": [
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010101-S000000-E235959.01.V07B.HDF5",
+   "year": 2001,
+   "month": 1,
+   "sha256_dap_response": "84c8919ff6548d501506d5234780a9eb3fc004e5c32a664c6600593d5329488b",
+   "bytes": 6187748
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010201-S000000-E235959.02.V07B.HDF5",
+   "year": 2001,
+   "month": 2,
+   "sha256_dap_response": "466a440777a478cb541c843e2bf10b70f92fd6af8af8a7c30981f8de1fd6a8f2",
+   "bytes": 6461329
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010301-S000000-E235959.03.V07B.HDF5",
+   "year": 2001,
+   "month": 3,
+   "sha256_dap_response": "d3301e9eef448b2e8c9862f56d38a8e677d44bd28e478e2b2d7c34e2e30b8b70",
+   "bytes": 6599825
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010401-S000000-E235959.04.V07B.HDF5",
+   "year": 2001,
+   "month": 4,
+   "sha256_dap_response": "b05720493c31109592ef6b9458dd98853b8c458eccb421627aa21cd547dee167",
+   "bytes": 6781194
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010501-S000000-E235959.05.V07B.HDF5",
+   "year": 2001,
+   "month": 5,
+   "sha256_dap_response": "939b445004fb724af438608ebe2f0acf36350aa1e1fe3b6c56e709e544e9d9a0",
+   "bytes": 6880961
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010601-S000000-E235959.06.V07B.HDF5",
+   "year": 2001,
+   "month": 6,
+   "sha256_dap_response": "a8f978980f4b795e1aac4ce2261400cf478d672b78bba43e10cf244d7f80f151",
+   "bytes": 6791298
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010701-S000000-E235959.07.V07B.HDF5",
+   "year": 2001,
+   "month": 7,
+   "sha256_dap_response": "0f23d09acf84cf5a3912a223c69d9442c3e2a99a297efea791084ee9e0d3bf69",
+   "bytes": 6873914
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010801-S000000-E235959.08.V07B.HDF5",
+   "year": 2001,
+   "month": 8,
+   "sha256_dap_response": "8daa42b750112f3c00e1c7b61f1d53cecc1f58b6db29b271cb3cd4827177d1cc",
+   "bytes": 6818863
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20010901-S000000-E235959.09.V07B.HDF5",
+   "year": 2001,
+   "month": 9,
+   "sha256_dap_response": "82d537fa4d0176691aadd218dddf2ce96e98e3b589777a0f9f075129d11d72c4",
+   "bytes": 6741669
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20011001-S000000-E235959.10.V07B.HDF5",
+   "year": 2001,
+   "month": 10,
+   "sha256_dap_response": "7d3cc329b21835c58155755b318e4873fe2568bf0beeaac491455afce83681d5",
+   "bytes": 6489601
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20011101-S000000-E235959.11.V07B.HDF5",
+   "year": 2001,
+   "month": 11,
+   "sha256_dap_response": "0f0693d2972ccb76bf2b013dc50a7ce29b90b6b63cdcf41876801835e2e00387",
+   "bytes": 6628485
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20011201-S000000-E235959.12.V07B.HDF5",
+   "year": 2001,
+   "month": 12,
+   "sha256_dap_response": "286a6ef3842324e466d1047381564c867f1f129e6937409734e787089cfd255d",
+   "bytes": 6616177
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020101-S000000-E235959.01.V07B.HDF5",
+   "year": 2002,
+   "month": 1,
+   "sha256_dap_response": "2094c586e42ed03a90e5af7d98bd63b25757c824b8caba0bfe0c92c70865ff60",
+   "bytes": 6294369
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020201-S000000-E235959.02.V07B.HDF5",
+   "year": 2002,
+   "month": 2,
+   "sha256_dap_response": "6d54ed6212a8c42b3e694c13910ac429cba74fce016cc0268c9e37f7662b72f4",
+   "bytes": 6516270
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020301-S000000-E235959.03.V07B.HDF5",
+   "year": 2002,
+   "month": 3,
+   "sha256_dap_response": "c0d8e0e3113c47300282d4792d838d47fd6c846a57bbc1bcc92b95b62908ee67",
+   "bytes": 6737242
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020401-S000000-E235959.04.V07B.HDF5",
+   "year": 2002,
+   "month": 4,
+   "sha256_dap_response": "c328bd1d73f2a5b20a2b0ebd5a87a27cc144c418133ebccee5c5e4a1847d48bb",
+   "bytes": 6703667
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020501-S000000-E235959.05.V07B.HDF5",
+   "year": 2002,
+   "month": 5,
+   "sha256_dap_response": "5ccc6233e81fa4f4a070a4b55e68a1304dae80310b4e0722e9b7db583493e5b7",
+   "bytes": 6840283
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020601-S000000-E235959.06.V07B.HDF5",
+   "year": 2002,
+   "month": 6,
+   "sha256_dap_response": "3422b416cccd1628672ab00ea48be37d6b8892a2005f778e65e91299c1930a72",
+   "bytes": 6752552
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020701-S000000-E235959.07.V07B.HDF5",
+   "year": 2002,
+   "month": 7,
+   "sha256_dap_response": "850a13fb84cc80b479481fd7398e22a257aad9096aace86597ba187e965345a8",
+   "bytes": 6764848
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020801-S000000-E235959.08.V07B.HDF5",
+   "year": 2002,
+   "month": 8,
+   "sha256_dap_response": "ca7715f9db7ebce39913c413e664c5f96bf8f986d0d7244bf1b73ae771be9f0b",
+   "bytes": 6830435
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20020901-S000000-E235959.09.V07B.HDF5",
+   "year": 2002,
+   "month": 9,
+   "sha256_dap_response": "a752633d8073752253d5f576bee24620ac1fa85732fd1ccb647e064449461308",
+   "bytes": 6789508
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20021001-S000000-E235959.10.V07B.HDF5",
+   "year": 2002,
+   "month": 10,
+   "sha256_dap_response": "35dd7f1d25d3fae1bd02145d38f349c929761ffcfb130f59ad54da7134d42769",
+   "bytes": 6614069
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20021101-S000000-E235959.11.V07B.HDF5",
+   "year": 2002,
+   "month": 11,
+   "sha256_dap_response": "278034dad5f17ba031bae1e3630a0beee638fa8757121477a9ba6ec5bdfc7166",
+   "bytes": 6652128
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20021201-S000000-E235959.12.V07B.HDF5",
+   "year": 2002,
+   "month": 12,
+   "sha256_dap_response": "d8ad3e604fe547c1ca9f406fb039c28ab54ffe6c3d3f911877d77df73c0a81ad",
+   "bytes": 6561171
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030101-S000000-E235959.01.V07B.HDF5",
+   "year": 2003,
+   "month": 1,
+   "sha256_dap_response": "41b05bb687b918d31994dfa4fe26f63ef228d67dbb10d89b13600ae94c688bbc",
+   "bytes": 6141654
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030201-S000000-E235959.02.V07B.HDF5",
+   "year": 2003,
+   "month": 2,
+   "sha256_dap_response": "f37084bdd37ee3f5e9e0fdd7dca5881ed3a89e321c77b7b30afdbf614b76d961",
+   "bytes": 6472482
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030301-S000000-E235959.03.V07B.HDF5",
+   "year": 2003,
+   "month": 3,
+   "sha256_dap_response": "324113be4ca56f66fa96162ae15a5931181d82c90f117ab522c1f6a3f00a19fb",
+   "bytes": 6590766
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030401-S000000-E235959.04.V07B.HDF5",
+   "year": 2003,
+   "month": 4,
+   "sha256_dap_response": "bd27290832edb536eb80aa916247eaaa8e3efaa428b942e7336aa6de0ee18ac0",
+   "bytes": 6683664
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030501-S000000-E235959.05.V07B.HDF5",
+   "year": 2003,
+   "month": 5,
+   "sha256_dap_response": "b7bdfefa28c13c7b6c09a001e807540a0288ae844147cad5ee1d38423b9e1182",
+   "bytes": 6720392
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030601-S000000-E235959.06.V07B.HDF5",
+   "year": 2003,
+   "month": 6,
+   "sha256_dap_response": "96f2f62600089eb6963620d1ea99a92dda1bc3c7dbf0eb7ae87f82014e4f7bca",
+   "bytes": 6835380
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030701-S000000-E235959.07.V07B.HDF5",
+   "year": 2003,
+   "month": 7,
+   "sha256_dap_response": "5f5ddd7e42b9462d17454c47d921babc11acfccbad759ddc57578e91e25809ca",
+   "bytes": 6834098
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030801-S000000-E235959.08.V07B.HDF5",
+   "year": 2003,
+   "month": 8,
+   "sha256_dap_response": "0b4181b3fe008191fd1dadc5098597d8541b8ae0f8ac6146fe6279ee5bfecbbc",
+   "bytes": 6832038
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20030901-S000000-E235959.09.V07B.HDF5",
+   "year": 2003,
+   "month": 9,
+   "sha256_dap_response": "57364d7ece064fee10662c6e44f900eef3c18eb01f78653302a616e8b0872af9",
+   "bytes": 6811935
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20031001-S000000-E235959.10.V07B.HDF5",
+   "year": 2003,
+   "month": 10,
+   "sha256_dap_response": "cd4ee0b654090e5efae337938657a4846977e8874fe0e19e4d11b7a38d68fef8",
+   "bytes": 6593549
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20031101-S000000-E235959.11.V07B.HDF5",
+   "year": 2003,
+   "month": 11,
+   "sha256_dap_response": "a225ccc18125dfda5cc67aa575c9c0c17cc71652928e4bd69010eacf8d2e7911",
+   "bytes": 6638030
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20031201-S000000-E235959.12.V07B.HDF5",
+   "year": 2003,
+   "month": 12,
+   "sha256_dap_response": "7e0eacc4fb9ea3949ac677d76af8dce8171992943903417d8d84f34a01b9068b",
+   "bytes": 6478020
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040101-S000000-E235959.01.V07B.HDF5",
+   "year": 2004,
+   "month": 1,
+   "sha256_dap_response": "596c48250b8fe5188d51684f289a3d881a3707cb7ef2b8bd5b16cc21deb2e19c",
+   "bytes": 6212329
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040201-S000000-E235959.02.V07B.HDF5",
+   "year": 2004,
+   "month": 2,
+   "sha256_dap_response": "b119a3be3a1b66a746e6d8a6c668f08651007a2b447d05fa3bbe2a013f5f89f7",
+   "bytes": 6429065
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040301-S000000-E235959.03.V07B.HDF5",
+   "year": 2004,
+   "month": 3,
+   "sha256_dap_response": "e2ad39736710fb21b90ad01ca1b5e125c9947dca60ad670f275bbc3ef308a21d",
+   "bytes": 6629727
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040401-S000000-E235959.04.V07B.HDF5",
+   "year": 2004,
+   "month": 4,
+   "sha256_dap_response": "a3f566c86cff1228219fe109bf1ef484a1dd85ce1423cc244056bd25fd7e4b30",
+   "bytes": 6706545
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040501-S000000-E235959.05.V07B.HDF5",
+   "year": 2004,
+   "month": 5,
+   "sha256_dap_response": "aa8eab2b627a827d1ae13b8243d37412079f49516f5207238d4b6116dab4b0af",
+   "bytes": 6725950
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040601-S000000-E235959.06.V07B.HDF5",
+   "year": 2004,
+   "month": 6,
+   "sha256_dap_response": "4d4276f47b1389421f851a3cde82c1a996a305fad2ced1616f53b102713d5be9",
+   "bytes": 6744172
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040701-S000000-E235959.07.V07B.HDF5",
+   "year": 2004,
+   "month": 7,
+   "sha256_dap_response": "60ab51b2fa070ac5e0840d4f318034c34294e02a1ddee626808cea02e1a7644f",
+   "bytes": 6865070
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040801-S000000-E235959.08.V07B.HDF5",
+   "year": 2004,
+   "month": 8,
+   "sha256_dap_response": "c652492acddb030d309a17f264d22054104b70de6708e915d5b9a084c6338b5c",
+   "bytes": 6876483
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20040901-S000000-E235959.09.V07B.HDF5",
+   "year": 2004,
+   "month": 9,
+   "sha256_dap_response": "95e1a59e21e99d525b8a965c3e1737372b858832f0cdaef5437ad454e47ba07d",
+   "bytes": 6850628
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20041001-S000000-E235959.10.V07B.HDF5",
+   "year": 2004,
+   "month": 10,
+   "sha256_dap_response": "0aebeb03ebbcc1955af12e54bb040293846fd467a41aefeaa9efd39337463444",
+   "bytes": 6614680
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20041101-S000000-E235959.11.V07B.HDF5",
+   "year": 2004,
+   "month": 11,
+   "sha256_dap_response": "f59ca6da2b18436d9a80683be1b4e10a4c2640016d6dce6c12218949e99c3164",
+   "bytes": 6577143
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20041201-S000000-E235959.12.V07B.HDF5",
+   "year": 2004,
+   "month": 12,
+   "sha256_dap_response": "a608df960ef12eba3781f62df3f701d6f01dfb612601684f2266c5b29d205d2e",
+   "bytes": 6470424
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050101-S000000-E235959.01.V07B.HDF5",
+   "year": 2005,
+   "month": 1,
+   "sha256_dap_response": "89e8474ea559fbcf18ec448e225fed4dd966b7cf76fbb98401cbeccde5e4c8ad",
+   "bytes": 6325499
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050201-S000000-E235959.02.V07B.HDF5",
+   "year": 2005,
+   "month": 2,
+   "sha256_dap_response": "3baa7e89a866a3daf9c3b7438cd7dd9006fc4236c88e3f52deaca321dcde58d6",
+   "bytes": 6695945
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050301-S000000-E235959.03.V07B.HDF5",
+   "year": 2005,
+   "month": 3,
+   "sha256_dap_response": "32cfbf2367ab20fd73dca4c1a40ed2db75783593444498637fd60e3395365978",
+   "bytes": 6790705
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050401-S000000-E235959.04.V07B.HDF5",
+   "year": 2005,
+   "month": 4,
+   "sha256_dap_response": "1df6989b646fbbcf4c0dc60cba9acad4b7dde256612569569cf9bfc4dd6a5f1a",
+   "bytes": 6759803
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050501-S000000-E235959.05.V07B.HDF5",
+   "year": 2005,
+   "month": 5,
+   "sha256_dap_response": "6bedb4e5a098fc9c55e1a64c11bd520472f274d83df522c7e443d07bc561f100",
+   "bytes": 6845413
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050601-S000000-E235959.06.V07B.HDF5",
+   "year": 2005,
+   "month": 6,
+   "sha256_dap_response": "faec9fc94fa270e4a0a964b28b78249247bac835d0fb133c62048fe83efacf4e",
+   "bytes": 6871578
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050701-S000000-E235959.07.V07B.HDF5",
+   "year": 2005,
+   "month": 7,
+   "sha256_dap_response": "76067f063a18d5791f91f37f9e51b70a980b694ed07ddbd011a7a9443dcaa945",
+   "bytes": 6850123
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050801-S000000-E235959.08.V07B.HDF5",
+   "year": 2005,
+   "month": 8,
+   "sha256_dap_response": "f7ceee60f65340a27c3d4db1c9d4fc2ee35d0278cd008db88c060d74447b974f",
+   "bytes": 6827212
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20050901-S000000-E235959.09.V07B.HDF5",
+   "year": 2005,
+   "month": 9,
+   "sha256_dap_response": "eeda0ce05ef26d03187c2378c1218e782f916609e1de9289fdf0e0652609694b",
+   "bytes": 6755788
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20051001-S000000-E235959.10.V07B.HDF5",
+   "year": 2005,
+   "month": 10,
+   "sha256_dap_response": "ca53865cc242d2a5445e33067b4cafd9e1b1ca5abb0daf4fd74977e43625ff9f",
+   "bytes": 6586238
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20051101-S000000-E235959.11.V07B.HDF5",
+   "year": 2005,
+   "month": 11,
+   "sha256_dap_response": "44f11ba2a0f36b3d09d1a9f52546dbd8dcb708f1990996896b902f3e16e7f0f8",
+   "bytes": 6724144
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20051201-S000000-E235959.12.V07B.HDF5",
+   "year": 2005,
+   "month": 12,
+   "sha256_dap_response": "0d1c10cbd7fdda624239ab4631d281cfa422479893fb4ef8002fa725be6438b6",
+   "bytes": 6551698
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060101-S000000-E235959.01.V07B.HDF5",
+   "year": 2006,
+   "month": 1,
+   "sha256_dap_response": "69005d0abeb2f7fad16b28c175aee8bf1ec7ce6931c603f02b0d370a0bc89823",
+   "bytes": 6321842
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060201-S000000-E235959.02.V07B.HDF5",
+   "year": 2006,
+   "month": 2,
+   "sha256_dap_response": "ee4fce866497ab37a6ac70bbd691760c77b626cee7c2baae9d7a8b32aefeb644",
+   "bytes": 6656044
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060301-S000000-E235959.03.V07B.HDF5",
+   "year": 2006,
+   "month": 3,
+   "sha256_dap_response": "45d9448a018e7162efdf06357321e0f3c6a02f86273944e03e48deaf990411b3",
+   "bytes": 6669123
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060401-S000000-E235959.04.V07B.HDF5",
+   "year": 2006,
+   "month": 4,
+   "sha256_dap_response": "d755bddbb0e8773151c72e7d85e822d3711a9be8bd9c369024b20caff21e2c58",
+   "bytes": 6756259
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060501-S000000-E235959.05.V07B.HDF5",
+   "year": 2006,
+   "month": 5,
+   "sha256_dap_response": "b61cb89f8f79a44b0a3c4be1b599124a58b38031be99a5a868a4d62162335d12",
+   "bytes": 6954316
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060601-S000000-E235959.06.V07B.HDF5",
+   "year": 2006,
+   "month": 6,
+   "sha256_dap_response": "3028e796474fa01f8d5c6fef31492e2ec1f996089bacc1591a13f2c7a4287361",
+   "bytes": 6968522
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060701-S000000-E235959.07.V07B.HDF5",
+   "year": 2006,
+   "month": 7,
+   "sha256_dap_response": "21c5109b92e7ea8f065a7c74dd419edb03b6eb1e8eb4bb4e88ee518adcdb5eb7",
+   "bytes": 7030616
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060801-S000000-E235959.08.V07B.HDF5",
+   "year": 2006,
+   "month": 8,
+   "sha256_dap_response": "d7f546d94f70e9c3e991fb0eda8d1a6c0675a4600e69d0c660fdec1bf69251e2",
+   "bytes": 6907887
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20060901-S000000-E235959.09.V07B.HDF5",
+   "year": 2006,
+   "month": 9,
+   "sha256_dap_response": "a67be1f9cb430d11f12602bc55f95d4ac76d7958135636001f996a8389e8efb3",
+   "bytes": 6979593
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20061001-S000000-E235959.10.V07B.HDF5",
+   "year": 2006,
+   "month": 10,
+   "sha256_dap_response": "0fed0842fd63eeae39078b372af048a9b9ad041ac28dff7e509040e556b2835e",
+   "bytes": 6841971
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20061101-S000000-E235959.11.V07B.HDF5",
+   "year": 2006,
+   "month": 11,
+   "sha256_dap_response": "e686b1db9c13b1384c2aa6da70e9dfa43c9c10e7e7035c57fd48dc0fcb93328c",
+   "bytes": 6924081
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20061201-S000000-E235959.12.V07B.HDF5",
+   "year": 2006,
+   "month": 12,
+   "sha256_dap_response": "ab69195308f6f5cf808dc9e34658f913a6f479b3297f0fa0cc121a3c1846432b",
+   "bytes": 6630869
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070101-S000000-E235959.01.V07B.HDF5",
+   "year": 2007,
+   "month": 1,
+   "sha256_dap_response": "055be005ccbf3b732724ab262d51cc509414c6b114b65ada5719e7496bd573fe",
+   "bytes": 6228579
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070201-S000000-E235959.02.V07B.HDF5",
+   "year": 2007,
+   "month": 2,
+   "sha256_dap_response": "72e1a1d7290463c2c431c76602b37299ce7e3fded079508dc5228919f34ede66",
+   "bytes": 6601458
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070301-S000000-E235959.03.V07B.HDF5",
+   "year": 2007,
+   "month": 3,
+   "sha256_dap_response": "8f16c97c217351dd39f69cfab2b59d656071a5f77872026e456ae94fd49e5736",
+   "bytes": 6865664
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070401-S000000-E235959.04.V07B.HDF5",
+   "year": 2007,
+   "month": 4,
+   "sha256_dap_response": "ae4e46c70593c410091b64678dc182e6de2657aee232eac6cc951118728c7831",
+   "bytes": 6731506
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070501-S000000-E235959.05.V07B.HDF5",
+   "year": 2007,
+   "month": 5,
+   "sha256_dap_response": "e1cefd6e7c177a482159bd2299265dbe805c556eec3199bd695cd25df5e1c41f",
+   "bytes": 6828840
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070601-S000000-E235959.06.V07B.HDF5",
+   "year": 2007,
+   "month": 6,
+   "sha256_dap_response": "2c0de053cb0d1f1a2185802579826fecc577aa529a701ee896e53e8b033e66a9",
+   "bytes": 7069933
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070701-S000000-E235959.07.V07B.HDF5",
+   "year": 2007,
+   "month": 7,
+   "sha256_dap_response": "049427e7a09096c4f7352139faed7629623743e53e090e78b16a0d0f7b23372c",
+   "bytes": 6913314
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070801-S000000-E235959.08.V07B.HDF5",
+   "year": 2007,
+   "month": 8,
+   "sha256_dap_response": "5f2f108acf8438f07c4e61cfeb20bc8399aa97a40bd7bd324e32e4ce9f716bb9",
+   "bytes": 6905497
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20070901-S000000-E235959.09.V07B.HDF5",
+   "year": 2007,
+   "month": 9,
+   "sha256_dap_response": "e3e12b58e3582cf674a9654121520767953239910d74c59ead1eb81bbc94c412",
+   "bytes": 6831345
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20071001-S000000-E235959.10.V07B.HDF5",
+   "year": 2007,
+   "month": 10,
+   "sha256_dap_response": "4dd92f7dd35bf0749fc6b4f5ef6e042dfd907f0d18a72eaf2bc9a967f884a4d7",
+   "bytes": 6627127
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20071101-S000000-E235959.11.V07B.HDF5",
+   "year": 2007,
+   "month": 11,
+   "sha256_dap_response": "ef9b47273deb2c06418cbee150856ceff71f3d6f8e524694fcd3029d1b68a6cf",
+   "bytes": 6731375
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20071201-S000000-E235959.12.V07B.HDF5",
+   "year": 2007,
+   "month": 12,
+   "sha256_dap_response": "3b17f8b59c0fd6c36c8930c7aac4becca73fd2f16c4c29880bf630fa7ac1df20",
+   "bytes": 6752029
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080101-S000000-E235959.01.V07B.HDF5",
+   "year": 2008,
+   "month": 1,
+   "sha256_dap_response": "1e6539503feae32a3668ca7d7ed8252baa30708f8ec6ac96daa1a9f9f6d91bc2",
+   "bytes": 6199395
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080201-S000000-E235959.02.V07B.HDF5",
+   "year": 2008,
+   "month": 2,
+   "sha256_dap_response": "716b8116cd62c4b1cef56db296234bdd64eca60a02c6ef5b0332437c9a6ffb14",
+   "bytes": 6585809
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080301-S000000-E235959.03.V07B.HDF5",
+   "year": 2008,
+   "month": 3,
+   "sha256_dap_response": "d01a0f032719b0bd7b844c9c8f59e20b96bce11b71dfbab7e0daf99c9b3600ec",
+   "bytes": 6594568
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080401-S000000-E235959.04.V07B.HDF5",
+   "year": 2008,
+   "month": 4,
+   "sha256_dap_response": "7957336353b15011284d7354a119892e14f9b0190e3ef9ae4fb7cbfb194b3839",
+   "bytes": 6834970
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080501-S000000-E235959.05.V07B.HDF5",
+   "year": 2008,
+   "month": 5,
+   "sha256_dap_response": "f652b0c5bcee37a3778461539c35e8ce326f8f5ecb16e2bd4a3740c7571486c5",
+   "bytes": 6872150
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080601-S000000-E235959.06.V07B.HDF5",
+   "year": 2008,
+   "month": 6,
+   "sha256_dap_response": "7a4a1cb7d1991ddb7a31b42edff388d7a7409bb4de9efb44add1f56419c35029",
+   "bytes": 6956919
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080701-S000000-E235959.07.V07B.HDF5",
+   "year": 2008,
+   "month": 7,
+   "sha256_dap_response": "5292400e3f58521a9174d6c40751628b026bc6ec50e351e1f6cdb95c16e770dc",
+   "bytes": 6978996
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080801-S000000-E235959.08.V07B.HDF5",
+   "year": 2008,
+   "month": 8,
+   "sha256_dap_response": "03c851a22ea439234c56e1bffb564a9ecefe06eced1447588de1c92dc7a50c83",
+   "bytes": 6913161
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20080901-S000000-E235959.09.V07B.HDF5",
+   "year": 2008,
+   "month": 9,
+   "sha256_dap_response": "69db8a990a5a4d618a2ba0c319cfac0247a38f25f169a9e28a740ffdc86b6cb2",
+   "bytes": 7004005
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20081001-S000000-E235959.10.V07B.HDF5",
+   "year": 2008,
+   "month": 10,
+   "sha256_dap_response": "46c9a4657bf2261643f2a9bc1b9bf889d35fcd0cd261044859097d48ba4361c4",
+   "bytes": 6759914
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20081101-S000000-E235959.11.V07B.HDF5",
+   "year": 2008,
+   "month": 11,
+   "sha256_dap_response": "f41ef022ec58d1688e46e0a2594ac561e84930bdbd1b9275be4b503c8b1a1b10",
+   "bytes": 6819300
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20081201-S000000-E235959.12.V07B.HDF5",
+   "year": 2008,
+   "month": 12,
+   "sha256_dap_response": "9b85925cd24aab95db81e1bed538d6548fd4fbb43816c251ff2af6a68f33a31e",
+   "bytes": 6585210
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090101-S000000-E235959.01.V07B.HDF5",
+   "year": 2009,
+   "month": 1,
+   "sha256_dap_response": "4ebae740569d68683bceb09dbb344130664ba22d53d357124fc816dc27b47c22",
+   "bytes": 6288484
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090201-S000000-E235959.02.V07B.HDF5",
+   "year": 2009,
+   "month": 2,
+   "sha256_dap_response": "ba09f893cd4673aa8eebae374e5ab5bbb7f096626e5572ebbe4abd13747fe282",
+   "bytes": 6465646
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090301-S000000-E235959.03.V07B.HDF5",
+   "year": 2009,
+   "month": 3,
+   "sha256_dap_response": "e1e4c9503d38ad38d569f919983aeefaed6c4ccb4857907c6bb6a0f6fa74eb58",
+   "bytes": 6689831
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090401-S000000-E235959.04.V07B.HDF5",
+   "year": 2009,
+   "month": 4,
+   "sha256_dap_response": "5ca0cba2f54a15810763a61e2665dfab2131c20683c289377e4fe8205d68bece",
+   "bytes": 6768058
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090501-S000000-E235959.05.V07B.HDF5",
+   "year": 2009,
+   "month": 5,
+   "sha256_dap_response": "f6db228c73a36482476af8c069b906c16e66a276d7192dee02aac8ffc1e3a284",
+   "bytes": 6972435
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090601-S000000-E235959.06.V07B.HDF5",
+   "year": 2009,
+   "month": 6,
+   "sha256_dap_response": "6796df3047f4975f535688d9b16602e1d7ac4a6809a8dc5a9c96e629aa4ba0a8",
+   "bytes": 7031249
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090701-S000000-E235959.07.V07B.HDF5",
+   "year": 2009,
+   "month": 7,
+   "sha256_dap_response": "fc4b004015cb73113a0b8ba25f73f504c173048a86019f1962153d989d1824e5",
+   "bytes": 7098805
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090801-S000000-E235959.08.V07B.HDF5",
+   "year": 2009,
+   "month": 8,
+   "sha256_dap_response": "8975af81dc6b4d178e0e8bab9c12a8be269af8ecd36d2abe0446742281d00c00",
+   "bytes": 6912391
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20090901-S000000-E235959.09.V07B.HDF5",
+   "year": 2009,
+   "month": 9,
+   "sha256_dap_response": "3c25fe736163558b48c6f5a2ff49df680ab8871977700b8e318101052b3db4ec",
+   "bytes": 7046215
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20091001-S000000-E235959.10.V07B.HDF5",
+   "year": 2009,
+   "month": 10,
+   "sha256_dap_response": "c48e53806fafc009b3c810d011efb980845f216f63366956056225045aa8df25",
+   "bytes": 6867422
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20091101-S000000-E235959.11.V07B.HDF5",
+   "year": 2009,
+   "month": 11,
+   "sha256_dap_response": "a025af7fa3206de3b5e76f37c4ab0837c45d46026ffaeb49416487dbd0211f40",
+   "bytes": 6995792
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20091201-S000000-E235959.12.V07B.HDF5",
+   "year": 2009,
+   "month": 12,
+   "sha256_dap_response": "b50181518870d000d548eb81d76e286a9c922e95ec63e74546ff803ff6cfc9f7",
+   "bytes": 6749208
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100101-S000000-E235959.01.V07B.HDF5",
+   "year": 2010,
+   "month": 1,
+   "sha256_dap_response": "688396a132a45bfafa376c5d467613867d9bc5010605fe3021c8c73725765598",
+   "bytes": 6328232
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100201-S000000-E235959.02.V07B.HDF5",
+   "year": 2010,
+   "month": 2,
+   "sha256_dap_response": "0be0931525d9762407f7f97b71236558514d6e85ce788512350f7fa6656d0d45",
+   "bytes": 6740562
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100301-S000000-E235959.03.V07B.HDF5",
+   "year": 2010,
+   "month": 3,
+   "sha256_dap_response": "f8d912693641a5564b861182c1575fcd9257dfd9dc5befa4cc2f75b3cd1e9e08",
+   "bytes": 6779141
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100401-S000000-E235959.04.V07B.HDF5",
+   "year": 2010,
+   "month": 4,
+   "sha256_dap_response": "17963cc6a98b5e2b4a858f65c8c7626bbde5549d119233393b8ebdeefed359f0",
+   "bytes": 6848375
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100501-S000000-E235959.05.V07B.HDF5",
+   "year": 2010,
+   "month": 5,
+   "sha256_dap_response": "c64152f964dea4ce84c14fc884dcefa842206db1a3c243a09773bd9342e96d9b",
+   "bytes": 7017189
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100601-S000000-E235959.06.V07B.HDF5",
+   "year": 2010,
+   "month": 6,
+   "sha256_dap_response": "a7834500bed21510ef5b84474789659e7694e718eda54b51d19e8f110abd6671",
+   "bytes": 6993738
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100701-S000000-E235959.07.V07B.HDF5",
+   "year": 2010,
+   "month": 7,
+   "sha256_dap_response": "d01c98cd9100e2d78a534f7047320796e138828319f7b9b549f714ab08e5d2c0",
+   "bytes": 7009361
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100801-S000000-E235959.08.V07B.HDF5",
+   "year": 2010,
+   "month": 8,
+   "sha256_dap_response": "0f6f34671b8a6a543faa2124f3d6c7386aeec484deecc6397d724a5a072ccda6",
+   "bytes": 6987553
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20100901-S000000-E235959.09.V07B.HDF5",
+   "year": 2010,
+   "month": 9,
+   "sha256_dap_response": "013c04c94bd125d881540054974d3e0aaa4afe05b226512a438d48151c76b369",
+   "bytes": 7009997
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20101001-S000000-E235959.10.V07B.HDF5",
+   "year": 2010,
+   "month": 10,
+   "sha256_dap_response": "510845cfaf2bbb1ec53e82c1db69ba0eb96eb57b716059bf592268cd2e3749ed",
+   "bytes": 6870109
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20101101-S000000-E235959.11.V07B.HDF5",
+   "year": 2010,
+   "month": 11,
+   "sha256_dap_response": "7e467f88549ac252d2dc367e0f91d50c00bb96e89dc6329ec15d9ee6d783899e",
+   "bytes": 6935359
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20101201-S000000-E235959.12.V07B.HDF5",
+   "year": 2010,
+   "month": 12,
+   "sha256_dap_response": "bc949fdc168f082baf46ee4b2cb532f5be6d4a0fba7a4fe009344073511db983",
+   "bytes": 6756005
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110101-S000000-E235959.01.V07B.HDF5",
+   "year": 2011,
+   "month": 1,
+   "sha256_dap_response": "a9b29475393896ce34161717ead8d6ea40fe3582d0d659ad3e077999a5dbfc08",
+   "bytes": 6263383
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110201-S000000-E235959.02.V07B.HDF5",
+   "year": 2011,
+   "month": 2,
+   "sha256_dap_response": "a6206060747996f1af9ecef2bb12c17ded634891b3cc43754310ad66bebdd200",
+   "bytes": 6669568
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110301-S000000-E235959.03.V07B.HDF5",
+   "year": 2011,
+   "month": 3,
+   "sha256_dap_response": "6729288822ab15405026d88f36951922b2619dc95fe76fa9a1b825de28d99584",
+   "bytes": 6801510
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110401-S000000-E235959.04.V07B.HDF5",
+   "year": 2011,
+   "month": 4,
+   "sha256_dap_response": "ea91b765519a486d503ae96d0fb517028c354100bb8dcdcf378bd7c2e3521ed4",
+   "bytes": 6903016
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110501-S000000-E235959.05.V07B.HDF5",
+   "year": 2011,
+   "month": 5,
+   "sha256_dap_response": "8abba7cd5498dd2f131d69e7df992fcda3c56217a60d586584a581aaf6b6f58c",
+   "bytes": 7118210
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110601-S000000-E235959.06.V07B.HDF5",
+   "year": 2011,
+   "month": 6,
+   "sha256_dap_response": "03b57dba37df1a6c28951d59bb3e82799b3018a4202eee2df0474e6c5a77e755",
+   "bytes": 7095671
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110701-S000000-E235959.07.V07B.HDF5",
+   "year": 2011,
+   "month": 7,
+   "sha256_dap_response": "59957bc75f1d3675bef2efdd3d3bf44d15eb79f0fd13b7275f770a29ff43e4dc",
+   "bytes": 7064536
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110801-S000000-E235959.08.V07B.HDF5",
+   "year": 2011,
+   "month": 8,
+   "sha256_dap_response": "b63102d8181dcd0ed2d7e39a5f5b0c4fe0a2719b8275ce722525df8ae6d021fc",
+   "bytes": 7037203
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20110901-S000000-E235959.09.V07B.HDF5",
+   "year": 2011,
+   "month": 9,
+   "sha256_dap_response": "0481b98e563524ff885b3cb74c339bdd1e7a7aa6620872d3126a9f1a2335fa4a",
+   "bytes": 6947067
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20111001-S000000-E235959.10.V07B.HDF5",
+   "year": 2011,
+   "month": 10,
+   "sha256_dap_response": "ddd63d7eed3308dcb6d6715eadf619c38ce54ea20864d41834853769a8170db4",
+   "bytes": 6926725
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20111101-S000000-E235959.11.V07B.HDF5",
+   "year": 2011,
+   "month": 11,
+   "sha256_dap_response": "e903fefc8084cbd5069f467a8f751998c40072a36f1cf9250216b88483a7e991",
+   "bytes": 6987596
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20111201-S000000-E235959.12.V07B.HDF5",
+   "year": 2011,
+   "month": 12,
+   "sha256_dap_response": "26df44cdad1d2e7c459347a6c1607a6e402a1ceae0534ccb8bf4fa56e65c38aa",
+   "bytes": 6707791
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120101-S000000-E235959.01.V07B.HDF5",
+   "year": 2012,
+   "month": 1,
+   "sha256_dap_response": "3498b4890c1752635c645aa53f0aababbe70e9544a82bf70cf6fc94e4a95756f",
+   "bytes": 6318971
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120201-S000000-E235959.02.V07B.HDF5",
+   "year": 2012,
+   "month": 2,
+   "sha256_dap_response": "86c570cbefc1debc3901f2678656f074319e8c8a82ae5bca845db70dd94ab9df",
+   "bytes": 6771221
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120301-S000000-E235959.03.V07B.HDF5",
+   "year": 2012,
+   "month": 3,
+   "sha256_dap_response": "277e2181632de5606e83a765974ceaba899680eb1d6d097a2d0ecffd0cadcc90",
+   "bytes": 6878330
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120401-S000000-E235959.04.V07B.HDF5",
+   "year": 2012,
+   "month": 4,
+   "sha256_dap_response": "129038f9703a942827719e5aa110f9a7593ce2403b4df0eaf3858d031a84f416",
+   "bytes": 6910347
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120501-S000000-E235959.05.V07B.HDF5",
+   "year": 2012,
+   "month": 5,
+   "sha256_dap_response": "97d3f17df049b3cf1bee13f50ccb2f11e7b5d60ae9d168f8f697de4fda9b8ef4",
+   "bytes": 6967703
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120601-S000000-E235959.06.V07B.HDF5",
+   "year": 2012,
+   "month": 6,
+   "sha256_dap_response": "18dcea3eb4f5cd5bae7bba59d6764ba9b4eaf53e9bb2653b9d5d52753adb3bc2",
+   "bytes": 7049834
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120701-S000000-E235959.07.V07B.HDF5",
+   "year": 2012,
+   "month": 7,
+   "sha256_dap_response": "3cbbe6554a4c6ead581bfc0d38dac130ed00be7bfbc9f115fa60b3ff876b2f2e",
+   "bytes": 7076507
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120801-S000000-E235959.08.V07B.HDF5",
+   "year": 2012,
+   "month": 8,
+   "sha256_dap_response": "043bf32d76b0cf21ee9b5135e0a6a4579aaff1f596889fc0265e5016e020666c",
+   "bytes": 7029212
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20120901-S000000-E235959.09.V07B.HDF5",
+   "year": 2012,
+   "month": 9,
+   "sha256_dap_response": "fbd5b568a9d5725729854f4e47ea1c53aa57e901bbaa4de903565fd7eee1cbcc",
+   "bytes": 7060671
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20121001-S000000-E235959.10.V07B.HDF5",
+   "year": 2012,
+   "month": 10,
+   "sha256_dap_response": "ea2701a560e29af612d3e8717066a5a9bc7a68110c4ff65dbb27846c8ffa00fa",
+   "bytes": 6887026
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20121101-S000000-E235959.11.V07B.HDF5",
+   "year": 2012,
+   "month": 11,
+   "sha256_dap_response": "004c247a50cea44c3a2d943f25bf8fcd9917e5d3a57c735deadeff6fd6f8aa63",
+   "bytes": 7085607
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20121201-S000000-E235959.12.V07B.HDF5",
+   "year": 2012,
+   "month": 12,
+   "sha256_dap_response": "11ff605403f37c07ffd1db68dce9317630548127005d61d8a55d2c460268bcf0",
+   "bytes": 6721914
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130101-S000000-E235959.01.V07B.HDF5",
+   "year": 2013,
+   "month": 1,
+   "sha256_dap_response": "c28cc32bbfdb32d49063c119594f5da769fda0a78788dee9396283831ab83c55",
+   "bytes": 6296293
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130201-S000000-E235959.02.V07B.HDF5",
+   "year": 2013,
+   "month": 2,
+   "sha256_dap_response": "70a6688013518a7822dbe1607c452665d51aabbfb038a09c8df6eaf201ec4af7",
+   "bytes": 6601594
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130301-S000000-E235959.03.V07B.HDF5",
+   "year": 2013,
+   "month": 3,
+   "sha256_dap_response": "28a6c6522cec8b275b5f9a4095221c0162b90c16ecb9c153744c07721e25da93",
+   "bytes": 6892138
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130401-S000000-E235959.04.V07B.HDF5",
+   "year": 2013,
+   "month": 4,
+   "sha256_dap_response": "c3ca69baa6492819d455737bc1c24609930cfe951ded6251929a7a7d111db825",
+   "bytes": 6906242
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130501-S000000-E235959.05.V07B.HDF5",
+   "year": 2013,
+   "month": 5,
+   "sha256_dap_response": "01e38705b07b7b91c4ebe9af44deeb2f4c5ae19b4f3831d5f6d1b9c89d8cb6aa",
+   "bytes": 6974077
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130601-S000000-E235959.06.V07B.HDF5",
+   "year": 2013,
+   "month": 6,
+   "sha256_dap_response": "cad1cbcc665c2c7aff0bb1039883dea3815649a95e1c0a64e026792461354a11",
+   "bytes": 7046327
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130701-S000000-E235959.07.V07B.HDF5",
+   "year": 2013,
+   "month": 7,
+   "sha256_dap_response": "0c64280034c3f3147c0d201f3b2efd7b6d89c7e57383536fc2244010b7ea06ad",
+   "bytes": 7106060
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130801-S000000-E235959.08.V07B.HDF5",
+   "year": 2013,
+   "month": 8,
+   "sha256_dap_response": "99db58faa6903315598fbaa149d18c234ed64a05e5a81457d2025240e9d616ea",
+   "bytes": 7008542
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20130901-S000000-E235959.09.V07B.HDF5",
+   "year": 2013,
+   "month": 9,
+   "sha256_dap_response": "868a258915cd590475b9d143c4d3eb009b00c89e04db22a4672334335915b147",
+   "bytes": 7085013
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20131001-S000000-E235959.10.V07B.HDF5",
+   "year": 2013,
+   "month": 10,
+   "sha256_dap_response": "444306b59c07df0588265dda74aabefc2898d0cb64ebb6eabe125972ac4bdd8c",
+   "bytes": 6825830
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20131101-S000000-E235959.11.V07B.HDF5",
+   "year": 2013,
+   "month": 11,
+   "sha256_dap_response": "a43c3b543f2667050d3655c2966a3eb66266b578990044973dd1bcf2ff855646",
+   "bytes": 6934761
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20131201-S000000-E235959.12.V07B.HDF5",
+   "year": 2013,
+   "month": 12,
+   "sha256_dap_response": "add19eaa63da595d779a8c93de6a18f79bfff9508afea9373122ff26acd2d1dc",
+   "bytes": 6750649
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140101-S000000-E235959.01.V07B.HDF5",
+   "year": 2014,
+   "month": 1,
+   "sha256_dap_response": "59720b900c0c017f061066b80850c7063342b7f5f6bd49865d01c592758872ce",
+   "bytes": 6251781
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140201-S000000-E235959.02.V07B.HDF5",
+   "year": 2014,
+   "month": 2,
+   "sha256_dap_response": "984858ab5c3cc3e408c17ff8a7c69b88bfbefe50d18d51313801aa2a16138d61",
+   "bytes": 6734659
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140301-S000000-E235959.03.V07B.HDF5",
+   "year": 2014,
+   "month": 3,
+   "sha256_dap_response": "79153e600a6af2c69f1201ddcc9e9f5263416d847d746503403ee9b95961feb8",
+   "bytes": 6936356
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140401-S000000-E235959.04.V07B.HDF5",
+   "year": 2014,
+   "month": 4,
+   "sha256_dap_response": "6c43a23c27f2e4b66a382b1864fa8e217580ccb523b2eb35f183a6833d689a69",
+   "bytes": 6843588
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140501-S000000-E235959.05.V07B.HDF5",
+   "year": 2014,
+   "month": 5,
+   "sha256_dap_response": "baea4285789147544d43f2f30a45b0e9ec22d8184e91e10e863036868707ba50",
+   "bytes": 7085456
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140601-S000000-E235959.06.V07B.HDF5",
+   "year": 2014,
+   "month": 6,
+   "sha256_dap_response": "e684885a68a87405f268f8aa58f094816d977877b328102b514e17dd25b6e012",
+   "bytes": 6985192
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140701-S000000-E235959.07.V07B.HDF5",
+   "year": 2014,
+   "month": 7,
+   "sha256_dap_response": "234b21879337b71adbb3645d80440b7985dcd3b697f35d427f4c25f4d7ae469e",
+   "bytes": 7026592
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140801-S000000-E235959.08.V07B.HDF5",
+   "year": 2014,
+   "month": 8,
+   "sha256_dap_response": "2d3e071d21ede7de780f123ffbf46c2224cf789b88ea4c50a50279c043740115",
+   "bytes": 7061175
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20140901-S000000-E235959.09.V07B.HDF5",
+   "year": 2014,
+   "month": 9,
+   "sha256_dap_response": "4a93d5696949fa083ab0abab48d1c7fc19fd18ad55cefb3cf6830f99345c40f8",
+   "bytes": 7039227
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20141001-S000000-E235959.10.V07B.HDF5",
+   "year": 2014,
+   "month": 10,
+   "sha256_dap_response": "bf240a55e615a776c7d50a22f0edb197b106b5b53010e5357a82b12bf60adc81",
+   "bytes": 6976141
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20141101-S000000-E235959.11.V07B.HDF5",
+   "year": 2014,
+   "month": 11,
+   "sha256_dap_response": "52e18a57b444f5bf09d69289dcf8dc71dcdd79f99aaac935f7ba9ba51cc18d07",
+   "bytes": 6799786
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20141201-S000000-E235959.12.V07B.HDF5",
+   "year": 2014,
+   "month": 12,
+   "sha256_dap_response": "daddb7a7d8ec383294cd15015557eb069751b47784981bd3c7e8abff9042602b",
+   "bytes": 6638462
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150101-S000000-E235959.01.V07B.HDF5",
+   "year": 2015,
+   "month": 1,
+   "sha256_dap_response": "04100ab1b1e10a297b1a2867772e87d816e36b1ffc2b2a52ab31e55e6cf86c86",
+   "bytes": 6636435
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150201-S000000-E235959.02.V07B.HDF5",
+   "year": 2015,
+   "month": 2,
+   "sha256_dap_response": "876d093c0f10a2f2617a4dbd39a6a1aeba10bb9775a9fb8295e1dd0513bbb49f",
+   "bytes": 6684235
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150301-S000000-E235959.03.V07B.HDF5",
+   "year": 2015,
+   "month": 3,
+   "sha256_dap_response": "104a329d57b1df619e50370b0610423e7ba10f97bd9323a87c1d19c2f574d001",
+   "bytes": 6775145
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150401-S000000-E235959.04.V07B.HDF5",
+   "year": 2015,
+   "month": 4,
+   "sha256_dap_response": "3962fc510c6f50d3498a957f476fbc063a492e5204d6c29c56bef681c3d6762f",
+   "bytes": 6898960
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150501-S000000-E235959.05.V07B.HDF5",
+   "year": 2015,
+   "month": 5,
+   "sha256_dap_response": "5812f11cedfec3b653669215841d4bc0d6d806cefd0ad9f096a906d861f41f54",
+   "bytes": 7105133
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150601-S000000-E235959.06.V07B.HDF5",
+   "year": 2015,
+   "month": 6,
+   "sha256_dap_response": "179521c8206b292de58d42a93232c5660c096f9b79e39fea1328d5f46842fa76",
+   "bytes": 7093831
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150701-S000000-E235959.07.V07B.HDF5",
+   "year": 2015,
+   "month": 7,
+   "sha256_dap_response": "96ef11c25926667a99757ec4a4fa4dca20797993ae9e4709090f163ada26a6a6",
+   "bytes": 7124523
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150801-S000000-E235959.08.V07B.HDF5",
+   "year": 2015,
+   "month": 8,
+   "sha256_dap_response": "14cd913a7827e8a8462c4fcdb5d8c372b5a3a4391ffcd4f7c81e911ae04c2d59",
+   "bytes": 7187068
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20150901-S000000-E235959.09.V07B.HDF5",
+   "year": 2015,
+   "month": 9,
+   "sha256_dap_response": "6d36e165c86d6137d99e38621cd4464a4d55b566c8db1bd3794fe09992fd05b2",
+   "bytes": 7108191
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20151001-S000000-E235959.10.V07B.HDF5",
+   "year": 2015,
+   "month": 10,
+   "sha256_dap_response": "0c38765f745823257e5a368d2ce2567523ad423dc073bc3a9badbf9932d5c6ca",
+   "bytes": 6928910
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20151101-S000000-E235959.11.V07B.HDF5",
+   "year": 2015,
+   "month": 11,
+   "sha256_dap_response": "2e8ad832ba0727402ac1582edc3f5efa6223e2b8d16d37c2d640f8c6824111e1",
+   "bytes": 6825044
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20151201-S000000-E235959.12.V07B.HDF5",
+   "year": 2015,
+   "month": 12,
+   "sha256_dap_response": "7d72f209c83361ef54577e42b83869e49300ebe71aef80a0e98c445de649760f",
+   "bytes": 6831724
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160101-S000000-E235959.01.V07B.HDF5",
+   "year": 2016,
+   "month": 1,
+   "sha256_dap_response": "d70922b574d99f41a8b20c1e2635e642cee248dc2409b0b38aeadf4227dfaf8d",
+   "bytes": 6885978
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160201-S000000-E235959.02.V07B.HDF5",
+   "year": 2016,
+   "month": 2,
+   "sha256_dap_response": "e6d45dc0edf39a277ff706ce7ee27f378b7f28550d2dd1c3853b4873f145d608",
+   "bytes": 6758782
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160301-S000000-E235959.03.V07B.HDF5",
+   "year": 2016,
+   "month": 3,
+   "sha256_dap_response": "ac0a6091f5e28c216f73674ddd26a61c6735f19df6f08a1d2bd855c954e2f045",
+   "bytes": 6761827
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160401-S000000-E235959.04.V07B.HDF5",
+   "year": 2016,
+   "month": 4,
+   "sha256_dap_response": "045e32353793f3941350aa4b7b79d8f39395911bc5512ce91e9608150a01a951",
+   "bytes": 6934567
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160501-S000000-E235959.05.V07B.HDF5",
+   "year": 2016,
+   "month": 5,
+   "sha256_dap_response": "1440ad93d6adc7a18659165195f9a1afb384880fc1783a54f81a52a7e8628d1c",
+   "bytes": 7149413
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160601-S000000-E235959.06.V07B.HDF5",
+   "year": 2016,
+   "month": 6,
+   "sha256_dap_response": "78ee07134d4b793ab5fe83beb72f79862ba62f09cbe341c10cc0a9cec4ce0bae",
+   "bytes": 7101257
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160701-S000000-E235959.07.V07B.HDF5",
+   "year": 2016,
+   "month": 7,
+   "sha256_dap_response": "0eca53f5095d4ce37286d8f06225946b1e32e9e612159a26136371e7d5207903",
+   "bytes": 7118339
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160801-S000000-E235959.08.V07B.HDF5",
+   "year": 2016,
+   "month": 8,
+   "sha256_dap_response": "b32d87c7972a8ce88208111a6adebb878848899d686eab5910acd7d3a7bc062c",
+   "bytes": 7079137
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20160901-S000000-E235959.09.V07B.HDF5",
+   "year": 2016,
+   "month": 9,
+   "sha256_dap_response": "be69dd5b5cd24046c61ffd3f4b8bdeb584b6efd9eab47200c4f2c1e5bf25ae1f",
+   "bytes": 7158542
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20161001-S000000-E235959.10.V07B.HDF5",
+   "year": 2016,
+   "month": 10,
+   "sha256_dap_response": "8468a025268a54e691e3902b771b9ce67919c427bfcf21f6641898f2215e7db8",
+   "bytes": 7100942
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20161101-S000000-E235959.11.V07B.HDF5",
+   "year": 2016,
+   "month": 11,
+   "sha256_dap_response": "a978bdeb2449101f318c6803e97424ef9ee5bec35b5ab251b308b17a167db936",
+   "bytes": 6933538
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20161201-S000000-E235959.12.V07B.HDF5",
+   "year": 2016,
+   "month": 12,
+   "sha256_dap_response": "acadc290c93e0513d6bef7bc62392ddfe282039621837f34506f231ecef23a56",
+   "bytes": 6725821
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170101-S000000-E235959.01.V07B.HDF5",
+   "year": 2017,
+   "month": 1,
+   "sha256_dap_response": "28897605df82f6515181b6254197aac085c78f357a2fd9627ac3d4ba1583af21",
+   "bytes": 6694036
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170201-S000000-E235959.02.V07B.HDF5",
+   "year": 2017,
+   "month": 2,
+   "sha256_dap_response": "8cbc7c2e8f9fd2f37281b51f00d8b9ab0df09a24d603fd20b906b7d74886f8e6",
+   "bytes": 6776991
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170301-S000000-E235959.03.V07B.HDF5",
+   "year": 2017,
+   "month": 3,
+   "sha256_dap_response": "1e084d1ba6f16339434c483ddec4b4cc9fa6e7c1762df92555fb7ee5be3d1432",
+   "bytes": 6790662
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170401-S000000-E235959.04.V07B.HDF5",
+   "year": 2017,
+   "month": 4,
+   "sha256_dap_response": "3edaf23623f99ca06f6ae03e64bcb83d2571341ff4aeab170929af5c88b783dd",
+   "bytes": 6869321
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170501-S000000-E235959.05.V07B.HDF5",
+   "year": 2017,
+   "month": 5,
+   "sha256_dap_response": "9180bb382bd5168308781093f2db81e315f9ab9e22e6567f6a4e2fe51105978e",
+   "bytes": 7103066
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170601-S000000-E235959.06.V07B.HDF5",
+   "year": 2017,
+   "month": 6,
+   "sha256_dap_response": "4493ee23e2870dde3e8b1160e8cadc8fd2161e766df97a53b067911a26ebda6a",
+   "bytes": 7058364
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170701-S000000-E235959.07.V07B.HDF5",
+   "year": 2017,
+   "month": 7,
+   "sha256_dap_response": "1218476f35e54c37f0874c7704da810210b62eb662db70c7317c7a77e074fd1a",
+   "bytes": 7086748
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170801-S000000-E235959.08.V07B.HDF5",
+   "year": 2017,
+   "month": 8,
+   "sha256_dap_response": "e7799477d10ce0ae37c154b30e3f41855800dd9a5a0cdaab6a4c54b8a6509762",
+   "bytes": 7087951
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20170901-S000000-E235959.09.V07B.HDF5",
+   "year": 2017,
+   "month": 9,
+   "sha256_dap_response": "6d87edcaf96ac1676a99f3ba0cf8f2345999b1736ace01e221b7d118c563a612",
+   "bytes": 7057971
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20171001-S000000-E235959.10.V07B.HDF5",
+   "year": 2017,
+   "month": 10,
+   "sha256_dap_response": "ebc2d171a7088b26ec0e7d9202aec396947531dfa9d88c46b2a64a52dc49d25d",
+   "bytes": 6925456
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20171101-S000000-E235959.11.V07B.HDF5",
+   "year": 2017,
+   "month": 11,
+   "sha256_dap_response": "3991005eee633f47dcc54b1214262a774de21fd725b333120e6e595b0ab37658",
+   "bytes": 6827481
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20171201-S000000-E235959.12.V07B.HDF5",
+   "year": 2017,
+   "month": 12,
+   "sha256_dap_response": "074835eec51b2f8921967380a8a5eb070e5ed7257a0b2999bd9104ed1f0700be",
+   "bytes": 6715573
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180101-S000000-E235959.01.V07B.HDF5",
+   "year": 2018,
+   "month": 1,
+   "sha256_dap_response": "973aec223f0f3acc7f5649e6dd237edbb6de7db6985d36dbee293ba9f4c2bc3c",
+   "bytes": 6556807
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180201-S000000-E235959.02.V07B.HDF5",
+   "year": 2018,
+   "month": 2,
+   "sha256_dap_response": "7a555b49c979af266488083f426a6b6b7f973d126c832adc1e00afcd85d65980",
+   "bytes": 6779238
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180301-S000000-E235959.03.V07B.HDF5",
+   "year": 2018,
+   "month": 3,
+   "sha256_dap_response": "0ec495435b962e57519f6e6a966231025d30e02f3b56d4e4394642f899274717",
+   "bytes": 6637614
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180401-S000000-E235959.04.V07B.HDF5",
+   "year": 2018,
+   "month": 4,
+   "sha256_dap_response": "1d5702dba94001e7ac949e612c16a6e44b34c51d628a4b376ba04cbaef5323be",
+   "bytes": 6876683
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180501-S000000-E235959.05.V07B.HDF5",
+   "year": 2018,
+   "month": 5,
+   "sha256_dap_response": "a3099aebe1653529bffa93252e125e6699dda96dfea394512014945639fca221",
+   "bytes": 7071607
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180601-S000000-E235959.06.V07B.HDF5",
+   "year": 2018,
+   "month": 6,
+   "sha256_dap_response": "ad56fead698bed81e03b313d240b8bb7bc30cfaa4ebd8fdd63dbcdee8ce962d6",
+   "bytes": 7019540
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180701-S000000-E235959.07.V07B.HDF5",
+   "year": 2018,
+   "month": 7,
+   "sha256_dap_response": "e4c9c275efb7caf2ec9db4a5dcbe1d3434f40d0e2fec07fe7f1cfaabad1188c3",
+   "bytes": 7037181
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180801-S000000-E235959.08.V07B.HDF5",
+   "year": 2018,
+   "month": 8,
+   "sha256_dap_response": "a0193dcb5e6c6b0cef118f514d8057257138b94487487a1fb3aa71ad1c92de99",
+   "bytes": 7034098
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20180901-S000000-E235959.09.V07B.HDF5",
+   "year": 2018,
+   "month": 9,
+   "sha256_dap_response": "5fef6723d71ca2b914868cbc056bdee0d30a18417a8b1ad021dc830df650725d",
+   "bytes": 7091894
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20181001-S000000-E235959.10.V07B.HDF5",
+   "year": 2018,
+   "month": 10,
+   "sha256_dap_response": "d982765fe832ad17ee6b1dfb11db1bfbfa57077632ee9e0cc569ebac26ef759a",
+   "bytes": 6998508
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20181101-S000000-E235959.11.V07B.HDF5",
+   "year": 2018,
+   "month": 11,
+   "sha256_dap_response": "5b8162383d3e46569e5f292461a53e4323555de0bb50d796b4ad20c13c92692a",
+   "bytes": 6758557
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20181201-S000000-E235959.12.V07B.HDF5",
+   "year": 2018,
+   "month": 12,
+   "sha256_dap_response": "8e5c7e07555dd609d6ccb35051d51080f18e0d06e110ca8128d7ab9b99cbb800",
+   "bytes": 6624822
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190101-S000000-E235959.01.V07B.HDF5",
+   "year": 2019,
+   "month": 1,
+   "sha256_dap_response": "81e49ef3c30366b3b3e9a1e6b96704cfc494d6b6e142f4d3873c75e2e06f7ab8",
+   "bytes": 6524056
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190201-S000000-E235959.02.V07B.HDF5",
+   "year": 2019,
+   "month": 2,
+   "sha256_dap_response": "e19358136580acf8473de957fc8faa08836927766a4cd994ac985bc8866d9fbc",
+   "bytes": 6642476
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190301-S000000-E235959.03.V07B.HDF5",
+   "year": 2019,
+   "month": 3,
+   "sha256_dap_response": "00db343b1a8b321068fc09f5acd01b3b6302393912e90c278bc3a97bc0783726",
+   "bytes": 6730289
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190401-S000000-E235959.04.V07B.HDF5",
+   "year": 2019,
+   "month": 4,
+   "sha256_dap_response": "976318d3833756fa15271c274fb4143372222266dfb1675a47a33814730c2bb9",
+   "bytes": 6965125
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190501-S000000-E235959.05.V07B.HDF5",
+   "year": 2019,
+   "month": 5,
+   "sha256_dap_response": "56b611e5278dae4fd8766d48d6e072605280fecf055d87fcb0c7f6a36dc71e0d",
+   "bytes": 7106283
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190601-S000000-E235959.06.V07B.HDF5",
+   "year": 2019,
+   "month": 6,
+   "sha256_dap_response": "1a4f799c4d3ad07439fe354e9716788fb89d933bd57af40a5d97f3cf86b3a5b2",
+   "bytes": 7102583
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190701-S000000-E235959.07.V07B.HDF5",
+   "year": 2019,
+   "month": 7,
+   "sha256_dap_response": "cb5413b6a788db1750ecb2eb19a99ab10089c2cbcad85144f856c25c0d6aa8c8",
+   "bytes": 7018762
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190801-S000000-E235959.08.V07B.HDF5",
+   "year": 2019,
+   "month": 8,
+   "sha256_dap_response": "f45f9233fa181fa8cdf95ee26b0f10edf5ace5052fa5b077593d1afe43bdf374",
+   "bytes": 7031984
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20190901-S000000-E235959.09.V07B.HDF5",
+   "year": 2019,
+   "month": 9,
+   "sha256_dap_response": "a9c6ff0f537b66c932e5e632faa6a4d575733bd70afa6304a03d6404b19a0bd2",
+   "bytes": 7080141
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20191001-S000000-E235959.10.V07B.HDF5",
+   "year": 2019,
+   "month": 10,
+   "sha256_dap_response": "4d53b88f2a0440476218335a74c935a319dad7d801f0474508ea841ba6a79102",
+   "bytes": 6937439
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20191101-S000000-E235959.11.V07B.HDF5",
+   "year": 2019,
+   "month": 11,
+   "sha256_dap_response": "f07bd660e067e5584631c4c4eb595993529ec0e290d645ef62a2c4580e0ae04f",
+   "bytes": 6833557
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20191201-S000000-E235959.12.V07B.HDF5",
+   "year": 2019,
+   "month": 12,
+   "sha256_dap_response": "2ade5bac37f738e4294fe39048b9f91eb3aec51fd995fa416c4fe7a57031f27f",
+   "bytes": 6734462
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200101-S000000-E235959.01.V07B.HDF5",
+   "year": 2020,
+   "month": 1,
+   "sha256_dap_response": "8681d226d768c4c0bfeaf10067b5c247ccf616a2704b775ced5b97847f37ae39",
+   "bytes": 6617415
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200201-S000000-E235959.02.V07B.HDF5",
+   "year": 2020,
+   "month": 2,
+   "sha256_dap_response": "e90942b445a7264ead3790d2f8867d2a361d518377c3f39b3f7786dae21ddb24",
+   "bytes": 6645815
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200301-S000000-E235959.03.V07B.HDF5",
+   "year": 2020,
+   "month": 3,
+   "sha256_dap_response": "193a2318cb23fed805bf55cdc5b774c7815dfc466859abf354e8853d8b7115a7",
+   "bytes": 6713054
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200401-S000000-E235959.04.V07B.HDF5",
+   "year": 2020,
+   "month": 4,
+   "sha256_dap_response": "6bd858864e1ce2c44b4497017c917b34787cb52d42c4e16328cd7e908afb7188",
+   "bytes": 6938581
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200501-S000000-E235959.05.V07B.HDF5",
+   "year": 2020,
+   "month": 5,
+   "sha256_dap_response": "0c0f26ff21d4f981e41a84c9bd6065cc8e5693654833e81df5d4d9a3c46d09de",
+   "bytes": 7168024
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200601-S000000-E235959.06.V07B.HDF5",
+   "year": 2020,
+   "month": 6,
+   "sha256_dap_response": "64dff0aa533439e210fe4af935821626394478ef512714a5eb87ec847bd94f80",
+   "bytes": 7056206
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200701-S000000-E235959.07.V07B.HDF5",
+   "year": 2020,
+   "month": 7,
+   "sha256_dap_response": "43b6bfbeed547b3f4121e28d56609aa348bb78d9f074175071f37eb9e82c2405",
+   "bytes": 7044665
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200801-S000000-E235959.08.V07B.HDF5",
+   "year": 2020,
+   "month": 8,
+   "sha256_dap_response": "863fb1ae46030978fcb6aa3463c78b81601c94b751919f78c016f36c4eca0449",
+   "bytes": 7092294
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20200901-S000000-E235959.09.V07B.HDF5",
+   "year": 2020,
+   "month": 9,
+   "sha256_dap_response": "2854b8520142984f5c87cb07567dd887bc8135871853debc1830c05abf8ca1d8",
+   "bytes": 7015432
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20201001-S000000-E235959.10.V07B.HDF5",
+   "year": 2020,
+   "month": 10,
+   "sha256_dap_response": "ba4450601b76c7317bf6873aaed8027ff5988e74d4ae8510fb29be829e0de8b6",
+   "bytes": 6843164
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20201101-S000000-E235959.11.V07B.HDF5",
+   "year": 2020,
+   "month": 11,
+   "sha256_dap_response": "6ebca95640c1d392aaec3f25dffba953a888a458066cd1aed8f8211ba8bf74b1",
+   "bytes": 6800475
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20201201-S000000-E235959.12.V07B.HDF5",
+   "year": 2020,
+   "month": 12,
+   "sha256_dap_response": "d42a59ac207c071f05c2e79a4cb44a025a5a5680d56e86529cd0448f9e04c2d9",
+   "bytes": 6633343
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210101-S000000-E235959.01.V07B.HDF5",
+   "year": 2021,
+   "month": 1,
+   "sha256_dap_response": "56654abde54011cf4a255084704794a3e61933a1ced5232154d21c83a513e167",
+   "bytes": 6567873
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210201-S000000-E235959.02.V07B.HDF5",
+   "year": 2021,
+   "month": 2,
+   "sha256_dap_response": "082e2f192becc7d80b6c17eac0293e72547f2e70df916d84f537ab319712e478",
+   "bytes": 6657235
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210301-S000000-E235959.03.V07B.HDF5",
+   "year": 2021,
+   "month": 3,
+   "sha256_dap_response": "b531c43fe17b7009be6607ecd33978b8eed9534240c44a4e1c27f384d8717f8f",
+   "bytes": 6578916
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210401-S000000-E235959.04.V07B.HDF5",
+   "year": 2021,
+   "month": 4,
+   "sha256_dap_response": "6f9d23231b7a98cb78156d861770934e1a0a15772d3dcf1ab3870b4843347e0c",
+   "bytes": 6809317
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210501-S000000-E235959.05.V07B.HDF5",
+   "year": 2021,
+   "month": 5,
+   "sha256_dap_response": "2591b2795d306398be861d017456335d760a40716ec9878684ca7f2e0c9a24eb",
+   "bytes": 7056328
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210601-S000000-E235959.06.V07B.HDF5",
+   "year": 2021,
+   "month": 6,
+   "sha256_dap_response": "4b493ef061de7324389cd445622ae240d07de2532995b2796b1f10df2f97f712",
+   "bytes": 6966151
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210701-S000000-E235959.07.V07B.HDF5",
+   "year": 2021,
+   "month": 7,
+   "sha256_dap_response": "6458b1acdbddbf68cbd2e02bf76725d2d46201cc0122e6d725b03e59f8442ea1",
+   "bytes": 6987642
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210801-S000000-E235959.08.V07B.HDF5",
+   "year": 2021,
+   "month": 8,
+   "sha256_dap_response": "922c416a7a3264cf18526cd0a265578a8ca2ca481fca3165a2a396783655247f",
+   "bytes": 6984973
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20210901-S000000-E235959.09.V07B.HDF5",
+   "year": 2021,
+   "month": 9,
+   "sha256_dap_response": "fa282574247ec8524441814c6b995b02a205ac4a1dacbe0aea93fe30ca80f296",
+   "bytes": 7050367
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20211001-S000000-E235959.10.V07B.HDF5",
+   "year": 2021,
+   "month": 10,
+   "sha256_dap_response": "daaff1f901fceba9428c2e5358bdcc6e1fddab618414745b67edfabe9ca02e14",
+   "bytes": 6881871
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20211101-S000000-E235959.11.V07B.HDF5",
+   "year": 2021,
+   "month": 11,
+   "sha256_dap_response": "2c1f33438f342b225f1d5ce7372197900c812374f5929eb99aeaa8d430221b59",
+   "bytes": 6635980
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20211201-S000000-E235959.12.V07B.HDF5",
+   "year": 2021,
+   "month": 12,
+   "sha256_dap_response": "8f0bc4121e16c4c77665d04d6141fb113789d9aba634b3e9cc2f9d7f02038ed2",
+   "bytes": 6608375
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220101-S000000-E235959.01.V07B.HDF5",
+   "year": 2022,
+   "month": 1,
+   "sha256_dap_response": "716a3201cd259d79cb6b75a93da7f6a3c58fef3109e31a5b502080d27a96379d",
+   "bytes": 6630916
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220201-S000000-E235959.02.V07B.HDF5",
+   "year": 2022,
+   "month": 2,
+   "sha256_dap_response": "5a13c8adb9b580039c1795666df6b1d2cac16290d9d8d8ebdfd05800a3d72a37",
+   "bytes": 6627522
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220301-S000000-E235959.03.V07B.HDF5",
+   "year": 2022,
+   "month": 3,
+   "sha256_dap_response": "61d223e084096778a98133b63031de738b02d3fac61bd8593978c006a28b63bb",
+   "bytes": 6716257
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220401-S000000-E235959.04.V07B.HDF5",
+   "year": 2022,
+   "month": 4,
+   "sha256_dap_response": "7efbccd8ad8b6d663db98503fb8977ed3226be1cd5a706b4fd9f98322fcf1a00",
+   "bytes": 6765339
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220501-S000000-E235959.05.V07B.HDF5",
+   "year": 2022,
+   "month": 5,
+   "sha256_dap_response": "d472287a1b819ea8a0ebdb89a86f01e69239538cc5a62d531ed11987d0053dba",
+   "bytes": 6976650
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220601-S000000-E235959.06.V07B.HDF5",
+   "year": 2022,
+   "month": 6,
+   "sha256_dap_response": "a1fc1486c02f2ea8ca4970634ab3839d5b4ad77a4fb2df978c9852fc9b93491b",
+   "bytes": 7041890
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220701-S000000-E235959.07.V07B.HDF5",
+   "year": 2022,
+   "month": 7,
+   "sha256_dap_response": "b9e34cb6d7d2e71f4ad88cf0a3f97de85bf955e24734cdad2cb0339facea6609",
+   "bytes": 7093570
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220801-S000000-E235959.08.V07B.HDF5",
+   "year": 2022,
+   "month": 8,
+   "sha256_dap_response": "9e53f77cfd8745564e20fa010c00d98972c59743c3c7c1d5b6ab581fd008794c",
+   "bytes": 7125707
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20220901-S000000-E235959.09.V07B.HDF5",
+   "year": 2022,
+   "month": 9,
+   "sha256_dap_response": "76723be5f08824933207c05783ebd7d049bda06a7a5d4a5153ef8c617427fabf",
+   "bytes": 7071899
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20221001-S000000-E235959.10.V07B.HDF5",
+   "year": 2022,
+   "month": 10,
+   "sha256_dap_response": "7ef755d29cb6184ecfb28f8d29ee523e38f080a42dbb1a36381c14e5b3f64d0b",
+   "bytes": 6808217
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20221101-S000000-E235959.11.V07B.HDF5",
+   "year": 2022,
+   "month": 11,
+   "sha256_dap_response": "4f146fc8cd41b7ae5228a143229ab8673ad22f58bf9a54663e398de69451a426",
+   "bytes": 6716055
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20221201-S000000-E235959.12.V07B.HDF5",
+   "year": 2022,
+   "month": 12,
+   "sha256_dap_response": "1285be1ffaca1b31e18663c8630f24aa788c3a031214dd82a6825d869c05474a",
+   "bytes": 6717027
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230101-S000000-E235959.01.V07B.HDF5",
+   "year": 2023,
+   "month": 1,
+   "sha256_dap_response": "8912329b2e1ffaca2ccb012ff8fe671a731dfc16f14b079febdc88fb480681a9",
+   "bytes": 6541089
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230201-S000000-E235959.02.V07B.HDF5",
+   "year": 2023,
+   "month": 2,
+   "sha256_dap_response": "3a9e9554fec4fea3296651e1898fb76f6ee69a69be6d1232188f010c7299503d",
+   "bytes": 6558768
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230301-S000000-E235959.03.V07B.HDF5",
+   "year": 2023,
+   "month": 3,
+   "sha256_dap_response": "2e2b64d3fba2ccf0558d53f1044d19566c3f76f239cc096927f1c0e65d8f9d0d",
+   "bytes": 6726831
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230401-S000000-E235959.04.V07B.HDF5",
+   "year": 2023,
+   "month": 4,
+   "sha256_dap_response": "7bedf5dd88ff7b709f230459dd11e3dfbd02c26bf05d4f93665df990f0f91b1b",
+   "bytes": 6831404
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230501-S000000-E235959.05.V07B.HDF5",
+   "year": 2023,
+   "month": 5,
+   "sha256_dap_response": "00ca502bcaa39afe3599e4e4ee79595ebf517b25978f79cc6cde3693d363a108",
+   "bytes": 6990446
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230601-S000000-E235959.06.V07B.HDF5",
+   "year": 2023,
+   "month": 6,
+   "sha256_dap_response": "ae47db5ac71a2da11344b5b422ec0a210d915bc7712d1b537937319447ce550d",
+   "bytes": 7132107
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230701-S000000-E235959.07.V07B.HDF5",
+   "year": 2023,
+   "month": 7,
+   "sha256_dap_response": "4d806e97efdbc12e333455f47cbc6b1e1b8761ee221393f9ee4494d5532db6a7",
+   "bytes": 7068921
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230801-S000000-E235959.08.V07B.HDF5",
+   "year": 2023,
+   "month": 8,
+   "sha256_dap_response": "a8af467a21d334e1f9692fbb743f9053bfedd365a39b40eb8c9e3a5c9f04a8c6",
+   "bytes": 7043805
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20230901-S000000-E235959.09.V07B.HDF5",
+   "year": 2023,
+   "month": 9,
+   "sha256_dap_response": "e49f7a768e5358842173718909d2fd1c4f421586821151b6c45f091216d086bf",
+   "bytes": 7095353
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20231001-S000000-E235959.10.V07B.HDF5",
+   "year": 2023,
+   "month": 10,
+   "sha256_dap_response": "c0b471bcb27990de623f3f81bcbf2ab5dedeaf89f589107cd74c8ecea1a10607",
+   "bytes": 6909544
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20231101-S000000-E235959.11.V07B.HDF5",
+   "year": 2023,
+   "month": 11,
+   "sha256_dap_response": "ad660efebb5be3ef4f9865084c48152da2d4cdf3b505f2b1bd064654ffd33a97",
+   "bytes": 6792966
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20231201-S000000-E235959.12.V07B.HDF5",
+   "year": 2023,
+   "month": 12,
+   "sha256_dap_response": "2d00e31df1281f648c54cd5be6d22bec9c2100c8c1ccb48bf092344877128f7a",
+   "bytes": 6729897
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240101-S000000-E235959.01.V07B.HDF5",
+   "year": 2024,
+   "month": 1,
+   "sha256_dap_response": "4d905e9ba9ddb86f388f362fd3eef33f47c9558f7a76cdbf41cac29c5e2f6128",
+   "bytes": 6655351
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240201-S000000-E235959.02.V07B.HDF5",
+   "year": 2024,
+   "month": 2,
+   "sha256_dap_response": "cecee9fb06031dd418198328e5649a90492a3f860e1ba263e22a4028b512d761",
+   "bytes": 6706998
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240301-S000000-E235959.03.V07B.HDF5",
+   "year": 2024,
+   "month": 3,
+   "sha256_dap_response": "1bdd4669861dde94d04b5116cb5c16f82f0e5779389855e07ddd1ead4a82e020",
+   "bytes": 6756216
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240401-S000000-E235959.04.V07B.HDF5",
+   "year": 2024,
+   "month": 4,
+   "sha256_dap_response": "de3c2a4f0ea663a9bda321b28a74b19f8f3264738ff2e97d112986f9411cd2fd",
+   "bytes": 6875334
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240501-S000000-E235959.05.V07B.HDF5",
+   "year": 2024,
+   "month": 5,
+   "sha256_dap_response": "c69daf90b6babb58935fc560bf02ef1aeaf4c00759ecd22d2cc59ecc85ecc584",
+   "bytes": 7125575
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240601-S000000-E235959.06.V07B.HDF5",
+   "year": 2024,
+   "month": 6,
+   "sha256_dap_response": "505a0621ae5a5849f02085c0a874f3fda534d759ba32a1dc3f411132add7b5a0",
+   "bytes": 7061023
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240701-S000000-E235959.07.V07B.HDF5",
+   "year": 2024,
+   "month": 7,
+   "sha256_dap_response": "500eaa546b49aa2cdcda9fd44be50245f09b95a2768fc77ca0baa93900ef82e4",
+   "bytes": 7060363
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240801-S000000-E235959.08.V07B.HDF5",
+   "year": 2024,
+   "month": 8,
+   "sha256_dap_response": "b05a6844d821d0e0934a9e77eda6fc201036a0dfd704143254d9532f567c1f59",
+   "bytes": 7140678
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20240901-S000000-E235959.09.V07B.HDF5",
+   "year": 2024,
+   "month": 9,
+   "sha256_dap_response": "f21b693493976ba56811f7ead97875e62d7c5e5e1dd9eb7d811bccbfa74b23c0",
+   "bytes": 7099580
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20241001-S000000-E235959.10.V07B.HDF5",
+   "year": 2024,
+   "month": 10,
+   "sha256_dap_response": "8b2004d392b5e1d77e11677fc06b33bfa23a948258437fe5d5b2d4c473d4e387",
+   "bytes": 6872628
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20241101-S000000-E235959.11.V07B.HDF5",
+   "year": 2024,
+   "month": 11,
+   "sha256_dap_response": "1fb05198d6b8819fbb3b34b97e840da43bb8871253bcfcc897da43e1917d69dd",
+   "bytes": 6737372
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20241201-S000000-E235959.12.V07B.HDF5",
+   "year": 2024,
+   "month": 12,
+   "sha256_dap_response": "76a6a74d503c83d55cb708137d396fd1b95b3bd0bdfae1dba5dfdfe9e1f342b5",
+   "bytes": 6607952
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250101-S000000-E235959.01.V07B.HDF5",
+   "year": 2025,
+   "month": 1,
+   "sha256_dap_response": "9537fef0cee94927b9900a583c166a5a859d5c0e28f84a4172b2aee9c8bf3f60",
+   "bytes": 6598372
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250201-S000000-E235959.02.V07B.HDF5",
+   "year": 2025,
+   "month": 2,
+   "sha256_dap_response": "945db292f07ef2663271ae76b20e609842202923fba4fb523b886de47f70df46",
+   "bytes": 6733259
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250301-S000000-E235959.03.V07B.HDF5",
+   "year": 2025,
+   "month": 3,
+   "sha256_dap_response": "de170b0fe691b2d9e13d7c726f4d80e363c1c8c539338fe4200c5e82eeee82f1",
+   "bytes": 6649778
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250401-S000000-E235959.04.V07B.HDF5",
+   "year": 2025,
+   "month": 4,
+   "sha256_dap_response": "a9531839819db987cb453063d228848798b55e7e56c5ea169b9a77794f26790d",
+   "bytes": 6848055
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250501-S000000-E235959.05.V07B.HDF5",
+   "year": 2025,
+   "month": 5,
+   "sha256_dap_response": "dc9289edb04a3fd58570e8e47a34e13ab95d74f0d7f38695231bf9ac3217252b",
+   "bytes": 7098947
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250601-S000000-E235959.06.V07B.HDF5",
+   "year": 2025,
+   "month": 6,
+   "sha256_dap_response": "89115ee4b6cc01fe828153d0ce35ec8118fa2b9f77f4b8c4c0e93441b783ab79",
+   "bytes": 6995397
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250701-S000000-E235959.07.V07B.HDF5",
+   "year": 2025,
+   "month": 7,
+   "sha256_dap_response": "05b33e0de703578bc4eb0b982b13fb2dd1ccbf26512621485e1d58a273f46bc3",
+   "bytes": 7035211
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250801-S000000-E235959.08.V07B.HDF5",
+   "year": 2025,
+   "month": 8,
+   "sha256_dap_response": "36a3afb2d0c3b3ec9b7916d7b3369e83beff6c0ca47224ec97bb6bb23147a0d0",
+   "bytes": 7083366
+  },
+  {
+   "granule_ur": "GPM_3IMERGM.07:3B-MO.MS.MRG.3IMERG.20250901-S000000-E235959.09.V07B.HDF5",
+   "year": 2025,
+   "month": 9,
+   "sha256_dap_response": "71260495b3b9c779dbb3ad1f2fe4d85648d92f5eeec04dbc5c1bdb7be6eda995",
+   "bytes": 7144836
+  }
+ ],
+ "outputs_sha256": {
+  "global_series.json": "aadc5494fe450e1489696824fadc07a398142944b6179db588bc6f9f5ceda980",
+  "tile_0_0.bin.gz": "c570fd5f686a1d89d5ff6640fbebd7de16456f14f084aa5f1b55d0c68a67e5cb",
+  "tile_0_1.bin.gz": "ecc2e9742ac4b73c340b5fd415917ff491d37b3980d9c380b61a59c64a17f501",
+  "tile_0_10.bin.gz": "8962a787e7032e3fe351c85caecc874f27c2ec328b00cf58494549b8a9b57fbd",
+  "tile_0_11.bin.gz": "2386abaf8a32458d295058c42e9a0e55e856a3e200d22b36883dcf92faa1c45b",
+  "tile_0_2.bin.gz": "77541b2384d859f87678baa02214371be89078b4819fcadaebe061870bd00f90",
+  "tile_0_3.bin.gz": "f7d33240bf157da5917efa3c001d50462310caf42977f098f71b93c3127d850b",
+  "tile_0_4.bin.gz": "5e4f0231ea50d3827dc596c33f3eea40b46f1c1a2e3de01d0d92c821ff02232a",
+  "tile_0_5.bin.gz": "de387c63b21a5d581893eabad8d713a6056b2086759758cc3e84564e720c752d",
+  "tile_0_6.bin.gz": "bbe7a78c72b299aa1f7ef0df25614f86a405713959acb7ebf0be9e2bf68963de",
+  "tile_0_7.bin.gz": "ac4cecfc12efac9b69cee5eaf40d018ab190075eca2aa952160732571b2aa1de",
+  "tile_0_8.bin.gz": "91dafc05bbf242c7bd7f5d235172f8734535c9789ee5e84618b139ad9e78da11",
+  "tile_0_9.bin.gz": "df9b838767cfd67c56468f6db4be72bca99ce4a39cafbc0e4f04955f8f0da0f9",
+  "tile_1_0.bin.gz": "e04b476182dc22f34c4397e0833ead75cbfb6bbe2868d95f8a23191df7fda319",
+  "tile_1_1.bin.gz": "30e2c7a49f3920eb9aa1182aa221766143cf283754c68bde39f01d7caa970fa9",
+  "tile_1_10.bin.gz": "ed75ef7433c0b631a5a3c34b7195d36e4b046f861b1d6e8b3bf1e2f9381f454e",
+  "tile_1_11.bin.gz": "fa435bbbf39f11a93e35bb9d2937a681b1318b86c1b557b4692eafcfba15f4d4",
+  "tile_1_2.bin.gz": "a4de9af99f0c069f2059ad005a7764672f5c53ec6c85929c89fe725e2ea1a1a7",
+  "tile_1_3.bin.gz": "03b47fbaec6a4009b887cf9046bab8c91fc72851ededb779e792e16462a8eb05",
+  "tile_1_4.bin.gz": "45d49f4d3f74717de5f37f9c60d8de4139eef90ae76d33dee7e8bab3ec829370",
+  "tile_1_5.bin.gz": "34825ceec7faf5b7c98f28f5c075e17ca16110cdaf0da1f1f1b7228927868e73",
+  "tile_1_6.bin.gz": "c726a8218efe71a18a06e39c270236f2bf56cca2fcc089d7072b47d47a6a0175",
+  "tile_1_7.bin.gz": "5c0479873fc0872ffd1a6f3e3f7c569789353a4f2b15e796642065021bed04eb",
+  "tile_1_8.bin.gz": "746eb4443c63c5aeb849e1354eb0e6712d48fbd6d8cf00eab966841234560290",
+  "tile_1_9.bin.gz": "1af0ed0785270a6f90be601d85d3d7599d32ca60fe96f35899b8fed8d48dc5c9",
+  "tile_2_0.bin.gz": "77deac846d3b2977d275baed0d97709f981dd04537dde124261e29f6afa6019c",
+  "tile_2_1.bin.gz": "d58de01e9c36475a8e593d7f53420e55fc9e2be727ce7193ed66b6220b475501",
+  "tile_2_10.bin.gz": "1956fc34edb1470a2387e5f4683f41f513708325823b90b05f7f3651d01dd48d",
+  "tile_2_11.bin.gz": "fd752415070f821245af4bf049a547fc600b762001ced62f97a1d2a2ffcc0242",
+  "tile_2_2.bin.gz": "7437b5b3ed0d91e6dd7a15f75bdec404556c1308bcaa1cbfb95179a0f4d26bf0",
+  "tile_2_3.bin.gz": "226181629aff7e57f5ee95308703a23b659113ce5ead09b0ec4ea7b10e34ba36",
+  "tile_2_4.bin.gz": "050caba5cd3158cb5b7d6c18013fd3ce251fa76f7d61f7ce6bd02f1ad5bf7c3d",
+  "tile_2_5.bin.gz": "267d852eaa70c9fee247ba9c5edfac9d89ea8b9f8ec0900aa8e9f78626c6dcc6",
+  "tile_2_6.bin.gz": "7eaa5d63e6c09cfa5b0f96b44e1f47686f726dbf1a55835cde0991300fca901f",
+  "tile_2_7.bin.gz": "660dcacc5d31a1c81cb6af0eda533a82bc2681aef996a2a0ab659bd3390e13b5",
+  "tile_2_8.bin.gz": "ae17264cc8c592d8924810e40ec37a68b691ffb005f7bf7383f18ca6fba62bc6",
+  "tile_2_9.bin.gz": "10223177514ccc56ca986a21541cc408d990743c3341fe03702e6a75daa49f0d",
+  "tile_3_0.bin.gz": "3bf6f45f262e1b0963a80516984308bc6f59504c8128f1126a4514d58f01b90b",
+  "tile_3_1.bin.gz": "d7031601d60f41536f65065c8f857571f4eb4ac73ba5460c27583df91380ecff",
+  "tile_3_10.bin.gz": "c4a014709d11907f90b591e705d373d23dc02a5f020d19840ec0011b55a76bde",
+  "tile_3_11.bin.gz": "ccbf72c5dc6923dd030366f3337a5fece33ca1734188a4f4ac2baf87d696bb40",
+  "tile_3_2.bin.gz": "5039f09d76ae206096a6f76dd5c983228a405b0879f7e0c569c341a16f2ff73c",
+  "tile_3_3.bin.gz": "728d118aa01e0e3d10e398959c795e7cb88f24893f76f6b17e4a2e2b81cfd79a",
+  "tile_3_4.bin.gz": "62bae151ea08e7eccdee7501aba9e1e791ff6e581cc8b16f0ac9a2fe44e41ff3",
+  "tile_3_5.bin.gz": "5669490a4317afb97758eff6d3f39c7d8d66a787a612510fe8e75136784ab906",
+  "tile_3_6.bin.gz": "8fcaf158b3f41ebee457841fa52adba2efd81a401c8fd7d4cae23f043310c19b",
+  "tile_3_7.bin.gz": "528552d1d425374a1359437523d043004cd94c459770c522988fa068c82846bf",
+  "tile_3_8.bin.gz": "725464bd3c2396b9ea3de1531923af7f2152d34acd68aab472df222ad31a3175",
+  "tile_3_9.bin.gz": "d7d3403f6db18941c6ab2e5a100a6662a3d92371aa637decb75a06f62acc87f9",
+  "tile_4_0.bin.gz": "6b6e010f8ca5b38ac5ff532e5265f92f7d5a2d23d0a1f50587e759c9521980ef",
+  "tile_4_1.bin.gz": "d7ac20a742dd9e06a7242b756f209cacfd5de6dd0be9310f7ea4254e8d5ded29",
+  "tile_4_10.bin.gz": "607946d81779a2dd0b3df63abffbfdfafd79f49b5f52e59cb2e1338741a12770",
+  "tile_4_11.bin.gz": "d395f23f5686649b07ebf76bd50605b504aa4a83c3a0ebae2951612f74bf4cae",
+  "tile_4_2.bin.gz": "4b9d25b8464b34a3fb8d1347fda39051dace6375561e895a62947ed48de62540",
+  "tile_4_3.bin.gz": "8706a0113ec459cf195a5041471cc6018715ba712484457cfc3c6f12d0adec47",
+  "tile_4_4.bin.gz": "039a153a0d8a6ca02c987ed1a650c68292f4ec211d70a5ffc24680fa32be1648",
+  "tile_4_5.bin.gz": "3d9e5de313d152f3f18e6c33d55192269ca101310832fd051e5656acef7012f4",
+  "tile_4_6.bin.gz": "5e95d1d1fd366166ae2a0c7a4b5155543bdc7f43fb8c27caa0def6072c18653f",
+  "tile_4_7.bin.gz": "340967a1f1fb7002568819c6eeece2af3518785e7062ebd69bec2e8635c373f8",
+  "tile_4_8.bin.gz": "a30425f9d04ed8c3e9f7153c5d0412e7533ab99610de92bb624fec60d3cf69b8",
+  "tile_4_9.bin.gz": "daac8631e21f45a4b1afd421cd1dc7761062f22ae79f350a8b4dee803373ba1c",
+  "tile_5_0.bin.gz": "261557c9db2fb1f3539410ef9b5e05a0df85ccb326cad16fc52ea21a27fc6b3c",
+  "tile_5_1.bin.gz": "8a021a1ee8e4c691322646291fde21ac88a18c5be93bc9d301f95f9f361a03b9",
+  "tile_5_10.bin.gz": "e5481f5f7dfd762fbb09a5807065c47fb5774416078b7131611d7371006b5c36",
+  "tile_5_11.bin.gz": "c644eac578270919edb93d22e9c41b9200574e1d30f7b73d8b1648732af2a963",
+  "tile_5_2.bin.gz": "74da0d90f526208465f1074dda2545b506baefce8fa9dbbd8b23cbfbffc9ff3d",
+  "tile_5_3.bin.gz": "70969e99cfa7d61f8031457e6b00ca741797609e3738d9875a766d1e591a24b4",
+  "tile_5_4.bin.gz": "c04a9beec136a1bd264aed6cecf7fd134cb49e8f52f8fb7ff0878484a7e963d7",
+  "tile_5_5.bin.gz": "5f6c585c9bb5fa14af5490f2efff3a2f83d18910640d562650813baaa16c3a56",
+  "tile_5_6.bin.gz": "85cd59f7e5afca03c71c17d4dce65f6d282917635ced0693710e1c02fc8aaee9",
+  "tile_5_7.bin.gz": "21b918f71e13b366fd389ec142da48b5666d1106c04b00e7cb15614f0d2bd00c",
+  "tile_5_8.bin.gz": "65576c955c030a56994e529edf7febb9bb2791e40015625c1f7e86d4f74d47e7",
+  "tile_5_9.bin.gz": "cda2c01ce894c3ca113b2f161b94ee1b8091e1584a349cd86e1c5748e33197b8",
+  "tile_means.json": "8122ffb21ddca29ae7aef27bdae6227c4a234194bbc590d71730b7f75f0f921d"
+ },
+ "builder_scripts": [
+  "data/library/scripts/libcommon.py",
+  "data/library/scripts/products.py",
+  "data/library/scripts/finalize.py",
+  "data/library/scripts/build_imerg.py"
+ ],
+ "note": "Raw granules are not kept; only the 1-degree monthly derivative is shipped. No trend statistic is computed in the build."
+}

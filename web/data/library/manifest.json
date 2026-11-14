@@ -1,0 +1,341 @@
+{
+ "library": "NASA satellite library (Climate Claim on Trial)",
+ "tile_deg": 30,
+ "grid": {
+  "resolution_deg": 1,
+  "rows": 180,
+  "cols": 360,
+  "row0": "89.5N (rows run north to south)",
+  "col0": "179.5W (columns run west to east)",
+  "tiles": "6 x 12 tiles of 30 x 30 cells; tile r covers 90-30r N to 60-30r N, tile c covers 180W+30c eastward",
+  "tile_file": "<id>/tile_<r>_<c>.bin.gz",
+  "encoding": "gunzip; bytes = [all high bytes of the int16 values][all low bytes]; int16 little-endian = (high<<8)|low; layout [month][30][30]; value = int16*scale + offset; -32768 = no data; tiles that are entirely no-data are not written"
+ },
+ "variables": [
+  {
+   "id": "precip_imerg",
+   "name": "Precipitation (rain and snow)",
+   "definition": "How much rain and snow water reaches the ground, shown as the average amount per day over each month (millimetres of water per day).",
+   "units": "mm/day",
+   "product": "GPM IMERG Final monthly V07 (GPM_3IMERGM)",
+   "version": "07",
+   "short_name": "GPM_3IMERGM",
+   "concept_id": "C2723754851-GES_DISC",
+   "doi": "https://doi.org/10.5067/GPM/IMERG/3B-MONTH/07",
+   "agency": "NASA GES DISC",
+   "kind": "satellite observation (multi-satellite, gauge-calibrated)",
+   "source_variable": "/Grid/precipitation (mm/hr x 24)",
+   "period": {
+    "first_month": "2001-01",
+    "last_month": "2025-09",
+    "n_months_axis": 297,
+    "t0": [
+     2001,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "0.1 degree, block-averaged to 1 degree",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.05,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "Precipitation only (rain and snow water), not a measure of soil wetness or river flow. Final Run is calibrated to monthly rain-gauge analyses where gauges exist, so skill is best over land with many gauges and weaker over high latitudes, ice and snow, and steep terrain. The record joins the older TRMM-era and the GPM-era satellite constellations, so small steps are possible. Ocean cells are included.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     2,
+     11
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "precip_imerg/global_series.json",
+    "tile_means": "precip_imerg/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
+  }
+ ]
+}

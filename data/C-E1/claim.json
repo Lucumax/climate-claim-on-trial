@@ -1,0 +1,41 @@
+{
+ "claim_id": "C-E1",
+ "claim_text": "Tropospheric nitrogen dioxide over the eastern United States has fallen",
+ "variable": "ColumnAmountNO2TropCloudScreened (OMI/Aura tropospheric NO2 column, cloud-screened)",
+ "variable_plain": "annual mean tropospheric nitrogen dioxide (a gas from burning fuel)",
+ "units": "1e15 molecules/cm2",
+ "direction": "decrease",
+ "season_months": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "period": [
+  2005,
+  2025
+ ],
+ "region_name": "the eastern United States",
+ "region_box": {
+  "lat_min": 35,
+  "lat_max": 45,
+  "lon_min": -90,
+  "lon_max": -70
+ },
+ "product": {
+  "name": "OMNO2d (OMI/Aura NO2 Cloud-Screened Total and Tropospheric Column L3 Global Gridded 0.25 degree x 0.25 degree Ver 5.0, Col 004 (OMNO2d))",
+  "version": "004",
+  "doi": "10.5067/AURA/OMI/DATA3407"
+ },
+ "is_model_data": false,
+ "preregistered": true,
+ "registration_ref": "WP0 addendum 3 (Sat Nov 14 13:15 ET)"
+}

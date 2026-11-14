@@ -1,0 +1,43 @@
+{
+ "claim": "C-E1",
+ "shape_monthly_npz": [
+  252,
+  40,
+  80
+ ],
+ "grid_deg": 0.25,
+ "cells_in_box": 3200,
+ "support_cells": 3200,
+ "support_rule": "cell valid in >= 50% of the 252 months (no land mask: the registered region is the box)",
+ "valid_fraction_all": 0.9880679563492063,
+ "valid_fraction_within_support": 0.9880679563492063,
+ "min_month_valid_fraction_within_support": 0.1784375,
+ "valid_fraction_by_calendar_month_mean": {
+  "1": 0.9396428571428571,
+  "2": 0.9887202380952381,
+  "3": 0.9994791666666667,
+  "4": 0.9997916666666666,
+  "5": 0.9998214285714285,
+  "6": 1.0,
+  "7": 1.0,
+  "8": 1.0,
+  "9": 0.999985119047619,
+  "10": 0.994985119047619,
+  "11": 0.9813392857142857,
+  "12": 0.9530505952380952
+ },
+ "months_all_missing": [],
+ "daily_granules_per_month_min": 19,
+ "daily_granules_per_month_max": 31,
+ "monthly_cell_rule": "mean of the daily cloud-screened 0.25 degree cells over valid days, kept if >= 5 valid days",
+ "row_anomaly": "handled by NASA's own screening inside the Level-3 field (XTrackQualityFlagsModified good, VcdQualityFlags good, SZA <= 85, cloud fraction <= 0.30); no extra step here. Per-day coverage still falls after 2007-2011, which is why the valid-day rule matters.",
+ "lat_range": [
+  35.125,
+  44.875
+ ],
+ "lon_range": [
+  -89.875,
+  -70.125
+ ],
+ "note": "Counts of valid cells only; no trend or yearly summary of NO2 values computed."
+}

@@ -55,3 +55,13 @@ withheld > contradicted > supported > partly supported > not supported by this d
 
 ## Honest limits to print
 Hamed-Rao is less reliable for short series; gaps are skipped (lags counted in valid observations); BH wording per spec 3.5; synthetic calibration does not establish BH validity for all real fields; field significance out of scope; hotspot intervals pointwise.
+
+## JS series-level module (Detective mode): `stats/js/trendtrial.js`
+Dependency-free ES module (`import {...} from "./trendtrial.js"`). It ports only SERIES-level functions of the Python core and is checked against it (`tests/test_js_parity.py`, 240 series + 40 seasonal sets + 12 verdict inputs). Per-cell maps, BH and the bootstrap stay Python-only (case files).
+- `olsTest(t, y)` -> `{n, slope, se, t, df, p, ciLow, ciHigh}` (slope per unit of t; multiply by 10 for per decade).
+- `mannKendall(y, t, {hr: true})` -> `{n, s, tau, varS0, hrFactorRaw, hrFactor, varS, z, p, slope, intercept}`; ties corrected; Hamed-Rao factor floored at 1; gaps (null/NaN) skipped, Sen uses calendar differences.
+- `senInterval(y, t, varS)` -> `[lo, hi]` analytic Gilbert interval (pass the Hamed-Rao `varS`). In Detective mode this is exploratory and not validated for the user's series.
+- `seasonalSeries(rows, {months, y0, y1})` with `rows = [{year, month, value}]` -> `{years, raw, anomaly, nMonths}`; anomaly = mean of (value minus that calendar month's mean over y0..y1) over the same months as `raw`; a season needs at least ceil(2/3 * months) usable months; a month needs 60 percent of years for its climatology.
+- `analyzeSeries(t, y, {units})` -> `{ols, mk, mkIndependent, sen, verdict}` in one call; `detectiveVerdict(p, slope, n, units)` -> `{id, text}` with ids `significant_up | significant_down | not_significant | too_short`.
+- Wording (the challenge author's framing, fixed templates): p < 0.05 is statistically significant; "A p-value above 0.05 does not mean there is no trend or that it is unimportant, and a longer series can help." Significant text says it does not explain why or what comes next. Render `verdict.text` as is.
+- Label every Detective result "your own exploration, not pre-registered"; the Detective verdict is NOT gated by the case-file calibration (no validation has been run for user-chosen series), so always show the persistence caveat from `method_notes`: p-values here are typically too small when a series has year-to-year persistence.

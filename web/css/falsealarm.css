@@ -51,7 +51,7 @@
   .hearings.fa-rail .hearing { border: 0; padding: 8px 6px; min-height: 64px; }
   .hearings.fa-rail .hearing-top { justify-content: center; gap: 4px; font-size: .68rem; }
   .hearings.fa-rail .hearing .status { display: none; }
-  .hearings.fa-rail .hearing h3 { margin: 4px 0 2px; font: 600 .78rem/1.15 var(--font-ui); text-align: center; }
+  .hearings.fa-rail .hearing .hearing-h { margin: 4px 0 2px; font: 600 .78rem/1.15 var(--font-ui); text-align: center; }
   .hearings.fa-rail .hearing .full { display: none; }
   .hearings.fa-rail .hearing .short { display: inline; }
   .hearings.fa-rail .hearing-result { justify-content: center; margin-top: 4px; }

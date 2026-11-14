@@ -52,7 +52,15 @@ export function signed(v, d = 2) {
   return (v > 0 && +a !== 0 ? "+" : v < 0 && +a !== 0 ? MINUS : "") + a;
 }
 export const plain = (v, d = 2) => (v == null || Number.isNaN(v) ? "n/a" : minus(v.toFixed(d)));
-export const unitText = (data) => String(data.units_label || data.units || "");
+export const unitText = (data) => String(data.units_label || data.units || "").replace(/^1 \(unitless\)$/, "AOD (unitless)");
+/** Semantic ends of the colour scale, from what is measured: "cooler / warmer", "drier / wetter", "lower / higher aerosol". */
+export function endpoints(data) {
+  const m = String(data.measure || data.variable_plain || "").toLowerCase();
+  if (/temperature/.test(m)) return { lo: "cooler than baseline", hi: "warmer than baseline" };
+  if (/rain|precip/.test(m)) return { lo: "drier than baseline", hi: "wetter than baseline" };
+  if (/aerosol/.test(m)) return { lo: "lower aerosol than baseline", hi: "higher aerosol than baseline" };
+  return { lo: "below baseline", hi: "above baseline" };
+}
 /** decimals for a regional anomaly of this case */
 export const decimals = (data) => (data.units === "mm/day" ? 2 : 2);
 export const tickDecimals = (data) => {
@@ -113,17 +121,18 @@ export function makeScale(data) {
   return { max, rgb, css, gradient, mid: `rgb(${mid.join(",")})` };
 }
 
-/** Legend element: gradient bar, printed range with units, baseline sentence. */
+/** Legend element, placed directly beneath the picture: gradient bar, printed range, semantic ends, units and baseline. */
 export function legend(data, scale, { caption = true } = {}) {
-  const m = scale.max, d = tickDecimals(data), u = unitText(data);
+  const m = scale.max, d = tickDecimals(data), u = unitText(data), e = endpoints(data);
   const ticks = [-m, -m / 2, 0, m / 2, m];
   const box = el("div", { class: "viz-legend" });
   box.append(
-    el("div", { class: "viz-legend__bar", role: "img", "aria-label": `Colour scale from ${signed(-m, d)} to ${signed(m, d)} ${u} difference from baseline, neutral at zero`, style: `background:${scale.gradient()}` }),
-    el("div", { class: "viz-legend__ticks viz-num", "aria-hidden": "true" }, ticks.map((v) => el("span", { class: v === 0 ? "viz-legend__zero" : "" }, v === 0 ? "0 (baseline)" : signed(v, d)))),
+    el("div", { class: "viz-legend__bar", role: "img", "aria-label": `Colour scale from ${signed(-m, d)} (${e.lo}) to ${signed(m, d)} (${e.hi}) ${u}, neutral at zero`, style: `background:${scale.gradient()}` }),
+    el("div", { class: "viz-legend__ticks viz-num", "aria-hidden": "true" }, ticks.map((v) => el("span", { class: v === 0 ? "viz-legend__zero" : "" }, v === 0 ? "0" : signed(v, d)))),
+    el("div", { class: "viz-legend__ends", "aria-hidden": "true" }, el("span", {}, "← " + e.lo), el("span", {}, e.hi + " →")),
   );
   if (typeof caption === "string") box.append(el("div", { class: "viz-legend__cap" }, caption));
-  else if (caption) box.append(el("div", { class: "viz-legend__cap" }, `Difference from baseline in ${u}. Baseline: ${data.baseline.text}. Values beyond ±${m} ${u} use the end colour.`));
+  else if (caption) box.append(el("div", { class: "viz-legend__cap" }, `${data.measure ? data.measure + ". " : ""}Difference from baseline, in ${u}. Baseline: ${data.baseline.text}. Values beyond ±${m} ${u} use the end colour.`));
   return box;
 }
 
@@ -157,7 +166,7 @@ export function regionalAt(data, yi) { const v = data.regional.anomaly[yi]; retu
 // ------------------------------------------------------------------------------------------------ timeline and controls
 /** Year player. onFrame(tView, tRaw) is called for every change; tView is eased (each year holds a moment) unless ease:false. */
 export function timeline({ n, stepMs = 700, ease = true, start = 0, onFrame, onState, onIndex }) {
-  let t = clamp(start, 0, n - 1), playing = false, last = 0, raf = 0, lastIdx = Math.round(t);
+  let t = clamp(start, 0, n - 1), playing = false, last = 0, raf = 0, lastIdx = Math.round(t), speed = 1;
   const reduce = reducedMotion();
   const view = (x) => {
     if (!ease) return x;
@@ -168,12 +177,12 @@ export function timeline({ n, stepMs = 700, ease = true, start = 0, onFrame, onS
   function frame(now) {
     if (!playing) return;
     const dt = Math.min(300, now - last);   // time-based: a slow frame skips ahead instead of slowing the whole play-through last = now;
-    t = Math.min(n - 1, t + dt / stepMs);
+    t = Math.min(n - 1, t + (dt * speed) / stepMs);
     emit();
     if (t >= n - 1) { playing = false; onState && onState(); } else raf = requestAnimationFrame(frame);
   }
   const api = {
-    get t() { return t; }, get index() { return Math.round(view(t)); }, get playing() { return playing; }, get reduced() { return reduce; },
+    get t() { return t; }, get index() { return Math.round(view(t)); }, get playing() { return playing; }, get reduced() { return reduce; }, get speed() { return speed; }, setSpeed(v) { speed = v > 0 ? v : 1; },
     play() {
       if (reduce) { api.next(); return; }
       if (t >= n - 1 - 1e-6) t = 0;
@@ -192,7 +201,7 @@ let uid = 0;
 export const nextId = (p) => `${p}-${++uid}`;
 
 /** Play button, scrubber and year readout. Returns {node, sync()}; labelFn(i) gives the text for step i. */
-export function controls(tl, { n, labelFn, name = "year", extra = [], wide = false, showYear = true }) {
+export function controls(tl, { n, labelFn, name = "year", extra = [], wide = false, showYear = true, play = true }) {
   const id = nextId("viz-scrub");
   const reduce = tl.reduced;
   const btn = el("button", { type: "button", class: "viz-btn viz-btn--primary", onclick: () => tl.toggle() }, reduce ? "Next " + name : "Play");
@@ -203,7 +212,7 @@ export function controls(tl, { n, labelFn, name = "year", extra = [], wide = fal
     range.value = i; out.textContent = labelFn(i); range.setAttribute("aria-valuetext", labelFn(i));
     if (!reduce) btn.textContent = tl.playing ? "Pause" : "Play";
   };
-  const node = el("div", { class: "viz-controls" }, btn, el("div", { class: "viz-scrub" }, range, showYear ? out : null), ...extra);
+  const node = el("div", { class: "viz-controls" }, play ? btn : null, el("div", { class: "viz-scrub" }, range, showYear ? out : null), ...extra);
   sync();
   return { node, sync, btn, range };
 }

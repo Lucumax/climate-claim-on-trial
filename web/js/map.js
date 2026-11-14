@@ -21,7 +21,7 @@ export function mapSummary(claim, rung) {
 
 export function renderMap(claim, rung, opts = {}) {
   const g = claim.grid, nlon = g.n_lon, nlat = g.n_lat, box = claim.region.box;
-  const view = makeView(box, { width: opts.width || 560, maxHeight: opts.maxHeight || 420 });
+  const view = opts.view || makeView(box, { width: opts.width || 560, maxHeight: opts.maxHeight || 420 });   // the docket passes the frame it shares with the values-over-time map
   const { X, Y } = view, id = opts.id || "map";
   const dlat = Math.abs(g.dlat), dlon = Math.abs(g.dlon);
   const d = { up: "", down: "", nf: "", nd: "" }, marks = { up: "", down: "", nf: "" };
@@ -39,7 +39,7 @@ export function renderMap(claim, rung, opts = {}) {
     s("defs", {}, bm.defs, s("pattern", { id: id + "-hatch", width: 5, height: 5, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, s("line", { class: "hatch-line", x1: 0, y1: 0, x2: 0, y2: 5 }))), bm.under,
     s("g", { "clip-path": `url(#${id}-clip)` }, s("path", { class: "c-nd", d: d.nd }), s("path", { d: d.nd, fill: `url(#${id}-hatch)` }), s("path", { class: "c-nf", d: d.nf }), s("path", { class: "c-down", d: d.down }), s("path", { class: "c-up", d: d.up }),
       s("path", { class: "m-nf", d: marks.nf }), s("path", { class: "m-down", d: marks.down }), s("path", { class: "m-up", d: marks.up })),
-    bm.over, frameLayer(view, { label: claim.region.name }), cursor);
+    bm.over, frameLayer(view, { label: claim.region.name.replace(/^./, c => c.toUpperCase()) }), cursor);
   const summary = mapSummary(claim, rung);
   const readout = h("div", { class: "readout", "aria-live": "polite" }, "Hover or focus the map and use the arrow keys to read a cell.");
   let cur = null;

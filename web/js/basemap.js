@@ -50,7 +50,11 @@ function pathFrom(rings, view, wrapWorld) {
     if (!wrapWorld && (e < box.w - pad || w > box.e + pad || n < box.s - pad || so > box.n + pad)) continue;
     let pts = r.pts;
     if (wrapWorld) { const u = [pts[0]]; for (let i = 1; i < pts.length; i++) { let dl = pts[i][0] - pts[i - 1][0]; if (dl > 180) dl -= 360; else if (dl < -180) dl += 360; u.push([u[i - 1][0] + dl, pts[i][1]]); } pts = u; }
-    for (const off of wrapWorld ? [-360, 0, 360] : [0]) d += "M" + pts.map(q => X(q[0] + off).toFixed(1) + " " + Y(q[1]).toFixed(1)).join("L") + "Z";
+    if (wrapWorld) { for (const off of [-360, 0, 360]) d += "M" + pts.map(q => X(q[0] + off).toFixed(1) + " " + Y(q[1]).toFixed(1)).join("L") + "Z"; continue; }
+    // A ring that crosses the antimeridian (Russia, Fiji) jumps by about 360 degrees between two points: break the line there instead of drawing a stripe across the map.
+    let seg = "", broke = false;
+    for (let i = 0; i < pts.length; i++) { const jump = i > 0 && Math.abs(pts[i][0] - pts[i - 1][0]) > 180; if (jump) broke = true; seg += (i === 0 || jump ? "M" : "L") + X(pts[i][0]).toFixed(1) + " " + Y(pts[i][1]).toFixed(1); }
+    d += seg + (broke ? "" : "Z");
   }
   return d;
 }

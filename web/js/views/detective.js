@@ -6,11 +6,12 @@ import { fetchMonthly, validateBox, planBox } from "../live.js";
 import { analyzeRows, stepInfo, detectiveVerdict, STATS_VERSION } from "../stats.js";
 import { trendChart } from "../chart.js";
 import { disc, copyButton } from "./common.js";
+import { monthlyData } from "../viz/monthly.js";
 import { groupVariables } from "./pages.js";
 import { pWords, trendWords, stepWords, sigClass, sigLabel, ALPHA, fixVerdict, PERSISTENCE_CAVEAT, INTERVAL_EXPLORATORY } from "../words.js";
 
 const LAST_YEAR = 2025, DEMO_TIMEOUT_MS = 25000;
-const state = { varKey: "t2m", presetKey: "wisconsin", box: null, y0: 1981, y1: 2025, season: "all", view: "values", step: 1, visited: new Set([1]), status: "idle", err: "", result: null, last: null };
+const state = { varKey: "t2m", presetKey: "wisconsin", box: null, y0: 1981, y1: 2025, season: "all", view: "values", chart: "yearly", step: 1, visited: new Set([1]), status: "idle", err: "", result: null, last: null };
 
 const STEPS = [
   { n: 1, name: "Choose the evidence", short: "Evidence", why: "Pick the NASA Earth measurement to investigate.", cta: "Continue: choose a place" },
@@ -227,7 +228,11 @@ export function detective(cat, bundle, query = "") {
   const next = n => h("button", { class: "btn", type: "button", onclick: () => demo ? goDemo(n === 5 ? 6 : n) : goStep(n) }, STEPS[n - 2].cta);
   const stat = (k, val, sub) => h("div", { class: "stat" }, h("div", { class: "k" }, k), h("div", { class: "v num" }, val), h("div", { class: "s" }, sub));
 
+  // "Monthly cycle" (the spiral) is a second view of the Step 4 record, offered only for a complete twelve-month record; it is mounted and disposed with the panel.
+  let spiralH = null, spiralToken = 0;
+  function killSpiral() { spiralToken++; if (spiralH) { try { spiralH.destroy(); } catch (e) { /* ignore */ } spiralH = null; } }
   function drawPanel() {
+    killSpiral();
     const n = state.step, L = state.last;
     if (n === 1) { drawDef(); panel.replaceChildren(taskHead(1), pickerNode(), bar(next(2))); }
     else if (n === 2) panel.replaceChildren(taskHead(2),
@@ -281,12 +286,17 @@ export function detective(cat, bundle, query = "") {
       describe: `${R.v.name}, ${boxStr(R.box)}, ${season.name}, one value per year, ${R.y0} to ${R.y1}. Sen trend ${signed(A.sen.slopePerDecade, 3)} ${u} per decade.`,
       keyItems: [["k-pt", "Season average for one year"], ["k-sen", "Sen trend (robust line)"], ["k-ols", "Least squares line"]],
     });
+    const cyc = season.key === "all" ? monthlyData(R.data.rows, { y0: R.y0, y1: R.y1, name: R.v.name, units: R.v.units, unitsLabel: u, place: boxStr(R.box), source: R.v.source }) : null;
+    const cycle = !!cyc && state.chart === "cycle";
+    const chartSeg = !cyc ? null : h("div", { class: "seg", role: "radiogroup", "aria-label": "Chart shown", style: "margin-bottom:12px" }, [["yearly", "Yearly record"], ["cycle", "Monthly cycle"]].map(([k, l]) =>
+      h("label", {}, h("input", { type: "radio", name: "chartview", value: k, checked: (state.chart === "cycle") === (k === "cycle"), onchange: () => { state.chart = k; drawPanel(); document.getElementById("cv-" + k)?.focus(); } }), h("span", { id: "cv-" + k }, l))));
+    const cycHost = h("div", { class: "cycle-host" });
     const toggle = season.key === "all" ? null
       : h("div", { class: "seg", role: "radiogroup", "aria-label": "Series shown", style: "margin-bottom:12px" }, [["values", "Season mean per year"], ["anom", "Seasonal cycle removed"]].map(([k, l]) =>
         h("label", {}, h("input", { type: "radio", name: "view", value: k, checked: (state.view === "anom") === (k === "anom"), onchange: () => { state.view = k; drawPanel(); document.getElementById("view-" + k)?.focus(); } }), h("span", { id: "view-" + k }, l))));
     panel.replaceChildren(taskHead(4), withRuling([
-      cachedBadge(R), h("p", { class: "chart-sub" }, `${W.n} years with a value, ${R.y0}–${R.y1}, ${season.name}. ${R.data.note}`), toggle, h("div", { id: "det-chart" }, chart.node),
-      h("p", { class: "slope-label" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade; ${INTERVAL_EXPLORATORY} ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)}`),
+      cachedBadge(R), h("p", { class: "chart-sub" }, `${W.n} years with a value, ${R.y0}–${R.y1}, ${season.name}. ${R.data.note}`), chartSeg, cycle ? null : toggle, cycle ? h("div", { id: "det-chart" }, h("p", { class: "muted small", style: "margin:0 0 8px" }, `Each loop is one year; each point is one month, measured from the average of the same calendar month over ${R.y0}–${R.y1}. A descriptive view of the same data: the trend test below uses the yearly record.`), cycHost) : h("div", { id: "det-chart" }, chart.node),
+      cycle ? null : h("p", { class: "slope-label" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade; ${INTERVAL_EXPLORATORY} ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)}`),
       h("div", { id: "det-test", style: "margin-top:24px" }, h("h3", {}, "Is the trend significant?"),
         h("div", { class: "statgrid" },
           stat("Mann-Kendall test", `p ${fmtP(R_.mkIndependent.p)}`, `${sigLabel(R_.mkIndependent.p)}. Sen slope ${signed(R_.sen.slopePerDecade, 2)} ${u} per decade, 95% range ${signed(R_.sen.intervalPerDecade[0], 2)} to ${signed(R_.sen.intervalPerDecade[1], 2)}`),
@@ -295,6 +305,7 @@ export function detective(cat, bundle, query = "") {
         h("p", { class: "muted small" }, "Mann-Kendall asks whether later values tend to be higher or lower than earlier ones, with no straight-line assumption. The t-test is the version most people learn first. They can differ a little. That is normal."),
         h("p", { class: "muted small", style: "margin:0" }, `Statistics: trendtrial ${STATS_VERSION}, checked against the Python reference.`))], L),
       bar(back(3), next(5), csvBtn(W, R), linkBtn(R)));
+    if (cycle) { const my = ++spiralToken; import("../viz/cycle.js").then(m => m.renderCycle(cycHost, cyc, {})).then(hnd => { if (my !== spiralToken) { hnd && hnd.destroy(); return; } spiralH = hnd; }).catch(e => { console.error(e); cycHost.append(h("p", { class: "muted small" }, "The monthly cycle could not be drawn. The yearly record is unaffected.")); }); }
   }
 
   function drawTrial() {
@@ -398,5 +409,5 @@ export function detective(cat, bundle, query = "") {
   if (state.step >= 4 && !state.last) state.step = 3;
   drawPanel(); refresh();
   if (replayOk) goStep(4, true);
-  return { node: root, title: "Investigate a question" };
+  return { node: root, title: "Investigate a question", dispose: killSpiral };
 }

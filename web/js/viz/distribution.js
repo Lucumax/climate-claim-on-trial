@@ -1,9 +1,11 @@
-// Shifting distribution (idea: NASA SVS 5613 "shifting distribution", redrawn as quiet ridgelines).
-// One ridge per period (5 years, or 10 years for records longer than 30 years): the density of every cell-year anomaly in that period.
-// The first period is the reference and is outlined. One annotation reports how far the mean moved and how the spread changed.
+// Distribution view: one foreground curve that moves from period to period over the first period's outline.
+// Population: every grid cell in every year of the period, each cell against its own baseline ("pooled cell-year anomalies, unweighted").
+// Axes never change: the zero line, the horizontal range and the density scale are fixed for all periods, so a curve that moves, widens or narrows
+// does so on its own densities. Nothing here promises that a distribution shifts or broadens; the text line reports what the numbers do.
 // Question it answers: is the WHOLE distribution moving, not just the average?
-// render(container, data, options) -> {destroy, play, pause, seek, el, timeline}. Options: year (start index = group), onYear(i), groupSize.
-import { el, sv, tok, onTheme, makeScale, timeline, controls, sizeObserver, clamp, signed, plain, unitText, dataTable, nextId, prepare, reducedMotion, tickDecimals } from "./common.js";
+// Idea: NASA SVS 5613 (shifting distribution). render(container, data, options) -> {destroy, play, pause, seek, el, timeline}.
+// Options: year (start index = period), onYear(i), groupSize.
+import { el, sv, tok, onTheme, makeScale, timeline, controls, stageKeys, sizeObserver, clamp, signed, plain, unitText, dataTable, nextId, prepare, reducedMotion } from "./common.js";
 
 function groupsOf(years, size) {
   const g = [];
@@ -11,137 +13,141 @@ function groupsOf(years, size) {
   if (g.length > 1 && g[g.length - 1].length < 3) { const last = g.pop(); g[g.length - 1] = g[g.length - 1].concat(last); }   // avoid a tiny final group
   return g;
 }
-const labelOf = (years, ix) => { const a = years[ix[0]], b = years[ix[ix.length - 1]]; return a === b ? String(a) : `${a}–${String(b).slice(String(a).length === 4 && String(b).slice(0, 2) === String(a).slice(0, 2) ? 2 : 0)}`; };
+const NICE = (() => { const a = []; for (const k of [0.01, 0.1, 1, 10]) for (const m of [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8]) a.push(m * k); return a; })();
+const nice = (v) => NICE.find((x) => x >= v) || Math.ceil(v);
+const num = (n) => n.toLocaleString("en-US");
 
 export async function render(container, data, options = {}) {
   const P = prepare(data), U = unitText(data), years = data.years;
   const size = options.groupSize || (years.length > 30 ? 10 : 5), groups = groupsOf(years, size), nG = groups.length;
-  const xm = data.scale.max, BINS = 360;
-  // ---- densities: histogram on a fixed grid, smoothed with one shared Gaussian (Silverman bandwidth of the pooled sample)
+  const perUnit = /unitless/.test(U) ? "per unit of AOD" : `per ${U}`;
+  const BINS = 300;
   const pooled = []; for (let i = 0; i < P.A.length; i++) if (!Number.isNaN(P.A[i])) pooled.push(P.A[i]);
   const mu = (a) => a.reduce((s, v) => s + v, 0) / a.length, sd = (a, m) => Math.sqrt(a.reduce((s, v) => s + (v - m) * (v - m), 0) / (a.length - 1));
-  const sorted = Float64Array.from(pooled).sort(), q = (p) => sorted[Math.floor(p * (sorted.length - 1))];
-  const hBw = Math.max(0.22 * sd(pooled, mu(pooled)), (2 * xm) / BINS * 2);   // gentle shared smoothing: the cells in a year move together, so fine detail is not evidence
+  const sorted = Float64Array.from(pooled).sort(), q = (p) => sorted[Math.min(sorted.length - 1, Math.max(0, Math.floor(p * (sorted.length - 1))))];
+  // fixed horizontal range: symmetric about zero, wide enough for 99.8% of all cell-years; the rest is disclosed, not hidden
+  const D = nice(Math.max(Math.abs(q(0.001)), Math.abs(q(0.999)), 0.05));
+  const outside = pooled.filter((v) => Math.abs(v) > D).length;
+  const dec = D >= 2 ? 1 : D >= 0.5 ? 2 : 2;
+  const binW = (2 * D) / BINS, bw = Math.max(0.22 * sd(pooled, mu(pooled)), binW * 2);   // one shared bandwidth: cells in a year move together, so fine detail is not evidence
   const stats = groups.map((ix) => {
     const s = []; for (const y of ix) for (let c = 0; c < P.nC; c++) { const v = P.A[y * P.nC + c]; if (!Number.isNaN(v)) s.push(v); }
     const m = mu(s), so = Float64Array.from(s).sort(), pq = (p) => so[Math.floor(p * (so.length - 1))];
-    const hist = new Float64Array(BINS); for (const v of s) { const b = Math.floor(((v + xm) / (2 * xm)) * BINS); if (b >= 0 && b < BINS) hist[b]++; }
-    const sig = hBw / ((2 * xm) / BINS), kr = Math.ceil(sig * 4), ker = []; for (let k = -kr; k <= kr; k++) ker.push(Math.exp(-0.5 * (k / sig) ** 2));
+    const hist = new Float64Array(BINS); for (const v of s) { const b = Math.floor(((v + D) / (2 * D)) * BINS); if (b >= 0 && b < BINS) hist[b]++; }
+    const sig = bw / binW, kr = Math.ceil(sig * 4), ker = []; for (let k = -kr; k <= kr; k++) ker.push(Math.exp(-0.5 * (k / sig) ** 2));
     const ks = ker.reduce((a, b) => a + b, 0), dens = new Float64Array(BINS);
-    for (let i = 0; i < BINS; i++) { let a = 0; for (let k = -kr; k <= kr; k++) { const j = i + k; if (j >= 0 && j < BINS) a += hist[j] * ker[k + kr]; } dens[i] = a / ks / (s.length * ((2 * xm) / BINS)); }
-    return { label: labelOf(years, ix), n: s.length, mean: m, sd: sd(s, m), p10: pq(0.1), p90: pq(0.9), dens };
+    for (let i = 0; i < BINS; i++) { let a = 0; for (let k = -kr; k <= kr; k++) { const j = i + k; if (j >= 0 && j < BINS) a += hist[j] * ker[k + kr]; } dens[i] = a / ks / (s.length * binW); }
+    const y0 = years[ix[0]], y1 = years[ix[ix.length - 1]];
+    return { label: y0 === y1 ? String(y0) : `${y0}–${y1}`, nYears: ix.length, partial: ix.length < size, n: s.length, mean: m, sd: sd(s, m), p10: pq(0.1), p90: pq(0.9), dens };
   });
-  const dmax = Math.max(...stats.map((s) => Math.max(...s.dens)));
-  const first = stats[0], lastG = stats[nG - 1];
+  const dmax = Math.max(...stats.map((s) => Math.max(...s.dens))) * 1.08;     // one density scale for every period
+  const first = stats[0], periodText = (s) => `${s.label}${s.partial ? ` (partial: ${s.nYears} of ${size} years)` : ""}`;
 
-  let scale = makeScale(data), destroyed = false, S = 0, G = null, cur = options.year != null ? options.year : nG - 1, ridgeEls = [], annot = null, tickEls = [];
+  if (options.tableOnly) {            // the docket's Statistics section owns the numbers: same stats, no chart
+    const rowsT = stats.map((s) => [s.label + (s.partial ? " (partial)" : ""), String(s.nYears), num(s.n), signed(s.mean, 2), plain(s.sd, 2), signed(s.p10, 2), signed(s.p90, 2)]);
+    const node = dataTable(["Period", "Years", "Cell-years", `Mean (${U})`, `Spread, SD (${U})`, "10th percentile", "90th percentile"], rowsT, "Distribution summary by period; pooled cell-year anomalies, unweighted");
+    return { el: node, destroy() { node.remove(); } };
+  }
+  let scale = makeScale(data), destroyed = false, S = 0, G = null, cur = clamp(options.year != null ? options.year : nG - 1, 0, nG - 1), fT = cur;
   const summaryId = nextId("viz-sum");
   const svg = sv("svg", { role: "img", "aria-labelledby": summaryId, focusable: "false", style: "display:block;max-width:100%" });
   const stage = el("div", { class: "viz-stage", tabindex: "0", role: "group", "aria-label": `Shifting distribution for ${data.region_name}. Arrow keys change the period, space plays or pauses.` }, svg);
-  const readout = el("p", { class: "viz-readout viz-num" }, "Point at a ridge to read its period.");
+  const line = el("p", { class: "viz-dist__line", "aria-hidden": "true" });
   const summary = el("p", { class: "viz-summary", id: summaryId, "aria-live": "polite" });
-  const tl = timeline({ n: nG, stepMs: 1100, ease: false, start: cur, onFrame: (tv) => { cur = Math.round(tv); apply(); }, onState });
-  const ctl = controls(tl, { n: nG, labelFn: (i) => stats[i].label, name: "period", wide: true });
-  const rows = stats.map((s) => [s.label, signed(s.mean, 2), plain(s.sd, 2), signed(s.p10, 2), signed(s.p90, 2), s.n.toLocaleString("en-US")]);
-  const details = el("details", { class: "viz-details" }, el("summary", {}, "Summary numbers by period (table)"), dataTable(["Period", `Mean (${U})`, `Spread, SD (${U})`, "10th percentile", "90th percentile", "Cell-years"], rows, "Distribution summary by period"));
-  const note = el("p", { class: "viz-note" }, `Each ridge pools every cell-year anomaly in the period (${first.n.toLocaleString("en-US")} to ${Math.max(...stats.map((s) => s.n)).toLocaleString("en-US")} values), against each cell's own ${data.baseline.years[0]}–${data.baseline.years[1]} average, so the reference period is not centred on zero by construction. Densities are drawn between ±${(xm).toFixed(1)} ${U}. ${data.product_label}.`);
-  const root = el("figure", { class: "viz viz-distribution" }, stage, ctl.node, readout, summary, details, note);
+  const tl = timeline({ n: nG, stepMs: 1100, ease: true, start: cur, onFrame: (tv) => { fT = tv; apply(); }, onState, onIndex: (i) => { cur = i; sayLine(); } });
+  const ctl = controls(tl, { n: nG, labelFn: (i) => stats[i].label + (stats[i].partial ? " (partial)" : ""), name: "period", wide: true, play: false });
+  const rows = stats.map((s) => [s.label + (s.partial ? " (partial)" : ""), String(s.nYears), num(s.n), signed(s.mean, 2), plain(s.sd, 2), signed(s.p10, 2), signed(s.p90, 2)]);
+  const details = options.table === false ? null : el("details", { class: "viz-details" }, el("summary", {}, "Summary numbers by period (table)"),
+    dataTable(["Period", "Years", "Cell-years", `Mean (${U})`, `Spread, SD (${U})`, "10th percentile", "90th percentile"], rows, "Distribution summary by period; pooled cell-year anomalies, unweighted"));
+  const note = el("p", { class: "viz-note" }, `Population: pooled cell-year anomalies, unweighted. Every grid cell counts once for every year, each against its own ${data.baseline.years[0]}–${data.baseline.years[1]} baseline, so a period's mean here differs from the area-weighted regional record. Neighbouring cells and the years in a period are correlated, so the curves describe the data and are not independent observations; no test is run on them. ${outside ? `The horizontal range is ±${D} ${U}; ${num(outside)} of ${num(pooled.length)} values (${(100 * outside / pooled.length).toFixed(2)}%) lie beyond it and are not drawn.` : `The horizontal range is ±${D} ${U} and holds every value.`} Curves use one shared smoothing width of ${bw.toFixed(2)} ${U}. ${data.product_label}.`);
+  const root = el("figure", { class: "viz viz-distribution" }, line, stage, ctl.node, summary, details, note);
   container.append(root);
 
-  // ---------------------------------------------------------------- drawing
-  function draw() {
-    S = clamp(Math.round(stage.clientWidth || 640), 300, 1100);
-    const narrow = S < 520, ML = narrow ? 70 : 104, MR = narrow ? 24 : 28, MT = narrow ? 64 : 58, MB = 54;
-    const rowH = narrow ? 56 : 66, peak = rowH * 1.55, H = MT + (nG - 1) * rowH + peak + MB, pw = S - ML - MR;
-    const X = (v) => ML + ((v + xm) / (2 * xm)) * pw, base = (g) => MT + peak + g * rowH;
-    G = { ML, MT, pw, rowH, peak, X, base, H, narrow };
-    svg.replaceChildren(); svg.setAttribute("width", S); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${S} ${H}`);
-    const ink = tok("ink", "#192D40"), grid = tok("viz-grid", "#B8B3A4"), ghost = tok("viz-ghost", "#9AA3A8"), surface = tok("surface", "#FFFDF7"), ringC = tok("viz-ring", "#192D40");
-    const halo = { "paint-order": "stroke", stroke: surface, "stroke-width": 4, "stroke-linejoin": "round" };
-    const dec = tickDecimals(data), tickStep = data.scale.max / 2;
-    // vertical grid + axis
-    const axisY = base(nG - 1) + 14;
-    for (let v = -2 * tickStep; v <= 2 * tickStep + 1e-9; v += tickStep) {
-      svg.append(sv("line", { x1: X(v), x2: X(v), y1: MT - 6, y2: axisY, stroke: grid, "stroke-width": v === 0 ? 0 : 1, opacity: 0.6 }));
-      svg.append(sv("text", { x: X(v), y: axisY + 18, "text-anchor": "middle", "font-size": 12, class: "t-muted num" }, v === 0 ? "0" : signed(v, dec)));
-    }
-    svg.append(sv("line", { x1: X(0), x2: X(0), y1: MT - 10, y2: axisY, stroke: ringC, "stroke-width": 1.5, opacity: 0.7 }));
-    svg.append(sv("text", { x: ML + pw / 2, y: axisY + 38, "text-anchor": "middle", "font-size": 12, class: "t-muted" }, narrow ? `Difference from baseline (${U})` : `Difference from baseline, ${U} (0 = each cell's own average)`));
-    // ridges
-    ridgeEls = []; tickEls = [];
-    const fillFor = (g) => {
-      if (g === nG - 1) { const sh = lastG.mean - first.mean; return Math.abs(sh) > 0.04 * data.scale.max ? scale.css(Math.sign(sh) * data.scale.max * 0.55) : ghost; }
-      return ghost;
-    };
-    for (let g = 0; g < nG; g++) {
-      const s = stats[g], y0 = base(g), pts = [];
-      for (let i = 0; i < BINS; i++) pts.push([X(-xm + ((i + 0.5) / BINS) * 2 * xm), y0 - (s.dens[i] / dmax) * peak]);
-      const line = "M" + pts.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join("L");
-      const grp = sv("g", { class: "viz-ridge", "data-g": g });
-      grp.append(sv("path", { d: `${line}L${pts[BINS - 1][0].toFixed(1)} ${y0}L${pts[0][0].toFixed(1)} ${y0}Z`, fill: fillFor(g), "fill-opacity": g === nG - 1 ? 0.62 : 0.28 + 0.1 * (g / Math.max(1, nG - 1)), stroke: "none" }));
-      grp.append(sv("path", { d: line, fill: "none", stroke: ink, "stroke-width": g === 0 ? 2 : 1.1, "stroke-opacity": g === 0 ? 0.95 : 0.55, "stroke-dasharray": g === 0 ? "none" : "none", "stroke-linejoin": "round" }));
-      grp.append(sv("line", { x1: ML, x2: ML + pw, y1: y0, y2: y0, stroke: grid, "stroke-width": 1, opacity: 0.5 }));
-      // mean tick
-      grp.append(sv("path", { d: `M${X(s.mean).toFixed(1)} ${y0 + 1}l-4 7h8z`, fill: ink, opacity: 0.85 }));
-      // label
-      grp.append(sv("text", { x: ML - 10, y: y0 - 4, "text-anchor": "end", "font-size": narrow ? 12 : 13, class: "num", "font-weight": g === 0 ? 700 : 400 }, s.label), g === 0 ? sv("text", { x: ML - 10, y: y0 + 11, "text-anchor": "end", "font-size": 11, class: "t-muted" }, "reference") : null);
-      svg.append(grp); ridgeEls.push(grp);
-    }
-    // annotation group (bracket between the reference mean and the current mean)
-    annot = sv("g", { class: "viz-ridge", "aria-hidden": "true" });
-    svg.append(annot);
-    void halo; apply();
+  // One large, plain message: how far the mean moved and what the spread did, against the reference period. Smaller line: period, years, counts.
+  function sayLine() {
+    const s = stats[cur]; line.innerHTML = "";
+    if (cur === 0) { line.append(el("span", { class: "viz-dist__big" }, `${first.label} is the reference: mean ${signed(s.mean, 2)} ${U}, spread ${plain(s.sd, 2)} ${U}.`), el("span", { class: "viz-dist__sub" }, `${periodText(s)} · ${num(s.nYears)} years · ${num(s.n)} cell-years. Press the slider or arrow keys to compare later periods.`)); return; }
+    const shift = s.mean - first.mean, r = s.sd / first.sd;
+    const moved = Math.abs(shift) < 0.05 * first.sd ? "The average barely moved" : `The average moved ${signed(shift, 2)} ${U}`;
+    const spread = r > 1.05 ? "the spread widened" : r < 0.95 ? "the spread narrowed" : "the spread stayed about the same";
+    line.append(el("span", { class: "viz-dist__big" }, `${moved}, and ${spread} (${plain(first.sd, 2)} → ${plain(s.sd, 2)} ${U}).`), el("span", { class: "viz-dist__sub" }, `${periodText(s)} compared with the reference ${first.label} · ${num(s.n)} cell-years.`));
   }
 
-  function annotate() {
-    annot.replaceChildren();
-    if (cur === 0) { annot.setAttribute("data-hidden", "true"); return; }
-    annot.setAttribute("data-hidden", "false");
-    const s = stats[cur], ink = tok("ink", "#192D40"), surface = tok("surface", "#FFFDF7");
-    const x1 = G.X(first.mean), x2 = G.X(s.mean), y = G.MT - 20, shift = s.mean - first.mean;
-    annot.append(sv("path", { d: `M${x1} ${y + 8}V${y}H${x2}V${y + 8}`, fill: "none", stroke: ink, "stroke-width": 1.5 }));
-    const left = Math.min(x1, x2), mid = (x1 + x2) / 2, anchorEnd = mid > G.ML + G.pw * 0.62;
-    const tx = G.narrow ? G.ML : clamp(anchorEnd ? Math.max(x1, x2) : left, G.ML, G.ML + G.pw);
-    const t1 = sv("text", { x: tx, y: y - 22, "text-anchor": anchorEnd && !G.narrow ? "end" : "start", "font-size": G.narrow ? 12 : 14, class: "num", "paint-order": "stroke", stroke: surface, "stroke-width": 4 }, `Mean ${signed(shift, 2)} ${U} since ${first.label.split("–")[0]}`);
-    const t2 = sv("text", { x: tx, y: y - 7, "text-anchor": anchorEnd && !G.narrow ? "end" : "start", "font-size": 12, class: "t-muted num", "paint-order": "stroke", stroke: surface, "stroke-width": 4 }, `Spread (SD) ${plain(first.sd, 2)} → ${plain(s.sd, 2)} ${U}`);
-    annot.append(t1, t2);
+  // ---------------------------------------------------------------- drawing
+  let fgFill = null, fgLine = null, fgMean = null, fgLab = null, outlines = [];
+  function draw() {
+    S = clamp(Math.round(stage.clientWidth || 640), 300, 1100);
+    const narrow = S < 520, ML = narrow ? 56 : 64, MR = 16, MT = 28, MB = 62, H = narrow ? 300 : 360, pw = S - ML - MR, ph = H - MT - MB;
+    const X = (v) => ML + ((v + D) / (2 * D)) * pw, Y = (d) => MT + ph - (d / dmax) * ph;
+    G = { ML, MT, pw, ph, X, Y, H, narrow };
+    svg.replaceChildren(); svg.setAttribute("width", S); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${S} ${H}`);
+    const grid = tok("viz-grid", "#B8B3A4"), ringC = tok("viz-ring", "#192D40"), ghost = tok("viz-ghost", "#7C878D"), ink = tok("ink", "#192D40"), surface = tok("surface", "#FFFDF7");
+    const stepX = D <= 1 ? 0.25 : D <= 2 ? 0.5 : D <= 5 ? 1 : 2;
+    for (let v = -Math.floor(D / stepX) * stepX; v <= D + 1e-9; v += stepX) {
+      if (Math.abs(v) < 1e-9) continue;
+      svg.append(sv("line", { x1: X(v), x2: X(v), y1: MT, y2: MT + ph, stroke: grid, "stroke-width": 1, opacity: 0.45 }));
+      svg.append(sv("text", { x: X(v), y: MT + ph + 20, "text-anchor": "middle", "font-size": 14, class: "t-muted num" }, signed(v, dec > 1 ? 2 : 1).replace(/\.00$/, "").replace(/(\.\d)0$/, "$1")));
+    }
+    // density axis (same scale in every period)
+    const yStep = [0.05, 0.1, 0.2, 0.25, 0.5, 1, 2, 5].find((s) => dmax / s <= 5) || 5;
+    for (let d = 0; d <= dmax * 0.97; d += yStep) {
+      svg.append(sv("line", { x1: ML, x2: ML + pw, y1: Y(d), y2: Y(d), stroke: grid, "stroke-width": 1, opacity: d === 0 ? 0.9 : 0.35 }));
+      svg.append(sv("text", { x: ML - 8, y: Y(d) + 5, "text-anchor": "end", "font-size": 14, class: "t-muted num" }, String(+d.toFixed(2))));
+    }
+    svg.append(sv("text", { x: 14, y: MT + ph / 2, "text-anchor": "middle", transform: `rotate(-90 14 ${MT + ph / 2})`, "font-size": 14, class: "t-muted" }, narrow ? "Share of cell-years" : `Share of cell-years, ${perUnit}`));
+    svg.append(sv("text", { x: ML + pw / 2, y: H - 10, "text-anchor": "middle", "font-size": 14, class: "t-muted" }, `Difference from each cell's own baseline (${U})`));
+    // fixed zero line
+    svg.append(sv("line", { x1: X(0), x2: X(0), y1: MT - 6, y2: MT + ph, stroke: ringC, "stroke-width": 1.8, opacity: 0.8 }));
+    svg.append(sv("text", { x: X(0), y: MT + ph + 20, "text-anchor": "middle", "font-size": 14, class: "num", "font-weight": 700 }, "0"));
+    svg.append(sv("text", { x: X(0) + 6, y: MT - 10, "font-size": 14, class: "t-muted", "paint-order": "stroke", stroke: surface, "stroke-width": 4 }, "baseline"));
+    // faint outlines of the periods passed, reference outline, then the moving foreground curve
+    const path = (d) => { let p = ""; for (let i = 0; i < BINS; i++) p += (i ? "L" : "M") + X(-D + (i + 0.5) * binW).toFixed(1) + " " + Y(d[i]).toFixed(1); return p; };
+    outlines = [];
+    for (let g = 1; g < nG; g++) { const o = sv("path", { d: path(stats[g].dens), fill: "none", stroke: ghost, "stroke-width": 1, opacity: 0.4, "stroke-linejoin": "round", visibility: "hidden" }); svg.append(o); outlines.push(o); }
+    svg.append(sv("path", { d: path(first.dens), fill: "none", stroke: ink, "stroke-width": 2, "stroke-dasharray": "7 4", opacity: 0.9, "stroke-linejoin": "round" }));
+    fgFill = sv("path", { fill: "currentColor", "fill-opacity": 0.5, stroke: "none" }); fgLine = sv("path", { fill: "none", stroke: ink, "stroke-width": 2.4, "stroke-linejoin": "round" });
+    fgMean = sv("path", { fill: ink }); fgLab = sv("text", { "font-size": 14, class: "num", "text-anchor": "middle", "paint-order": "stroke", stroke: surface, "stroke-width": 4 });
+    svg.append(fgFill, fgLine, fgMean, fgLab);
+    svg.append(sv("path", { d: `M${X(first.mean).toFixed(1)} ${MT + ph}l-5 9h10z`, fill: "none", stroke: ink, "stroke-width": 1.4 }));
+    const refLab = sv("text", { "font-size": 14, class: "t-muted", "paint-order": "stroke", stroke: surface, "stroke-width": 4 }, "dashed: reference period " + first.label);
+    refLab.setAttribute("x", narrow ? ML + 8 : ML + 12); refLab.setAttribute("y", MT + 16); svg.append(refLab);
+    apply();
   }
 
   function apply() {
     if (!G) return;
-    ridgeEls.forEach((e, g) => {
-      e.setAttribute("data-hidden", g > cur ? "true" : "false");
-      e.style.opacity = g > cur ? "" : (g === cur || g === 0 ? "1" : "0.72");
-    });
-    annotate();
+    const t = clamp(fT, 0, nG - 1), i0 = Math.floor(t), i1 = Math.min(nG - 1, i0 + 1), f = t - i0, a = stats[i0], b = stats[i1];
+    const d = new Float64Array(BINS); for (let k = 0; k < BINS; k++) d[k] = a.dens[k] * (1 - f) + b.dens[k] * f;
+    let p = ""; for (let k = 0; k < BINS; k++) p += (k ? "L" : "M") + G.X(-D + (k + 0.5) * binW).toFixed(1) + " " + G.Y(d[k]).toFixed(1);
+    const y0 = G.Y(0);
+    fgLine.setAttribute("d", p);
+    fgFill.setAttribute("d", `${p}L${G.X(D).toFixed(1)} ${y0}L${G.X(-D).toFixed(1)} ${y0}Z`);
+    const m = a.mean * (1 - f) + b.mean * f;
+    fgFill.style.color = scale.css(m, 0.1); fgFill.setAttribute("fill", scale.css(m, 0.1));
+    const mx = G.X(m); fgMean.setAttribute("d", `M${mx.toFixed(1)} ${y0 + 1}l-6 10h12z`);
+    fgLab.textContent = `mean ${signed(m, 2)}`; fgLab.setAttribute("x", clamp(mx, G.ML + 44, G.ML + G.pw - 44)); fgLab.setAttribute("y", y0 + 32);
+    outlines.forEach((o, k) => o.setAttribute("visibility", k + 1 < Math.round(t) ? "visible" : "hidden"));   // periods already passed stay as faint outlines
     ctl.sync();
   }
 
   function onState() {
     ctl.sync();
-    const s = stats[cur], shift = s.mean - first.mean;
-    summary.textContent = `Distribution of ${data.measure.toLowerCase()} anomalies over ${data.region_name}, by ${size}-year period, ${years[0]}–${years[years.length - 1]}. ${cur === 0 ? `${s.label} is the reference period: mean ${signed(s.mean, 2)} ${U}, spread (standard deviation) ${plain(s.sd, 2)} ${U}.` : `${s.label}: mean ${signed(s.mean, 2)} ${U}, ${signed(shift, 2)} ${U} from ${first.label}; spread ${plain(s.sd, 2)} ${U} against ${plain(first.sd, 2)} ${U}; 10th to 90th percentile ${signed(s.p10, 2)} to ${signed(s.p90, 2)} ${U}.`} Each value is one cell in one year, against that cell's own baseline.`;
+    const s = stats[tl.index], shift = s.mean - first.mean;
+    summary.textContent = `Distribution of ${data.measure.toLowerCase()} anomalies over ${data.region_name}, by ${size}-year period, ${years[0]}–${years[years.length - 1]}; pooled cell-year anomalies, unweighted. ${tl.index === 0 ? `${periodText(s)} is the reference period: mean ${signed(s.mean, 2)} ${U}, spread (standard deviation) ${plain(s.sd, 2)} ${U}.` : `${periodText(s)}: mean ${signed(s.mean, 2)} ${U}, ${signed(shift, 2)} ${U} from ${first.label}; spread ${plain(s.sd, 2)} ${U} against ${plain(first.sd, 2)} ${U}; 10th to 90th percentile ${signed(s.p10, 2)} to ${signed(s.p90, 2)} ${U}.`}`;
+    cur = tl.index; sayLine();
     options.onYear && options.onYear(cur);
   }
 
-  function readAt(cy) {
-    if (!G) return; const r = svg.getBoundingClientRect(), y = (cy - r.top) * (G.H / r.height);
-    let g = Math.round((y - G.MT - G.peak) / G.rowH); g = clamp(g, 0, cur);
-    const s = stats[g]; readout.textContent = `${s.label}: mean ${signed(s.mean, 2)} ${U}, spread (SD) ${plain(s.sd, 2)} ${U}, 10th to 90th percentile ${signed(s.p10, 2)} to ${signed(s.p90, 2)} ${U}.`;
-  }
-  svg.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") readAt(e.clientY); });
-  svg.addEventListener("pointerdown", (e) => readAt(e.clientY));
-  stage.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); tl.seek(tl.index + 1); }
-    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); tl.seek(tl.index - 1); }
-    else if (e.key === " " || e.key === "Enter") { e.preventDefault(); tl.toggle(); }
-    else if (e.key === "Home") { e.preventDefault(); tl.seek(0); } else if (e.key === "End") { e.preventDefault(); tl.seek(1e9); }
-  });
-
-  draw(); onState();
+  draw(); onState(); stageKeys(stage, tl);
   const offSize = sizeObserver(stage, () => { if (!destroyed && Math.abs(clamp(Math.round(stage.clientWidth || 640), 300, 1100) - S) > 1) draw(); });
   const offTheme = onTheme(() => { scale = makeScale(data); draw(); });
-  if (options.autoplay && !reducedMotion()) { cur = 0; tl.seek(0); tl.play(); }
-  void tickEls; void nextId;
-  return { el: root, play: () => tl.play(), pause: () => tl.pause(), seek: (i) => tl.seek(i), timeline: tl, destroy() { destroyed = true; tl.destroy(); offSize(); offTheme(); root.remove(); } };
+  // Animate once, automatically, the first time the chart scrolls into view; it settles on the last period against the reference outline.
+  // Reduced motion (or no IntersectionObserver) shows that final state at once. The slider and arrow keys stay available.
+  const finalI = nG - 1; let io = null;
+  if (!reducedMotion() && "IntersectionObserver" in window && options.animate !== false) {
+    tl.seek(0);
+    io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); io = null; if (!destroyed && tl.index === 0 && !tl.playing) tl.play(); } }, { threshold: 0.5 });
+    io.observe(stage);
+  } else tl.seek(finalI);
+  return { el: root, play: () => tl.play(), pause: () => tl.pause(), seek: (i) => tl.seek(i), timeline: tl, destroy() { destroyed = true; if (io) io.disconnect(); tl.destroy(); offSize(); offTheme(); root.remove(); } };
 }

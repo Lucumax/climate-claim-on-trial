@@ -1,0 +1,5 @@
+{
+  "_help": "Visual-module tokens (css/viz.css) against the app surfaces, both themes. Text needs 4.5:1, graphics (lines, marks, hatch) 3:1. Run: python web/tools/check_contrast_viz.py",
+  "text": [["ink", "surface"], ["muted", "surface"], ["muted", "bg"], ["ink", "ocean"], ["muted", "ocean"], ["ink", "land"]],
+  "graphics": [["viz-warm-3", "surface"], ["viz-cool-3", "surface"], ["viz-ghost", "surface"], ["viz-ring", "surface"], ["viz-warm-4", "surface"], ["viz-cool-4", "surface"], ["edge", "surface"], ["nodata-mark", "nodata"]]
+}

@@ -4,6 +4,28 @@ import { h, fmtNum, minus, U, range } from "../util.js";
 import { olsTest } from "../stats.js";
 import { windowsChart } from "../chart.js";
 
+// Home hero, right half: "where the trials are held". One Earth with all registered case regions, each drawn by its per-cell trend per decade;
+// withheld cases are hatched. It starts paused and never turns by itself. Phones and browsers without WebGL get a labelled static poster
+// (web/img/globe-trials-light.jpg and -dark.jpg, a screenshot of this same globe) with the same case list under it.
+const POSTER_ALT = "Earth seen from above North America, with four outlined case regions. Interior and western Alaska and the central Sahel are coloured by each cell's trend per decade; the Southeastern United States and Wisconsin are hatched because their rulings are withheld.";
+const hasWebGL = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } };
+function heroGlobe(claims) {
+  const host = h("div", { class: "hero-globe-host" });
+  const cap = h("figcaption", { class: "hero-cap" }, h("b", {}, "Where the trials are held."), " Four registered regions, each drawn by its per-cell trend per decade. Click a region or a case below to open it. Imagery: NASA Blue Marble, muted.");
+  const poster = () => h("a", { href: "#/cases", class: "poster-link", "aria-label": "Open the case files" },
+    h("img", { class: "poster poster-light", src: "img/globe-trials-light.jpg", width: 1292, height: 973, alt: POSTER_ALT, loading: "lazy" }), h("img", { class: "poster poster-dark", src: "img/globe-trials-dark.jpg", width: 1292, height: 973, alt: POSTER_ALT, loading: "lazy" }));
+  const fig = h("figure", { class: "hero-globe" }, host);
+  let handle = null, dead = false;
+  async function start() {
+    const mod = await import("../viz/globe-trials.js").catch(() => null); if (!mod || dead) return;
+    const still = async () => { host.replaceChildren(); handle = await mod.render(host, claims, { poster: poster(), caption: cap }); };
+    if (window.matchMedia("(max-width: 700px)").matches || !hasWebGL()) { await still(); return; }
+    try { handle = await mod.render(host, claims, { caption: cap, height: "clamp(340px, 38vw, 500px)" }); if (dead && handle) handle.destroy(); }
+    catch (e) { console.error(e); if (!dead) { host.replaceChildren(); await still(); } }
+  }
+  return { node: fig, start, dispose() { dead = true; if (handle) { try { handle.destroy(); } catch (e) { /* ignore */ } handle = null; } } };
+}
+
 const WINDOWS = [{ a: 1998, b: 2012, cls: "a" }, { a: 2005, b: 2019, cls: "b" }];
 
 function slopeOver(years, y, a, b) {
@@ -29,6 +51,7 @@ const headline = (c, slope) => { const p = c.region.name.charAt(0).toUpperCase()
 
 export function landing(b) {
   const ex = example(b);
+  const globe = ex ? heroGlobe(b.claims) : null;
   const u = ex ? U(ex.c.regional.units) : "";
   const card = x => h("article", { class: "hl-card " + x.cls },
     h("p", { class: "hl-window" }, "Selected window ", range(x.a, x.b)),
@@ -54,11 +77,13 @@ export function landing(b) {
     } }, "Reveal the full record");
   }
   return { title: "How strong is the evidence for climate change here?", node: h("div", {},
-    h("section", { class: "hero" },
-      h("p", { class: "eyebrow brass" }, "NASA Earth data · trend detective"),
-      h("h1", { id: "page-title", tabindex: "-1" }, "How strong is the evidence for climate change here?"),
-      h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and test whether the trend survives tougher questions. The answer depends on how you ask."),
-      h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))),
+    h("section", { class: "hero" + (globe ? " hero-split" : "") },
+      h("div", { class: "hero-text" },
+        h("p", { class: "eyebrow brass" }, "NASA Earth data · trend detective"),
+        h("h1", { id: "page-title", tabindex: "-1" }, "How strong is the evidence for climate change here?"),
+        h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and test whether the trend survives tougher questions. The answer depends on how you ask."),
+        h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))),
+      globe ? globe.node : null),
     ex ? h("section", { class: "example", "aria-labelledby": "ex-h" },
       h("p", { class: "eyebrow" }, "A worked example"),
       h("h2", { id: "ex-h" }, "Same NASA record, opposite headlines"),
@@ -66,5 +91,6 @@ export function landing(b) {
       h("p", { class: "hl-label", role: "note" }, "Two headlines you could write from selected years"),
       h("div", { class: "hl-pair" }, ex.w.map(card)),
       h("p", { class: "hl-foot" }, "Illustrative headlines written from the numbers, not real news items."),
-      h("div", { class: "reveal" }, revealBtn), panel) : null) };
+      h("div", { class: "reveal" }, revealBtn), panel) : null),
+    afterMount: globe ? globe.start : null, dispose: globe ? globe.dispose : null };
 }

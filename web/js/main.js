@@ -10,7 +10,7 @@ import { method, glossary, provenance, howShell } from "./views/pages.js";
 import { falseAlarm } from "./views/falsealarm.js";
 
 const view = document.getElementById("view");
-let bundle = null, catalog = null;
+let bundle = null, catalog = null, disposeView = null;   // a view may return dispose() (stops animations, frees WebGL) and afterMount() (runs once its node is in the page)
 
 // Old routes keep working: they are rewritten in place (no extra history entry) before routing.
 const REDIRECTS = [
@@ -56,12 +56,15 @@ function route(moved) {
   for (const [re, to] of REDIRECTS) if (re.test(location.hash)) { history.replaceState(null, "", to); break; }
   let r;
   try { r = resolve(location.hash); } catch (e) { console.error(e); r = { nav: "", v: { title: "Error", node: h("div", { class: "err" }, h("h1", { id: "page-title", tabindex: "-1" }, "Something went wrong drawing this page"), h("p", { class: "muted" }, String(e && e.message || e))) } }; }
+  if (disposeView) { try { disposeView(); } catch (e) { console.error(e); } disposeView = null; }
   view.replaceChildren(r.v.node);
+  disposeView = r.v.dispose || null;
   const sb = document.getElementById("synth"); if (sb && bundle.synthetic) sb.hidden = r.nav === "investigate"; // the banner is about the case-file bundle, not live data
   document.title = r.v.title + " · Climate Claim on Trial";
   document.querySelectorAll("nav.main a, a.utility").forEach(a => a.getAttribute("data-nav") === r.nav ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   window.scrollTo(0, 0);
   if (r.anchor) { const el = document.getElementById(r.anchor); if (el) { el.scrollIntoView({ block: "start" }); el.setAttribute("tabindex", "-1"); el.focus({ preventScroll: true }); } }
+  if (r.v.afterMount) { try { r.v.afterMount(); } catch (e) { console.error(e); } }
   if (moved) { const t = document.getElementById("page-title"); if (t && !r.anchor) t.focus({ preventScroll: true }); announce(r.v.title); }
 }
 boot();

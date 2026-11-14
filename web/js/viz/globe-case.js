@@ -3,7 +3,8 @@
 // render(container, data, options) -> {destroy, play, pause, seek, setFlat, el}.
 // Rendering: globe.gl (vendored, MIT) with the cells painted into the globe texture (one canvas, smooth year-to-year blend);
 // the flat map paints the same cells into a 2D canvas. Phones, reduced motion and no-WebGL use the flat map first.
-// Options: flat (true/false, default: flat on narrow screens or without WebGL), year (start index), onYear(i).
+// Options: flat (true/false, default: flat on narrow screens or without WebGL), year (start index), onYear(i), hero (Home: compact controls, no flat toggle).
+// The globe starts paused and never rotates by itself; Play moves through the years, Reset view returns to the framed region.
 import { WEB, el, tok, isDark, onTheme, makeScale, legend, prepare, valueAt, timeline, controls, stageKeys, sizeObserver,
   clamp, signed, plain, unitText, caseLine, regionalDetails, regionalMeanText, reducedMotion, nextId } from "./common.js";
 import { loadGeo, tracePath, isUS } from "./geo.js";
@@ -48,19 +49,21 @@ export async function render(container, data, options = {}) {
   // ---------------------------------------------------------------- DOM
   const summaryId = nextId("viz-sum");
   const stage = el("div", { class: "viz-stage viz-stage--stage", tabindex: "0", role: "group", "aria-describedby": summaryId,
-    "aria-label": `Map of ${data.region_name}. Arrow keys change the year, space plays or pauses.`, style: "height:clamp(320px,56vw,620px)" });
+    "aria-label": `Map of ${data.region_name}. Arrow keys change the year, space plays or pauses.`, style: "height:" + (options.height || "clamp(320px,56vw,620px)") });
   const host = el("div", { style: "position:absolute;inset:0" });
   const flatCanvas = el("canvas", { "aria-hidden": "true", style: "position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);cursor:crosshair" });
   stage.append(host, flatCanvas);
   const readout = el("p", { class: "viz-readout viz-num", "aria-live": "polite" }, "Click or tap a cell to read its value for the year shown.");
   const summary = el("p", { class: "viz-summary", id: summaryId, "aria-live": "polite" });
-  const flatBtn = el("button", { type: "button", class: "viz-btn", "aria-pressed": String(flat), onclick: () => setFlat(!flat) }, "Flat map");
+  const flatBtn = options.hero ? null : el("button", { type: "button", class: "viz-btn", "aria-pressed": String(flat), onclick: () => setFlat(!flat) }, "Flat map");
   const resetBtn = el("button", { type: "button", class: "viz-btn", onclick: () => fitCamera(true) }, "Reset view");
   let curT = options.year != null ? options.year : lastYi;
   const tl = timeline({ n: data.years.length, stepMs: 820, start: curT, onFrame: (tv) => { curT = tv; schedule(); }, onState: onState, onIndex: () => { ctl.sync(); updateReadout(); } });
-  const ctl = controls(tl, { n: data.years.length, labelFn: (i) => String(data.years[i]), name: "year", extra: [flatBtn, resetBtn] });
-  const credit = el("p", { class: "viz-note" }, "Earth imagery: NASA Earth Observatory / Blue Marble (public domain), muted so the data stands out. Coastlines: Natural Earth. Cells are drawn at the case's own grid size.");
-  const root = el("figure", { class: "viz viz-globe" }, stage, ctl.node, legend(data, scale), readout, summary, regionalDetails(data, undefined, "globe view"), credit);
+  const ctl = controls(tl, { n: data.years.length, labelFn: (i) => String(data.years[i]), name: "year", extra: [flatBtn, resetBtn].filter(Boolean) });
+  const credit = options.hero ? null : el("p", { class: "viz-note" }, "Earth imagery: NASA Earth Observatory / Blue Marble (public domain), muted so the data stands out. Coastlines: Natural Earth. Squares are the case's own grid cells, drawn at their true size; the thin line marks the sampled region.");
+  const lg = () => legend(data, scale, options.hero ? { caption: `${data.measure}, ${unitText(data)}, difference from each cell's own ${data.baseline.years[0]}–${data.baseline.years[1]} average.` } : {});
+  const root = el("figure", { class: "viz viz-globe" }, stage, options.caption || null, lg(), ctl.node, options.hero ? null : readout, summary, options.hero ? null : regionalDetails(data, undefined, "globe view"), credit);
+  if (options.hero) summary.className = "sr-only", readout.className = "sr-only";
   container.append(root);
 
   // ---------------------------------------------------------------- composition (shared by globe texture and flat map)
@@ -74,10 +77,10 @@ export async function render(container, data, options = {}) {
     if (img) {
       const sx = ((v.lon0 + 180) / 360) * img.naturalWidth, sw = ((v.lon1 - v.lon0) / 360) * img.naturalWidth;
       const sy = ((90 - v.lat1) / 180) * img.naturalHeight, sh = ((v.lat1 - v.lat0) / 180) * img.naturalHeight;
-      g.filter = dark ? "saturate(0.34) brightness(0.9) contrast(1.0)" : "saturate(0.3) brightness(1.04) contrast(0.92)";
+      g.filter = dark ? "grayscale(0.75) brightness(0.62) contrast(0.8)" : "grayscale(0.7) brightness(0.92) contrast(0.62)";
       g.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
       g.filter = "none";
-      g.fillStyle = dark ? "rgba(10,20,29,0.2)" : "rgba(243,239,229,0.34)"; g.fillRect(0, 0, c.width, c.height);
+      g.fillStyle = dark ? "rgba(10,20,29,0.42)" : "rgba(222,230,233,0.62)"; g.fillRect(0, 0, c.width, c.height);   // flatten the bright Arctic whites into the ocean tone
     }
     if (geo) {
       const pxDeg = v.W / (v.lon1 - v.lon0), box = { w: v.lon0, e: v.lon1, s: v.lat0, n: v.lat1 };
@@ -106,6 +109,8 @@ export async function render(container, data, options = {}) {
       const x0 = Math.round(X(v, P.lon[i]) - hw), x1 = Math.round(X(v, P.lon[i]) + hw), y0 = Math.round(Y(v, P.lat[i]) - hh), y1 = Math.round(Y(v, P.lat[i]) + hh);
       g.fillRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));      // shared rounded edges: no overlap, no seams
     }
+    const b = P.bbox, bx0 = X(v, b.w), bx1 = X(v, b.e), by0 = Y(v, b.n), by1 = Y(v, b.s);        // fine boundary of the sampled region
+    g.lineWidth = Math.max(1, v.W / 2400); g.strokeStyle = dark ? "rgba(244,237,222,0.9)" : "rgba(25,45,64,0.85)"; g.setLineDash([]); g.strokeRect(bx0, by0, bx1 - bx0, by1 - by0);
     if (selected >= 0) {
       const x = X(v, P.lon[selected]), y = Y(v, P.lat[selected]);
       g.lineWidth = Math.max(1.5, v.W / 1400); g.strokeStyle = dark ? "#F4EDDE" : "#192D40"; g.strokeRect(x - hw, y - hh, 2 * hw, 2 * hh);
@@ -113,7 +118,7 @@ export async function render(container, data, options = {}) {
   }
 
   let texCap = 4096, lastPaintAt = 0, slow = 0;
-  function texSize() { return Math.min(texCap, container.clientWidth >= 700 ? 4096 : 2048); }
+  function texSize() { return Math.min(texCap, container.clientWidth >= 700 || options.hero ? 4096 : 2048); }
   // If frames arrive slowly while playing (weak GPU), halve the texture once; the map stays correct, only a little softer.
   function watchSpeed() {
     const now = performance.now();
@@ -168,14 +173,14 @@ export async function render(container, data, options = {}) {
       .onGlobeClick(({ lat, lng }) => pick(lat, lng));
     globe = g;
     try { g.renderer().setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); } catch (e) { /* default ratio */ }
-    const c = g.controls(); c.enablePan = false; c.autoRotate = false; c.minDistance = 112; c.maxDistance = 420; c.rotateSpeed = 0.55; c.zoomSpeed = 0.7;
+    const c = g.controls(); c.enablePan = false; c.autoRotate = false; c.minDistance = 110; c.maxDistance = 420; c.rotateSpeed = 0.55; c.zoomSpeed = 0.7;
     tex = await new Promise((res) => { let n = 0; const iv = setInterval(() => { const m = g.globeMaterial().map; if (m) { clearInterval(iv); res(m); } else if (++n > 150) { clearInterval(iv); res(null); } }, 25); });
     if (!tex || destroyed) return;
     tex.dispose(); tex.image = texCanvas; tex.generateMipmaps = false; tex.minFilter = 1006;
     try { tex.anisotropy = g.renderer().capabilities.getMaxAnisotropy(); } catch (e) { /* ignore */ }
     fitCamera(false);
     schedule();
-    if ("IntersectionObserver" in window) { io = new IntersectionObserver((es) => { for (const e of es) { try { e.isIntersecting ? g.resumeAnimation() : g.pauseAnimation(); } catch (er) { /* ignore */ } } }); io.observe(stage); }
+    if ("IntersectionObserver" in window) { io = new IntersectionObserver((es) => { for (const e of es) { try { if (e.isIntersecting) g.resumeAnimation(); else { g.pauseAnimation(); tl.pause(); } } catch (er) { /* ignore */ } } }); io.observe(stage); }
   }
   let io = null;
   function fitCamera(animate) {
@@ -183,7 +188,7 @@ export async function render(container, data, options = {}) {
     const b = P.bbox, midLat = (b.s + b.n) / 2, midLon = (b.w + b.e) / 2, d2r = Math.PI / 180;
     const aspect = Math.max(0.6, (stage.clientWidth || 800) / (stage.clientHeight || 500));
     const spanLat = (b.n - b.s) * d2r, spanLon = (b.e - b.w) * d2r * Math.cos(midLat * d2r);
-    const alt = clamp(Math.max(spanLat / 0.93, spanLon / (0.93 * aspect)) * 1.45, 0.34, 2.4);
+    const alt = clamp(Math.max(spanLat / 0.93, spanLon / (0.93 * aspect)) * 1.45, options.hero ? 1.4 : 0.75, 2.4);   // far enough back that Earth's edge shows
     globe.pointOfView({ lat: midLat, lng: midLon, altitude: alt }, animate ? 700 : 0);
   }
 
@@ -215,17 +220,17 @@ export async function render(container, data, options = {}) {
 
   async function setFlat(v) {
     flat = !!v && true; if (!webgl) flat = true;
-    flatBtn.setAttribute("aria-pressed", String(flat));
+    flatBtn && flatBtn.setAttribute("aria-pressed", String(flat));
     resetBtn.hidden = flat;
     host.style.visibility = flat ? "hidden" : "visible"; flatCanvas.style.display = flat ? "block" : "none";
     if (flat) { try { globe && globe.pauseAnimation(); } catch (e) { /* ignore */ } baseFlat = makeBase(flatGeometry()); schedule(); }
-    else { stage.style.height = "clamp(320px,56vw,620px)"; await ensureGlobe(); try { globe && globe.resumeAnimation(); } catch (e) { /* ignore */ } schedule(); }
+    else { stage.style.height = options.height || "clamp(320px,56vw,620px)"; await ensureGlobe(); try { globe && globe.resumeAnimation(); } catch (e) { /* ignore */ } schedule(); }
   }
 
   // ---------------------------------------------------------------- start
   [img, geo] = await Promise.all([loadImage(IMG_URL), loadGeo({ states: isUS(data.region_box) }).catch(() => null)]);
   if (destroyed) return null;
-  flatBtn.setAttribute("aria-pressed", String(flat)); resetBtn.hidden = flat;
+  flatBtn && flatBtn.setAttribute("aria-pressed", String(flat)); resetBtn.hidden = flat;
   host.style.visibility = flat ? "hidden" : "visible"; flatCanvas.style.display = flat ? "block" : "none";
   if (flat) baseFlat = makeBase(flatGeometry());
   onState();
@@ -239,7 +244,7 @@ export async function render(container, data, options = {}) {
   });
   const offTheme = onTheme(() => {
     scale = makeScale(data);
-    const lg = root.querySelector(".viz-legend"); if (lg) lg.replaceWith(legend(data, scale));
+    const lgEl = root.querySelector(".viz-legend"); if (lgEl) lgEl.replaceWith(lg());
     if (globe) { globe.atmosphereColor(tok("viz-atmos", "#8FB1CC")); baseTex = makeBase(world(texCanvas.width, texCanvas.height)); }
     if (flat) baseFlat = makeBase(flatGeometry());
     schedule();

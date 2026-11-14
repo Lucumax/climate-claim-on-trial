@@ -7,6 +7,8 @@ import { seriesChart } from "../chart.js";
 import { KIND, withheldNote, regionThumb, copyButton, clinicSlot, disc, datasetName, kindChip } from "./common.js";
 import { sigClass, sigLabel } from "../words.js";
 import { clinicStrip, whoActs } from "./clinic.js";
+import { exhibit } from "./exhibit.js";
+import { caseFrame } from "../viz/anomaly-map.js";
 
 const NA = () => h("span", { class: "muted" }, "Not in this bundle yet.");
 const NOT_SHOWN = "Not shown: failed its coverage check.";
@@ -61,38 +63,41 @@ export function caseDocket(b, c) {
       h("div", { class: "chips" }, h("span", { class: "chip" }, withheld ? "Ruling withheld" : "Regional ruling: final"), c.synthetic ? h("span", { class: "chip warn" }, "Synthetic test case") : h("a", { class: "chip", href: "#/data/registration" }, "Question registered; methods amended"), kindChip(c.data_kind))),
     h("div", {}, h("p", { class: "eyebrow" }, withheld ? "What the record shows" : "Regional change"), h("p", { class: "verdict-num" }, signed(r.sen.slope_per_decade, 2), " ", h("small", {}, `${u} per decade (Sen slope${withheld ? ", descriptive only" : ""})`)),
       iv ? h("p", { class: "verdict-iv" }, `95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
-      h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => { const x = document.getElementById("exhibit-map"); if (x) { x.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); x.focus({ preventScroll: true }); } } }, withheld ? "See the map by hearing" : "Explore the hearings"),
+      h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => ex.select("hearings", { scroll: true }) }, withheld ? "See the evidence by hearing" : "Explore the hearings"),
         copyButton("Copy finding", text, `finding_${c.id}.txt`))),
     h("div", { class: "verdict-notes" },
       whoActs(c) ? h("p", { class: "verdict-who" }, h("b", {}, "Who acts on this? "), whoActs(c)) : null,
       h("p", { class: "verdict-caveat" }, h("b", {}, "Essential caveat. "), essential)));
 
-  // ---------------------------------------------------------------- Exhibit A: the regional record
-  const chartHost = h("div", {});
-  const baselineNote = h("p", { class: "note", style: "margin:8px 0 0" });
-  function drawChart() {
-    chartHost.replaceChildren(seriesChart(c, { ols: showOls }).node);
-    baselineNote.textContent = showOls ? `Baseline fit (least squares, shown for comparison): ${signed(r.ols.slope_per_decade, 2)} ${u} per decade, 95% range ${signed(r.ols.ci_lo, 2)} to ${signed(r.ols.ci_hi, 2)}.` : "";
-  }
-  const olsBox = h("input", { type: "checkbox", onchange: e => { showOls = e.target.checked; drawChart(); } });
-  const exRecord = h("section", { class: "surface rec", "aria-labelledby": "exa-h" },
-    h("div", { class: "exhibit-head" }, h("div", { class: "exhibit-title" }, h("p", { class: "eyebrow" }, "Exhibit A"), h("h2", { id: "exa-h" }, "The regional record")), h("span", { class: "tag" }, withheld ? "Ruling withheld" : "Regional ruling: final")),
-    h("p", { class: "chart-sub" }, `${cap(c.season.toLowerCase())}, one value per year, ${range(c.period.start, c.period.end)}. Difference from the series' own average (${r.baseline}).`),
-    h("div", { class: "chart-tools" }, h("label", { class: "check" }, olsBox, "Compare baseline fit (least squares)")),
-    chartHost, baselineNote);
+  // ---------------------------------------------------------------- the exhibit area: one View selector, one mounted view at a time
+  let anomYear, distPeriod, mapHost = null, infoHost = null;
+  const jsonCache = {}, getJson = u => jsonCache[u] || (jsonCache[u] = fetch(u).then(r => { if (!r.ok) throw new Error("Could not load " + u); return r.json(); }));
+  const cellsFrame = env => caseFrame({ region_box: c.region.box }, env.plotW);
 
-  // ---------------------------------------------------------------- Exhibit B: the map, by hearing
-  const mapBody = h("div", { "aria-live": "off" });
+  // View 1: the regional record
+  function mountRecord(body) {
+    const chartHost = h("div", { class: "ex-record" }), baselineNote = h("p", { class: "note", style: "margin:8px 0 0" });
+    const drawChart = () => {
+      chartHost.replaceChildren(seriesChart(c, { ols: showOls }).node);
+      baselineNote.textContent = showOls ? `Baseline fit (least squares, shown for comparison): ${signed(r.ols.slope_per_decade, 2)} ${u} per decade, 95% range ${signed(r.ols.ci_lo, 2)} to ${signed(r.ols.ci_hi, 2)}.` : "";
+    };
+    const olsBox = h("input", { type: "checkbox", checked: showOls, onchange: e => { showOls = e.target.checked; drawChart(); } });
+    body.append(h("p", { class: "chart-sub" }, `${cap(c.season.toLowerCase())}, one value per year, ${range(c.period.start, c.period.end)}. Difference from the series' own average (${r.baseline}).`),
+      h("div", { class: "chart-tools" }, h("label", { class: "check" }, olsBox, "Compare baseline fit (least squares)")), chartHost, baselineNote);
+    drawChart();
+    return { destroy() {} };
+  }
+
+  // View 3: the map by hearing (same frame as "Values over time")
   const picker = h("fieldset", { class: "hearing-pick" }, h("legend", {}, "Choose a hearing"));
   const modeSeg = h("div", { class: "seg", role: "radiogroup", "aria-label": "Count flagged cells" }, [["claimed", `Claimed direction (${c.direction})`], ["any", "Either direction"]].map(([k, l]) =>
     h("label", {}, h("input", { type: "radio", name: "mode", value: k, checked: mode === k, onchange: () => { mode = k; drawPicker(); drawMap(true); } }), h("span", {}, l))));
-  const mapTag = h("span", { class: "tag" });
   function drawPicker() {
     picker.replaceChildren(h("legend", {}, "Choose a hearing"), ...L.map((q, i) => h("label", { class: "hp" },
       h("input", { type: "radio", name: "hearing", value: i, checked: i === sel, onchange: () => { sel = i; drawPicker(); drawMap(true); announceHearing(); const x = picker.querySelector(`input[value="${i}"]`); if (x) x.focus(); } }),
       h("span", { class: "hp-in" }, h("span", { class: "hp-n" }, `Hearing ${i + 1}`), h("span", { class: "hp-name" }, HEARING_SHORT[q.rung] || q.label), h("span", { class: "hp-pct num" }, pct(q[ak()], 1))))));
   }
-  const announceHearing = () => { const q = L[sel]; announce(`Map: hearing ${sel + 1} of ${nL}. ${pct(q[ak()], 1)} of mapped area flagged. The regional ruling is unchanged.`); };
+  const announceHearing = () => { const q = L[sel]; announce(`Hearing ${sel + 1} of ${nL}. ${pct(q[ak()], 1)} of mapped area flagged. The regional ruling is unchanged.`); };
 
   // What each hearing changes, honest in both directions. Hearing 4 is a different question, not simply a tougher test.
   function hearingNote(q, i) { const n = hearingNote0(q, i); return n && q.threshold_text && q.rung !== 2 ? `${n} Rule used: ${q.threshold_text}.` : n; }
@@ -107,27 +112,56 @@ export function caseDocket(b, c) {
     }
     return null;
   }
+  let hearingView = null;
   function drawMap(fade) {
-    const q = L[sel], h0 = mapBody.offsetHeight;
-    mapTag.textContent = `Map: hearing ${sel + 1} of ${nL}`;
-    if (!c.gate.cells) { mapBody.replaceChildren(withheldNote(c)); return; }
-    const m = renderMap(c, q, { id: `map-${c.id}-${q.rung}`, label: `Map for hearing ${sel + 1} of ${nL}: ${q.label}` });
+    if (!mapHost) return;
+    const q = L[sel];
+    if (!c.gate.cells) { mapHost.replaceChildren(withheldNote(c)); infoHost.replaceChildren(); return; }
+    const m = renderMap(c, q, { id: `map-${c.id}-${q.rung}`, label: `Map for hearing ${sel + 1} of ${nL}: ${q.label}`, view: hearingView });
     const note = hearingNote(q, sel);
-    if (h0) mapBody.style.minHeight = h0 + "px";
-    mapBody.replaceChildren(...[
+    mapHost.replaceChildren(m.node);
+    infoHost.replaceChildren(...[
       h("div", { class: "measure" }, h("strong", { class: "num" }, pct(q[ak()], 1), " of mapped area flagged"),
         h("span", { class: "num" }, `${q[nk()]} of ${q.n_cells} cells (${pct(q[ck()], 1)})` + (q.cells_changed != null ? `; ${q.cells_changed} changed status from the previous hearing` : ""))),
       h("p", { class: "hearing-line" }, h("b", {}, q.label + ". "), q.changes),
       note ? h("details", { class: "quiet" }, h("summary", {}, "Why this count changed"), h("p", { class: "rung-note", style: "margin-top:8px" }, note)) : null,
-      h("div", { style: "margin-top:16px" }, m.node),
       h("p", { class: "map-null" }, "Not flagged means too little evidence, not no change." + (c.region.note ? " " + c.region.note : ""))].filter(Boolean));
-    if (fade) { mapBody.classList.remove("ruling-fade"); void mapBody.offsetWidth; mapBody.classList.add("ruling-fade"); }
-    setTimeout(() => { mapBody.style.minHeight = ""; }, 220);
+    if (fade) { infoHost.classList.remove("ruling-fade"); void infoHost.offsetWidth; infoHost.classList.add("ruling-fade"); }
   }
-  const exMap = h("section", { class: "surface map-ex", id: "exhibit-map", tabindex: "-1", "aria-labelledby": "exb-h" },
-    h("div", { class: "exhibit-head" }, h("div", { class: "exhibit-title" }, h("p", { class: "eyebrow" }, "Exhibit B"), h("h2", { id: "exb-h" }, "The map, by hearing")), mapTag),
-    h("p", { class: "map-scope" }, withheld ? "Choosing a hearing changes this map only. The regional ruling is withheld, so the map describes which cells pass each hearing and is not a basis for a verdict." : "Choosing a hearing changes this map only. The regional ruling above is final."),
-    picker, modeSeg, mapBody);
+  function mountHearings(body, env) {
+    hearingView = cellsFrame(env);
+    mapHost = h("div", { class: "viz-col-a", style: `width:${hearingView.W}px` }); infoHost = h("div", { class: "ex-info", "aria-live": "off" });
+    body.append(h("div", { class: "viz-split" }, mapHost, h("div", { class: "viz-col-b" }, picker, modeSeg, infoHost)));
+    drawPicker(); drawMap(false);
+    return { destroy() { mapHost = null; infoHost = null; } };
+  }
+
+  // Views 2 and 4 (and 5 for C-A) are the visual modules: loaded on first use, disposed when another view is chosen.
+  async function mountAnomaly(body, env) {
+    const [mod, data] = await Promise.all([import("../viz/anomaly-map.js"), getJson(`data/viz/${c.id}.json`)]);
+    return mod.render(body, data, { view: caseFrame(data, env.plotW), year: anomYear, onYear: i => { anomYear = i; } });
+  }
+  async function mountDistribution(body) {
+    const [mod, data] = await Promise.all([import("../viz/distribution.js"), getJson(`data/viz/${c.id}.json`)]);
+    const hnd = await mod.render(body, data, { year: distPeriod, onYear: i => { distPeriod = i; }, table: false });
+    hnd.el.append(h("p", { class: "viz-note" }, "Numbers for every period: ", h("button", { class: "btn-text", type: "button", onclick: () => openStatistics() }, "Statistics")));
+    return hnd;
+  }
+
+  async function mountYearly3d(body) {
+    const [mod, data] = await Promise.all([import("../viz/cycle.js"), getJson(`data/viz/${c.id}.json`)]);
+    return mod.renderCycle(body, data, {});
+  }
+  const rulingNote = withheld ? "The regional ruling above is withheld. Changing the view changes what you see, never the ruling." : "The regional ruling above is final. Changing the view changes what you see, never the ruling.";
+  const views = [
+    { key: "record", label: "Regional record", title: "The regional record", ask: "What did the region's value do, year by year?", mount: mountRecord },
+    { key: "anomaly", label: "Values over time", title: "Values over time", ask: "What changed, and when? Every grid cell, year by year, on one fixed colour scale.", mount: mountAnomaly, frame: true },
+    { key: "hearings", label: "Evidence by hearing", title: "Evidence by hearing", ask: withheld ? "Which cells pass each hearing? A description of the tests, not a basis for a verdict." : "Where do the tests flag evidence? Each hearing asks one stricter question of the same cells.", mount: mountHearings, frame: true },
+    ...(c.id === "C-C" ? [{ key: "yearly3d", label: "Year by year (3D)", title: "Year by year (3D)", ask: "How did each month change over the years? Every month of every year, wound around the baseline; a descriptive view.", mount: mountYearly3d }] : []),
+    { key: "distribution", label: "Distribution", title: "Distribution", ask: "Is the whole distribution moving, or only the average? All cells and years in each period.", mount: mountDistribution },
+  ];
+  const ex = exhibit({ views, initial: "record", rulingNote, tag: h("span", { class: "tag" }, withheld ? "Ruling withheld" : "Regional ruling: final") });
+  const openStatistics = () => { statistics.open = true; statistics.scrollIntoView({ block: "start", behavior: "smooth" }); };
 
   // ---------------------------------------------------------------- collapsible detail: Statistics, Limits of this finding, Provenance
   const stat = (k, val, sub) => h("div", { class: "stat" }, h("div", { class: "k" }, k), h("div", { class: "v num" }, val), h("div", { class: "s" }, sub));
@@ -136,18 +170,28 @@ export function caseDocket(b, c) {
     ctx.hr && t && t.method !== "hr_registered" ? `Registered Hamed-Rao version: p = ${fmtPx(ctx.hr.p)}, variance factor ${ctx.hr.factor != null ? ctx.hr.factor.toFixed(2) : "n/a"} (the first method we registered; replaced before results).` : null,
     ctx.raw ? `Raw Mann-Kendall, years treated as independent: p = ${fmtPx(ctx.raw.p)}.` : null,
   ].filter(Boolean);
+  const distTable = h("div", { class: "dist-table" }, h("p", { class: "muted small" }, "Opens with this section."));
   const statistics = disc("Statistics",
     h("p", {}, h("b", {}, v.headline), " ", v.sentences.join(" ")),
     h("div", { class: "statgrid" },
       stat("Sen slope per decade", `${signed(r.sen.slope_per_decade, 2)} ${u}`, iv ? `${iv.label}: ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : `95% interval: ${NOT_SHOWN.toLowerCase()}`),
       t ? stat(t.title, `p = ${fmtPx(t.p)}`, `${sigLabel(t.p)}. A pattern this strong would be rare if there were no trend.`) : stat("Regional test", withheld ? "Withheld" : "Not shown", withheld ? "No test kept its false-alarm rate near 5% on records like this one, so no significance statement is made." : "It did not pass its calibration check, so no significance statement is made."),
       t ? stat("Variance factor", fac(t), "Above 1.00 means neighbouring years resemble each other, and the test widens to allow for it") : null),
+    h("div", { class: "baseline" }, h("h3", {}, "Pooled distribution by period"),
+      h("p", { class: "muted small" }, "Every grid cell in every year of each period, each against its own baseline, unweighted. It describes the data; it is not a test."),
+      distTable, h("p", { style: "margin:8px 0 0" }, h("button", { class: "btn-text", type: "button", onclick: () => ex.select("distribution", { scroll: true }) }, "Inspect distribution"))),
     t ? h("p", { class: "small muted", style: "margin:12px 0 0" }, t.label + ". " + (t.method === "mk_independent" ? "No autocorrelation correction was chosen here: simulations on synthetic series with this series' persistence showed this test keeps false alarms near 5%. " : "p-values from series whose years resemble each other tend to be too small, which is why this correction is applied. ") + "The test was chosen by simulation on synthetic series, not by looking at this result.") : null,
     h("p", { class: "small muted" }, iv ? `${iv.label}. How often such intervals contain the true slope was measured on synthetic series. It is not a range for individual years. ` : `Interval: ${NOT_SHOWN} `, r.band_lo ? r.band_meaning : `Band: ${NOT_SHOWN}`),
     ctxRows.length ? h("div", { class: "baseline" }, h("h3", {}, "Context, not the ruling"), ctxRows.map(x => h("p", { class: "muted small", style: "margin:0 0 4px" }, x))) : null,
     h("div", { class: "baseline" }, h("h3", {}, "The familiar baseline: least squares and t-test"), h("p", { class: "muted small" }, "Context only. The ruling rests on the Sen slope and the regional test above."),
       h("p", { style: "margin:0" }, h("b", {}, `${signed(r.ols.slope_per_decade, 2)} ${u} per decade`), `, 95% range ${signed(r.ols.ci_lo, 2)} to ${signed(r.ols.ci_hi, 2)}; `, h("span", { class: "chip " + sigClass(r.ols.p) }, sigLabel(r.ols.p)), ` t = ${r.ols.t}, p = ${fmtPx(r.ols.p)}`)));
 
+  let distLoaded = false;
+  statistics.addEventListener("toggle", async () => {
+    if (!statistics.open || distLoaded) return; distLoaded = true;
+    try { const [mod, data] = await Promise.all([import("../viz/distribution.js"), getJson(`data/viz/${c.id}.json`)]); const hnd = await mod.render(h("div", {}), data, { tableOnly: true }); distTable.replaceChildren(hnd.el); }
+    catch (e) { distLoaded = false; distTable.replaceChildren(h("p", { class: "muted small" }, "The table could not be loaded.")); }
+  });
   const limits = disc("Limits of this finding",
     withheld ? h("p", {}, h("b", {}, "Why the ruling is withheld. "), (v.withheld_reasons && v.withheld_reasons.length ? v.withheld_reasons : c.gate.reasons).join(" "), " ", h("a", { href: "#/method" }, "How the checks work")) : withheldNote(c),
     c.gate.adaptive_notes && c.gate.adaptive_notes.length ? c.gate.adaptive_notes.map(x => h("p", { class: "muted small" }, h("b", {}, "Calibration note. "), x)) : null,
@@ -155,6 +199,7 @@ export function caseDocket(b, c) {
     f.scope_text ? h("p", {}, h("b", {}, "This number is for. "), f.scope_text) : null,
     f.not_supported ? [h("p", {}, h("b", {}, "What the evidence does not support")), h("ul", {}, f.not_supported.map(x => h("li", {}, x)))] : null,
     withheld ? null : h("p", {}, h("b", {}, "How to read the ruling. "), `The map and the regional series come from the same data, so they are not independent evidence. The ${pct(th.breadth, 0)} and ${pct(th.local, 0)} area thresholds that separate "supported" from "partly supported" are conventions we chose before seeing results, not a calibrated scale.`),
+    h("p", {}, h("b", {}, "The views of the map and the distribution. "), "Values over time: each square is one grid cell against its own baseline, with no smoothing in space; colours blend between years only while playing. Distribution: pools every cell in every year of a 10-year period (the last period can be shorter), unweighted, so its mean differs from the area-weighted regional record; neighbouring cells and years are correlated, so these curves describe the data and are not independent observations, and a small share of extreme values can fall outside the drawn range (the figure says how many). None of these views is a test, and none changes the ruling."),
     h("p", {}, h("b", {}, "Cell share and area share. "), "The cell share counts every grid cell once. The area share weights each cell by the cosine of its latitude, because cells near the pole cover less ground. Neither is the chance that the claim is true, and neither says which single cell is right."),
     h("p", {}, h("b", {}, "An honest null belongs here. "), "Not flagged means too little evidence, not no change. A result that is not significant is still a finding and can be reported."),
     f.selection_disclosure ? h("p", {}, h("b", {}, "Selection disclosure. "), f.selection_disclosure, " ", h("a", { href: "#/data/registration" }, "Registration and amendments")) : null);
@@ -170,12 +215,12 @@ export function caseDocket(b, c) {
     h("ul", { class: "ticks" }, v.checklist.map(i => h("li", { class: i.ok ? "yes" : "no" }, h("span", { class: "mark", "aria-hidden": "true" }, i.ok ? "✓" : "–"), h("span", {}, i.text, i.link ? [" ", h("a", { href: i.link[0].replace("#/method/registration", "#/data/registration") }, i.link[1])] : null, h("span", { class: "sr-only" }, i.ok ? " (yes)" : " (no)"))))),
     h("p", { style: "margin-top:16px" }, h("a", { class: "btn-text", href: `#/data/${c.id}` }, "Files and reproduction steps for this case")));
 
-  drawPicker(); drawMap(false); drawChart();
   return { title: `Case ${c.id}`, node: h("div", { class: "case-page" },
     h("p", { class: "crumb" }, h("a", { href: "#/cases" }, "Case files"), " / ", caseNo(c.id)),
     h("header", { class: "case-head" },
       h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id) + " · the registered claim"), h("h1", { id: "page-title", tabindex: "-1" }, "“" + c.claim_text + "”"),
       h("p", { class: "definition" }, h("b", {}, c.variable.name + ": "), c.variable.plain)),
     (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(), ruling,
-    h("div", { class: "docket-grid" }, exRecord, exMap, h("div", { class: "docket-more" }, statistics, limits, provenance))) };
+    ex.node, h("div", { class: "docket-more" }, statistics, limits, provenance)),
+    afterMount: () => ex.start(), dispose: () => ex.dispose() };
 }

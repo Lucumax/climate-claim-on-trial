@@ -28,13 +28,16 @@ export async function render(container, data, options = {}) {
   const svg = sv("svg", { role: "img", "aria-labelledby": summaryId, focusable: "false", style: "display:block;margin:0 auto;max-width:100%" });
   const stage = el("div", { class: "viz-stage", tabindex: "0", role: "group", "aria-label": `Climate spiral of ${data.region_name}. Arrow keys change the year, space plays or pauses.` }, svg);
   const readout = el("p", { class: "viz-readout viz-num" }, "Point at the spiral or tap a line to read a month.");
+  const sumLine = el("p", { class: "viz-sumline viz-num", "aria-hidden": "true" });
   const summary = el("p", { class: "viz-summary", id: summaryId, "aria-live": "polite" });
-  const tl = timeline({ n: nY, stepMs: reducedMotion() ? 700 : 520, ease: false, start: curT, onFrame: (tv) => { curT = tv; update(); }, onState, onIndex: () => ctl.sync() });
-  const ctl = controls(tl, { n: nY, labelFn: (i) => String(M.years[i]), name: "year" });
+  // Slow and smooth, like an orbit: about 2.8 s for each year at 1x, a continuous leading point, a soft fading trail, no per-year redraw.
+  const tl = timeline({ n: nY, stepMs: reducedMotion() ? 700 : 2800, ease: false, start: curT, onFrame: (tv) => { curT = tv; update(); }, onState, onIndex: () => ctl.sync() });
+  const speedSel = el("label", { class: "viz-speed" }, "Speed ", el("select", { "aria-label": "Playback speed", onchange: (e) => tl.setSpeed(+e.target.value) }, [[1, "1×"], [2, "2×"], [4, "4×"]].map(([v, l]) => el("option", { value: v }, l))));
+  const ctl = controls(tl, { n: nY, labelFn: (i) => String(M.years[i]), name: "year", extra: reducedMotion() ? [] : [speedSel] });
   const rows = M.years.map((y, i) => [String(y)].concat(M.anomaly[i].map((v) => (v == null ? "n/a" : signed(v, 2)))));
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Monthly values (table)"), dataTable(["Year"].concat(M.labels.map((l) => l + " (" + U + ")")), rows, `Monthly regional difference from baseline in ${U}`));
   const note = el("p", { class: "viz-note" }, `Each month is compared with the same month's average over ${data.baseline.years[0]}–${data.baseline.years[1]} (the baseline ring, 0). Regional, area-weighted. ${nM < 12 ? "Only the months of this case's season are in the record, so the clock shows those months." : ""} ${data.product_label}.`);
-  const root = el("figure", { class: "viz viz-spiral" }, stage, ctl.node, legend(dataM, scale, { caption: CAP }), readout, summary, details, note);
+  const root = el("figure", { class: "viz viz-spiral" }, sumLine, stage, legend(dataM, scale, { caption: CAP }), ctl.node, readout, summary, details, note);
   container.append(root);
 
   // ---------------------------------------------------------------- geometry
@@ -51,7 +54,7 @@ export async function render(container, data, options = {}) {
     const c1x = p1.x + ((p2.x - p0.x) / 6) * t * 2, c1y = p1.y + ((p2.y - p0.y) / 6) * t * 2, c2x = p2.x - ((p3.x - p1.x) / 6) * t * 2, c2y = p2.y - ((p3.y - p1.y) / 6) * t * 2;
     return `M${p1.x.toFixed(1)} ${p1.y.toFixed(1)}C${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
   };
-  let segEls = [];
+  let segEls = [], haloEls = [];
   function draw() {
     const g = build(), { cx, cy, R, r0, pts } = g;
     svg.replaceChildren(); svg.setAttribute("width", S); svg.setAttribute("height", S); svg.setAttribute("viewBox", `0 0 ${S} ${S}`);
@@ -60,35 +63,33 @@ export async function render(container, data, options = {}) {
     const rings = [];
     for (let v = step; v <= RM + 1e-9; v += step) rings.push(v, -v);
     for (const v of rings) svg.append(sv("circle", { cx, cy, r: g.rOf(v), fill: "none", stroke: grid, "stroke-width": 1, "stroke-dasharray": v < 0 ? "2 4" : "none", opacity: v < 0 ? 0.8 : 0.9 }));
-    svg.append(sv("circle", { cx, cy, r: r0, fill: "none", stroke: ringC, "stroke-width": 1.5, opacity: 0.7 }));
+    svg.append(sv("circle", { cx, cy, r: r0, fill: "none", stroke: ringC, "stroke-width": 2.4, opacity: 0.95 }));
     // spokes and month labels
     for (let j = 0; j < nM; j++) {
       const a = g.ang(j), c = Math.cos(a), s = Math.sin(a);
       svg.append(sv("line", { x1: cx + R * 0.14 * c, y1: cy + R * 0.14 * s, x2: cx + R * c, y2: cy + R * s, stroke: grid, "stroke-width": 1, opacity: 0.55 }));
       const lx = cx + (R + 14) * c, ly = cy + (R + 14) * s + 4;
-      svg.append(sv("text", { x: lx, y: ly, "text-anchor": Math.abs(c) < 0.2 ? "middle" : c > 0 ? "start" : "end", "font-size": 13, class: "t-muted num" }, M.labels[j]));
+      svg.append(sv("text", { x: lx, y: ly, "text-anchor": Math.abs(c) < 0.2 ? "middle" : c > 0 ? "start" : "end", "font-size": 14, class: "t-muted num" }, M.labels[j]));
     }
     // ring labels along the 12 o'clock spoke (with a halo so lines passing behind stay readable)
     const halo = { "paint-order": "stroke", stroke: surface, "stroke-width": 4, "stroke-linejoin": "round" };
-    const lab = (v, txt, strong) => svg.append(sv("text", { x: cx + 4, y: v >= RM - 1e-9 ? cy - g.rOf(v) + 14 : cy - g.rOf(v) - 3, "font-size": 12, class: (strong ? "" : "t-muted ") + "num", ...halo }, txt));
-    lab(0, `0 baseline`, true);
+    const lab = (v, txt, strong) => svg.append(sv("text", { x: cx + 4, y: v >= RM - 1e-9 ? cy - g.rOf(v) + 14 : cy - g.rOf(v) - 3, "font-size": 14, class: (strong ? "" : "t-muted ") + "num", ...halo }, txt));
+    lab(0, `0 = baseline`, true);
     for (const v of rings) if (Math.abs(v) <= RM + 1e-9 && (S >= 420 || v === RM)) lab(v, `${sgn(v)} ${U}`, false);
     // segments
-    const segG = sv("g", { fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" });
-    segEls = [];
+    const haloG = sv("g", { fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }), segG = sv("g", { fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" });
+    segEls = []; haloEls = [];
     for (let i = 0; i < N - 1; i++) {
       const a = pts[i], b = pts[i + 1];
       if (a.v == null || b.v == null) { segEls.push(null); continue; }
       const p0 = pts[Math.max(0, i - 1)], p3 = pts[Math.min(N - 1, i + 2)];
-      const e = sv("path", { d: bez(p0, a, b, p3), stroke: scale.css((a.v + b.v) / 2, 0.22), "stroke-width": 1.4, pathLength: 1, visibility: "hidden" });
-      segG.append(e); segEls.push(e);
+      const dd = bez(p0, a, b, p3), e = sv("path", { d: dd, stroke: scale.css((a.v + b.v) / 2, 0.22), "stroke-width": 1.4, pathLength: 1, visibility: "hidden" });
+      const hl = sv("path", { d: dd, stroke: surface, "stroke-width": 6, pathLength: 1, visibility: "hidden", opacity: 0.85 });
+      haloG.append(hl); segG.append(e); segEls.push(e); haloEls.push(hl);
     }
-    svg.append(segG);
-    head = sv("circle", { r: 5, fill: ink, stroke: surface, "stroke-width": 2, visibility: "hidden" });
+    svg.append(haloG, segG);
+    head = sv("circle", { r: 6.5, fill: ink, stroke: surface, "stroke-width": 2.5, visibility: "hidden" });
     svg.append(head);
-    // centre label
-    svg.append(sv("text", { id: "sp-year", x: cx, y: cy + (S < 420 ? 4 : 6), "text-anchor": "middle", "font-size": S < 420 ? 30 : 40, class: "t-serif num", ...halo }, ""),
-      sv("text", { id: "sp-val", x: cx, y: cy + (S < 420 ? 24 : 30), "text-anchor": "middle", "font-size": S < 420 ? 11 : 13, class: "t-muted num", ...halo }, ""));
     drawn = -1; update(true);
     void muted; void ink; void halo;
   }
@@ -97,26 +98,30 @@ export async function render(container, data, options = {}) {
   function update(force) {
     if (!geom || destroyed) return;
     const t = curT, pos = t * nM + (nM - 1);                  // progress in points
-    const full = Math.floor(pos), frac = pos - full, headYear = Math.round(t);
+    const full = Math.floor(pos), frac = pos - full, headYear = Math.floor(clamp(pos, 0, N - 1) / nM);
+    const headLoop = clamp(Math.floor(Math.max(0, Math.min(pos, N - 1)) / nM), 0, nY - 1);
     for (let i = 0; i < segEls.length; i++) {
-      const e = segEls[i]; if (!e) continue;
+      const e = segEls[i], hl = haloEls[i]; if (!e) continue;
       let vis = i < full ? "visible" : "hidden", dash = null;
       if (i === full && frac > 0.001) { vis = "visible"; dash = `${frac.toFixed(3)} 1`; }
       if (vis === "visible") {
-        const age = headYear - Math.floor(i / nM), cur = Math.floor(i / nM) === headYear;
-        e.setAttribute("stroke-opacity", cur ? 1 : Math.max(0.18, 0.7 - Math.max(0, age) * 0.04).toFixed(2));
-        e.setAttribute("stroke-width", cur ? 2.6 : 1.1);
-      }
+        const cur = Math.floor(i / nM) === headLoop, age = Math.max(0, pos - i);       // age in months behind the leading point
+        e.setAttribute("stroke-opacity", cur ? 1 : Math.max(0.1, 0.55 * Math.exp(-age / (nM * 3))).toFixed(2));
+        e.setAttribute("stroke-width", cur ? 3.4 : 1);
+        hl.setAttribute("visibility", cur ? "visible" : "hidden");
+        if (dash) hl.setAttribute("stroke-dasharray", dash); else hl.removeAttribute("stroke-dasharray");
+      } else hl.setAttribute("visibility", "hidden");
       e.setAttribute("visibility", vis);
       if (dash) e.setAttribute("stroke-dasharray", dash); else e.removeAttribute("stroke-dasharray");
     }
     // head dot at the interpolated end of the drawn line
     const i0 = clamp(full, 0, N - 1), i1 = clamp(full + 1, 0, N - 1), a = geom.pts[i0], b = geom.pts[i1], f = i0 === i1 ? 0 : frac;
-    head.setAttribute("cx", (a.x + (b.x - a.x) * f).toFixed(1)); head.setAttribute("cy", (a.y + (b.y - a.y) * f).toFixed(1));
+    let hx = a.x + (b.x - a.x) * f, hy = a.y + (b.y - a.y) * f;
+    const sg = segEls[i0]; if (sg && f > 0) { try { const pt = sg.getPointAtLength(sg.getTotalLength() * f); hx = pt.x; hy = pt.y; } catch (er) { /* straight interpolation */ } }
+    head.setAttribute("cx", hx.toFixed(1)); head.setAttribute("cy", hy.toFixed(1));
     const hv = a.v != null && b.v != null ? a.v + (b.v - a.v) * f : a.v; head.setAttribute("fill", hv == null ? tok("ink") : scale.css(hv, 0.22)); head.setAttribute("visibility", "visible");
-    const yearTxt = svg.querySelector("#sp-year"), valTxt = svg.querySelector("#sp-val");
     const yi = clamp(headYear, 0, nY - 1); const m = mean(yi);
-    yearTxt.textContent = String(M.years[yi]); valTxt.textContent = m == null ? "" : `average ${signed(m, 2)} ${U}`;
+    sumLine.textContent = String(M.years[yi]); sumLine.append(el("small", {}, m == null ? "" : `Average of the months: ${signed(m, 2)} ${U} from baseline`));
     if (force) void 0;
   }
 

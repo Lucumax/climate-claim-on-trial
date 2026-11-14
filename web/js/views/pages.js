@@ -148,12 +148,12 @@ export function provenance(b, pick) {
       REPO_URL ? h("p", {}, h("a", { href: REPO_URL }, "Project repository (MIT licence)")) : null,
       h("h3", {}, "1. Fetch the NASA data"),
       h("p", { class: "muted small" }, cmd === "C-C" ? "C-C uses NASA POWER and needs no key." : "This case uses NASA Earthdata and needs a free Earthdata token in the EARTHDATA_TOKEN environment variable."),
-      h("pre", { class: "cmd" }, cmd === "C-C" ? "python data/scripts/fetch_power_cc.py\npython data/scripts/make_contract_cc.py" : `data\\.venv\\Scripts\\python.exe -I data\\scripts\\fetch_earthdata.py ${cmd}`),
+      h("pre", { class: "cmd", tabindex: "0" }, cmd === "C-C" ? "python data/scripts/fetch_power_cc.py\npython data/scripts/make_contract_cc.py" : `data\\.venv\\Scripts\\python.exe -I data\\scripts\\fetch_earthdata.py ${cmd}`),
       h("h3", {}, "2. Run the statistics"),
-      h("pre", { class: "cmd" }, `cd stats\npython scripts/run_case.py ${cmd}`),
+      h("pre", { class: "cmd", tabindex: "0" }, `cd stats\npython scripts/run_case.py ${cmd}`),
       h("p", { class: "muted small" }, `This writes stats/out/${cmd}/bundle.json, the file you can download above. The run identifier and input hashes should match.`),
       h("h3", {}, "3. Check it"),
-      h("pre", { class: "cmd" }, "cd stats\npython -m pytest\n\ncd ..\npython web/tools/serve.py   # then open http://127.0.0.1:8765/"),
+      h("pre", { class: "cmd", tabindex: "0" }, "cd stats\npython -m pytest\n\ncd ..\npython web/tools/serve.py   # then open http://127.0.0.1:8765/"),
       null].filter(Boolean));
   }
   draw();

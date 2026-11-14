@@ -150,7 +150,7 @@ export function falseAlarm() {
     const num = h("strong", {}, "–"), bar = h("i", { style: "width:0%" }), delta = h("span", { class: "delta" }, ""), status = h("span", { class: "status" }, "Waiting");
     const b = h("button", { type: "button", class: "hearing", onclick: () => chooseStage(i + 1) },
       h("span", { class: "hearing-top" }, h("span", {}, "Rung " + r.id), status),
-      h("h3", {}, h("span", { class: "full" }, r.name), h("span", { class: "short" }, r.short)), h("p", { class: "explain" }, r.what),
+      h("span", { class: "hearing-h" }, h("span", { class: "full" }, r.name), h("span", { class: "short" }, r.short)), h("p", { class: "explain" }, r.what),
       h("span", { class: "hearing-result" }, num, h("span", { class: "mini-bar", "aria-hidden": "true" }, bar), delta));
     railBtns.push(b); railNum.push(num); railBar.push(bar); railDelta.push(delta); railStatus.push(status);
     return h("li", {}, b);

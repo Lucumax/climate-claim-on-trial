@@ -1,163 +1,133 @@
-// Anomaly map: the case region on a flat map, one frame per year, smooth blend between years, fixed symmetric colour range.
-// Question it answers: WHERE, and WHEN? (the globe shows where; this one lets you compare years against one fixed scale)
-// render(container, data, options) -> {destroy, play, pause, seek, el, timeline}. Options: year (start index), onYear(i), smooth (default true).
-import { el, sv, tok, isDark, onTheme, makeScale, legend, prepare, valueAt, timeline, controls, stageKeys, sizeObserver, clamp,
-  signed, unitText, caseLine, regionalDetails, regionalMeanText, reducedMotion, nextId } from "./common.js";
-import { loadGeo, tracePath, isUS } from "./geo.js";
+// Anomaly map ("Values over time"): the case region on a flat map, one frame per year, fixed symmetric colour range.
+// Question it answers: WHAT CHANGED WHEN? (the hearing map answers WHERE the tests flag evidence; the ruling never changes with this view)
+// Every square is one grid cell coloured by its own value for the year shown. There is no spatial smoothing. While playing, colours blend
+// between two years; paused, each cell shows that year exactly. Cells with no value that year stay visible as hatched grey.
+// render(container, data, options) -> {destroy, play, pause, seek, el, timeline}.
+// Options: year (start index), onYear(i), view (a basemap.js view: the docket passes one so this map and the hearing map share one frame),
+//          width (plot width when no view is given), autoplay (never used by the site).
+import { el, sv, tok, onTheme, makeScale, legend, prepare, timeline, controls, stageKeys, sizeObserver, clamp, signed, unitText, endpoints,
+  caseLine, regionalDetails, regionalMeanText, reducedMotion, nextId } from "./common.js";
+import { makeView, basemapLayers, frameLayer } from "../basemap.js";
 
 const fmtLat = (v) => Math.abs(v).toFixed(2) + "°" + (v >= 0 ? "N" : "S");
 const fmtLon = (v) => Math.abs(v).toFixed(2) + "°" + (v >= 0 ? "E" : "W");
-const niceStep = (span, maxTicks) => { for (const s of [0.5, 1, 2, 5, 10, 15, 20, 30]) if (span / s <= maxTicks) return s; return 45; };
+
+/** The frame both docket maps use: the case region with some context around it, fitted into the given plot width. */
+export function caseFrame(data, plotWidth, maxHeight = 460) {
+  const b = data.region_box, spanLon = b.e - b.w, spanLat = b.n - b.s;
+  const pad = Math.min(spanLon, spanLat) < 10 ? 0.35 : 0.08;               // small regions (Wisconsin) get more surrounding geography
+  const box = { w: b.w - spanLon * pad, e: b.e + spanLon * pad, s: Math.max(-89, b.s - spanLat * pad), n: Math.min(89, b.n + spanLat * pad) };
+  return makeView(box, { width: Math.max(200, plotWidth), maxHeight });
+}
 
 export async function render(container, data, options = {}) {
   const P = prepare(data);
   let scale = makeScale(data);
-  const U = unitText(data), smooth = options.smooth !== false;
-  let destroyed = false, geo = null, G = null, raf = 0, dirty = false, curT = options.year != null ? options.year : data.years.length - 1;
-  const lastYi = data.years.length - 1;
+  const U = unitText(data), ends = endpoints(data), nY = data.years.length;
+  let destroyed = false, raf = 0, dirty = false, curT = options.year != null ? options.year : nY - 1, selected = -1, id = nextId("avm");
+  let view = options.view || caseFrame(data, (options.width || container.clientWidth || 640) - 60);
 
   const summaryId = nextId("viz-sum");
-  const yearEl = el("div", { class: "viz-map__year viz-num" }, String(data.years[Math.round(curT)]));
-  const regV = el("div", { class: "viz-map__regv viz-num" }), regL = el("div", { class: "viz-map__label" }, "Regional average, difference from baseline");
-  const head = el("div", { class: "viz-map__head" }, el("div", {}, yearEl, el("div", { class: "viz-map__label" }, data.measure + ", " + data.season_text)), el("div", { class: "viz-map__reg" }, regV, regL));
-  const cBase = el("canvas", { "aria-hidden": "true" }), cField = el("canvas", { "aria-hidden": "true" }), cLines = el("canvas", { "aria-hidden": "true", style: "cursor:crosshair" });
-  const svg = sv("svg", { "aria-hidden": "true", focusable: "false" });
+  const whatEl = el("div", { class: "viz-map__what" }, data.measure, el("small", {}, data.region_name.replace(/^./, (c) => c.toUpperCase()) + " · " + data.season_text));
+  const yearEl = el("div", { class: "viz-map__year viz-num" }), regV = el("div", { class: "viz-map__regv viz-num" });
+  const head = el("div", { class: "viz-map__head" }, whatEl,
+    el("div", {}, el("div", { class: "viz-map__label" }, "Year"), yearEl),
+    el("div", { class: "viz-map__reg" }, el("div", { class: "viz-map__label" }, "Regional average vs baseline"), regV));
+  const cField = el("canvas", { "aria-hidden": "true", style: "cursor:crosshair" });
+  const under = sv("svg", { class: "viz-bm", "aria-hidden": "true", focusable: "false" }), over = sv("svg", { class: "viz-bm", "aria-hidden": "true", focusable: "false" });
   const plot = el("div", { class: "viz-map__plot viz-stage", tabindex: "0", role: "group", "aria-describedby": summaryId,
-    "aria-label": `Anomaly map of ${data.region_name}. Arrow keys change the year, space plays or pauses.` }, cBase, cField, cLines, svg);
-  const readout = el("p", { class: "viz-readout viz-num" }, "Point at the map or tap a cell to read its value for the year shown.");
+    "aria-label": `Values over time for ${data.region_name}. Arrow keys change the year, space plays or pauses.` }, under, cField, over);
+  const readout = el("p", { class: "viz-readout viz-num", "aria-live": "off" }, "Point at the map or tap a cell to read its value for the year shown.");
   const summary = el("p", { class: "viz-summary", id: summaryId, "aria-live": "polite" });
-  const tl = timeline({ n: data.years.length, stepMs: 900, start: curT, onFrame: (tv) => { curT = tv; schedule(); }, onState, onIndex: () => ctl.sync() });
-  const ctl = controls(tl, { n: data.years.length, labelFn: (i) => String(data.years[i]), name: "year", showYear: false });
-  const note = el("p", { class: "viz-note" }, `${data.product_label}. Colours blend smoothly between years; each pixel is interpolated from cells of ${data.grid.dlat}°, so read values from the legend, not from single edges.`);
-  const root = el("figure", { class: "viz viz-anomaly-map" }, head, plot, ctl.node, legend(data, scale), readout, summary, regionalDetails(data, undefined, "map view"), note);
+  const tl = timeline({ n: nY, stepMs: 900, start: curT, onFrame: (tv) => { curT = tv; schedule(); }, onState, onIndex: () => { ctl.sync(); updateReadout(); } });
+  const ctl = controls(tl, { n: nY, labelFn: (i) => String(data.years[i]), name: "year", showYear: false });
+  const note = el("p", { class: "viz-note" }, `${data.product_label}. Each square is one grid cell (${data.grid.dlat}° × ${data.grid.dlon}°) coloured by its own difference from its own baseline; nothing is smoothed in space. While playing, colours blend from one year to the next; paused, each cell shows that year exactly. Hatched grey: no value that year.`);
+  const lg = () => legend(data, scale);
+  let legendEl = lg();
+  const colA = el("div", { class: "viz-col-a" }, plot, legendEl);
+  const colB = el("div", { class: "viz-col-b" }, ctl.node, readout, summary, regionalDetails(data, undefined, "values over time"), note);
+  const root = el("figure", { class: "viz viz-anomaly-map" }, head, el("div", { class: "viz-split" }, colA, colB));
   container.append(root);
 
-  // ---------------------------------------------------------------- geometry (CSS pixels)
-  function geometry() {
-    const b = P.bbox, padLon = (b.e - b.w) * 0.06, padLat = (b.n - b.s) * 0.06;
-    const box = { w: b.w - padLon, e: b.e + padLon, s: b.s - padLat, n: b.n + padLat };
-    const k = Math.max(0.2, Math.cos(((box.s + box.n) / 2) * Math.PI / 180));
-    const ML = 46, MT = 6, MB = 26, MR = 8, avail = Math.max(240, plot.clientWidth || container.clientWidth || 640);
-    const aspect = ((box.e - box.w) * k) / (box.n - box.s);
-    let pw = avail - ML - MR, ph = pw / aspect;
-    const maxH = Math.max(300, Math.min(640, window.innerHeight * 0.72));
-    if (ph > maxH) { ph = maxH; pw = ph * aspect; }
-    const x0 = ML + (avail - ML - MR - pw) / 2;
-    return (G = { box, ML: x0, MT, pw, ph, W: avail, H: MT + ph + MB, dpr: Math.min(2, window.devicePixelRatio || 1),
-      X: (lon) => (lon - box.w) / (box.e - box.w) * pw, Y: (lat) => (box.n - lat) / (box.n - box.s) * ph });
-  }
+  // ---------------------------------------------------------------- frame and cells
+  let layers = null;
   function layout() {
-    geometry();
-    plot.style.height = G.H + "px";
-    for (const c of [cBase, cField, cLines]) {
-      c.width = Math.round(G.pw * G.dpr); c.height = Math.round(G.ph * G.dpr);
-      c.style.left = G.ML + "px"; c.style.top = G.MT + "px"; c.style.width = G.pw + "px"; c.style.height = G.ph + "px";
-    }
-    drawStatic(); drawAxes(); paint();
+    plot.style.width = view.W + "px"; plot.style.height = view.H + "px";
+    for (const s of [under, over]) { s.setAttribute("width", view.W); s.setAttribute("height", view.H); s.setAttribute("viewBox", `0 0 ${view.W.toFixed(0)} ${view.H.toFixed(0)}`); }
+    under.replaceChildren(); over.replaceChildren();
+    layers = basemapLayers(view, { states: true, id });
+    under.append(layers.defs, layers.under); over.append(layers.over, frameLayer(view, { label: data.region_name.replace(/^./, (c) => c.toUpperCase()) }));
+    const d = Math.min(2, window.devicePixelRatio || 1);
+    cField.width = Math.round(view.pw * d); cField.height = Math.round(view.ph * d);
+    cField.style.left = view.ML + "px"; cField.style.top = view.MT + "px"; cField.style.width = view.pw + "px"; cField.style.height = view.ph + "px";
+    paint();
   }
-  function drawStatic() {
-    const d = G.dpr, X = (lon) => G.X(lon) * d, Y = (lat) => G.Y(lat) * d, dark = isDark();
-    let g = cBase.getContext("2d");
-    g.clearRect(0, 0, cBase.width, cBase.height);
-    g.fillStyle = tok("ocean", "#DCE5E8"); g.fillRect(0, 0, cBase.width, cBase.height);
-    if (geo) { g.beginPath(); tracePath(g, geo.land, X, Y, G.box, 2); g.fillStyle = tok("land", "#F7F2E4"); g.fill(); }
-    g = cLines.getContext("2d");
-    g.clearRect(0, 0, cLines.width, cLines.height);
-    if (!geo) return;
-    g.lineJoin = "round";
-    g.beginPath(); tracePath(g, geo.countries, X, Y, G.box, 2); g.strokeStyle = tok("border", "#8E8878"); g.globalAlpha = 0.7; g.lineWidth = 0.8 * d; g.stroke();
-    if (isUS(data.region_box) && geo.states.length) { g.beginPath(); tracePath(g, geo.states, X, Y, G.box, 2); g.globalAlpha = 0.6; g.lineWidth = 0.7 * d; g.stroke(); }
-    g.globalAlpha = 1; g.beginPath(); tracePath(g, geo.land, X, Y, G.box, 2); g.strokeStyle = tok("coast", "#6F6A5A"); g.lineWidth = 1.1 * d; g.stroke();
-    // frame
-    g.strokeStyle = tok("line", "#C9C3B5"); g.lineWidth = d; g.strokeRect(d / 2, d / 2, cLines.width - d, cLines.height - d);
-    void dark;
-  }
-  function drawAxes() {
-    svg.replaceChildren();
-    svg.setAttribute("width", G.W); svg.setAttribute("height", G.H); svg.setAttribute("viewBox", `0 0 ${G.W} ${G.H}`);
-    const b = G.box, ls = niceStep(b.n - b.s, 5), os = niceStep(b.e - b.w, 7), muted = "t-muted num";
-    for (let la = Math.ceil(b.s / ls) * ls; la <= b.n; la += ls) {
-      const y = G.MT + G.Y(la); svg.append(sv("line", { x1: G.ML - 4, x2: G.ML, y1: y, y2: y, stroke: tok("edge", "#7D7868"), "stroke-width": 1 }), sv("text", { x: G.ML - 8, y: y + 4, "text-anchor": "end", class: muted, "font-size": 12 }, Math.abs(la) + "°" + (la < 0 ? "S" : la > 0 ? "N" : "")));
-    }
-    for (let lo = Math.ceil(b.w / os) * os; lo <= b.e; lo += os) {
-      const x = G.ML + G.X(lo); svg.append(sv("line", { x1: x, x2: x, y1: G.MT + G.ph, y2: G.MT + G.ph + 4, stroke: tok("edge", "#7D7868"), "stroke-width": 1 }), sv("text", { x, y: G.MT + G.ph + 18, "text-anchor": "middle", class: muted, "font-size": 12 }, Math.abs(lo) + "°" + (lo < 0 ? "W" : lo > 0 ? "E" : "")));
-    }
-  }
-
-  // ---------------------------------------------------------------- field raster
-  const small = document.createElement("canvas"), mask = document.createElement("canvas"), tmp = document.createElement("canvas");
-  small.width = mask.width = P.nx; small.height = mask.height = P.ny;
-  const sCtx = small.getContext("2d"), mCtx = mask.getContext("2d");
-  const img = sCtx.createImageData(P.nx, P.ny), mimg = mCtx.createImageData(P.nx, P.ny);
-  for (let iy = 0; iy < P.ny; iy++) for (let ix = 0; ix < P.nx; ix++) { const has = P.grid[iy * P.nx + ix] >= 0; const o = ((P.ny - 1 - iy) * P.nx + ix) * 4; mimg.data[o + 3] = has ? 255 : 0; }
-  mCtx.putImageData(mimg, 0, 0);
-  const vals = new Float32Array(P.nx * P.ny);
-
-  function fieldPixels(t) {
-    vals.fill(NaN);
-    for (let iy = 0; iy < P.ny; iy++) for (let ix = 0; ix < P.nx; ix++) { const ci = P.grid[iy * P.nx + ix]; if (ci >= 0) vals[iy * P.nx + ix] = valueAt(P, t, ci); }
-    // fill gaps from valid neighbours so the smooth blend does not fade at coast edges (the hard mask is re-applied afterwards)
-    for (let pass = 0; pass < 2; pass++) {
-      const nxt = vals.slice();
-      for (let iy = 0; iy < P.ny; iy++) for (let ix = 0; ix < P.nx; ix++) {
-        const i = iy * P.nx + ix; if (!Number.isNaN(vals[i])) continue;
-        let s = 0, n = 0;
-        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const jy = iy + dy, jx = ix + dx; if (jy < 0 || jx < 0 || jy >= P.ny || jx >= P.nx) continue; const v = vals[jy * P.nx + jx]; if (!Number.isNaN(v)) { s += v; n++; } }
-        if (n) nxt[i] = s / n;
-      }
-      vals.set(nxt);
-    }
-    for (let iy = 0; iy < P.ny; iy++) for (let ix = 0; ix < P.nx; ix++) {
-      const v = vals[iy * P.nx + ix], c = scale.rgb(Number.isNaN(v) ? 0 : v), o = ((P.ny - 1 - iy) * P.nx + ix) * 4;
-      img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2]; img.data[o + 3] = 255;
-    }
-    sCtx.putImageData(img, 0, 0);
+  const dlat = data.grid.dlat, dlon = data.grid.dlon;
+  function cellValue(t, i) {                         // exact when paused; blended only between two years that both have values
+    const y0 = clamp(Math.floor(t), 0, nY - 1), y1 = Math.min(nY - 1, y0 + 1), f = t - y0;
+    const a = P.A[y0 * P.nC + i], b = P.A[y1 * P.nC + i];
+    if (f < 0.002 || y1 === y0) return a;
+    if (f > 0.998) return b;
+    if (Number.isNaN(a) || Number.isNaN(b)) return f < 0.5 ? a : b;
+    return a + (b - a) * f;
   }
   function schedule() { if (!dirty) { dirty = true; raf = requestAnimationFrame(paint); } }
   function paint() {
-    dirty = false; if (destroyed || !G) return;
-    const t = curT, d = G.dpr;
-    fieldPixels(t);
-    const b = P.bbox, dx = G.X(b.w) * d, dy = G.Y(b.n) * d, dw = (G.X(b.e) - G.X(b.w)) * d, dh = (G.Y(b.s) - G.Y(b.n)) * d;
-    if (tmp.width !== cField.width || tmp.height !== cField.height) { tmp.width = cField.width; tmp.height = cField.height; }
-    const tg = tmp.getContext("2d"); tg.globalCompositeOperation = "source-over"; tg.clearRect(0, 0, tmp.width, tmp.height);
-    tg.imageSmoothingEnabled = smooth; tg.imageSmoothingQuality = "high";
-    // keep the half-cell border sharp: draw the raster so cell centres sit on their true positions
-    tg.drawImage(small, dx, dy, dw, dh);
-    tg.globalCompositeOperation = "destination-in"; tg.imageSmoothingEnabled = false; tg.drawImage(mask, dx, dy, dw, dh);
-    const fg = cField.getContext("2d"); fg.clearRect(0, 0, cField.width, cField.height); fg.globalAlpha = 0.94; fg.drawImage(tmp, 0, 0); fg.globalAlpha = 1;
+    dirty = false; if (destroyed) return;
+    const d = cField.width / view.pw, g = cField.getContext("2d"), t = curT;
+    g.clearRect(0, 0, cField.width, cField.height);
+    const X = (lon) => Math.round((view.X(lon) - view.ML) * d), Y = (lat) => Math.round((view.Y(lat) - view.MT) * d);
+    const hatch = [], cellPx = Math.abs(view.X(P.lon[0] + dlon) - view.X(P.lon[0]));
+    for (let i = 0; i < P.nC; i++) {
+      const v = cellValue(t, i), x0 = X(P.lon[i] - dlon / 2), x1 = X(P.lon[i] + dlon / 2), y0 = Y(P.lat[i] + dlat / 2), y1 = Y(P.lat[i] - dlat / 2);
+      if (Number.isNaN(v)) { g.fillStyle = tok("nodata", "#F0EEE6"); g.fillRect(x0, y0, x1 - x0, y1 - y0); hatch.push([x0, y0, x1, y1]); continue; }
+      g.fillStyle = scale.css(v); g.fillRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
+    }
+    if (hatch.length) { g.beginPath(); for (const [x0, y0, x1, y1] of hatch) { g.moveTo(x0, y1); g.lineTo(x1, y0); } g.strokeStyle = tok("nodata-mark", "#6D777C"); g.lineWidth = d; g.globalAlpha = 0.7; g.stroke(); g.globalAlpha = 1; }
+    if (cellPx >= 9) {                                // fine cell edges only where cells are big enough to carry them
+      g.beginPath(); g.strokeStyle = tok("surface", "#FFFDF7"); g.globalAlpha = 0.35; g.lineWidth = d * 0.6;
+      for (let i = 0; i < P.nC; i++) { const x0 = X(P.lon[i] - dlon / 2), x1 = X(P.lon[i] + dlon / 2), y0 = Y(P.lat[i] + dlat / 2), y1 = Y(P.lat[i] - dlat / 2); g.rect(x0 + 0.5, y0 + 0.5, x1 - x0, y1 - y0); }
+      g.stroke(); g.globalAlpha = 1;
+    }
+    if (selected >= 0) {
+      const x0 = X(P.lon[selected] - dlon / 2), x1 = X(P.lon[selected] + dlon / 2), y0 = Y(P.lat[selected] + dlat / 2), y1 = Y(P.lat[selected] - dlat / 2);
+      g.lineWidth = 2.5 * d; g.strokeStyle = tok("surface", "#FFFDF7"); g.strokeRect(x0, y0, x1 - x0, y1 - y0);
+      g.lineWidth = 1.5 * d; g.strokeStyle = tok("ink", "#192D40"); g.strokeRect(x0, y0, x1 - x0, y1 - y0);
+    }
     const yi = Math.round(t); yearEl.textContent = String(data.years[yi]);
     const rv = data.regional.anomaly[yi]; regV.textContent = rv == null ? "n/a" : signed(rv, 2) + " " + U;
   }
 
   // ---------------------------------------------------------------- reading a cell
-  function readAt(clientX, clientY) {
-    if (!G) return;
-    const r = cLines.getBoundingClientRect(), px = (clientX - r.left) / r.width, py = (clientY - r.top) / r.height;
-    const lon = G.box.w + px * (G.box.e - G.box.w), lat = G.box.n - py * (G.box.n - G.box.s);
-    const ix = Math.round((lon - P.lo0) / data.grid.dlon), iy = Math.round((lat - P.la0) / data.grid.dlat);
-    const i = ix >= 0 && ix < P.nx && iy >= 0 && iy < P.ny ? P.grid[iy * P.nx + ix] : -1, yi = tl.index;
-    if (i < 0) { readout.textContent = `${fmtLat(lat)}, ${fmtLon(lon)}: outside the cells of this case.`; return; }
-    const v = P.A[yi * P.nC + i];
-    readout.textContent = `${fmtLat(P.lat[i])}, ${fmtLon(P.lon[i])}, ${data.years[yi]}: ${Number.isNaN(v) ? "no value this year" : signed(v, 2) + " " + U + " from this cell's own baseline"}.`;
+  function cellAt(clientX, clientY) {
+    const r = cField.getBoundingClientRect(), px = (clientX - r.left) / r.width, py = (clientY - r.top) / r.height;
+    const lon = view.box.w + px * (view.box.e - view.box.w), lat = view.box.n - py * (view.box.n - view.box.s);
+    const ix = Math.round((lon - P.lo0) / dlon), iy = Math.round((lat - P.la0) / dlat);
+    return { lat, lon, i: ix >= 0 && ix < P.nx && iy >= 0 && iy < P.ny ? P.grid[iy * P.nx + ix] : -1 };
   }
-  cLines.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") readAt(e.clientX, e.clientY); });
-  cLines.addEventListener("pointerdown", (e) => readAt(e.clientX, e.clientY));
+  function updateReadout() {
+    const yi = tl.index;
+    if (selected < 0) { readout.textContent = "Point at the map or tap a cell to read its value for the year shown."; return; }
+    const v = P.A[yi * P.nC + selected];
+    readout.textContent = `${fmtLat(P.lat[selected])}, ${fmtLon(P.lon[selected])}, ${data.years[yi]}: ${Number.isNaN(v) ? "no value this year" : signed(v, 2) + " " + U + " from this cell's own baseline"}.`;
+  }
+  function pick(e) { const c = cellAt(e.clientX, e.clientY); selected = c.i; if (c.i < 0) { readout.textContent = `${fmtLat(c.lat)}, ${fmtLon(c.lon)}: outside the cells of this case.`; schedule(); return; } updateReadout(); schedule(); }
+  cField.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") pick(e); });
+  cField.addEventListener("pointerdown", pick);
+  cField.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse" && selected >= 0) { selected = -1; updateReadout(); schedule(); } });
 
   function onState() {
     ctl.sync();
     const yi = tl.index;
-    summary.textContent = `${caseLine(data)}. ${data.years[yi]}: regional average ${regionalMeanText(data, yi)}. The colour range is the same in every year (±${data.scale.max} ${U}), so years can be compared directly.`;
+    summary.textContent = `${caseLine(data)}. ${data.years[yi]}: regional average ${regionalMeanText(data, yi)}. The colour range is the same in every year (±${data.scale.max} ${U}; ${ends.lo} to ${ends.hi}), so years can be compared directly.`;
+    updateReadout();
     options.onYear && options.onYear(yi);
   }
 
   // ---------------------------------------------------------------- start
-  geo = await loadGeo({ states: isUS(data.region_box) }).catch(() => null);
-  if (destroyed) return null;
   layout(); onState(); stageKeys(plot, tl);
-  const offSize = sizeObserver(plot, () => { if (!destroyed) layout(); });
-  const offTheme = onTheme(() => { scale = makeScale(data); const lg = root.querySelector(".viz-legend"); if (lg) lg.replaceWith(legend(data, scale)); drawStatic(); drawAxes(); schedule(); });
+  const offSize = options.view ? () => {} : sizeObserver(container, () => { if (destroyed) return; const w = (container.clientWidth || 640) - 60; if (Math.abs(w - view.pw) > 8) { view = caseFrame(data, w); layout(); } });
+  const offTheme = onTheme(() => { scale = makeScale(data); const n = lg(); legendEl.replaceWith(n); legendEl = n; layout(); });
   if (options.autoplay && !reducedMotion()) tl.play();
-  void lastYi;
   return { el: root, play: () => tl.play(), pause: () => tl.pause(), seek: (i) => tl.seek(i), timeline: tl, destroy() { destroyed = true; cancelAnimationFrame(raf); tl.destroy(); offSize(); offTheme(); root.remove(); } };
 }

@@ -222,7 +222,7 @@ export function falseAlarm(opts = {}) {
   const rulingColumn = h("div", { class: "ruling-column" }, ruling, refs.leak, refs.check, tipBox);
 
   // the compact version: the three tests on the left, the planet with its headline, count and legend on the right
-  const previewRail = h("aside", { class: "hearings fa-rail", "aria-label": "Choose a test" }, railList);
+  const previewRail = h("div", { class: "hearings fa-rail", role: "group", "aria-label": "Choose a test" }, railList);
   const previewStage = h("div", { class: "fa-prev-main" }, refs.headline, refs.sub, refs.stage, refs.readout, legend, refs.summary);
   const node = preview
     ? h("div", { class: "fa-view fa-preview fa-pending" }, h("div", { class: "workspace fa-prev-ws" }, previewRail, previewStage))

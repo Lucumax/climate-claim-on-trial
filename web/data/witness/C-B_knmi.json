@@ -2,7 +2,7 @@
  "claim_id": "C-B",
  "status": "independent partner-agency witness, exploratory check, not the registered test",
  "title": "A second witness from the ground: station-based rainfall from KNMI Climate Explorer",
- "generated_utc": "2026-11-14T18:42:29+00:00",
+ "generated_utc": "2026-11-14T21:49:52+00:00",
  "witness": {
   "name": "KNMI Climate Explorer (Royal Netherlands Meteorological Institute)",
   "dataset": "CRU TS 4.10 precipitation (pre), 0.5 degree, land points, 1901-2025",
@@ -185,8 +185,8 @@
    "mk_p_independent_years": 0.06503135683341554,
    "mk_p_hamed_rao": 0.06503135683341554,
    "mk_tau": 0.26666666666666666,
-   "mk_p_registered_method": 0.06503135683341554,
-   "registered_method_name": "mk_independent",
+   "mk_p_registered_method": 0.012,
+   "registered_method_name": "boot_mk_L3",
    "ols_per_decade": 0.22241337767969732,
    "ols_p": 0.02026989124235712
   },
@@ -201,8 +201,8 @@
    "mk_p_independent_years": 0.029854753709825932,
    "mk_p_hamed_rao": 0.029854753709825932,
    "mk_tau": 0.31333333333333335,
-   "mk_p_registered_method": 0.029854753709825932,
-   "registered_method_name": "mk_independent",
+   "mk_p_registered_method": 0.004,
+   "registered_method_name": "boot_mk_L3",
    "ols_per_decade": 0.22893411492307694,
    "ols_p": 0.019847219692508133
   },
@@ -240,12 +240,12 @@
   "note": "Copied read-only from the registered case bundle. Nothing in this file changes it.",
   "sen_per_decade": 0.206775,
   "interval_95": [
-   0.0233249,
-   0.489271
+   0.0964132,
+   0.330281
   ],
-  "interval_method": "analytic Sen interval (Gilbert) with Hamed-Rao variance",
-  "shipped_test": "Mann-Kendall assuming independent years",
-  "shipped_p": 0.0298548,
+  "interval_method": "residual moving-block bootstrap around the Sen line, percentile 95%",
+  "shipped_test": "Mann-Kendall with moving-block bootstrap p-value (block 3)",
+  "shipped_p": 0.004,
   "verdict_block_keys": [
    "id",
    "branch",

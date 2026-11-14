@@ -29,3 +29,23 @@
 [   978s] R-trend-n45-phi0.2: regional_power=0.647, interval_coverage_bootstrap=0.867
 [  1087s] R-trend-n45-phi0.3: regional_power=0.614, interval_coverage_bootstrap=0.855
 [  1181s] R-trend-n45-phi0.45: regional_power=0.555, interval_coverage_bootstrap=0.833
+[  1279s] R-trend-n45-phi0.6: regional_power=0.512, interval_coverage_bootstrap=0.769
+[  1282s] C-none-phi0.0: p_any_bh_rejection=0.060
+[  1285s] C-positive-phi0.0: bh_fdr=0.037
+[  1288s] C-mixed-phi0.0: bh_fdr=0.050
+[  1292s] C-none-phi0.1: p_any_bh_rejection=0.125
+[  1295s] C-positive-phi0.1: bh_fdr=0.084
+[  1299s] C-mixed-phi0.1: bh_fdr=0.062
+[  1302s] C-none-phi0.2: p_any_bh_rejection=0.170
+[  1305s] C-positive-phi0.2: bh_fdr=0.149
+[  1308s] C-mixed-phi0.2: bh_fdr=0.151
+[  1312s] C-none-phi0.3: p_any_bh_rejection=0.325
+[  1315s] C-positive-phi0.3: bh_fdr=0.224
+[  1318s] C-mixed-phi0.3: bh_fdr=0.240
+[  1322s] C-none-phi0.45: p_any_bh_rejection=0.665
+[  1325s] C-positive-phi0.45: bh_fdr=0.399
+[  1328s] C-mixed-phi0.45: bh_fdr=0.368
+[  1331s] C-none-phi0.6: p_any_bh_rejection=0.895
+[  1335s] C-positive-phi0.6: bh_fdr=0.532
+[  1338s] C-mixed-phi0.6: bh_fdr=0.509
+summary: {'n_scenarios': 50, 'failures': ['R-null-n23-phi0.0:B3', 'R-null-n23-phi0.1:B1', 'R-null-n23-phi0.1:B4', 'R-null-n23-phi0.1:B3', 'R-null-n23-phi0.2:B1', 'R-null-n23-phi0.2:B3', 'R-null-n23-phi0.3:B1', 'R-null-n23-phi0.3:B4', 'R-null-n23-phi0.3:B3', 'R-null-n23-phi0.3:B3a', 'R-null-n23-phi0.45:B1', 'R-null-n23-phi0.45:B3', 'R-null-n23-phi0.45:B3a', 'R-null-n23-phi0.6:B1', 'R-null-n23-phi0.6:B3', 'R-null-n23-phi0.6:B3a', 'R-null-n25-phi0.0:B3', 'R-null-n25-phi0.1:B1', 'R-null-n25-phi0.1:B3', 'R-null-n25-phi0.2:B1', 'R-null-n25-phi0.2:B3', 'R-null-n25-phi0.3:B1', 'R-null-n25-phi0.3:B3', 'R-null-n25-phi0.3:B3a', 'R-null-n25-phi0.45:B1', 'R-null-n25-phi0.45:B3', 'R-null-n25-phi0.45:B3a', 'R-null-n25-phi0.6:B1', 'R-null-n25-phi0.6:B3', 'R-null-n25-phi0.6:B3a', 'R-null-n45-phi0.0:B3', 'R-null-n45-phi0.1:B1', 'R-null-n45-phi0.1:B3', 'R-null-n45-phi0.2:B1', 'R-null-n45-phi0.2:B3', 'R-null-n45-phi0.3:B1', 'R-null-n45-phi0.3:B3', 'R-null-n45-phi0.3:B3a', 'R-null-n45-phi0.45:B1', 'R-null-n45-phi0.45:B4', 'R-null-n45-phi0.45:B3', 'R-null-n45-phi0.45:B3a', 'R-null-n45-phi0.6:B1', 'R-null-n45-phi0.6:B3', 'R-null-n45-phi0.6:B3a', 'R-null-skewed-n25-phi0.3:B1', 'R-null-skewed-n25-phi0.3:B4', 'R-null-skewed-n25-phi0.3:B3', 'R-null-skewed-n25-phi0.3:B3a', 'R-null-gaps-n25-phi0.3:B1', 'R-null-gaps-n25-phi0.3:B3', 'R-null-gaps-n25-phi0.3:B3a', 'R-trend-n25-phi0.0:B3', 'R-trend-n25-phi0.1:B3', 'R-trend-n25-phi0.2:B3', 'R-trend-n25-phi0.3:B3', 'R-trend-n25-phi0.3:B3a', 'R-trend-n25-phi0.45:B3', 'R-trend-n25-phi0.45:B3a', 'R-trend-n25-phi0.6:B3', 'R-trend-n25-phi0.6:B3a', 'R-trend-n45-phi0.0:B3', 'R-trend-n45-phi0.1:B3', 'R-trend-n45-phi0.2:B3', 'R-trend-n45-phi0.3:B3', 'R-trend-n45-phi0.3:B3a', 'R-trend-n45-phi0.45:B3', 'R-trend-n45-phi0.45:B3a', 'R-trend-n45-phi0.6:B3', 'R-trend-n45-phi0.6:B3a', 'C-none-phi0.2:B2', 'C-positive-phi0.2:B2', 'C-mixed-phi0.2:B2', 'C-none-phi0.3:B2', 'C-positive-phi0.3:B2', 'C-mixed-phi0.3:B2', 'C-none-phi0.45:B2', 'C-positive-phi0.45:B2', 'C-mixed-phi0.45:B2', 'C-none-phi0.6:B2', 'C-positive-phi0.6:B2', 'C-mixed-phi0.6:B2'], 'conservative_size': [], 'all_floors_ok': True}

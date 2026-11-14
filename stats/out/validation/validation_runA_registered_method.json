@@ -1,0 +1,3005 @@
+{
+ "run": {
+  "generated_at": "2026-11-14T11:09:32-05:00",
+  "code_version": "1.0.0",
+  "quick": false,
+  "seed": 11,
+  "elapsed_seconds": 1338.0,
+  "q": 0.1,
+  "alpha": 0.05,
+  "replicate_floors": {
+   "regional_size": 4000,
+   "regional_cov": 1000,
+   "cells_fields": 200
+  },
+  "bars": {
+   "B1": "size within 0.05 +/- 2SE (liberal side disables regional verdict)",
+   "B2": "FDR <= q + 2SE; P(any rejection) <= q + 2SE under global null",
+   "B3": "bootstrap interval coverage >= 0.90",
+   "B4": "|Sen bias| <= 2SE"
+  }
+ },
+ "scenarios": [
+  {
+   "id": "R-null-n23-phi0.0",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.04575,
+     "se": 0.0033036698344416924,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.04625,
+     "se": 0.0033208032725531933
+    },
+    "regional_size_ols": {
+     "value": 0.048,
+     "se": 0.005519420259411309,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.007705118223295484,
+     "se": 0.005171908078157485
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.855,
+     "se": 0.011134406135937382,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0179863239248692
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.957,
+     "se": 0.006414904519944161
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": true,
+     "within_band": true,
+     "side": "ok",
+     "band": [
+      0.04339266033111662,
+      0.056607339668883386
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.01034381615631497
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n23-phi0.1",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.06425,
+     "se": 0.0038769168645974342,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.06575,
+     "se": 0.003918766945736886
+    },
+    "regional_size_ols": {
+     "value": 0.06533333333333333,
+     "se": 0.006380433051598138,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.01702318058179484,
+     "se": 0.00556757404539633
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.812,
+     "se": 0.01235540367612487,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0631144911005719
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.93,
+     "se": 0.008068457101577721
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04224616627080514,
+      0.05775383372919487
+     ]
+    },
+    "B4": {
+     "passed": false,
+     "bar": 0.01113514809079266
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n23-phi0.2",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.0835,
+     "se": 0.004374007030172677,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.087,
+     "se": 0.004456203541132295
+    },
+    "regional_size_ols": {
+     "value": 0.10533333333333333,
+     "se": 0.007926252675853923,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 2.2696718272389836e-05,
+     "se": 0.005979441173985954
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.825,
+     "se": 0.012015614840697917,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1284429796332502
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.904,
+     "se": 0.009315793041926167
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04125198593965465,
+      0.058748014060345355
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.011958882347971909
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n23-phi0.3",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.1105,
+     "se": 0.004957059360144883,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.116,
+     "se": 0.005063200568810207
+    },
+    "regional_size_ols": {
+     "value": 0.13,
+     "se": 0.008683317338436964,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.014346858841274145,
+     "se": 0.006596880269571582
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.8,
+     "se": 0.012649110640673518,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1501720758846266
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.875,
+     "se": 0.010458250331675944
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04008588127971024,
+      0.05991411872028977
+     ]
+    },
+    "B4": {
+     "passed": false,
+     "bar": 0.013193760539143165
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n23-phi0.45",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.171,
+     "se": 0.005953129429132211,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.191,
+     "se": 0.006215283581623609
+    },
+    "regional_size_ols": {
+     "value": 0.22333333333333333,
+     "se": 0.010753466280090202,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.003597990139188182,
+     "se": 0.0075995750581267065
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.759,
+     "se": 0.013524755080961725,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.209803081329031
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.824,
+     "se": 0.012042591083317579
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03809374114173558,
+      0.061906258858264424
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.015199150116253413
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n23-phi0.6",
+   "kind": "regional",
+   "n": 23,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.2285,
+     "se": 0.006638669859241383,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.274,
+     "se": 0.007052020986922827
+    },
+    "regional_size_ols": {
+     "value": 0.31266666666666665,
+     "se": 0.011969578723364278,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.01107401060881162,
+     "se": 0.008768759791374228
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.706,
+     "se": 0.014407081592050489,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.22995326723058
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.756,
+     "se": 0.013581752464244074
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03672266028151724,
+      0.06327733971848276
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.017537519582748455
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n25-phi0.0",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.0485,
+     "se": 0.003396606762638266,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.04925,
+     "se": 0.003421419204803761
+    },
+    "regional_size_ols": {
+     "value": 0.05733333333333333,
+     "se": 0.006002567351959894,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0024175717205852446,
+     "se": 0.004552684475601501
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.864,
+     "se": 0.010839926199010766,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9054635529382743
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.948,
+     "se": 0.007021111023192843
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": true,
+     "within_band": true,
+     "side": "ok",
+     "band": [
+      0.04320678647472347,
+      0.05679321352527653
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.009105368951203003
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n25-phi0.1",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.07025,
+     "se": 0.004040882870735058,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.072,
+     "se": 0.004087052727822336
+    },
+    "regional_size_ols": {
+     "value": 0.072,
+     "se": 0.006674129156676548,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.006984879849336981,
+     "se": 0.00494761152764608
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.827,
+     "se": 0.011961229033840963,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9429234810810242
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.924,
+     "se": 0.008379976133617564
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04191823425852989,
+      0.058081765741470115
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.00989522305529216
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n25-phi0.2",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.09275,
+     "se": 0.004586595619301968,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.097,
+     "se": 0.004679503178757335
+    },
+    "regional_size_ols": {
+     "value": 0.10133333333333333,
+     "se": 0.00779165745691672,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0021340886400425313,
+     "se": 0.0054036040519751674
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.83,
+     "se": 0.0118785521003193,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.984300732364584
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.914,
+     "se": 0.008865889690267975
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04082680876139606,
+      0.05917319123860394
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.010807208103950335
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n25-phi0.3",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.12,
+     "se": 0.005138093031466052,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.12375,
+     "se": 0.005206628887773739
+    },
+    "regional_size_ols": {
+     "value": 0.14866666666666667,
+     "se": 0.009185673224788296,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.004371944986493352,
+     "se": 0.0058738060218440176
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.809,
+     "se": 0.012430567163247216,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0257938201941743
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.876,
+     "se": 0.010422283818818216
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.0397238139370679,
+      0.060276186062932106
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.011747612043688035
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n25-phi0.45",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.176,
+     "se": 0.006021295541658788,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.1985,
+     "se": 0.006306697828499476
+    },
+    "regional_size_ols": {
+     "value": 0.21466666666666667,
+     "se": 0.01060141150630075,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.00721511896828714,
+     "se": 0.006774460697270112
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.747,
+     "se": 0.013747399754135324,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0703390279212013
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.806,
+     "se": 0.012504559168559281
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03795740891668242,
+      0.06204259108331758
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.013548921394540224
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n25-phi0.6",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.23125,
+     "se": 0.006666585285961622,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.287,
+     "se": 0.007152464610188575
+    },
+    "regional_size_ols": {
+     "value": 0.31933333333333336,
+     "se": 0.01203770619222659,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0058932971618962625,
+     "se": 0.007994321188496235
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.702,
+     "se": 0.01446360950800318,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.1012728993456862
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.766,
+     "se": 0.013388203763014663
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03666682942807676,
+      0.06333317057192325
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.01598864237699247
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n45-phi0.0",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.046,
+     "se": 0.0033122499905653257,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.05025,
+     "se": 0.003454161891834255
+    },
+    "regional_size_ols": {
+     "value": 0.042,
+     "se": 0.005179189125722288,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0033833197581212247,
+     "se": 0.0019063935588805648
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.898,
+     "se": 0.009570579919733181,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.395730363696685
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.953,
+     "se": 0.00669260786241059
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": true,
+     "within_band": true,
+     "side": "ok",
+     "band": [
+      0.04337550001886935,
+      0.05662449998113066
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.0038127871177611296
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n45-phi0.1",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.071,
+     "se": 0.004060757318530621,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.07375,
+     "se": 0.00413252155166794
+    },
+    "regional_size_ols": {
+     "value": 0.08666666666666667,
+     "se": 0.007264321741936433,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.00407710179899726,
+     "se": 0.0020729265925774794
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.89,
+     "se": 0.009894442884771228,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.4224009038277914
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.937,
+     "se": 0.007683163410991592
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04187848536293876,
+      0.05812151463706124
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.004145853185154959
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n45-phi0.2",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.089,
+     "se": 0.004502193909640055,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.09775,
+     "se": 0.004695607987790292
+    },
+    "regional_size_ols": {
+     "value": 0.09266666666666666,
+     "se": 0.007486857620994073,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0017921778881093942,
+     "se": 0.0022129440461568003
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.882,
+     "se": 0.01020176455325254,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.4495790254177151
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.917,
+     "se": 0.008724161850859943
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04099561218071989,
+      0.059004387819280114
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.0044258880923136006
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n45-phi0.3",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.12025,
+     "se": 0.005142711772499019,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.13675,
+     "se": 0.005432527899146032
+    },
+    "regional_size_ols": {
+     "value": 0.15266666666666667,
+     "se": 0.009286533460000223,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.004001881286398843,
+     "se": 0.002465855308568495
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.851,
+     "se": 0.011260506205317771,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.47891046321088093
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.886,
+     "se": 0.010050074626588601
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03971457645500197,
+      0.06028542354499804
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.00493171061713699
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n45-phi0.45",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.15875,
+     "se": 0.005778157956909797,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.2155,
+     "se": 0.006501148936918766
+    },
+    "regional_size_ols": {
+     "value": 0.232,
+     "se": 0.010898807274192897,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0058732443567985106,
+     "se": 0.002896106822170983
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.812,
+     "se": 0.01235540367612487,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.5116223487750344
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.85,
+     "se": 0.011291589790636216
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03844368408618041,
+      0.0615563159138196
+     ]
+    },
+    "B4": {
+     "passed": false,
+     "bar": 0.005792213644341966
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-n45-phi0.6",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.19175,
+     "se": 0.006224587084698871,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.3035,
+     "se": 0.0072695899127804995
+    },
+    "regional_size_ols": {
+     "value": 0.326,
+     "se": 0.012103002382329215,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.005640439658246976,
+     "se": 0.0034247298990646505
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.758,
+     "se": 0.013543854695026818,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.5325156155277037
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.792,
+     "se": 0.012834952278836098
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.037550825830602264,
+      0.06244917416939774
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.006849459798129301
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-skewed-n25-phi0.3",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.3,
+   "noise": "skewed",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.14525,
+     "se": 0.005571185634584437,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.15375,
+     "se": 0.005703309072371933
+    },
+    "regional_size_ols": {
+     "value": 0.156,
+     "se": 0.009368884672147481,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.02375582564164921,
+     "se": 0.004683137950286254
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.815,
+     "se": 0.012279047194306243,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.8339922059150454
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.862,
+     "se": 0.01090669519148674
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.03885762873083113,
+      0.061142371269168876
+     ]
+    },
+    "B4": {
+     "passed": false,
+     "bar": 0.009366275900572507
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-null-gaps-n25-phi0.3",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.12,
+   "trend_sd_per_decade": 0.0,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_size": {
+     "value": 0.1065,
+     "se": 0.0048774416962173925,
+     "R": 4000
+    },
+    "regional_size_mk_independent": {
+     "value": 0.10975,
+     "se": 0.004942290397680007
+    },
+    "regional_size_ols": {
+     "value": 0.12666666666666668,
+     "se": 0.008587674198998712,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0014303824111408438,
+     "se": 0.006126114177709456
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.79,
+     "se": 0.01288021738946979,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0662514622329404
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.884,
+     "se": 0.010126401137620413
+    }
+   },
+   "checks": {
+    "B1": {
+     "passed": false,
+     "within_band": false,
+     "side": "liberal",
+     "band": [
+      0.04024511660756522,
+      0.05975488339243479
+     ]
+    },
+    "B4": {
+     "passed": true,
+     "bar": 0.012252228355418912
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n25-phi0.0",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.1625,
+     "se": 0.005832961297660049,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.166,
+     "se": 0.005883111421688357
+    },
+    "regional_power_ols": {
+     "value": 0.18933333333333333,
+     "se": 0.010115539933594654,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.003173338868206764,
+     "se": 0.004581070470404955
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.862,
+     "se": 0.01090669519148674,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9076559080877061
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.955,
+     "se": 0.00655553201502365
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.00916214094080991
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n25-phi0.1",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.188,
+     "se": 0.006177701838062436,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.19125,
+     "se": 0.006218388808606294
+    },
+    "regional_power_ols": {
+     "value": 0.20933333333333334,
+     "se": 0.01050437651295525,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0014268501195307268,
+     "se": 0.0049194147852943335
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.847,
+     "se": 0.011383804285035824,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.950904756879823
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.941,
+     "se": 0.007451107300260817
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.009838829570588667
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n25-phi0.2",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.2055,
+     "se": 0.006388852596515277,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.213,
+     "se": 0.006473619543964567
+    },
+    "regional_power_ols": {
+     "value": 0.242,
+     "se": 0.011058511051071328,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.003253878420492945,
+     "se": 0.005479434529313417
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.825,
+     "se": 0.012015614840697917,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.9970740654973002
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.915,
+     "se": 0.008819013550278736
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.010958869058626834
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n25-phi0.3",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.2335,
+     "se": 0.00668912830643874,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.244,
+     "se": 0.006790876232122037
+    },
+    "regional_power_ols": {
+     "value": 0.25866666666666666,
+     "se": 0.011306582808913347,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.003273755412133561,
+     "se": 0.005877854706031086
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.809,
+     "se": 0.012430567163247216,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0329205191645587
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.875,
+     "se": 0.010458250331675944
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.011755709412062172
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n25-phi0.45",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.25075,
+     "se": 0.006853364821385185,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.28125,
+     "se": 0.007108945728798328
+    },
+    "regional_power_ols": {
+     "value": 0.322,
+     "se": 0.012064161802628478,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.006826486169014124,
+     "se": 0.006670649711026774
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.78,
+     "se": 0.01309961831505025,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.0979700413497722
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.837,
+     "se": 0.011680368144883107
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.013341299422053548
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n25-phi0.6",
+   "kind": "regional",
+   "n": 25,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.30125,
+     "se": 0.007254282140570492,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.36475,
+     "se": 0.007610969673766938
+    },
+    "regional_power_ols": {
+     "value": 0.4026666666666667,
+     "se": 0.012662970220876885,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.002041681584583995,
+     "se": 0.008022843487006416
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.693,
+     "se": 0.01458598642533305,
+     "R": 1000,
+     "mean_width_sd_per_decade": 1.086213240463088
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.769,
+     "se": 0.01332812815064441
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.016045686974012832
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n45-phi0.0",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.0,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.68025,
+     "se": 0.007374109056353859,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.688,
+     "se": 0.007325571650048889
+    },
+    "regional_power_ols": {
+     "value": 0.712,
+     "se": 0.01169204858012487,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.00021452410718465352,
+     "se": 0.0018614562937349938
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.892,
+     "se": 0.009815090422405694,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.40107090540064155
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.958,
+     "se": 0.006343185319695463
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.0037229125874699877
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n45-phi0.1",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.1,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.66525,
+     "se": 0.007461441507845518,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.67725,
+     "se": 0.0073922668630806345
+    },
+    "regional_power_ols": {
+     "value": 0.7213333333333334,
+     "se": 0.011576169647327378,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0009800709209097991,
+     "se": 0.0020174911874508775
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.875,
+     "se": 0.010458250331675944,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.42502433235727655
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.932,
+     "se": 0.00796090447122687
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.004034982374901755
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n45-phi0.2",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.2,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.64725,
+     "se": 0.007555088310205248,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.6695,
+     "se": 0.007437569327407981
+    },
+    "regional_power_ols": {
+     "value": 0.6853333333333333,
+     "se": 0.011990317081032665,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0027578259484801458,
+     "se": 0.0022588613873829513
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.867,
+     "se": 0.010738295954200556,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.44783940342155143
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.901,
+     "se": 0.009444522221901962
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.0045177227747659025
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": true,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n45-phi0.3",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.3,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.614,
+     "se": 0.0076974671158764945,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.66025,
+     "se": 0.007488657047495232
+    },
+    "regional_power_ols": {
+     "value": 0.6766666666666666,
+     "se": 0.012077220676101737,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0009433818960910441,
+     "se": 0.002432277930119653
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.855,
+     "se": 0.011134406135937382,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.4788826992744048
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.883,
+     "se": 0.010164201887015036
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.004864555860239306
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n45-phi0.45",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.45,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.55475,
+     "se": 0.007858155596257941,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.637,
+     "se": 0.007603140798380627
+    },
+    "regional_power_ols": {
+     "value": 0.666,
+     "se": 0.012177684508969675,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.0024664073716745482,
+     "se": 0.0029379347781230162
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.833,
+     "se": 0.01179453263168999,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.513760099932555
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.861,
+     "se": 0.010939789760319894
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.0058758695562460325
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "R-trend-n45-phi0.6",
+   "kind": "regional",
+   "n": 45,
+   "phi": 0.6,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "R_size": 4000,
+   "R_cov": 1000,
+   "boot_reps": 2000,
+   "block_len": 3,
+   "metrics": {
+    "regional_power": {
+     "value": 0.512,
+     "se": 0.00790341698254622,
+     "R": 4000
+    },
+    "regional_power_mk_independent": {
+     "value": 0.6375,
+     "se": 0.007600883994641676
+    },
+    "regional_power_ols": {
+     "value": 0.6633333333333333,
+     "se": 0.012201699942281874,
+     "R": 1500
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0014863096763983608,
+     "se": 0.003485567555885452
+    },
+    "interval_coverage_bootstrap": {
+     "value": 0.769,
+     "se": 0.01332812815064441,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.5425562740806199
+    },
+    "interval_coverage_analytic_hr": {
+     "value": 0.806,
+     "se": 0.012504559168559281
+    }
+   },
+   "checks": {
+    "B4": {
+     "passed": true,
+     "bar": 0.006971135111770904
+    },
+    "B3": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "residual block bootstrap"
+    },
+    "B3a": {
+     "passed": false,
+     "bar": 0.9,
+     "method": "analytic Sen CI with Hamed-Rao variance"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-none-phi0.0",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.0,
+   "truth": "none",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "cell_size_rung1": {
+     "value": 0.0516375,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.050675,
+     "se": null
+    },
+    "p_any_bh_rejection": {
+     "value": 0.06,
+     "se": 0.016792855623746664,
+     "R": 200
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": true,
+     "bar": 0.13358571124749333,
+     "what": "P(any rejection)"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-positive-phi0.0",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.0,
+   "truth": "positive",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.03673280063595365,
+     "se": 0.008321088017485042,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.07583333333333334,
+     "se": 0.009836391938366381
+    },
+    "cell_power_rung3": {
+     "value": 0.33216666666666667,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.00294325867696537,
+     "se": 0.009188502167093653
+    },
+    "cell_size_rung1": {
+     "value": 0.045964285714285714,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.045339285714285714,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": true,
+     "bar": 0.1166421760349701,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-mixed-phi0.0",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.0,
+   "truth": "mixed",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.05041931642558328,
+     "se": 0.010877039566758997,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.05833333333333332,
+     "se": 0.008114591430350558
+    },
+    "cell_power_rung3": {
+     "value": 0.29825,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.010675946272461068,
+     "se": 0.008893398474164845
+    },
+    "cell_size_rung1": {
+     "value": 0.048160714285714286,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.04742857142857143,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": true,
+     "bar": 0.121754079133518,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-none-phi0.1",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.1,
+   "truth": "none",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "cell_size_rung1": {
+     "value": 0.067575,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.065875,
+     "se": null
+    },
+    "p_any_bh_rejection": {
+     "value": 0.125,
+     "se": 0.023385358667337135,
+     "R": 200
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": true,
+     "bar": 0.14677071733467428,
+     "what": "P(any rejection)"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-positive-phi0.1",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.1,
+   "truth": "positive",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.08408280154313365,
+     "se": 0.014801798396786756,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.08037500000000002,
+     "se": 0.010276892636594889
+    },
+    "cell_power_rung3": {
+     "value": 0.30816666666666664,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.011639193511681405,
+     "se": 0.010306199185474884
+    },
+    "cell_size_rung1": {
+     "value": 0.073125,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.07135714285714286,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": true,
+     "bar": 0.12960359679357353,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-mixed-phi0.1",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.1,
+   "truth": "mixed",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.06227921753403269,
+     "se": 0.009882908142523126,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.07458333333333333,
+     "se": 0.008187533165122647
+    },
+    "cell_power_rung3": {
+     "value": 0.3370416666666667,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.006701761353815587,
+     "se": 0.009957303916329822
+    },
+    "cell_size_rung1": {
+     "value": 0.061125,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.059875,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": true,
+     "bar": 0.11976581628504626,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-none-phi0.2",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.2,
+   "truth": "none",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "cell_size_rung1": {
+     "value": 0.0928875,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.0903125,
+     "se": null
+    },
+    "p_any_bh_rejection": {
+     "value": 0.17,
+     "se": 0.02656124997058685,
+     "R": 200
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.15312249994117372,
+     "what": "P(any rejection)"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-positive-phi0.2",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.2,
+   "truth": "positive",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.14879198692800316,
+     "se": 0.01754357419726422,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.14862499999999998,
+     "se": 0.012813595284175486
+    },
+    "cell_power_rung3": {
+     "value": 0.373375,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.01586851492703611,
+     "se": 0.009704283512589099
+    },
+    "cell_size_rung1": {
+     "value": 0.08967857142857143,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.08685714285714285,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.13508714839452846,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-mixed-phi0.2",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.2,
+   "truth": "mixed",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.15079257728216353,
+     "se": 0.014507457284753151,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.13949999999999999,
+     "se": 0.010294931886964119
+    },
+    "cell_power_rung3": {
+     "value": 0.35041666666666665,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.004442026592517051,
+     "se": 0.010672814545197307
+    },
+    "cell_size_rung1": {
+     "value": 0.09475,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.09155357142857143,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.1290149145695063,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-none-phi0.3",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.3,
+   "truth": "none",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "cell_size_rung1": {
+     "value": 0.1297875,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.1236,
+     "se": null
+    },
+    "p_any_bh_rejection": {
+     "value": 0.325,
+     "se": 0.03311910324872942,
+     "R": 200
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.16623820649745885,
+     "what": "P(any rejection)"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-positive-phi0.3",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.3,
+   "truth": "positive",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.22399232346822437,
+     "se": 0.01828241796667641,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.175375,
+     "se": 0.013256201931798429
+    },
+    "cell_power_rung3": {
+     "value": 0.35941666666666666,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0013034485378954682,
+     "se": 0.0119914920470322
+    },
+    "cell_size_rung1": {
+     "value": 0.12632142857142858,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.11998214285714286,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.13656483593335283,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-mixed-phi0.3",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.3,
+   "truth": "mixed",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.24033881862940817,
+     "se": 0.019716061191621278,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.17983333333333335,
+     "se": 0.013132963671046848
+    },
+    "cell_power_rung3": {
+     "value": 0.365375,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0030876090786345605,
+     "se": 0.012356920532090544
+    },
+    "cell_size_rung1": {
+     "value": 0.1392142857142857,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.13203571428571428,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.13943212238324257,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-none-phi0.45",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.45,
+   "truth": "none",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "cell_size_rung1": {
+     "value": 0.190625,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.170325,
+     "se": null
+    },
+    "p_any_bh_rejection": {
+     "value": 0.665,
+     "se": 0.0333747659167821,
+     "R": 200
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.16674953183356422,
+     "what": "P(any rejection)"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-positive-phi0.45",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.45,
+   "truth": "positive",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.3989909485320466,
+     "se": 0.02172048998778823,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.20195833333333332,
+     "se": 0.01428917586256741
+    },
+    "cell_power_rung3": {
+     "value": 0.3395,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.010574117246776664,
+     "se": 0.015284489534281619
+    },
+    "cell_size_rung1": {
+     "value": 0.1843392857142857,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.1644642857142857,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.14344097997557648,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-mixed-phi0.45",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.45,
+   "truth": "mixed",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.3677311811747985,
+     "se": 0.016970840866401223,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.22866666666666668,
+     "se": 0.00975403107838277
+    },
+    "cell_power_rung3": {
+     "value": 0.37345833333333334,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0089548316303156,
+     "se": 0.012253662342736235
+    },
+    "cell_size_rung1": {
+     "value": 0.19005357142857143,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.16973214285714286,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.13394168173280246,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-none-phi0.6",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.6,
+   "truth": "none",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "cell_size_rung1": {
+     "value": 0.2853125,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.23225,
+     "se": null
+    },
+    "p_any_bh_rejection": {
+     "value": 0.895,
+     "se": 0.021676600286945368,
+     "R": 200
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.14335320057389073,
+     "what": "P(any rejection)"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-positive-phi0.6",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.6,
+   "truth": "positive",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.5319050457705835,
+     "se": 0.01601401246556297,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.2897083333333333,
+     "se": 0.013904859571232666
+    },
+    "cell_power_rung3": {
+     "value": 0.38345833333333335,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.01944172121541369,
+     "se": 0.016796717799241266
+    },
+    "cell_size_rung1": {
+     "value": 0.2785892857142857,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.22783928571428572,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.13202802493112595,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  },
+  {
+   "id": "C-mixed-phi0.6",
+   "kind": "cells",
+   "n": 25,
+   "phi": 0.6,
+   "truth": "mixed",
+   "grid": [
+    20,
+    20
+   ],
+   "fields": 200,
+   "spatial_smoothing_sigma": 2.0,
+   "metrics": {
+    "bh_fdr": {
+     "value": 0.5094551565389631,
+     "se": 0.01487128107736105,
+     "R": 200
+    },
+    "bh_power": {
+     "value": 0.28041666666666665,
+     "se": 0.010044525038526273
+    },
+    "cell_power_rung3": {
+     "value": 0.37175,
+     "se": null
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.013824688706883978,
+     "se": 0.017887041825786737
+    },
+    "cell_size_rung1": {
+     "value": 0.28169642857142857,
+     "se": null
+    },
+    "cell_size_rung3": {
+     "value": 0.2279642857142857,
+     "se": null
+    }
+   },
+   "checks": {
+    "B2": {
+     "passed": false,
+     "bar": 0.1297425621547221,
+     "what": "FDR"
+    }
+   },
+   "floor_ok": true
+  }
+ ],
+ "summary": {
+  "n_scenarios": 50,
+  "failures": [
+   "R-null-n23-phi0.0:B3",
+   "R-null-n23-phi0.1:B1",
+   "R-null-n23-phi0.1:B4",
+   "R-null-n23-phi0.1:B3",
+   "R-null-n23-phi0.2:B1",
+   "R-null-n23-phi0.2:B3",
+   "R-null-n23-phi0.3:B1",
+   "R-null-n23-phi0.3:B4",
+   "R-null-n23-phi0.3:B3",
+   "R-null-n23-phi0.3:B3a",
+   "R-null-n23-phi0.45:B1",
+   "R-null-n23-phi0.45:B3",
+   "R-null-n23-phi0.45:B3a",
+   "R-null-n23-phi0.6:B1",
+   "R-null-n23-phi0.6:B3",
+   "R-null-n23-phi0.6:B3a",
+   "R-null-n25-phi0.0:B3",
+   "R-null-n25-phi0.1:B1",
+   "R-null-n25-phi0.1:B3",
+   "R-null-n25-phi0.2:B1",
+   "R-null-n25-phi0.2:B3",
+   "R-null-n25-phi0.3:B1",
+   "R-null-n25-phi0.3:B3",
+   "R-null-n25-phi0.3:B3a",
+   "R-null-n25-phi0.45:B1",
+   "R-null-n25-phi0.45:B3",
+   "R-null-n25-phi0.45:B3a",
+   "R-null-n25-phi0.6:B1",
+   "R-null-n25-phi0.6:B3",
+   "R-null-n25-phi0.6:B3a",
+   "R-null-n45-phi0.0:B3",
+   "R-null-n45-phi0.1:B1",
+   "R-null-n45-phi0.1:B3",
+   "R-null-n45-phi0.2:B1",
+   "R-null-n45-phi0.2:B3",
+   "R-null-n45-phi0.3:B1",
+   "R-null-n45-phi0.3:B3",
+   "R-null-n45-phi0.3:B3a",
+   "R-null-n45-phi0.45:B1",
+   "R-null-n45-phi0.45:B4",
+   "R-null-n45-phi0.45:B3",
+   "R-null-n45-phi0.45:B3a",
+   "R-null-n45-phi0.6:B1",
+   "R-null-n45-phi0.6:B3",
+   "R-null-n45-phi0.6:B3a",
+   "R-null-skewed-n25-phi0.3:B1",
+   "R-null-skewed-n25-phi0.3:B4",
+   "R-null-skewed-n25-phi0.3:B3",
+   "R-null-skewed-n25-phi0.3:B3a",
+   "R-null-gaps-n25-phi0.3:B1",
+   "R-null-gaps-n25-phi0.3:B3",
+   "R-null-gaps-n25-phi0.3:B3a",
+   "R-trend-n25-phi0.0:B3",
+   "R-trend-n25-phi0.1:B3",
+   "R-trend-n25-phi0.2:B3",
+   "R-trend-n25-phi0.3:B3",
+   "R-trend-n25-phi0.3:B3a",
+   "R-trend-n25-phi0.45:B3",
+   "R-trend-n25-phi0.45:B3a",
+   "R-trend-n25-phi0.6:B3",
+   "R-trend-n25-phi0.6:B3a",
+   "R-trend-n45-phi0.0:B3",
+   "R-trend-n45-phi0.1:B3",
+   "R-trend-n45-phi0.2:B3",
+   "R-trend-n45-phi0.3:B3",
+   "R-trend-n45-phi0.3:B3a",
+   "R-trend-n45-phi0.45:B3",
+   "R-trend-n45-phi0.45:B3a",
+   "R-trend-n45-phi0.6:B3",
+   "R-trend-n45-phi0.6:B3a",
+   "C-none-phi0.2:B2",
+   "C-positive-phi0.2:B2",
+   "C-mixed-phi0.2:B2",
+   "C-none-phi0.3:B2",
+   "C-positive-phi0.3:B2",
+   "C-mixed-phi0.3:B2",
+   "C-none-phi0.45:B2",
+   "C-positive-phi0.45:B2",
+   "C-mixed-phi0.45:B2",
+   "C-none-phi0.6:B2",
+   "C-positive-phi0.6:B2",
+   "C-mixed-phi0.6:B2"
+  ],
+  "conservative_size": [],
+  "all_floors_ok": true
+ }
+}

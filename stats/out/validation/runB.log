@@ -10,3 +10,47 @@
 [   109s] R-trend-n23-phi0.45: mk_inde=0.268 hr_regi=0.247 hr_all_=0.241 yue_wan=0.150 tfpw=0.299 boot_mk=0.226 boot_mk=0.252
 [   122s] R-null-n23-phi0.6: mk_inde=0.276 hr_regi=0.229 hr_all_=0.233 yue_wan=0.124 tfpw=0.337 boot_mk=0.204 boot_mk=0.221
 [   130s] R-trend-n23-phi0.6: mk_inde=0.330 hr_regi=0.279 hr_all_=0.287 yue_wan=0.161 tfpw=0.406 boot_mk=0.266 boot_mk=0.274
+[   148s] R-null-n25-phi0.0: mk_inde=0.048 hr_regi=0.046 hr_all_=0.046 yue_wan=0.039 tfpw=0.047 boot_mk=0.071 boot_mk=0.117
+[   167s] R-trend-n25-phi0.0: mk_inde=0.165 hr_regi=0.161 hr_all_=0.164 yue_wan=0.150 tfpw=0.153 boot_mk=0.213 boot_mk=0.281
+[   181s] R-null-n25-phi0.1: mk_inde=0.065 hr_regi=0.062 hr_all_=0.063 yue_wan=0.050 tfpw=0.071 boot_mk=0.082 boot_mk=0.130
+[   195s] R-trend-n25-phi0.1: mk_inde=0.196 hr_regi=0.192 hr_all_=0.193 yue_wan=0.159 tfpw=0.180 boot_mk=0.227 boot_mk=0.286
+[   209s] R-null-n25-phi0.2: mk_inde=0.095 hr_regi=0.093 hr_all_=0.090 yue_wan=0.067 tfpw=0.106 boot_mk=0.111 boot_mk=0.151
+[   223s] R-trend-n25-phi0.2: mk_inde=0.212 hr_regi=0.206 hr_all_=0.205 yue_wan=0.161 tfpw=0.204 boot_mk=0.230 boot_mk=0.284
+[   236s] R-null-n25-phi0.3: mk_inde=0.128 hr_regi=0.122 hr_all_=0.120 yue_wan=0.079 tfpw=0.140 boot_mk=0.123 boot_mk=0.162
+[   247s] R-trend-n25-phi0.3: mk_inde=0.241 hr_regi=0.229 hr_all_=0.229 yue_wan=0.159 tfpw=0.239 boot_mk=0.217 boot_mk=0.256
+[   257s] R-null-n25-phi0.45: mk_inde=0.202 hr_regi=0.182 hr_all_=0.185 yue_wan=0.102 tfpw=0.226 boot_mk=0.169 boot_mk=0.186
+[   268s] R-trend-n25-phi0.45: mk_inde=0.296 hr_regi=0.264 hr_all_=0.272 yue_wan=0.166 tfpw=0.317 boot_mk=0.227 boot_mk=0.253
+[   278s] R-null-n25-phi0.6: mk_inde=0.294 hr_regi=0.233 hr_all_=0.246 yue_wan=0.128 tfpw=0.358 boot_mk=0.201 boot_mk=0.214
+[   292s] R-trend-n25-phi0.6: mk_inde=0.357 hr_regi=0.294 hr_all_=0.308 yue_wan=0.168 tfpw=0.409 boot_mk=0.267 boot_mk=0.269
+[   337s] R-null-n45-phi0.0: mk_inde=0.052 hr_regi=0.050 hr_all_=0.052 yue_wan=0.047 tfpw=0.059 boot_mk=0.073 boot_mk=0.097
+[   376s] R-trend-n45-phi0.0: mk_inde=0.691 hr_regi=0.680 hr_all_=0.687 yue_wan=0.662 tfpw=0.670 boot_mk=0.728 boot_mk=0.752
+[   407s] R-null-n45-phi0.1: mk_inde=0.072 hr_regi=0.070 hr_all_=0.070 yue_wan=0.056 tfpw=0.076 boot_mk=0.073 boot_mk=0.097
+[   440s] R-trend-n45-phi0.1: mk_inde=0.695 hr_regi=0.681 hr_all_=0.686 yue_wan=0.627 tfpw=0.673 boot_mk=0.690 boot_mk=0.709
+[   472s] R-null-n45-phi0.2: mk_inde=0.100 hr_regi=0.090 hr_all_=0.094 yue_wan=0.064 tfpw=0.108 boot_mk=0.086 boot_mk=0.102
+[   502s] R-trend-n45-phi0.2: mk_inde=0.670 hr_regi=0.647 hr_all_=0.657 yue_wan=0.543 tfpw=0.655 boot_mk=0.630 boot_mk=0.645
+[   532s] R-null-n45-phi0.3: mk_inde=0.135 hr_regi=0.116 hr_all_=0.125 yue_wan=0.070 tfpw=0.150 boot_mk=0.097 boot_mk=0.114
+[   565s] R-trend-n45-phi0.3: mk_inde=0.664 hr_regi=0.617 hr_all_=0.639 yue_wan=0.482 tfpw=0.660 boot_mk=0.586 boot_mk=0.591
+[   600s] R-null-n45-phi0.45: mk_inde=0.220 hr_regi=0.163 hr_all_=0.193 yue_wan=0.084 tfpw=0.260 boot_mk=0.131 boot_mk=0.132
+[   630s] R-trend-n45-phi0.45: mk_inde=0.637 hr_regi=0.551 hr_all_=0.597 yue_wan=0.393 tfpw=0.671 boot_mk=0.523 boot_mk=0.504
+[   662s] R-null-n45-phi0.6: mk_inde=0.319 hr_regi=0.218 hr_all_=0.256 yue_wan=0.104 tfpw=0.398 boot_mk=0.173 boot_mk=0.151
+[   697s] R-trend-n45-phi0.6: mk_inde=0.630 hr_regi=0.493 hr_all_=0.550 yue_wan=0.308 tfpw=0.690 boot_mk=0.477 boot_mk=0.443
+[   708s] R-null-skewed-n25-phi0.3: mk_inde=0.132 hr_regi=0.122 hr_all_=0.122 yue_wan=0.079 tfpw=0.152 boot_mk=0.116 boot_mk=0.149
+[   715s] R-null-gaps-n25-phi0.3: mk_inde=0.117 hr_regi=0.112 hr_all_=0.110 yue_wan=0.078 tfpw=0.132 boot_mk=0.126 boot_mk=0.153
+[   723s] C-none-phi0.0: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:ok
+[   733s] C-positive-phi0.0: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:ok
+[   742s] C-mixed-phi0.0: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:ok
+[   749s] C-none-phi0.1: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:ok
+[   756s] C-positive-phi0.1: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:ok
+[   763s] C-mixed-phi0.1: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:ok
+[   771s] C-none-phi0.2: mk_inde:ok hr_regi:ok hr_all_:ok yue_wan:ok tfpw:FAIL
+[   778s] C-positive-phi0.2: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:ok tfpw:FAIL
+[   786s] C-mixed-phi0.2: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:ok tfpw:FAIL
+[   794s] C-none-phi0.3: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   802s] C-positive-phi0.3: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   810s] C-mixed-phi0.3: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   818s] C-none-phi0.45: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   825s] C-positive-phi0.45: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   831s] C-mixed-phi0.45: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   838s] C-none-phi0.6: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   845s] C-positive-phi0.6: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL
+[   851s] C-mixed-phi0.6: mk_inde:FAIL hr_regi:FAIL hr_all_:FAIL yue_wan:FAIL tfpw:FAIL

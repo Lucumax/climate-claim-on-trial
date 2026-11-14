@@ -431,7 +431,10 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
         ok_c = [c for c in CELL_CANDS if all(sc[i]["candidates"][c]["B2_passed"] for i in cell_ids.values())
                 and all(sc[i]["floor_ok"] for i in cell_ids.values())]
         if ok_c:
-            cell_test = max(ok_c, key=lambda c: sc[cell_ids["positive"]]["candidates"][c]["bh_power"]["value"])
+            # same corrected test as the regional one when it is a batched candidate that kept its FDR; else the
+            # candidate with the highest BH power among those that kept it
+            cell_test = chosen if chosen in ok_c else max(
+                ok_c, key=lambda c: sc[cell_ids["positive"]]["candidates"][c]["bh_power"]["value"])
             cells_mode = "bh_flags"
         else:
             cell_test = min(CELL_CANDS, key=lambda c: abs(sc[cell_ids["none"]]["candidates"][c]["cell_size"]["value"] - ALPHA))

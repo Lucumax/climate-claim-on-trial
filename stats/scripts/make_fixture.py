@@ -13,18 +13,10 @@ from trendtrial.pipeline import run_claim
 work = ROOT / "out" / "_fixture_work"
 make_claim_folder(work / "SYN", ny=16, nx=24, trend_per_decade=0.5, frac_trend=0.7, phi=0.3, seed=7)
 
-def scen(sid, kind, n, phi, checks):
-    return dict(id=sid, kind=kind, n=n, phi=phi, checks=checks, floor_ok=True, metrics={})
-ok = lambda b: {b: dict(passed=True)}
-sc = []
-for n in (23, 25, 45):
-    for phi in (0.0, 0.3, 0.6):
-        sc.append(scen(f"R-null-n{n}-phi{phi}", "regional", n, phi, {"B1": dict(passed=True, side="ok"), "B3": dict(passed=True), "B3a": dict(passed=True), "B4": dict(passed=True)}))
-        sc.append(scen(f"R-trend-n{n}-phi{phi}", "regional", n, phi, {"B3": dict(passed=True), "B3a": dict(passed=True), "B4": dict(passed=True)}))
-        for k in ("none", "positive", "mixed"):
-            sc.append(scen(f"C-{k}-phi{phi}", "cells", 25, phi, {"B2": dict(passed=True)}))
-sc.append(scen("R-null-gaps-n25-phi0.3", "regional", 25, 0.3, {"B1": dict(passed=True, side="ok"), "B3": dict(passed=True), "B3a": dict(passed=True), "B4": dict(passed=True)}))
-ph = dict(run=dict(placeholder=True, note="PLACEHOLDER: every check set to pass, for the fixture only"), scenarios=sc, summary=dict(placeholder=True))
+sys.path.insert(0, str(ROOT / "tests"))
+from test_verdict_and_pipeline import fake_results  # noqa: E402
+ph = fake_results()
+ph["run"] = dict(kind="B_candidates", placeholder=True, note="PLACEHOLDER: every check set to pass, for the fixture only")
 (work / "validation_placeholder.json").write_text(json.dumps(ph))
 b = run_claim(work / "SYN", ROOT / "fixtures" / "_tmp_full", validation_path=work / "validation_placeholder.json", params=dict(boot_reps=1000))
 b2 = run_claim(work / "SYN", ROOT / "fixtures" / "_tmp_withheld", params=dict(boot_reps=1000))

@@ -451,15 +451,20 @@ export function analyzeSeries(t, y, opts = {}) {
   const units = opts.units ?? "units";
   const k = opts.perDecade === false ? 1 : 10;
   const ols = olsTest(t, y);
-  const mk = mannKendall(y, t, { hr: true });
-  const mk0 = mannKendall(y, t, { hr: false });
+  // Default correction for user-chosen series: Yue-Wang (lag-1). In the synthetic validation (STATS_LOG run B) it was the
+  // best-calibrated candidate at every tested persistence and length, still too liberal once persistence is about 0.2 or
+  // more. Pass {corr: "hr"} etc. to use another one.
+  const corr = opts.corr ?? "yw";
+  const mk = mannKendall(y, t, { corr });
+  const mk0 = mannKendall(y, t, { corr: "none" });
+  const mkReg = mannKendall(y, t, { corr: "hr" });
   const ci = mk.n >= 3 ? senInterval(y, t, mk.varS) : [null, null];
   const slopeDec = mk.slope === null ? null : mk.slope * k;
   const sen = { slopePerDecade: slopeDec, intervalPerDecade: ci[0] === null ? null : [ci[0] * k, ci[1] * k],
-    intervalNote: "analytic Sen interval with Hamed-Rao variance; exploratory (not validated for this series)" };
+    intervalNote: "analytic Sen interval using the corrected variance; exploratory (not validated for this series)" };
   return {
     ols: ols.slope === null ? ols : { ...ols, slopePerDecade: ols.slope * k, ciPerDecade: [ols.ciLow * k, ols.ciHigh * k] },
-    mk, mkIndependent: { p: mk0.p, z: mk0.z }, sen,
+    mk, mkIndependent: { p: mk0.p, z: mk0.z }, mkRegistered: { p: mkReg.p, z: mkReg.z, factor: mkReg.hrFactor }, sen,
     verdict: detectiveVerdict(mk.p, slopeDec, mk.n, units),
   };
 }

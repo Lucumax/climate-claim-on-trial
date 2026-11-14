@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Climate Claim on Trial — Classroom Detective</title>
+<style>
+:root{color-scheme:light;--bg:#fff9e9;--paper:#fff;--ink:#213c3d;--muted:#526565;--line:#bccac3;--teal:#086b60;--teal-soft:#e4f5ed;--yellow:#ffdb59;--yellow-soft:#fff1b8;--coral:#b54732;--coral-soft:#ffede4;--blue:#2d569c;--shadow:#213c3d;--chart-band:#c7e9df;--grid:#d6dfd9;--map-bg:#f4f6ef;--map-stroke:#465c56;--rise:#086b60;--rise-mark:#fff;--unflag:#fff0b6;--hatch:#8b6a22;--fall:#31599d;--nodata:#fff;--cross:#5c6963;--stone:#eef3ed}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#171b37;--paper:#242b49;--ink:#f4f3e8;--muted:#bcc8d7;--line:#606e8c;--teal:#76e4cc;--teal-soft:#183f46;--yellow:#ffdc68;--yellow-soft:#4a4025;--coral:#ffb19a;--coral-soft:#4a303d;--blue:#a5c7ff;--shadow:#080d22;--chart-band:#315c64;--grid:#495875;--map-bg:#1c2440;--map-stroke:#d4e0df;--rise:#71dfc6;--rise-mark:#183d3c;--unflag:#4b4226;--hatch:#ffdd77;--fall:#9abbff;--nodata:#252e4c;--cross:#c3ccda;--stone:#303953}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-rounded,"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;font-size:14px;line-height:1.4}button,summary{font:inherit}button,summary{cursor:pointer}button:focus-visible,summary:focus-visible{outline:3px solid var(--coral);outline-offset:4px}svg{display:block}button{color:inherit}h1,h2,h3,p{margin:0}h2{font-size:19px;letter-spacing:-.5px}small{font-size:12px}header{height:76px;padding:0 32px;background:var(--paper);border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}.badge{width:49px;height:53px;background:var(--yellow);border:2px solid #213c3d;border-radius:18px 18px 23px 23px;transform:rotate(-7deg);display:grid;place-items:center;color:#213c3d;box-shadow:2px 3px 0 #213c3d}.brand strong{font-size:21px;letter-spacing:-.7px}.brand small{display:block;color:var(--muted);font-size:12px;letter-spacing:.8px}.top-actions{display:flex;gap:14px;align-items:center}.case-picker{position:relative}.case-picker summary{list-style:none;display:flex;align-items:center;gap:16px;border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700}.case-picker summary::-webkit-details-marker{display:none}.case-picker summary span:first-child{color:var(--muted);font-size:12px}.case-list{position:absolute;right:0;top:54px;width:510px;z-index:5;background:var(--paper);border:2px solid var(--ink);border-radius:20px;padding:12px;box-shadow:5px 7px 0 var(--shadow)}.case-option{padding:12px;border-radius:12px}.case-option+.case-option{border-top:1px solid var(--line)}.case-option.active{background:var(--teal-soft)}.case-option b{color:var(--teal)}.case-option p{font-size:14px;margin:3px 0}.case-option small{color:var(--muted)}.theme-toggle{display:flex;align-items:center;gap:9px;border:1.5px solid var(--line);border-radius:30px;background:var(--bg);padding:10px 14px;font-weight:700;min-width:119px}.theme-toggle svg{width:18px;height:18px}main{max-width:1500px;padding:18px 32px 0;margin:auto}.case-intro{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:30px;align-items:center;min-height:128px}.eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}.label{border-radius:6px;padding:3px 8px;background:var(--ink);color:var(--paper);letter-spacing:.5px}.eyebrow .fake{color:var(--coral)}h1{font-size:31px;line-height:1.16;letter-spacing:-1.1px;max-width:970px}.definition{color:var(--muted);margin-top:9px;font-size:14px}.definition b{color:var(--ink)}.intro-note{position:relative;background:var(--yellow-soft);border:1.5px solid var(--ink);border-radius:21px 21px 21px 5px;padding:16px 18px;transform:rotate(1.5deg);font-size:14px;box-shadow:3px 3px 0 var(--shadow)}.intro-note b{display:block;margin-bottom:4px}.ladder{margin-top:14px}.section-line{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.section-line p{color:var(--muted)}.section-line p b{color:var(--teal)}.stones{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative}.stones:before{content:"";position:absolute;top:33px;left:35px;right:35px;border-top:3px dashed var(--line)}.stone{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:21px;padding:14px 15px 13px;height:174px;display:flex;flex-direction:column}.stone.current{border:2px solid var(--teal);background:var(--teal-soft);box-shadow:3px 4px 0 var(--teal);transform:translateY(-3px)}.stone-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}.step{width:30px;height:30px;display:grid;place-items:center;border-radius:11px;background:var(--stone);border:1.5px solid var(--line);font-weight:800;font-size:16px}.done .step{background:var(--teal);color:var(--paper);border-color:var(--teal)}.current .step{background:var(--yellow);color:#213c3d;border-color:#213c3d;transform:rotate(-7deg)}.status{font-size:12px;font-weight:800;color:var(--muted)}.current .status{color:var(--teal)}.stone h3{font-size:15px;line-height:1.2;letter-spacing:-.2px}.stone .explain{font-size:12px;line-height:1.3;color:var(--muted);margin-top:4px;min-height:31px}.stone-results{margin-top:auto;display:flex;gap:10px;align-items:center}.stone-results strong{font-size:22px;letter-spacing:-.7px;white-space:nowrap}.bar{height:7px;flex:1;background:var(--stone);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);border-radius:8px}.delta{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}.current .delta{color:var(--teal)}.evidence-grid{margin-top:18px;display:grid;grid-template-columns:1.1fr 1.1fr .82fr;gap:18px;height:380px}.card{border:1.5px solid var(--line);border-radius:25px;background:var(--paper);padding:19px;min-width:0}.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.mini-tag{font-size:12px;font-weight:800;border:1px solid var(--line);padding:3px 8px;border-radius:8px;white-space:nowrap}.sub{font-size:12px;color:var(--muted);margin-top:4px}.map-stat{display:flex;align-items:center;gap:10px;margin-top:11px}.map-stat strong{font-size:32px;line-height:1;letter-spacing:-1px;color:var(--teal)}.map-stat p{font-size:12px;color:var(--muted);line-height:1.3}.map-figure{margin:8px 0 0;background:var(--map-bg);border-radius:17px;border:1px solid var(--line)}.map-figure svg{width:100%;height:187px}.map-cell{stroke:var(--map-stroke);stroke-width:1.4}.legend{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:7px 8px;font-size:12px}.legend span{display:flex;align-items:center;gap:7px;white-space:nowrap}.legend svg{width:17px;height:17px;flex-shrink:0}.chart{width:100%;height:190px;margin-top:8px;overflow:visible}.chart text{font-family:inherit;fill:var(--muted);font-size:14px}.chart .axis-label{fill:var(--ink);font-size:14px;font-weight:700}.chart .grid{stroke:var(--grid);stroke-width:1}.chart .zero{stroke:var(--muted);stroke-dasharray:4 4}.chart .slope{stroke:var(--coral);stroke-width:3}.chart .point{fill:var(--teal);stroke:var(--paper);stroke-width:1.5}.chart-key{display:flex;align-items:center;gap:15px;font-size:12px;color:var(--muted);margin-top:0}.chart-key span{display:flex;align-items:center;gap:6px}.swatch-band{height:11px;width:18px;background:var(--chart-band);border:1px solid var(--muted);border-radius:3px}.swatch-line{height:3px;width:18px;background:var(--coral)}.slope-label{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--coral-soft);font-size:14px;font-weight:700}.verdict{background:var(--yellow-soft);border:2px solid var(--ink);box-shadow:4px 5px 0 var(--shadow);position:relative}.verdict .eyebrow{font-size:12px;letter-spacing:.8px;margin-bottom:7px}.verdict h2{font-size:29px;line-height:1.05;letter-spacing:-1.1px;max-width:220px}.verdict-illustration{position:absolute;right:16px;top:34px;width:60px;height:68px;transform:rotate(8deg)}.verdict-copy{margin-top:18px;font-size:14px;line-height:1.43}.verdict-copy p+p{margin-top:10px}.caveat{border-top:1px dashed var(--muted);margin-top:15px;padding-top:12px;font-size:12px;line-height:1.4}.caveat b{display:block;font-size:12px;margin-bottom:3px}.null-note{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;font-weight:800;color:var(--teal)}.null-note svg{width:20px;height:20px;flex-shrink:0}.footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;color:var(--muted);font-size:12px;padding-right:190px}.footer b{color:var(--ink)}.concept{position:fixed;bottom:5px;right:24px;z-index:10;font-size:12px;font-weight:800;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:9px;padding:7px 12px;box-shadow:2px 2px 0 var(--shadow);transform:rotate(-2deg)}
+@media(min-width:1500px){main{padding-top:27px}.case-intro{min-height:133px}}
+@media(max-width:1150px){header{padding:0 20px}.brand strong{font-size:18px}.case-picker summary{gap:8px}.case-picker summary span:first-child{display:none}main{padding:18px 20px}.case-intro{grid-template-columns:1fr 230px}h1{font-size:26px}.stone{height:190px;padding:12px}.evidence-grid{grid-template-columns:1fr 1fr;height:auto}.verdict{grid-column:1/-1}.verdict h2{max-width:none}.verdict-copy{display:flex;gap:20px}.verdict-copy p{flex:1}.verdict-copy p+p{margin-top:0}.verdict-illustration{top:13px}.footer{margin-bottom:50px}}
+</style>
+<script>
+(()=>{const t=new URLSearchParams(location.search).get('theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})();
+</script>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="badge" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 40 40"><circle cx="17" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="3"/><path d="m25 25 10 10" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M11 20C9 10 17 9 23 9c0 8-3 14-12 11Z" fill="#086b60"/><path d="m12 20 7-7" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <div><strong>Climate Claim on Trial</strong><small>YOUR EARTH. YOUR EVIDENCE.</small></div>
+  </div>
+  <div class="top-actions">
+    <details class="case-picker">
+      <summary><span>REGISTERED CLAIMS</span><strong>C-A · Southeastern US</strong><span aria-hidden="true">⌄</span></summary>
+      <div class="case-list" aria-label="Registered claims">
+        <div class="case-option active"><b>C-A · Current trial</b><p>“Summer daytime land surface temperature over the Southeastern United States has risen”</p><small>MODIS Terra LST · JJA 2001–2025</small></div>
+        <div class="case-option"><b>C-B</b><p>“Wet-season rainfall over the central Sahel has increased”</p><small>GPM IMERG · JJAS 2001–2025</small></div>
+        <div class="case-option"><b>C-C</b><p>“Near-surface air temperature over interior and western Alaska has risen”</p><small>MERRA-2 T2M · annual 1981–2025 · MODEL DATA</small></div>
+        <div class="sub" style="padding:8px 12px 2px">Case picker preview · this concept shows the C-A trial.</div>
+      </div>
+    </details>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 14.4A8.7 8.7 0 0 1 9.6 3.5a8.7 8.7 0 1 0 10.9 10.9Z"/></svg><span id="theme-label">Dark mode</span></button>
+  </div>
+</header>
+<main>
+  <section class="case-intro" aria-labelledby="claim-title">
+    <div>
+      <div class="eyebrow"><span class="label">CASE C-A</span><span>Trial view</span><span class="fake">All results are fake · demo only</span></div>
+      <h1 id="claim-title">“Summer daytime land surface temperature over the Southeastern United States has risen”</h1>
+      <p class="definition"><b>Land surface temperature:</b> how hot the ground’s surface is, rather than the air above it.</p>
+    </div>
+    <aside class="intro-note"><b>Detective tip: keep the null.</b>A result with no clear signal is still a result worth sharing.</aside>
+  </section>
+
+  <section class="ladder" aria-labelledby="ladder-title">
+    <div class="section-line"><h2 id="ladder-title">One claim. Four fair tests.</h2><p><b>You’re on rung 3 of 4</b> · each step changes one thing</p></div>
+    <div class="stones">
+      <article class="stone done"><div class="stone-top"><span class="step">1</span><span class="status">✓ DONE · BASELINE</span></div><h3>Raw Mann-Kendall</h3><p class="explain">Assumes every year is independent.</p><div class="stone-results"><strong>62%</strong><div class="bar" aria-hidden="true"><i style="width:62%"></i></div><span class="delta">starting point</span></div></article>
+      <article class="stone done"><div class="stone-top"><span class="step">2</span><span class="status">✓ DONE · REMOVE SEASON</span></div><h3>Seasonal anomalies</h3><p class="explain">Compare each cell with its own same-season average.</p><div class="stone-results"><strong>58%</strong><div class="bar" aria-hidden="true"><i style="width:58%"></i></div><span class="delta">−4 pts ↓</span></div></article>
+      <article class="stone current" aria-current="step"><div class="stone-top"><span class="step">3</span><span class="status">YOU ARE HERE · CORRECT DEPENDENCE</span></div><h3>Hamed-Rao autocorrelation correction</h3><p class="explain">Neighbouring years are not independent.</p><div class="stone-results"><strong>31%</strong><div class="bar" aria-hidden="true"><i style="width:31%"></i></div><span class="delta">−27 pts ↓</span></div></article>
+      <article class="stone"><div class="stone-top"><span class="step">4</span><span class="status">NEXT · CONTROL FALSE DISCOVERIES</span></div><h3>Benjamini-Hochberg false-discovery control</h3><p class="explain">q = 0.10, because we test thousands of cells.</p><div class="stone-results"><strong>24%</strong><div class="bar" aria-hidden="true"><i style="width:24%"></i></div><span class="delta">−7 pts ↓ · preview</span></div></article>
+    </div>
+  </section>
+
+  <section class="evidence-grid" aria-label="Evidence at rung three">
+    <article class="card map-card">
+      <div class="card-top"><h2>Where does it hold?</h2><span class="mini-tag">RUNG 3</span></div>
+      <p class="sub">MODIS Terra LST · summer (JJA) · 2001–2025</p>
+      <div class="map-stat"><strong>31%</strong><p>of valid cells flagged · fake<br><b>↓ 27 percentage points</b> from rung 2</p></div>
+      <figure class="map-figure" aria-label="Schematic cell map: 31 of 100 valid cells rising and flagged. The map is fictional, not a coastline.">
+        <svg viewBox="0 0 430 235" role="img" aria-labelledby="map-title map-desc"><title id="map-title">Fictional Southeastern US cell map at rung 3</title><desc id="map-desc">Solid teal cells with plus marks are rising and flagged. Hatched cells are rising but not flagged. Dotted blue cells are falling and not flagged. Crossed cells have no data. Thirty-one of one hundred valid cells are flagged.</desc>
+        <defs>
+          <pattern id="hatched" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="var(--unflag)"/><path d="m-2 2 4-4M0 7l7-7m-2 9 4-4" stroke="var(--hatch)" stroke-width="1.5"/></pattern>
+          <pattern id="dotted" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="var(--fall)"/><circle cx="4" cy="4" r="1.2" fill="var(--rise-mark)"/></pattern>
+        </defs>
+        <rect class="map-cell" x="102" y="8" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="126" y="8" width="21" height="19" rx="3" fill="var(--nodata)"/>
+<path d="m132 13 9 9m0-9-9 9" stroke="var(--cross)" stroke-width="1.5" fill="none"/>
+<rect class="map-cell" x="150" y="8" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 17.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="8" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M180 17.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="198" y="8" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="222" y="8" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="8" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="54" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="78" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="102" y="30" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M108 39.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="126" y="30" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M132 39.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="150" y="30" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 39.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="30" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M180 39.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="198" y="30" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M204 39.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="222" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="30" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="30" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="54" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="78" y="52" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M84 61.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="102" y="52" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M108 61.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="126" y="52" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M132 61.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="150" y="52" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 61.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="52" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M180 61.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="198" y="52" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M204 61.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="222" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="342" y="52" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="30" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="54" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="78" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M84 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="102" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M108 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="126" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M132 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="150" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M180 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="198" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M204 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="222" y="74" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M228 83.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="246" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="74" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="342" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="366" y="74" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="30" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="54" y="96" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="78" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="102" y="96" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M108 105.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="126" y="96" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M132 105.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="150" y="96" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 105.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="96" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M180 105.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="198" y="96" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M204 105.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="222" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="96" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="294" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="342" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="366" y="96" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="54" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="78" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="102" y="118" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M108 127.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="126" y="118" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M132 127.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="150" y="118" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 127.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="118" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M180 127.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="198" y="118" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M204 127.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="222" y="118" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="246" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="342" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="366" y="118" width="21" height="19" rx="3" fill="var(--nodata)"/>
+<path d="m372 123 9 9m0-9-9 9" stroke="var(--cross)" stroke-width="1.5" fill="none"/>
+<rect class="map-cell" x="390" y="118" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="78" y="140" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="102" y="140" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="126" y="140" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="150" y="140" width="21" height="19" rx="3" fill="var(--rise)"/>
+<path d="M156 149.5h9m-4.5-4.5v9" stroke="var(--rise-mark)" stroke-width="1.7" fill="none"/>
+<rect class="map-cell" x="174" y="140" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="198" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="222" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="342" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="366" y="140" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="150" y="162" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="174" y="162" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="198" y="162" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="222" y="162" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="162" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="162" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="162" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="318" y="162" width="21" height="19" rx="3" fill="var(--nodata)"/>
+<path d="m324 167 9 9m0-9-9 9" stroke="var(--cross)" stroke-width="1.5" fill="none"/>
+<rect class="map-cell" x="342" y="162" width="21" height="19" rx="3" fill="url(#dotted)"/>
+<rect class="map-cell" x="222" y="184" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="246" y="184" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="270" y="184" width="21" height="19" rx="3" fill="url(#hatched)"/>
+<rect class="map-cell" x="294" y="184" width="21" height="19" rx="3" fill="var(--nodata)"/>
+<path d="m300 189 9 9m0-9-9 9" stroke="var(--cross)" stroke-width="1.5" fill="none"/>
+        <text x="16" y="220" fill="var(--muted)" font-size="16" font-family="inherit">Schematic grid · not a real coastline</text>
+        </svg>
+      </figure>
+      <div class="legend" aria-label="Map legend">
+        <span><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="18" height="18" rx="3" fill="var(--rise)" class="map-cell"/><path d="M6 10h8m-4-4v8" stroke="var(--rise-mark)" stroke-width="1.7"/></svg>Rising + flagged</span>
+        <span><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="18" height="18" rx="3" fill="url(#hatched)" class="map-cell"/></svg>Rising, not flagged</span>
+        <span><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="18" height="18" rx="3" fill="url(#dotted)" class="map-cell"/></svg>Falling, not flagged</span>
+        <span><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="1" width="18" height="18" rx="3" fill="var(--nodata)" class="map-cell"/><path d="m6 6 8 8m0-8-8 8" stroke="var(--cross)" stroke-width="1.5"/></svg>No data</span>
+      </div>
+    </article>
+
+    <article class="card chart-card">
+      <div class="card-top"><h2>The region’s story</h2><span class="mini-tag">FAKE DATA</span></div>
+      <p class="sub">Yearly regional mean · anomaly = departure from average</p>
+      <svg class="chart" viewBox="0 0 430 219" role="img" aria-labelledby="chart-title chart-desc">
+        <title id="chart-title">Regional land surface temperature anomaly, 2001 to 2025, fake data</title><desc id="chart-desc">Twenty-five annual points fluctuate around a rising Sen slope line from minus 0.36 to plus 0.36 degrees Celsius. A shaded ordinary 95 percent interval surrounds the line. The slope is plus 0.3 degrees Celsius per decade. All values are fake.</desc>
+        <text x="43" y="15" class="axis-label">Mean anomaly (°C)</text>
+        <path class="grid" d="M44 35H412M44 69H412M44 103H412M44 137H412M44 171H412" fill="none"/>
+        <path d="M44 112.35 412 51.15 412 93.65 44 154.85Z" fill="var(--chart-band)"/>
+        <path class="zero" d="M44 103H412"/>
+        <path class="slope" d="m44 133.6 368-61.2" fill="none"/>
+        <circle class="point" cx="44.00" cy="146.35" r="3.8"><title>2001: -0.51 °C (fake)</title></circle>
+<circle class="point" cx="59.33" cy="126.80" r="3.8"><title>2002: -0.28 °C (fake)</title></circle>
+<circle class="point" cx="74.67" cy="137.85" r="3.8"><title>2003: -0.41 °C (fake)</title></circle>
+<circle class="point" cx="90.00" cy="155.70" r="3.8"><title>2004: -0.62 °C (fake)</title></circle>
+<circle class="point" cx="105.33" cy="124.25" r="3.8"><title>2005: -0.25 °C (fake)</title></circle>
+<circle class="point" cx="120.67" cy="135.30" r="3.8"><title>2006: -0.38 °C (fake)</title></circle>
+<circle class="point" cx="136.00" cy="109.80" r="3.8"><title>2007: -0.08 °C (fake)</title></circle>
+<circle class="point" cx="151.33" cy="130.20" r="3.8"><title>2008: -0.32 °C (fake)</title></circle>
+<circle class="point" cx="166.67" cy="120.85" r="3.8"><title>2009: -0.21 °C (fake)</title></circle>
+<circle class="point" cx="182.00" cy="102.15" r="3.8"><title>2010: +0.01 °C (fake)</title></circle>
+<circle class="point" cx="197.33" cy="127.65" r="3.8"><title>2011: -0.29 °C (fake)</title></circle>
+<circle class="point" cx="212.67" cy="92.80" r="3.8"><title>2012: +0.12 °C (fake)</title></circle>
+<circle class="point" cx="228.00" cy="108.10" r="3.8"><title>2013: -0.06 °C (fake)</title></circle>
+<circle class="point" cx="243.33" cy="114.90" r="3.8"><title>2014: -0.14 °C (fake)</title></circle>
+<circle class="point" cx="258.67" cy="95.35" r="3.8"><title>2015: +0.09 °C (fake)</title></circle>
+<circle class="point" cx="274.00" cy="111.50" r="3.8"><title>2016: -0.10 °C (fake)</title></circle>
+<circle class="point" cx="289.33" cy="80.05" r="3.8"><title>2017: +0.27 °C (fake)</title></circle>
+<circle class="point" cx="304.67" cy="101.30" r="3.8"><title>2018: +0.02 °C (fake)</title></circle>
+<circle class="point" cx="320.00" cy="85.15" r="3.8"><title>2019: +0.21 °C (fake)</title></circle>
+<circle class="point" cx="335.33" cy="97.05" r="3.8"><title>2020: +0.07 °C (fake)</title></circle>
+<circle class="point" cx="350.67" cy="69.00" r="3.8"><title>2021: +0.40 °C (fake)</title></circle>
+<circle class="point" cx="366.00" cy="91.95" r="3.8"><title>2022: +0.13 °C (fake)</title></circle>
+<circle class="point" cx="381.33" cy="63.05" r="3.8"><title>2023: +0.47 °C (fake)</title></circle>
+<circle class="point" cx="396.67" cy="76.65" r="3.8"><title>2024: +0.31 °C (fake)</title></circle>
+<circle class="point" cx="412.00" cy="56.25" r="3.8"><title>2025: +0.55 °C (fake)</title></circle>
+        <g text-anchor="end"><text x="35" y="39">+0.8</text><text x="35" y="73">+0.4</text><text x="35" y="107">0.0</text><text x="35" y="141">−0.4</text><text x="35" y="175">−0.8</text></g>
+        <g text-anchor="middle"><text x="44" y="192">2001</text><text x="151" y="192">2008</text><text x="259" y="192">2015</text><text x="412" y="192">2025</text><text x="228" y="212" class="axis-label">Year</text></g>
+      </svg>
+      <div class="chart-key"><span><i class="swatch-band"></i>95% ordinary interval</span><span><i class="swatch-line"></i>Sen slope</span></div>
+      <p class="slope-label">Sen slope +0.3 °C per decade (fake)</p>
+      <p class="sub" style="margin-top:9px">Baseline: each cell’s JJA average, 2001–2025.</p>
+    </article>
+
+    <aside class="card verdict" aria-labelledby="verdict-title">
+      <div class="eyebrow">The verdict · so far</div>
+      <h2 id="verdict-title" aria-label="Evidence-limited">Evidence-<br>limited</h2>
+      <svg class="verdict-illustration" viewBox="0 0 70 78" aria-hidden="true"><path d="m12 8 35-3 9 9 4 52-44 4Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><path d="m46 6 1 13 10-3M23 26l20-2M24 34l13-1M25 42l12-1" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/><circle cx="47" cy="48" r="13" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="3"/><path d="m56 58 9 12" stroke="var(--teal)" stroke-width="5" stroke-linecap="round"/><path d="m41 48 4 4 7-8" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="verdict-copy"><p>In this fake example, warming remains flagged in <b>31% of valid cells</b> after accounting for related years.</p><p>That supports a limited claim, not warming everywhere. Rung 4 still needs to check false discoveries across cells.</p></div>
+      <div class="caveat"><b>Caveat: surface heat ≠ air temperature.</b>The chart band is an ordinary interval, not adjusted for selection.</div>
+      <div class="null-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h12l3 3v14H5Z"/><path d="m8 13 3 3 6-7"/></svg>No clear signal? Keep the finding.</div>
+    </aside>
+  </section>
+  <footer class="footer"><span><b>Flagged</b> = meets this rung’s test rule. Area may go down, stay the same, or go up.</span><span>NASA Space Apps 2026 · Be An Earth System Trend Detective!</span></footer>
+</main>
+<div class="concept">concept, not product</div>
+<script>
+const themeButton=document.getElementById('theme-toggle');
+function updateThemeButton(){const dark=document.documentElement.dataset.theme==='dark';document.getElementById('theme-label').textContent=dark?'Light mode':'Dark mode';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');themeButton.setAttribute('aria-pressed',String(dark));}
+themeButton.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';updateThemeButton();});
+updateThemeButton();
+document.addEventListener('click',event=>{const picker=document.querySelector('.case-picker');if(!picker.contains(event.target))picker.open=false;});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')document.querySelector('.case-picker').open=false;});
+</script>
+</body>
+</html>

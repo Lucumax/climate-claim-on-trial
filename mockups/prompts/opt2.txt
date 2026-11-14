@@ -1,0 +1,33 @@
+You are a senior product/visual designer producing ONE hero-screen mockup as a single self-contained HTML file (inline CSS and inline SVG only; NO external requests, NO web fonts, NO CDN, NO images files; use system font stacks). Write only the file named below into the current directory (do not write anywhere else, do not read other directories).
+
+PRODUCT: "Climate Claim on Trial" for NASA Space Apps 2026, challenge "Be An Earth System Trend Detective!". Audience: high school/college students and the science-literate public ("data detectives"); plain-English definitions, friendly but rigorous. A regional climate claim is put on trial through a LADDER OF FOUR TESTS. Each rung changes exactly one thing, and the per-cell map shows what that change does, in either direction (flagged area can go down, stay the same, or even go up). The outcome is an evidence-limited verdict or an honest null. Nonsignificance is never "unpublishable".
+
+THE LADDER (exact names):
+ Rung 1  Raw Mann-Kendall (assumes every year is independent)
+ Rung 2  Seasonal anomalies (compare each cell with its own same-season average)
+ Rung 3  Hamed-Rao autocorrelation correction (neighbouring years are not independent)
+ Rung 4  Benjamini-Hochberg false-discovery control (q = 0.10, because we test thousands of cells)
+Registered claims the user can choose among (show as a small picker/tabs): 
+ C-A "Summer daytime land surface temperature over the Southeastern United States has risen" (MODIS Terra LST, JJA 2001-2025)
+ C-B "Wet-season rainfall over the central Sahel has increased" (GPM IMERG, JJAS 2001-2025)
+ C-C "Near-surface air temperature over interior and western Alaska has risen" (MERRA-2 T2M, annual 1981-2025, labelled model data)
+
+HERO SCREEN to mock (the TRIAL VIEW for claim C-A, currently selected, with the user standing on rung 3 of 4, rungs 1-2 done, rung 4 next):
+ 1. The claim statement, with a one-line plain definition of the variable (what land surface temperature is).
+ 2. The four-rung ladder, with rung 3 current, showing for each rung the flagged-area fraction as a small bar or number (use obviously fake numbers, e.g. rung1 62% of cells flagged, rung2 58%, rung3 31%, rung4 24%) and a short "what changed" phrase (e.g. -4 pts), with the sign/direction clearly shown.
+ 3. A schematic per-cell MAP at the current rung (draw a stylised gridded blob-shaped region with inline SVG rects: three or four categories such as rising and flagged, rising but not flagged, falling, no data; it is fine to use a simplified region shape, NOT a real coastline) with a legend that works for colour-vision deficiency (use shape/pattern/lightness differences plus colour), and a flagged-area fraction readout.
+ 4. A regional anomaly chart (inline SVG): yearly regional mean anomaly points 2001-2025, an uncertainty band, a Sen slope line, and a label like "Sen slope +0.3 deg C per decade (fake)". Axes labelled with units.
+ 5. A verdict card: e.g. "Evidence-limited" with 2-3 plain sentences (fake), a caveat line, and a note that the chart band is an ordinary interval not adjusted for selection. Include the words "Evidence-limited" as the verdict.
+ 6. A top bar with product name, claim picker, and a light/dark toggle button that works (small inline JS). Next/previous rung buttons are optional.
+ Use obviously fake numbers everywhere. Fit everything legibly in a 1440x900 viewport WITHOUT page scroll and with no overlapping text or elements (text >= 12px, body copy >= 14px, WCAG-style 4.5:1 contrast for text in both themes, 3:1 for map categories).
+ MANDATORY: a clearly legible label "concept, not product" fixed in a corner of the screen (small chip, visible in both themes).
+ FORBIDDEN: any NASA logo, NASA meatball, NASA worm, NASA flag, mission patch, real person images, real photographs, or anything that imitates a NASA mark. Generic space/earth iconography drawn by you is fine but keep it abstract. Do not put "NASA" in a logo-like lockup. Do not claim NASA endorsement.
+
+THEMING: implement light AND dark as two full palettes via CSS custom properties on :root with [data-theme="dark"] override. Initial theme: if the URL query has ?theme=dark or ?theme=light use that; otherwise follow prefers-color-scheme. The toggle button switches and works. Both themes must be fully designed (not a lazy inversion).
+
+DISTINCTIVENESS: this is one of FIVE directions being compared by the founder in five minutes, so go bold and make the direction unmistakable at thumbnail size: distinct layout, typography (system stacks only: serif, mono, rounded, etc.), colour palette, and shapes. Craft details matter: spacing rhythm, alignment, hierarchy, consistent icon style.
+
+When done, verify the HTML is valid and self-contained (grep for http:// or https:// and remove any), and stop. Reply with one line saying the file name.
+
+OUTPUT FILE NAME: opt2_labnotebook.html
+DESIGN DIRECTION: LAB NOTEBOOK direction: graph-paper/gridded notebook page, handwritten-feel annotations (use cursive/italic system stacks sparingly), taped-in cards, margin notes, ruler ticks, stamped 'Rung 3' marks, checkboxes for completed rungs. Light = cream paper with blue grid lines and blue/red pen colours; dark = blueprint/chalkboard-dark variant with chalk-white lines. Warm, tactile, student-friendly while still legible.

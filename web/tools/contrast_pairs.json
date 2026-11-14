@@ -13,7 +13,7 @@
   ],
   "graphics": [
     ["up", "land"], ["down", "land"], ["nf-line", "land"], ["up", "nf"], ["down", "nf"], ["nodata-mark", "land"], ["nodata-mark", "nodata"],
-    ["nf-line", "nf"], ["slope", "surface"], ["ols", "surface"], ["dot", "surface"], ["slope", "band"],
+    ["nf-line", "nf"], ["slope", "surface"], ["ols", "surface"], ["dot", "surface"], ["dot", "band"], ["nf-line", "nodata"], ["slope", "band"],
     ["edge", "surface"], ["focus", "bg"], ["focus", "surface"], ["current", "rail"], ["coast", "land"], ["coast", "ocean"],
     ["up", "surface"], ["down", "surface"], ["muted", "ocean"]
   ]

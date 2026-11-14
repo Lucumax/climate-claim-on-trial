@@ -1,29 +1,34 @@
 /* Courtroom theme: parchment, navy and brass (light); deep navy and warm brass (dark). One token set per theme.
    Dark follows the system setting or the manual toggle (data-theme); the two dark blocks must match.
+   Roles: navy = structure and the main action (ivory text and brass action in dark); brass = selection, focus, court identity;
+   blue and teal = data in both themes; red = error or simulated false alarm only; neutral grey = provenance and "not flagged".
    After any colour change run, from web/:  python tools/check_contrast.py */
 
 :root {
   color-scheme: light;
+  /* surfaces and text */
   --bg: #F3EFE5;       --surface: #FFFDF7;  --surface-2: #EAE4D5;  --ink: #192D40;   --muted: #56616A;  --ink-soft: #56616A;
   --line: #C9C3B5;     --edge: #7D7868;
-  --accent: #7D5A15;   --focus: #7D5A15;
+  /* roles: brass = selection, focus and court identity (never data). primary = structure and the main action. */
+  --accent: #7D5A15;   --focus: #7D5A15;    --brass-soft: #F0E1B9;
   --primary: #203345;  --on-primary: #FCF8ED;
-  --brass-soft: #F0E1B9;
+  /* state: red is only for an error or a simulated false alarm */
   --ok: #1F6B45;       --warn: #8A5200;     --bad: #A3261C;
   --ok-bg: #E2F1E8;    --warn-bg: #F7E8C8;  --bad-bg: #F9E6E3;
-  /* rail (Order of hearings) */
+  /* rail (hearing selector, steps) */
   --rail: #203345;     --rail-text: #FCF8ED; --rail-muted: #C7D1D8; --rail-line: #5D6D79; --current: #F0D89B; --current-ink: #263545;
-  /* map: flagged rising, flagged falling, not flagged, no data; marks are the glyph colours drawn on each */
-  --up: #203E57;       --up-mark: #FFFAF0;  --down: #38766E;     --down-mark: #FFFFFF;
-  --nf: #E7CD8B;       --nf-line: #80601E;  --nodata: #E2E3DF;   --nodata-mark: #626D72;
+  /* data families, the same two hues in both themes: blue = rising / the trend, teal = falling / the baseline */
+  --up: #1F4E79;       --up-mark: #FFFFFF;  --down: #2B7A78;     --down-mark: #FFFFFF;
+  --nf: #DADDDA;       --nf-line: #66737B;  --nodata: #F0EEE6;   --nodata-mark: #6D777C;
   --ocean: #DCE5E8;    --land: #F7F2E4;     --coast: #6F6A5A;    --border: #8E8878;  --state: #8E8878;
-  /* chart */
-  --band: #DFCFAA;     --slope: #8A5915;    --ols: #38766E;      --dot: #203E57;     --plot-grid: #D5D0C4;
-  --radius: 4px;
+  --band: #D2E0EC;     --slope: #1F4E79;    --ols: #2B7A78;      --dot: #55718C;     --plot-grid: #D5D0C4;
+  /* scale: spacing 4 8 12 16 24 32 48 64; radius; motion */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --radius: 4px; --pad: 24px; --t: 160ms;
   --font-ui: Arial, Helvetica, "Segoe UI", sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: Consolas, "Courier New", monospace;
-  --shadow-1: 0 3px 0 rgba(25, 45, 64, .04);
+  --shadow-1: 0 1px 0 rgba(25, 45, 64, .05);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,17 +36,16 @@
     color-scheme: dark;
     --bg: #101D29;     --surface: #192B3A;  --surface-2: #223646;  --ink: #F4EDDE;   --muted: #BEC9CE;  --ink-soft: #BEC9CE;
     --line: #52616A;   --edge: #7E8E98;
-    --accent: #E0BD72; --focus: #E0BD72;
+    --accent: #E0BD72; --focus: #E0BD72;    --brass-soft: #3E3726;
     --primary: #E0BD72; --on-primary: #152534;
-    --brass-soft: #3E3726;
     --ok: #7FD1A4;     --warn: #F0BE6A;     --bad: #FF9A90;
     --ok-bg: #123022;  --warn-bg: #3A2D12;  --bad-bg: #3B1B19;
     --rail: #0B1620;   --rail-text: #F4EDDE; --rail-muted: #B7C7D0; --rail-line: #485A68; --current: #D8B66F; --current-ink: #152534;
-    --up: #E5C17B;     --up-mark: #1B2C3B;  --down: #77BCB0;     --down-mark: #102B2B;
-    --nf: #1C3041;     --nf-line: #B4C6D2;  --nodata: #34424C;   --nodata-mark: #B9C5CA;
+    --up: #86B6EE;     --up-mark: #0F2234;  --down: #5FBDAA;     --down-mark: #0A2A26;
+    --nf: #2B3C49;     --nf-line: #93A5B1;  --nodata: #1B2D3C;   --nodata-mark: #8A9CA7;
     --ocean: #0C1822;  --land: #1B2D3C;     --coast: #8FA3B0;    --border: #566A78;  --state: #566A78;
-    --band: #485461;   --slope: #EFC67D;    --ols: #77BCB0;      --dot: #E0E7E8;     --plot-grid: #42525E;
-    --shadow-1: 0 3px 0 rgba(0, 0, 0, .2);
+    --band: #2C4660;   --slope: #86B6EE;    --ols: #5FBDAA;      --dot: #A9BFD3;     --plot-grid: #42525E;
+    --shadow-1: 0 1px 0 rgba(0, 0, 0, .25);
   }
 }
 
@@ -49,15 +53,14 @@
   color-scheme: dark;
   --bg: #101D29;     --surface: #192B3A;  --surface-2: #223646;  --ink: #F4EDDE;   --muted: #BEC9CE;  --ink-soft: #BEC9CE;
   --line: #52616A;   --edge: #7E8E98;
-  --accent: #E0BD72; --focus: #E0BD72;
+  --accent: #E0BD72; --focus: #E0BD72;    --brass-soft: #3E3726;
   --primary: #E0BD72; --on-primary: #152534;
-  --brass-soft: #3E3726;
   --ok: #7FD1A4;     --warn: #F0BE6A;     --bad: #FF9A90;
   --ok-bg: #123022;  --warn-bg: #3A2D12;  --bad-bg: #3B1B19;
   --rail: #0B1620;   --rail-text: #F4EDDE; --rail-muted: #B7C7D0; --rail-line: #485A68; --current: #D8B66F; --current-ink: #152534;
-  --up: #E5C17B;     --up-mark: #1B2C3B;  --down: #77BCB0;     --down-mark: #102B2B;
-  --nf: #1C3041;     --nf-line: #B4C6D2;  --nodata: #34424C;   --nodata-mark: #B9C5CA;
+  --up: #86B6EE;     --up-mark: #0F2234;  --down: #5FBDAA;     --down-mark: #0A2A26;
+  --nf: #2B3C49;     --nf-line: #93A5B1;  --nodata: #1B2D3C;   --nodata-mark: #8A9CA7;
   --ocean: #0C1822;  --land: #1B2D3C;     --coast: #8FA3B0;    --border: #566A78;  --state: #566A78;
-  --band: #485461;   --slope: #EFC67D;    --ols: #77BCB0;      --dot: #E0E7E8;     --plot-grid: #42525E;
-  --shadow-1: 0 3px 0 rgba(0, 0, 0, .2);
+  --band: #2C4660;   --slope: #86B6EE;    --ols: #5FBDAA;      --dot: #A9BFD3;     --plot-grid: #42525E;
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, .25);
 }

@@ -1,0 +1,4 @@
+<!doctype html><meta charset="utf-8"><title>phone shot (dev only)</title>
+<!-- Lays the app out at exactly 375 px wide in a tall iframe, for full-page phone screenshots: phone_shot.html?theme=dark&h=2600#/case/C-C -->
+<body style="margin:0;background:#888"><iframe id="f" style="width:375px;border:0;background:#fff;display:block"></iframe>
+<script>const q=new URLSearchParams(location.search),f=document.getElementById('f');f.style.height=(q.get('h')||'2400')+'px';f.src='../index.html?theme='+(q.get('theme')||'light')+(location.hash||'');</script>

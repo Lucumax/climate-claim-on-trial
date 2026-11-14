@@ -87,7 +87,7 @@ main:focus { outline: none; }
 .boxmini text { fill: var(--muted); font: 10px var(--font-ui); }
 
 /* case header + path */
-.casehead { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.casehead { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 10px; }
 .path { display: flex; gap: 6px; flex-wrap: wrap; list-style: none; margin: 14px 0 22px; padding: 0; }
 .path a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--surface); border-radius: 9999px; color: var(--ink); text-decoration: none; font-size: .95rem; min-height: 40px; }
 .path a:hover { background: var(--surface-2); }
@@ -220,3 +220,14 @@ fieldset { min-width: 0; }
 .stack > .flow-nav { margin-top: 18px; }
 
 .grid > * { margin-top: 0 !important; }
+
+@media (max-width: 40rem) {
+  .brand { margin-right: 0; flex: 1; }
+  #theme-toggle { order: 2; }
+  nav.main { order: 3; width: 100%; flex-wrap: nowrap; overflow-x: auto; margin: 0 -4px; padding-bottom: 2px; }
+  nav.main a { white-space: nowrap; }
+  .synth .wrap { flex-direction: column; gap: 2px; }
+  .seg { flex-wrap: wrap; }
+  .legend { gap: 4px 12px; }
+  dl.fields { font-size: .95rem; }
+}

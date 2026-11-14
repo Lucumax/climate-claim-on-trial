@@ -16,7 +16,7 @@ export function seriesFits(claim) {
   const senA = r.sen.intercept != null ? r.sen.intercept : median(y.map((v, i) => v - senB * t[i]));
   const my = y.reduce((a, b) => a + b, 0) / n, mt = t.reduce((a, b) => a + b, 0) / n;
   const olsB = r.ols.slope_per_decade / 10, olsA = r.ols.intercept != null ? r.ols.intercept : my - olsB * mt;
-  return { t, sen: t.map(v => senA + senB * v), ols: t.map(v => olsA + olsB * v) };
+  return { t, sen: r.sen_line || t.map(v => senA + senB * v), ols: t.map(v => olsA + olsB * v) };
 }
 
 export function seriesChart(claim) {
@@ -32,7 +32,7 @@ export function seriesChart(claim) {
 
 // Generic trend chart. opts: x (numbers), y, units, band {lo,hi}|null, lines [{label,cls,lbl,y}], fmtX, ptR, xTickStep, describe, yLabel, keyItems
 export function trendChart(o) {
-  const yrs = o.x, y = o.y, n = yrs.length, W = 760, H = 380, m = { l: 54, r: 118, t: 16, b: 40 };
+  const narrow = window.innerWidth < 640, yrs = o.x, y = o.y, n = yrs.length, W = narrow ? 400 : 760, H = narrow ? 360 : 380, m = { l: 46, r: narrow ? 86 : 118, t: 16, b: 40 };
   const all = [...y, ...(o.band ? [...o.band.lo, ...o.band.hi] : []), ...o.lines.flatMap(l => l.y)];
   let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.06 || 1; lo -= pad; hi += pad;
   const xs = v => m.l + (v - yrs[0]) / (yrs[n - 1] - yrs[0]) * (W - m.l - m.r);
@@ -80,18 +80,19 @@ export function trendChart(o) {
 
 // Horizontal bars: flagged share by rung (claimed direction or any direction)
 export function rungBars(claim, mode) {
-  const L = claim.ladder, W = 760, rowH = 62, H = L.length * rowH + 20, left = 230, right = 70;
+  const narrow = window.innerWidth < 640;
+  const L = claim.ladder, W = narrow ? 400 : 760, rowH = narrow ? 70 : 62, H = L.length * rowH + 20, left = narrow ? 0 : 230, right = narrow ? 56 : 70;
   const val = r => (mode === "any" ? r.flagged_fraction_any : r.flagged_fraction_claimed);
-  const svg = s("svg", { class: "bars", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Flagged share of cells on each rung: " + L.map(r => `rung ${r.rung} ${r.label} ${(val(r) * 100).toFixed(1)} percent`).join("; ") });
+  const svg = s("svg", { class: "bars", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Flagged share of the mapped area on each rung: " + L.map(r => `rung ${r.rung} ${r.label} ${(val(r) * 100).toFixed(1)} percent`).join("; ") });
   const maxV = Math.max(0.05, ...L.map(val));
   const x = v => left + v / maxV * (W - left - right);
   L.forEach((r, i) => {
-    const y = 8 + i * rowH, v = val(r);
-    svg.append(s("text", { x: 0, y: y + 18, "font-weight": 700 }, `${r.rung}. ${r.label}`),
-      s("text", { class: "sub", x: 0, y: y + 36 }, `${mode === "any" ? r.n_flagged_any : r.n_flagged_claimed} of ${r.n_cells} cells`),
-      s("rect", { class: "track", x: left, y: y + 4, width: W - left - right, height: 28, rx: 4 }),
-      s("rect", { class: mode === "any" ? "b-any" : "b-up", x: left, y: y + 4, width: Math.max(v > 0 ? 2 : 0, x(v) - left), height: 28, rx: 4 }),
-      s("text", { x: W - right + 8, y: y + 24, "font-weight": 700 }, (v * 100).toFixed(1) + "%"));
+    const y = 8 + i * rowH, v = val(r), by = narrow ? y + 26 : y + 4;
+    svg.append(s("text", { x: 0, y: y + 14, "font-weight": 700 }, `${r.rung}. ${r.label}` + (narrow ? ` (${mode === "any" ? r.n_flagged_any : r.n_flagged_claimed} of ${r.n_cells} cells)` : "")));
+    if (!narrow) svg.append(s("text", { class: "sub", x: 0, y: y + 32 }, `${mode === "any" ? r.n_flagged_any : r.n_flagged_claimed} of ${r.n_cells} cells`));
+    svg.append(s("rect", { class: "track", x: left, y: by, width: W - left - right, height: 28, rx: 4 }),
+      s("rect", { class: mode === "any" ? "b-any" : "b-up", x: left, y: by, width: Math.max(v > 0 ? 2 : 0, x(v) - left), height: 28, rx: 4 }),
+      s("text", { x: W - right + 8, y: by + 20, "font-weight": 700 }, (v * 100).toFixed(1) + "%"));
   });
   return svg;
 }

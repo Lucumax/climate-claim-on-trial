@@ -7,7 +7,7 @@ export function caseHeader(claim, active) {
   const steps = [["", "The claim", "claim"], ["/ladder", "The ladder", "ladder"], ["/series", "The series", "series"], ["/verdict", "The finding", "verdict"]];
   return h("div", {},
     h("p", { class: "crumb" }, h("a", { href: "#/cases" }, "Case files"), " / ", claim.id),
-    h("div", { class: "casehead" }, h("span", { class: "chip neutral" }, "Case " + claim.id), h("span", { class: "chip " + (claim.data_kind === "model_reanalysis" ? "warn" : "neutral") }, KIND[claim.data_kind] || claim.data_kind)),
+    h("div", { class: "casehead" }, h("span", { class: "chip neutral" }, "Case " + claim.id), claim.synthetic ? h("span", { class: "chip warn" }, "SYNTHETIC test case") : null, h("span", { class: "chip " + (claim.data_kind === "model_reanalysis" ? "warn" : "neutral") }, KIND[claim.data_kind] || claim.data_kind)),
     h("div", { class: "claimbox" }, "“" + claim.claim_text + ".”"),
     h("p", { class: "meta", style: "margin-top:12px" },
       h("span", {}, h("b", {}, "Place: "), claim.region.name, " (", boxStr(claim.region.box), ")"),
@@ -25,6 +25,12 @@ export function miniBox(box, label) {
   for (const lon of [-120, -60, 0, 60, 120]) svg.append(s("line", { y1: 0, y2: H, x1: x(lon), x2: x(lon), stroke: "var(--line)" }));
   svg.append(s("rect", { class: "hl", x: x(box.w), y: y(box.n), width: Math.max(4, x(box.e) - x(box.w)), height: Math.max(4, y(box.s) - y(box.n)) }));
   return svg;
+}
+
+export function withheldNote(c) {
+  if (c.verdict.branch !== "withheld" && c.gate.cells && c.gate.interval) return null;
+  const why = (c.verdict.withheld_reasons && c.verdict.withheld_reasons.length ? c.verdict.withheld_reasons : c.gate.reasons) || [];
+  return h("p", { class: "callout", role: "note" }, h("b", {}, "Some results are withheld. "), "The checks they depend on did not pass", why.length ? ": " + why.join("; ") : "", ". Numbers shown here are for reading only, not a basis for a verdict.");
 }
 
 export function tone(v) {

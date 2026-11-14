@@ -2,7 +2,7 @@
 import { h, pct, signed, fmtP, boxStr, download } from "../util.js";
 import { renderMap, legend } from "../map.js";
 import { seriesChart, rungBars } from "../chart.js";
-import { caseHeader, miniBox, KIND, tone } from "./common.js";
+import { caseHeader, miniBox, KIND, tone, withheldNote } from "./common.js";
 import { sigClass, sigLabel } from "../words.js";
 
 export function caseList(b) {
@@ -31,6 +31,7 @@ export function caseLadder(b, c) {
   let mode = "claimed";
   const wrap = h("div", {});
   function draw() {
+    if (!c.gate.cells) { wrap.replaceChildren(withheldNote(c), h("div", { class: "card" }, h("p", { class: "muted" }, "The per-cell maps are withheld for this case because the checks they depend on did not pass."))); return; }
     const L = c.ladder, key = mode === "any" ? "flagged_fraction_any" : "flagged_fraction_claimed", cnt = mode === "any" ? "n_flagged_any" : "n_flagged_claimed";
     const seg = h("div", { class: "seg", role: "radiogroup", "aria-label": "Count flagged cells" }, [["claimed", `Claimed direction only (${c.direction})`], ["any", "Either direction"]].map(([k, l]) =>
       h("label", {}, h("input", { type: "radio", name: "mode", value: k, checked: mode === k, onchange: () => { mode = k; draw(); const f = wrap.querySelector(`input[value="${k}"]`); if (f) f.focus(); } }), h("span", {}, l))));
@@ -44,7 +45,7 @@ export function caseLadder(b, c) {
         const dtext = !prev ? "Starting point" : Math.abs(d) < 0.05 ? "No change from the previous rung" : `${d > 0 ? "More" : "Fewer"} flagged than the previous rung: ${signed(d, 1)} percentage points (${dn > 0 ? "+" : ""}${dn} cells)`;
         const m = renderMap(c, r, { id: `map-${c.id}-${r.rung}` });
         return h("article", { class: "card rung" }, h("header", {}, h("span", { class: "num", "aria-hidden": "true" }, String(r.rung)), h("div", {}, h("h3", {}, r.label), h("p", { class: "what" }, r.changes))),
-          h("div", {}, h("div", { class: "bignum" }, pct(r[key])), h("div", { class: "muted small" }, `${r[cnt]} of ${r.n_cells} cells flagged`), h("div", { class: "delta " + dcls }, dtext)), m.node);
+          h("div", {}, h("div", { class: "bignum" }, pct(r[key])), h("div", { class: "muted small" }, `${r[cnt]} of ${r.n_cells} cells flagged` + (r.cells_changed != null ? `; ${r.cells_changed} cells changed status from the previous rung` : "")), h("div", { class: "delta " + dcls }, dtext), r.note ? h("p", { class: "muted small", style: "margin:6px 0 0" }, r.note) : null), m.node);
       })),
       h("div", { class: "card", style: "margin-top:16px" }, legend(c), h("p", { class: "muted small", style: "margin:10px 0 0" }, "The flagged share describes how much of the map shows a pattern. It is not an error rate and does not tell you which single cell is right.")),
       h("div", { class: "flow-nav" }, h("a", { class: "btn", href: `#/case/${c.id}/series` }, "Next: the regional series")));
@@ -57,7 +58,7 @@ export function caseSeries(b, c) {
   const r = c.regional, chart = seriesChart(c), u = r.units;
   const stat = (k, v, sub) => h("div", { class: "stat" }, h("div", { class: "k" }, k), h("div", { class: "v" }, v), h("div", { class: "s" }, sub));
   return { title: `Case ${c.id}: the series`, node: h("div", {}, caseHeader(c, "series"), h("h1", { id: "page-title", tabindex: "-1", class: "sr-only" }, "Case " + c.id + ": the series"),
-    h("div", { class: "card" }, h("h2", {}, "Regional series, one value per year"), h("p", { class: "muted" }, `Area-weighted mean anomaly for ${c.region.name}. Anomaly means the difference from this series' own average (${r.baseline}).`), chart.node,
+    withheldNote(c), h("div", { class: "card", style: "margin-top:12px" }, h("h2", {}, "Regional series, one value per year"), h("p", { class: "muted" }, `Area-weighted mean anomaly for ${c.region.name}. Anomaly means the difference from this series' own average (${r.baseline}).`), chart.node,
       h("details", { style: "margin-top:12px" }, h("summary", {}, "How the uncertainty band is made"), h("p", { class: "muted small" }, r.band_method))),
     h("div", { class: "statgrid", style: "margin-top:16px" },
       stat("Sen slope per decade", `${signed(r.sen.slope_per_decade, 2)} ${u}`, `95% range ${signed(r.sen.ci_lo, 2)} to ${signed(r.sen.ci_hi, 2)}`),
@@ -68,10 +69,11 @@ export function caseSeries(b, c) {
     h("div", { class: "flow-nav" }, h("a", { class: "btn", href: `#/case/${c.id}/verdict` }, "Next: the finding"))) };
 }
 
+const NA = h("span", { class: "muted" }, "Not in this bundle yet.");
 export function caseVerdict(b, c) {
   const v = c.verdict, f = c.finding, t = tone(v);
   const field = (k, ...kids) => [h("dt", {}, k), h("dd", {}, ...kids)];
-  const text = [v.label, v.headline, ...v.sentences, `${f.place}; ${f.variable}; ${f.period}; ${f.change_per_decade.text}; interval ${f.interval.lo} to ${f.interval.hi}; ${f.product.name} ${f.product.version} ${f.product.doi}; run ${f.run_id}; ledger ${f.ledger_ref}`].join("\n");
+  const text = [v.label, v.headline, ...v.sentences, `${f.place}; ${f.variable}; ${f.period}; ${f.change_per_decade.text}; interval ${f.interval.lo} to ${f.interval.hi}; ${f.product.name} ${f.product.version} ${f.product.doi}; run ${f.run_id}; ledger ${f.ledger_ref || "n/a"}`].join("\n");
   const copy = h("button", { class: "btn-quiet", type: "button", onclick: e => { (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => { e.target.textContent = "Copied"; }, () => { download(`finding_${c.id}.txt`, text, "text/plain"); }); } }, "Copy the finding as text");
   return { title: `Case ${c.id}: the finding`, node: h("div", {}, caseHeader(c, "verdict"), h("h1", { id: "page-title", tabindex: "-1", class: "sr-only" }, "Case " + c.id + ": the finding"),
     h("section", { class: "card verdict " + (t === "neutral" ? "" : t), role: "status", "aria-labelledby": "verdict-h" },
@@ -84,9 +86,9 @@ export function caseVerdict(b, c) {
         field("Change per decade", f.change_per_decade.text),
         field("Interval", `${signed(f.interval.lo, 2)} to ${signed(f.interval.hi, 2)} (${Math.round(f.interval.level * 100)}%). `, h("span", { class: "muted" }, f.interval.meaning)),
         field("NASA product", `${f.product.name}, version ${f.product.version}, DOI ${f.product.doi}`),
-        field("This number is for", f.scope_text),
-        field("What the evidence does not support", h("ul", {}, f.not_supported.map(x => h("li", {}, x)))),
-        field("Selection disclosure", f.selection_disclosure),
-        field("Run ID", h("span", { class: "mono" }, f.run_id)), field("Ledger reference", h("span", { class: "mono" }, f.ledger_ref)))),
+        field("This number is for", f.scope_text || NA),
+        field("What the evidence does not support", f.not_supported ? h("ul", {}, f.not_supported.map(x => h("li", {}, x))) : NA),
+        field("Selection disclosure", f.selection_disclosure || NA),
+        field("Run ID", h("span", { class: "mono" }, f.run_id)), field("Ledger reference", f.ledger_ref ? h("span", { class: "mono" }, f.ledger_ref) : NA))),
     h("div", { class: "flow-nav" }, copy, h("a", { class: "btn-quiet", href: "#/evidence" }, "Download the evidence"), h("a", { class: "btn-quiet", href: "#/method" }, "Read the method"))) };
 }

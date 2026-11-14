@@ -53,7 +53,7 @@ export function ladderCsv(b) {
 export function evidence(b) {
   const btn = (label, fn) => h("button", { class: "btn-quiet", type: "button", onclick: fn }, label);
   const files = [
-    ["Evidence bundle (JSON)", "Everything the site shows: claims, ladders, series, verdicts, run IDs.", () => download("climate_claim_on_trial_bundle.json", JSON.stringify(b._raw, null, 2), "application/json")],
+    ["Evidence bundle (JSON)", "Everything the site shows: claims, ladders, series, verdicts, run IDs.", () => download("climate_claim_on_trial_bundle.json", JSON.stringify(b._raws.length === 1 ? b._raws[0] : { bundles: b._raws }, null, 2), "application/json")],
     ["Ladder summary (CSV)", "One row per claim and rung: cells tested, cells flagged, shares.", () => download("climate_claim_on_trial_ladder.csv", ladderCsv(b), "text/csv")],
     ["Cell table (CSV)", "One row per grid cell with data: position, Sen slope, flag on each rung.", () => download("climate_claim_on_trial_cells.csv", cellsCsv(b), "text/csv")],
     ["Regional series (CSV)", "Yearly regional anomaly and uncertainty band for each claim.", () => download("climate_claim_on_trial_series.csv", seriesCsv(b), "text/csv")],
@@ -64,6 +64,6 @@ export function evidence(b) {
     h("p", { class: "lede" }, "Everything on this site comes from one bundle. Download it and check any number yourself."),
     b.synthetic ? h("p", { class: "callout" }, h("b", {}, "Synthetic data. "), b.notice || "These files hold placeholder numbers, not results.") : null,
     h("p", { class: "muted small" }, "Run ID: ", h("span", { class: "mono" }, b.run_id || "n/a"), "  ·  Schema: ", h("span", { class: "mono" }, b.schema_version || "n/a")),
-    h("div", { class: "grid g2", style: "margin-top:16px" }, files.map(f => h("div", { class: "card" }, h("h3", {}, f[0]), h("p", { class: "muted" }, f[1]), btn("Download", f[2])))),
-    h("div", { class: "card", style: "margin-top:16px" }, h("h3", {}, "Reproduce it"), h("p", { class: "muted" }, "The Python code that made the bundle is in the project repository, with instructions to rerun it from the downloaded NASA files."))) };
+    h("div", { class: "grid g2", style: "margin-top:16px" }, files.map(f => h("div", { class: "card" }, h("h2", { style: "font-size:1.1rem" }, f[0]), h("p", { class: "muted" }, f[1]), btn("Download", f[2])))),
+    h("div", { class: "card", style: "margin-top:16px" }, h("h2", { style: "font-size:1.1rem" }, "Reproduce it"), h("p", { class: "muted" }, "The Python code that made the bundle is in the project repository, with instructions to rerun it from the downloaded NASA files."))) };
 }

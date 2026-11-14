@@ -198,3 +198,5 @@
 .viz-w2-text { margin-top: var(--sp-3, 12px); max-width: 68ch; }
 .viz-w2-text p:not(.viz-note) { margin: 0 0 var(--sp-2, 8px); }
 .viz-witness2 .viz-note a { overflow-wrap: anywhere; }
+
+.w2-key-t3 { border-top-color: var(--viz-cool-3, #3F7FB0); border-top-style: dotted; }

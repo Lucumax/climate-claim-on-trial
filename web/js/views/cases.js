@@ -181,8 +181,8 @@ export function caseDocket(b, c, query = "") {
     "C-B": { file: "C-B_knmi", ask: "Does a station-based rain-gauge record agree with the satellite rainfall?" },
     "C-C": { file: "C-C_knmi", ask: "Does a station-based temperature record agree with the reanalysis?" } }[c.id];
   async function mountWitness2(body) {
-    const [mod, data] = await Promise.all([import("../viz/witness2.js"), getJson(`data/witness/${WIT2.file}.json`)]);
-    return mod.render(body, data);
+    const [mod, data, extra] = await Promise.all([import("../viz/witness2.js"), getJson(`data/witness/${WIT2.file}.json`), c.id === "C-A" ? getJson("data/witness/C-A_knmi.json").catch(() => null) : null]);
+    return mod.render(body, data, { extra });
   }
   async function mountYearly3d(body) {
     const [mod, data] = await Promise.all([import("../viz/cycle.js"), getJson(`data/viz/${c.id}.json`)]);

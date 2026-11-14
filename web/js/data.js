@@ -55,7 +55,6 @@ export const REG_SHORT = "Registered before data download (10:29 AM ET), with tw
 
 // The ONE place that decides which test, interval and band a case shows. Everything downstream reads r.test / r.interval / r.band / r.ctx.
 function pickRegional(reg, T, gate, val) {
-  const sen = T.sen || {};
   // shipped regional test (null if the gate disabled it; older bundles without addendum 2 fall back to the registered Hamed-Rao test)
   let test = null;
   if (T.shipped) {
@@ -64,17 +63,15 @@ function pickRegional(reg, T, gate, val) {
   } else if (!("shipped" in T) && T.mk_hr && gate.regional_verdict_enabled !== false) {
     test = { method: "hr_registered", name: "Hamed-Rao", title: "Mann-Kendall with Hamed-Rao correction", label: "Mann-Kendall with Hamed-Rao variance correction", p: T.mk_hr.p, z: T.mk_hr.z, factor: T.mk_hr.hr_factor, significant: T.mk_hr.significant, alpha: T.mk_hr.alpha };
   }
-  // selected interval: only if the gate enabled it; endpoints follow the gate's chosen method, never a hard-coded field
+  // selected interval: the ONLY displayable interval is regional.interval.selected (null when none passed its coverage bar). Candidates are audit-only and never read here.
   let interval = null;
-  if (gate.interval_enabled !== false) {
-    const key = gate.interval_method || (/bootstrap/i.test(sen.interval_method || "") ? "bootstrap" : "analytic_hr");
-    const ends = "interval_used_per_decade" in sen ? sen.interval_used_per_decade : (key === "analytic_hr" ? sen.ci_analytic_hr_per_decade : sen.ci_bootstrap_per_decade);
-    if (Array.isArray(ends) && ends.length === 2 && ends.every(Number.isFinite)) {
-      const ran = val && val.status === "run";
-      interval = { lo: ends[0], hi: ends[1], level: (reg.band && reg.band.level) || 0.95, method: key, label: `95% interval (${INTERVAL_WORD[key] || key}${ran ? COV_NOTE : ""})` };
-    }
+  const sel = reg.interval && reg.interval.selected;
+  if (sel && gate.interval_enabled !== false && Number.isFinite(sel.low) && Number.isFinite(sel.high)) {
+    const cov = sel.coverage_achieved && sel.coverage_achieved.headline && sel.coverage_achieved.headline.value;
+    interval = { lo: sel.low, hi: sel.high, level: sel.level_nominal || 0.95, method: sel.method, coverage: cov != null ? cov : null, meaning: sel.meaning || null,
+      label: `95% interval (${INTERVAL_WORD[sel.method] || sel.method}${cov != null ? `; in simulations it contained the true slope ${(cov * 100).toFixed(0)}% of the time` : ""})` };
   }
-  const band = interval && reg.band && Array.isArray(reg.band.lo) && Array.isArray(reg.band.hi) ? { lo: reg.band.lo, hi: reg.band.hi } : null;
+  const band = interval && reg.band && Array.isArray(reg.band.lo) && Array.isArray(reg.band.hi) ? { lo: reg.band.lo, hi: reg.band.hi, meaning: reg.band.band_meaning || null } : null;
   const ctx = { hr: T.mk_hr ? { p: T.mk_hr.p, factor: T.mk_hr.hr_factor, factor_raw: T.mk_hr.hr_factor_raw } : null, raw: T.mk_independent ? { p: T.mk_independent.p } : null };
   return { test, interval, band, ctx };
 }
@@ -90,7 +87,7 @@ function fromReal(r) {
     rung: R.rung, key: "rung" + R.rung, label: R.rung === 3 && cellTest ? `Autocorrelation correction: ${cellTest}` : R.name, changes: R.what_changes, flags: mkFlags(R.rung), n_cells: nValid,
     n_flagged_any: R.flagged_cells, n_flagged_claimed: R.flagged_in_direction_cells, flagged_fraction_any: R.flagged_area_frac, flagged_fraction_claimed: R.flagged_in_direction_area_frac,
     cell_frac_any: nValid ? R.flagged_cells / nValid : 0, cell_frac_claimed: nValid ? R.flagged_in_direction_cells / nValid : 0,
-    cells_changed: R.cells_changed_vs_previous, note: R.rung === 2 ? cells.rung2_note : null,
+    cells_changed: R.cells_changed_vs_previous, note: R.rung === 2 ? cells.rung2_note : null, explain: R.explain || null, threshold_text: R.threshold_text || null, q_used: R.q || null,
     registered_hr: R.registered_hr_flagged_cells != null ? { cells: R.registered_hr_flagged_cells, area: R.registered_hr_flagged_area_frac } : null,
   }));
   const [lbl, tone] = BRANCH[v.id] || BRANCH[v.branch] || [v.branch, "neutral"];
@@ -132,12 +129,12 @@ function fromReal(r) {
     cell_slope_per_decade: F.slope_per_decade.map((x, i) => F.valid[i] ? x : null),
     ladder, cell_test_name: cellTest, cell_test_key: cells.cell_test, cells_mode: cells.cells_mode || "bh_flags", bh_q: r.params.bh_q, alpha: r.params.alpha, thresholds: { breadth: r.params.breadth_min, local: r.params.local_min },
     regional: {
-      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: BAND_MEANING, units: reg.units, baseline: `average of this series, ${reg.baseline_mean} ${reg.units}`,
+      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${String(reg.units).replace("degC", "°C")}`,
       sen_line: reg.sen_line, test: R_.test, interval: iv, ctx: R_.ctx,
       sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },
     },
-    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [] },
+    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [], reasons_interval: gate.reasons_interval || [], adaptive_notes: gate.adaptive_notes || [] },
     verdict: { branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
     finding, method_notes: r.method_notes, sensitivity: r.sensitivity, coverage: r.coverage,
   };

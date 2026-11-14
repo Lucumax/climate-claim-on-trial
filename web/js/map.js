@@ -1,6 +1,6 @@
 // Exhibit A: per-cell map. Each cell is drawn at its true latitude/longitude over a real basemap (see basemap.js).
 // Categories (colour AND shape, so colour is never the only cue): flagged rising (+), flagged falling (v), not flagged (dot), no data (hatch).
-import { h, s, pct, latStr, lonStr, signed } from "./util.js";
+import { h, s, pct, latStr, lonStr, signed, U } from "./util.js";
 import { categoryCounts } from "./data.js";
 import { makeView, basemapLayers, frameLayer } from "./basemap.js";
 
@@ -36,8 +36,8 @@ export function renderMap(claim, rung, opts = {}) {
   const bm = basemapLayers(view, { states: true, id });
   const cursor = s("rect", { class: "cursor", visibility: "hidden" });
   const svg = s("svg", { class: "map", viewBox: `0 0 ${view.W.toFixed(0)} ${view.H.toFixed(0)}`, "aria-hidden": "true", preserveAspectRatio: "xMidYMid meet" },
-    s("defs", {}, bm.defs), bm.under,
-    s("g", { "clip-path": `url(#${id}-clip)` }, s("path", { class: "c-nd", d: d.nd }), s("path", { class: "c-nf", d: d.nf }), s("path", { class: "c-down", d: d.down }), s("path", { class: "c-up", d: d.up }),
+    s("defs", {}, bm.defs, s("pattern", { id: id + "-hatch", width: 5, height: 5, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, s("line", { class: "hatch-line", x1: 0, y1: 0, x2: 0, y2: 5 }))), bm.under,
+    s("g", { "clip-path": `url(#${id}-clip)` }, s("path", { class: "c-nd", d: d.nd }), s("path", { d: d.nd, fill: `url(#${id}-hatch)` }), s("path", { class: "c-nf", d: d.nf }), s("path", { class: "c-down", d: d.down }), s("path", { class: "c-up", d: d.up }),
       s("path", { class: "m-nf", d: marks.nf }), s("path", { class: "m-down", d: marks.down }), s("path", { class: "m-up", d: marks.up })),
     bm.over, frameLayer(view, { label: claim.region.name }), cursor);
   const summary = mapSummary(claim, rung);
@@ -50,7 +50,7 @@ export function renderMap(claim, rung, opts = {}) {
     const idx = i * nlon + j, v = rung.flags[idx], where = `${latStr(g.lat[i])}, ${lonStr(g.lon[j])}`;
     if (v == null) { readout.textContent = `Cell at ${where}: no data (outside the valid area).`; return; }
     const sl = claim.cell_slope_per_decade && claim.cell_slope_per_decade[idx];
-    readout.textContent = `Cell at ${where}: ${v > 0 ? "flagged as rising" : v < 0 ? "flagged as falling" : "not flagged"}.` + (sl != null ? ` Sen slope ${signed(sl)} ${claim.variable.unit} per decade.` : "");
+    readout.textContent = `Cell at ${where}: ${v > 0 ? "flagged as rising" : v < 0 ? "flagged as falling" : "not flagged"}.` + (sl != null ? ` Sen slope ${signed(sl)} ${U(claim.variable.unit)} per decade.` : "");
   }
   function fromPointer(ev) {
     const r = svg.getBoundingClientRect(), vx = (ev.clientX - r.left) / r.width * view.W, vy = (ev.clientY - r.top) / r.height * view.H;
@@ -60,7 +60,7 @@ export function renderMap(claim, rung, opts = {}) {
   }
   svg.addEventListener("pointermove", fromPointer); svg.addEventListener("pointerdown", fromPointer);
   const sumId = id + "-sum";
-  const wrap = h("div", { class: "mapfocus", tabindex: "0", role: "group", "aria-label": `Map for rung ${rung.rung}: ${rung.label}. Arrow keys move between cells.`, "aria-describedby": sumId }, svg);
+  const wrap = h("div", { class: "mapfocus", tabindex: "0", role: "group", "aria-label": `${opts.label || "Map for rung " + rung.rung + ": " + rung.label}. Arrow keys move between cells.`, "aria-describedby": sumId }, svg);
   wrap.addEventListener("keydown", ev => {
     const mv = { ArrowUp: [1, 0], ArrowDown: [-1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[ev.key];
     if (!mv) { if (ev.key === "Escape") { cursor.setAttribute("visibility", "hidden"); cur = null; } return; }
@@ -69,13 +69,13 @@ export function renderMap(claim, rung, opts = {}) {
     show(Math.min(nlat - 1, Math.max(0, c.i + (cur ? mv[0] * sgnLat : 0))), Math.min(nlon - 1, Math.max(0, c.j + (cur ? mv[1] * sgnLon : 0))));
   });
   wrap.addEventListener("blur", () => cursor.setAttribute("visibility", "hidden"));
-  const node = h("div", { class: "mapwrap" }, wrap, h("p", { id: sumId, class: "mapsum" }, summary), readout);
+  const node = h("div", { class: "mapwrap" }, wrap, legend(), h("p", { id: sumId, class: "sr-only" }, summary), readout);
   return { node, summary };
 }
 
 export function legend() {
   const key = (cls, glyph) => h("span", { class: "key " + cls, "aria-hidden": "true" }, glyph);
-  return h("div", { class: "legend", "aria-label": "Map key" },
-    h("span", { class: "legend-item" }, key("flag", "+"), "Rising and flagged"), h("span", { class: "legend-item" }, key("fall", "\u2304"), "Falling and flagged"),
-    h("span", { class: "legend-item" }, key("rise", "\u2022"), "Not flagged"), h("span", { class: "legend-item" }, key("none", "\u00D7"), "No data, excluded"));
+  return h("div", { class: "legend", role: "group", "aria-label": "Map key" },
+    h("span", { class: "legend-item" }, key("flag", "+"), "Rising, flagged"), h("span", { class: "legend-item" }, key("fall", "⌄"), "Falling, flagged"),
+    h("span", { class: "legend-item" }, key("rise", "•"), "Not flagged"), h("span", { class: "legend-item" }, key("none", ""), "No data"));
 }

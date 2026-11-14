@@ -37,5 +37,8 @@ export function analyzeRows(rows, { months, y0, y1, units }) {
   const A_raw = analyzeSeries(years, raw, { units }), A_an = analyzeSeries(years, anomaly, { units });
   const my = mean(raw), mt = mean(years);
   const olsIntercept = my - A_raw.ols.slope * mt, olsInterceptAn = mean(anomaly) - A_an.ols.slope * mt;
-  return { n, years, raw, anomaly, A_raw, A_an, olsIntercept, olsInterceptAn, nMonths: ss.nMonths, verdict: A_raw.verdict };
+  let gate = null; try { gate = TT.exploratoryGate ? TT.exploratoryGate(years, anomaly) : null; } catch (e) { gate = null; }
+  return { n, years, raw, anomaly, A_raw, A_an, olsIntercept, olsInterceptAn, nMonths: ss.nMonths, verdict: A_raw.verdict, gate };
 }
+export const olsTest = TT.olsTest;
+export const exploratoryGate = TT.exploratoryGate;

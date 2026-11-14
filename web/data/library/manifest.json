@@ -643,6 +643,287 @@
     "tile_means": "tws_grace/tile_means.json"
    },
    "build_date_utc": "2026-11-14"
+  },
+  {
+   "id": "lst_day_myd11",
+   "name": "Land surface temperature (day)",
+   "definition": "How hot the ground surface is in the early afternoon, as seen from space on clear days, averaged over the month (degrees Celsius). It is hotter than the air temperature in sun-baked places.",
+   "units": "degC",
+   "product": "MODIS Aqua MYD11C3 v061",
+   "version": "061",
+   "short_name": "MYD11C3",
+   "concept_id": "C2565794044-LPCLOUD",
+   "doi": "https://doi.org/10.5067/MODIS/MYD11C3.061",
+   "agency": "NASA LP DAAC",
+   "kind": "satellite observation",
+   "source_variable": "LST_Day_CMG (K x 0.02 minus 273.15)",
+   "period": {
+    "first_month": "2003-01",
+    "last_month": "2026-10",
+    "n_months_axis": 286,
+    "t0": [
+     2003,
+     1
+    ],
+    "months_all_missing": []
+   },
+   "native_resolution": "0.05 degree, block-averaged to 1 degree",
+   "library_resolution": "1 degree, area-weighted block mean of valid native cells (block kept if >= 50% valid)",
+   "scale": 0.05,
+   "offset": 0.0,
+   "nodata_int16": -32768,
+   "caveats": "Land surface temperature is the temperature of the ground and plant surface as seen from space (skin temperature), not the air temperature at weather stations, and it is only observed on clear-sky days, so cloudy places and seasons are under-sampled. Aqua passes at about 1:30 PM local time, so this is a mid-afternoon temperature, and Aqua's overpass time has drifted later since July 2021 (NSIDC 2021) while Terra, which we did not use, drifts earlier. Daytime only; ocean and water are not included; values are converted from kelvin to degrees Celsius once.",
+   "tiles": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     0,
+     3
+    ],
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     0,
+     6
+    ],
+    [
+     0,
+     7
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     9
+    ],
+    [
+     2,
+     10
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     4,
+     11
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     5,
+     7
+    ],
+    [
+     5,
+     8
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     5,
+     11
+    ]
+   ],
+   "files": {
+    "series": "lst_day_myd11/global_series.json",
+    "tile_means": "lst_day_myd11/tile_means.json"
+   },
+   "build_date_utc": "2026-11-14"
   }
  ]
 }

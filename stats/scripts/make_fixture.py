@@ -19,11 +19,11 @@ ok = lambda b: {b: dict(passed=True)}
 sc = []
 for n in (23, 25, 45):
     for phi in (0.0, 0.3, 0.6):
-        sc.append(scen(f"R-null-n{n}-phi{phi}", "regional", n, phi, {"B1": dict(passed=True, side="ok"), "B3": dict(passed=True), "B4": dict(passed=True)}))
-        sc.append(scen(f"R-trend-n{n}-phi{phi}", "regional", n, phi, {"B3": dict(passed=True), "B4": dict(passed=True)}))
+        sc.append(scen(f"R-null-n{n}-phi{phi}", "regional", n, phi, {"B1": dict(passed=True, side="ok"), "B3": dict(passed=True), "B3a": dict(passed=True), "B4": dict(passed=True)}))
+        sc.append(scen(f"R-trend-n{n}-phi{phi}", "regional", n, phi, {"B3": dict(passed=True), "B3a": dict(passed=True), "B4": dict(passed=True)}))
         for k in ("none", "positive", "mixed"):
             sc.append(scen(f"C-{k}-phi{phi}", "cells", 25, phi, {"B2": dict(passed=True)}))
-sc.append(scen("R-null-gaps-n25-phi0.3", "regional", 25, 0.3, {"B1": dict(passed=True, side="ok"), "B3": dict(passed=True), "B4": dict(passed=True)}))
+sc.append(scen("R-null-gaps-n25-phi0.3", "regional", 25, 0.3, {"B1": dict(passed=True, side="ok"), "B3": dict(passed=True), "B3a": dict(passed=True), "B4": dict(passed=True)}))
 ph = dict(run=dict(placeholder=True, note="PLACEHOLDER: every check set to pass, for the fixture only"), scenarios=sc, summary=dict(placeholder=True))
 (work / "validation_placeholder.json").write_text(json.dumps(ph))
 b = run_claim(work / "SYN", ROOT / "fixtures" / "_tmp_full", validation_path=work / "validation_placeholder.json", params=dict(boot_reps=1000))

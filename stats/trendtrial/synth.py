@@ -57,7 +57,8 @@ def make_claim_folder(path, ny=20, nx=30, years=(2001, 2025), months=(6, 7, 8), 
     cyc = {m: 2.0 * np.sin((m - 3) / 12 * 2 * np.pi) for m in months}
     noise = ar1_fields(1, n * len(months), ny, nx, phi, rng, sigma=2.0)[0].reshape(n, len(months), ny, nx)
     # true trend only in part of the field
-    mask = gaussian_filter(rng.standard_normal((ny, nx)), 3) > np.quantile(gaussian_filter(rng.standard_normal((ny, nx)), 3), 1 - frac_trend)
+    sm = gaussian_filter(rng.standard_normal((ny, nx)), 3)
+    mask = sm > np.quantile(sm, 1 - frac_trend)
     tr = trend_per_decade / 10.0
     vals, ys, ms = [], [], []
     for iy, y in enumerate(yrs):

@@ -17,7 +17,7 @@ Conventions: all numbers are plain JSON numbers rounded to 6 significant digits 
 `monthly.npz`: `values` (T, ny, nx) float, NaN = missing; `lat` (ny,), `lon` (nx,); `year` (T,) int; `month` (T,) int; optional `support` (ny, nx) bool (cells inside the region/land mask; default all). Months of the season only are needed (annual mean: all 12). Seasons must lie inside one calendar year. Aggregate to the shipped grid before writing (`trendtrial.aggregate.block_aggregate`: 0.05 to 0.25 degrees is k = 5). Run: `stats\.venv\Scripts\python -m trendtrial.pipeline data\C-A --out out\C-A --validation out\validation\validation_results.json`.
 
 ## Top level
-`schema_version, run, claim, params, coverage, regional, sensitivity, cells, validation, verdict, method_notes`.
+`schema_version, run, claim, params, coverage, regional, sensitivity, cells, validation, verdict, finding, method_notes`.
 
 - `run`: `run_id` ("run-" + 12 hex of sha256 over code version, input hashes, params, validation hash), `generated_at`, `code_version`, `seed`, `elapsed_seconds`, `input_sha256 {claim_json, monthly_npz}`, `software`.
 - `claim`: claim.json copied verbatim.
@@ -35,11 +35,14 @@ Conventions: all numbers are plain JSON numbers rounded to 6 significant digits 
 - `validation`: `status` ("run" | "not_run"), `gate`, `claim_phi_hat`, `results_summary`, `results_run`, `source_sha256`. See "Gate flags".
 - `verdict`: `id` (withheld | contradicted | supported | partly_supported | not_supported), `branch` (adds sub-branches `partly_regional_narrow`, `partly_local_only`), `text` (render this; the sentences come only from the fixed templates in `trendtrial/verdict.py`, no free text), `precedence_trace[]`, `withheld_reasons[]`, `inputs`, `branches[]`.
 
+- `finding` (spec 3.8 card; every sentence is a fixed template, render as is): `place_name, variable, units, period, season, seasons_used, change_per_decade {value, units, interval [lo,hi] | null, interval_method, interval_meaning, scope}, product {name, version, doi}, verdict_id, verdict_text, not_supported[]` (what the evidence does not support), `selection_disclosure` (headline = the one pre-registered regional test; synthetic and user-exploration variants), `scope_text` (regional average vs hotspot), `is_model_data, run_id, ledger_ref`. `product` is copied from claim.json `product`; `ledger_ref` from claim.json `ledger_ref` if present, else "claim / run_id". `interval` is null when the gate disabled it. Extra optional claim.json keys used: `preregistered` (default true), `registration_ref`, `synthetic`, `ledger_ref`.
+- Interval source: `regional.tests.sen.interval_used_per_decade` is the interval to show (null if disabled); `interval_method` says whether it is the bootstrap or the analytic Hamed-Rao interval (the gate picks: bootstrap if it passed its coverage bar, else analytic if that passed, else none). `regional.band` follows the same method (`band.meaning` states what it is).
+
 ## Verdict precedence (first match wins)
 withheld > contradicted > supported > partly supported > not supported by this data. Definitions and the 0.25 / 0.05 thresholds are in `verdict.py` and were recorded in `event_record/STATS_LOG.md` before any claim data. Never present nonsignificance as unpublishable; never state a cause or forecast. The browser must render `verdict.text` as is.
 
 ## Gate flags (the browser MUST honour them)
-`validation.gate`: `regional_verdict_enabled, interval_enabled, cells_enabled, reasons_blocking_verdict[], conservative_flags[], governing[]`.
+`validation.gate`: `regional_verdict_enabled, interval_enabled, interval_method (bootstrap | analytic_hr | null), cells_enabled, reasons_blocking_verdict[], conservative_flags[], governing[]`.
 - `regional_verdict_enabled = false`: show no regional verdict and no "significant / not significant" badge for the regional test; show `verdict.text` (withheld) and the reasons. Numbers may be shown as plain description only.
 - `interval_enabled = false`: hide the slope interval and the chart band (the OLS interval is a baseline and may stay, labelled as such).
 - `cells_enabled = false`: hide hotspot flags, flagged-area fractions and any breadth claim on the map; the per-cell p-values and slopes may still be shown as description.

@@ -179,7 +179,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
             "sen": dict(slope_per_decade=mk1(mk, "slope") * dec, intercept=mk1(mk, "intercept"),
                         ci_bootstrap_per_decade=[b["slope_ci"][0] * dec, b["slope_ci"][1] * dec],
                         ci_analytic_hr_per_decade=[R["sen_ci_hr"][0] * dec, R["sen_ci_hr"][1] * dec],
-                        interval_method="residual moving-block bootstrap around the Sen line, percentile 95%"),
+                        interval_method=None),
             "ols": dict(slope_per_decade=ols_r["slope"] * dec, se_per_decade=ols_r["se"] * dec,
                         t=ols_r["t"], df=ols_r["df"], p=ols_r["p"],
                         ci_per_decade=[ols_r["ci_low"] * dec, ols_r["ci_high"] * dec], n=ols_r["n"],
@@ -298,6 +298,32 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         validation["claim_phi_hat"] = phi_hat
         validation["source_sha256"] = sha256_file(validation_path)
 
+    # ---------- interval method chosen by the gate ----------
+    gate0 = validation["gate"]
+    imethod = gate0.get("interval_method")
+    if tests and gate0.get("interval_enabled"):
+        sen_t = tests["sen"]
+        if imethod == "analytic_hr":
+            lo_a, hi_a = sen_t["ci_analytic_hr_per_decade"]
+            sen_t["interval_used_per_decade"] = [lo_a, hi_a]
+            sen_t["interval_method"] = "analytic Sen interval (Gilbert) with Hamed-Rao variance"
+            pv = int(np.argmin(np.abs(np.asarray(years, float) - np.nanmedian(np.asarray(years, float)[np.isfinite(series)]))))
+            line = np.asarray(reg["sen_line"], float)
+            tt_ = np.asarray(years, float)
+            l1 = line[pv] + (lo_a / dec) * (tt_ - tt_[pv])
+            l2 = line[pv] + (hi_a / dec) * (tt_ - tt_[pv])
+            band = dict(years=years, center=line, lo=np.minimum(l1, l2), hi=np.maximum(l1, l2), level=0.95,
+                        meaning=("slope-range band: the Sen line rotated about its value at the median year between the "
+                                 "limits of the 95% slope interval; it does not include uncertainty in the level at the pivot"),
+                        method="analytic_hr", n=n_valid_years)
+        else:
+            sen_t["interval_used_per_decade"] = sen_t["ci_bootstrap_per_decade"]
+            sen_t["interval_method"] = "residual moving-block bootstrap around the Sen line, percentile 95%"
+        reg["band"] = band
+    elif tests:
+        tests["sen"]["interval_used_per_decade"] = None
+        reg["band"] = None
+
     # ---------- verdict ----------
     reasons = list(validation["gate"].get("reasons_blocking_verdict", [])) if validation["status"] != "not_run" else \
         ["validation results not attached"]
@@ -308,7 +334,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     hr = tests.get("mk_hr", {})
     inp = dict(
         withheld_reasons=reasons, p=hr.get("p"), slope=sen.get("slope_per_decade"),
-        ci=tuple(sen["ci_bootstrap_per_decade"]) if sen and gate.get("interval_enabled") else None,
+        ci=tuple(sen["interval_used_per_decade"]) if sen and gate.get("interval_enabled") and sen.get("interval_used_per_decade") else None,
         direction=direction, interval_enabled=bool(gate.get("interval_enabled")),
         breadth_in_dir=rungs[3]["flagged_in_direction_area_frac"],
         breadth_available=bool(gate.get("cells_enabled")) and cells["n_valid_cells"] > 0,
@@ -333,12 +359,17 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                                local_min=P["local_min"]),
                    branches=["withheld", "contradicted", "supported", "partly_supported", "not_supported"])
 
+    # ---------- finding card (spec 3.8) ----------
+    finding = build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid_years, len(years))
+
     # ---------- run identity ----------
     h_claim, h_npz = sha256_file(cj), sha256_file(nz)
     canon = json.dumps(dict(code=__version__, claim=h_claim, data=h_npz,
                             params={k: (list(v) if isinstance(v, tuple) else v) for k, v in P.items()},
                             validation=validation.get("source_sha256")), sort_keys=True)
     run_id = "run-" + hashlib.sha256(canon.encode()).hexdigest()[:12]
+    finding["run_id"] = run_id
+    finding["ledger_ref"] = claim.get("ledger_ref") or f"{claim['claim_id']} / {run_id}"
     bundle = dict(
         schema_version=SCHEMA_VERSION,
         run=dict(run_id=run_id, generated_at=dt.datetime.now().astimezone().isoformat(timespec="seconds"),
@@ -347,7 +378,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                  software=dict(python=platform.python_version(), numpy=np.__version__, scipy=scipy.__version__)),
         claim=claim, params={k: (list(v) if isinstance(v, tuple) else v) for k, v in P.items()},
         coverage=coverage, regional=reg, sensitivity=sens, cells=cells, validation=validation, verdict=verdict,
-        method_notes=METHOD_NOTES,
+        finding=finding, method_notes=METHOD_NOTES,
     )
     out_dir = Path(out_dir) if out_dir else Path("out") / claim["claim_id"]
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -360,6 +391,57 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     if not quiet:
         print(f"wrote {path} ({path.stat().st_size / 1e6:.2f} MB) run_id={run_id} elapsed={time.time() - t0:.1f}s")
     return b
+
+
+def build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid, n_years):
+    """Spec 3.8 fields. Every sentence is a fixed template with slots; no free text."""
+    sen = tests.get("sen", {})
+    used = sen.get("interval_used_per_decade")
+    prov = claim.get("product", {})
+    not_sup = [
+        "It does not say why the value changed, and it does not predict what happens next.",
+        "It describes this region, season and period only; it does not apply to other regions, seasons or periods.",
+        "It does not test whether the pattern of cells as a whole is unlikely by chance (field significance was not tested).",
+        "False-discovery control does not validate any single hotspot and does not measure the share of area that is wrong.",
+    ]
+    if claim.get("is_model_data"):
+        not_sup.append("The values are reanalysis model output, not a direct measurement.")
+    if coverage["years_dropped"]:
+        not_sup.append(f"{len(coverage['years_dropped'])} of {n_years} seasons were left out because too few cells had data.")
+    if not gate.get("regional_verdict_enabled"):
+        not_sup.append("The significance test for this claim did not pass its calibration checks, so no verdict is given.")
+    if not gate.get("interval_enabled"):
+        not_sup.append("The slope interval and its band are not shown because they did not pass their calibration checks.")
+    if not gate.get("cells_enabled"):
+        not_sup.append("The map flags and flagged-area shares are not shown because the cell-level tests did not pass their calibration checks.")
+    n_phrase = f"{n_valid} of {n_years} seasons"
+    if claim.get("preregistered", True) and not claim.get("synthetic"):
+        sel = (f"This headline is the one regional test registered for this claim before any data were downloaded "
+               f"({claim.get('registration_ref', 'WP0 claim registration')}). The region, season and period were not changed after "
+               f"looking at results.")
+    elif claim.get("synthetic"):
+        sel = "Synthetic example data for layout testing only; nothing here is a real result."
+    else:
+        sel = "This is the user's own exploration, not a pre-registered test; the region and period were chosen by the user."
+    scope = ("The change per decade is for the area-weighted average of the whole region (the containing area), not for any "
+             "hotspot or single cell. The map shows where individual cells pass the tests; any hotspot value is pointwise and "
+             "is not adjusted for having been selected.")
+    meaning = sen.get("interval_method") if used else None
+    return dict(
+        place_name=vclaim["region_name"], variable=vclaim["variable"], units=vclaim["units"],
+        period=vclaim["period_label"], season=vclaim["season_label"], seasons_used=n_phrase,
+        change_per_decade=dict(value=sen.get("slope_per_decade"), units=vclaim["units"] + " per decade",
+                               interval=used, interval_method=meaning,
+                               interval_meaning=("A 95% interval for the Sen slope per decade, built by the method named above. How often such "
+                                                 "intervals contain the true slope was measured on synthetic series (see the validation "
+                                                 "results). It is not an interval for individual years")
+                               if used else "interval not shown (did not pass its calibration check)",
+                               scope="regional average (containing area)"),
+        product=dict(name=prov.get("name"), version=prov.get("version"), doi=prov.get("doi")),
+        verdict_id=verdict["id"], verdict_text=verdict["text"],
+        not_supported=not_sup, selection_disclosure=sel, scope_text=scope,
+        is_model_data=bool(claim.get("is_model_data")),
+    )
 
 
 def _lag1(x):

@@ -26,7 +26,7 @@ ALPHA = 0.05
 Q = 0.10
 COVERAGE_BAR = 0.90
 REPLICATE_FLOORS = dict(regional_size=4000, regional_cov=1000, cells_fields=200)
-PHIS = (0.0, 0.3, 0.6)
+PHIS = (0.0, 0.1, 0.2, 0.3, 0.45, 0.6)
 NS = (23, 25, 45)
 TREND_SD_PER_DECADE = 0.3
 
@@ -91,7 +91,8 @@ def regional_scenario(sid, n, phi, noise="normal", gap_frac=0.0, trend=0.0, R_si
         checks["B1"] = dict(passed=side != "liberal", within_band=side == "ok", side=side, band=[lo, hi])
     se = metrics["sen_bias_sd_per_decade"]["se"]
     checks["B4"] = dict(passed=abs(metrics["sen_bias_sd_per_decade"]["value"]) <= 2 * se, bar=2 * se)
-    checks["B3"] = dict(passed=cb >= COVERAGE_BAR, bar=COVERAGE_BAR)
+    checks["B3"] = dict(passed=cb >= COVERAGE_BAR, bar=COVERAGE_BAR, method="residual block bootstrap")
+    checks["B3a"] = dict(passed=ca >= COVERAGE_BAR, bar=COVERAGE_BAR, method="analytic Sen CI with Hamed-Rao variance")
     floor_ok = metrics[key]["R"] >= REPLICATE_FLOORS["regional_size"] * (1 - gap_frac * 0 - 0.01) and \
         len(cov_b) >= REPLICATE_FLOORS["regional_cov"] * 0.95
     return dict(id=sid, kind="regional", n=n, phi=phi, noise=noise, gap_frac=gap_frac,
@@ -223,7 +224,7 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
     above = [p for p in phis if p >= phi_use - 1e-12]
     if not above:
         reasons.append(f"persistence in this series (lag-1 {phi_hat:.2f}) is above the tested range")
-        return dict(status="run", gate=dict(regional_verdict_enabled=False, interval_enabled=False, cells_enabled=False,
+        return dict(status="run", gate=dict(regional_verdict_enabled=False, interval_enabled=False, interval_method=None, cells_enabled=False,
                                             reasons_blocking_verdict=reasons, governing=[]),
                     results_summary=res.get("summary"), results_run=res.get("run"))
     phi_gov = above[0]
@@ -233,7 +234,7 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
     if skew is not None and abs(skew) > 0.8:
         ids_null.append("R-null-skewed-n25-phi0.3")
     ids_trend = [f"R-trend-n{n_gov}-phi{phi_gov}"] if f"R-trend-n{n_gov}-phi{phi_gov}" in sc else []
-    reg_ok, int_ok, flags = True, True, []
+    reg_ok, int_ok, int_ok_a, flags = True, True, True, []
     for sid in ids_null + ids_trend:
         s = sc.get(sid)
         if s is None:
@@ -252,6 +253,8 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
             reasons.append(f"Sen slope biased in {sid}")
         if not c["B3"]["passed"]:
             int_ok = False
+        if not c["B3a"]["passed"]:
+            int_ok_a = False
         if not s["floor_ok"]:
             reg_ok = False
             reasons.append(f"replicate floor not met in {sid}")
@@ -263,7 +266,9 @@ def gate_for_claim(res, n_years, phi_hat, has_gaps, q=Q, skew=None):
             cells_ok = False
         if s is not None:
             gov.append(sid)
-    return dict(status="run", gate=dict(regional_verdict_enabled=reg_ok, interval_enabled=int_ok and reg_ok,
+    method = "bootstrap" if int_ok else ("analytic_hr" if int_ok_a else None)
+    return dict(status="run", gate=dict(regional_verdict_enabled=reg_ok, interval_enabled=bool(method) and reg_ok,
+                                        interval_method=method if reg_ok else None,
                                         cells_enabled=cells_ok, reasons_blocking_verdict=reasons,
                                         conservative_flags=flags, governing=gov, governing_n=n_gov,
                                         governing_phi=phi_gov),

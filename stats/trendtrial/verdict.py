@@ -29,28 +29,28 @@ TEMPLATES = {
     "contradicted": (
         "The data point the other way. For {region}, {season}, {period}, the {variable} "
         "{opposite_past} by {abs_slope} {units} per decade ({ci_text}; "
-        "Mann-Kendall with autocorrelation correction, p = {p}). That is statistically significant "
+        "Mann-Kendall with autocorrelation correction, p {p}). That is statistically significant "
         "at the 0.05 level and opposite to the claim. " + NOTE_SCOPE
     ),
     "supported": (
         "The data support the claim. For {region}, {season}, {period}, the {variable} {direction_past} "
         "by {abs_slope} {units} per decade ({ci_text}; Mann-Kendall with "
-        "autocorrelation correction, p = {p}), which is statistically significant at the 0.05 level. "
+        "autocorrelation correction, p {p}), which is statistically significant at the 0.05 level. "
         "{breadth_clause} " + NOTE_SCOPE
     ),
     "partly_regional_narrow": (
         "The data partly support the claim. For {region}, {season}, {period}, the regional average "
-        "{direction_past} by {abs_slope} {units} per decade (p = {p}, significant at the 0.05 level), "
+        "{direction_past} by {abs_slope} {units} per decade (p {p}, significant at the 0.05 level), "
         "but {narrow_clause}. " + NOTE_SCOPE
     ),
     "partly_local_only": (
         "The data partly support the claim. The regional average for {region}, {season}, {period} "
-        "changed by {signed_slope} {units} per decade ({ci_text}; p = {p}), which is not "
+        "changed by {signed_slope} {units} per decade ({ci_text}; p {p}), which is not "
         "statistically significant at the 0.05 level, but {local_clause}. " + NOTE_NOT_SIG + " " + NOTE_SCOPE
     ),
     "not_supported": (
         "This data does not support the claim for {region}, {season}, {period}. The estimated change in "
-        "the {variable} is {signed_slope} {units} per decade ({ci_text}; p = {p}), "
+        "the {variable} is {signed_slope} {units} per decade ({ci_text}; p {p}), "
         "which is not statistically significant at the 0.05 level. " + NOTE_NOT_SIG + " " + NOTE_SCOPE
     ),
 }
@@ -58,17 +58,17 @@ TEMPLATES = {
 # Detective mode (series level, no map, no bootstrap): the challenge author's plain framing.
 DETECTIVE_TEMPLATES = {
     "significant_up": (
-        "The trend is statistically significant (p = {p}, below 0.05): the series rises by about "
+        "The trend is statistically significant (p {p}, below 0.05): the series rises by about "
         "{abs_slope} {units} per decade. Significant means the rise is unlikely to be chance alone; it "
         "does not say why it rose or what comes next."
     ),
     "significant_down": (
-        "The trend is statistically significant (p = {p}, below 0.05): the series falls by about "
+        "The trend is statistically significant (p {p}, below 0.05): the series falls by about "
         "{abs_slope} {units} per decade. Significant means the fall is unlikely to be chance alone; it "
         "does not say why it fell or what comes next."
     ),
     "not_significant": (
-        "The trend is not statistically significant (p = {p}, above 0.05). A p-value above 0.05 does not "
+        "The trend is not statistically significant (p {p}, above 0.05). A p-value above 0.05 does not "
         "mean there is no trend or that it is unimportant, and a longer series can help."
     ),
     "too_short": (
@@ -91,7 +91,7 @@ def _fmt_p(p):
         return "n/a"
     if p < 0.001:
         return "< 0.001"
-    return f"{p:.3f}"
+    return f"= {p:.3f}"
 
 
 def decide(inp):
@@ -156,13 +156,13 @@ def build_slots(claim, inp):
                           f"direction (a descriptive share, not an error rate).")
         narrow_clause = (f"only {pct} of the mapped area is flagged in the claimed direction after "
                          f"false-discovery control" if (b or 0) < BREADTH_MIN else
-                         ("the slope interval is not shown because it did not pass its calibration check" if interval_off
+                         ("the slope interval is not shown (it did not pass its calibration check)" if interval_off
                           else "the interval for the slope includes zero"))
         local_clause = (f"{pct} of the mapped area is flagged in the claimed direction after false-discovery "
                         f"control (a descriptive share, not an error rate)")
     else:
         breadth_clause = "The cell map is not used for this verdict."
-        narrow_clause = ("the slope interval is not shown because it did not pass its calibration check" if interval_off
+        narrow_clause = ("the slope interval is not shown (it did not pass its calibration check)" if interval_off
                          else "the interval for the slope includes zero")
         local_clause = "no cell map was available to check smaller areas"
     return {

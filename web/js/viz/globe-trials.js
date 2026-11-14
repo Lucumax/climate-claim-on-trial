@@ -4,12 +4,13 @@
 // The globe starts paused. "Turn the Earth" is a deliberate, slow rotation; reduced motion keeps the Earth still (drag and the chips still work).
 // Optional (landing hook prototype): options.onPick(case) replaces "open the docket" on a region or label click, options.onPoint({lat,lng}) reports a click anywhere else on the Earth.
 //   The returned object also has focus(lat,lng,altitude,ms), select(id|null), markBox(box|null) and turn(on).
+// Optional (Home hook): options.labels = "focus" shows a region's name label only on the selected region and on the one under the pointer (six labels never collide),
+//   and marks the selected case's chip so the page can show just that chip (its colour key and docket link). The default draws every label and every chip.
 // render(container, claims, options) -> {destroy, el}.  claims: bundle.claims (data.js shape: grid, cell_slope_per_decade, regional.units, verdict).
 import { WEB, el, tok, isDark, onTheme, makeScale, clamp, signed, reducedMotion, nextId } from "./common.js";
-import { loadGeo, tracePath } from "./geo.js";
+import { U } from "../util.js";
+import { DUMMY, loadEarth, makeBase, styleAtmosphere, useCanvasTexture } from "./globe-style.js";
 
-const IMG_URL = WEB + "vendor/blue-marble-4096.webp";
-const DUMMY = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
 const SHORT = { "C-A": "Southeast US", "C-B": "Sahel", "C-C": "Alaska", "C-D": "Wisconsin", "C-E1": "Eastern US", "C-E2": "Northern India" };
 const NICE = [0.05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.8, 1, 1.5, 2, 2.5, 3, 4, 5];
 const caseNo = (id) => id.replace("-", "–");
@@ -28,20 +29,19 @@ function loadGlobeLib() {
   return globeLib;
 }
 export const hasWebGL = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } };
-const loadImage = (url) => new Promise((res) => { const i = new Image(); i.decoding = "async"; i.onload = () => res(i); i.onerror = () => res(null); i.src = url; });
 
 /** What each case draws: its cells, trend scale, palette and whether it is withheld. */
 export function prepareCases(claims) {
   return claims.filter((c) => c.grid && c.cell_slope_per_decade).map((c) => {
     const g = c.grid, abs = c.cell_slope_per_decade.filter((v) => v != null).map(Math.abs).sort((a, b) => a - b);
     const p98 = abs.length ? abs[Math.min(abs.length - 1, Math.floor(0.98 * (abs.length - 1)))] : 1, max = NICE.find((v) => v >= p98) || Math.ceil(p98);
-    const unit = String(c.regional.units || "").replace(/\bdegC\b/g, "°C").replace(/^mm per day$/, "mm/day"), wet = /mm/.test(unit);
+    const unit = U(c.regional.units).replace(/^mm per day$/, "mm/day"), wet = /mm/.test(unit), no2 = /molecules/.test(unit) || /no2|nitrogen/i.test(`${c.variable && c.variable.key} ${c.variable && c.variable.plain}`);
     const withheld = c.verdict.branch === "withheld";
     const la0 = Math.min(...g.lat), la1 = Math.max(...g.lat), lo0 = Math.min(...g.lon), lo1 = Math.max(...g.lon);
     const hl = Math.abs(g.dlat) / 2, hw = Math.abs(g.dlon) / 2, box = { s: la0 - hl, n: la1 + hl, w: lo0 - hw, e: lo1 + hw };
     return { id: c.id, short: SHORT[c.id] || c.region.name, name: c.region.name, grid: g, slopes: c.cell_slope_per_decade, max, unit, wet, withheld, box,
       verdict: c.verdict.label, scaleData: { palette: wet ? "wet_up" : "warm_up", scale: { max } }, lat: (box.s + box.n) / 2, lng: (box.w + box.e) / 2,
-      words: wet ? ["drying", "wetting"] : /unitless|AOD/.test(unit) ? ["less aerosol", "more aerosol"] : ["cooling", "warming"] };
+      words: wet ? ["drying", "wetting"] : /unitless|AOD/.test(unit) ? ["less aerosol", "more aerosol"] : no2 ? ["less NO\u2082", "more NO\u2082"] : ["cooling", "warming"] };
   });
 }
 
@@ -50,7 +50,7 @@ export async function render(container, claims, options = {}) {
   if (!cases.length) throw new Error("no cases to draw");
   const reduce = reducedMotion(), id = nextId("gt");
   const holds = new Set(); let holdT = 0;
-  let selected = null, markPoly = null, destroyed = false, globe = null, tex = null, texCanvas = null, texCtx = null, baseTex = null, img = null, geo = null, io = null, hover = null, turning = false;
+  let selected = null, markPoly = null, destroyed = false, globe = null, tex = null, texCanvas = null, texCtx = null, baseTex = null, earth = null, io = null, hover = null, turning = false;
   let scales = new Map(cases.map((k) => [k.id, makeScale(k.scaleData)]));
 
   const stage = el("div", { class: "viz-stage viz-stage--stage gt-stage", "aria-hidden": "false", role: "group", "aria-label": "Globe showing where the case regions are. Drag to turn it; the case list below opens each docket.", style: "height:" + (options.height || "clamp(340px, 38vw, 500px)") });
@@ -82,23 +82,6 @@ export async function render(container, claims, options = {}) {
 
   // ---------------------------------------------------------------- the picture painted into the globe texture
   const X = (W, lon) => ((lon + 180) / 360) * W, Y = (H, lat) => ((90 - lat) / 180) * H;
-  function makeBase(W, H) {
-    const c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d"), dark = isDark();
-    g.fillStyle = tok("ocean", "#DCE5E8"); g.fillRect(0, 0, W, H);
-    if (img) {
-      g.filter = dark ? "grayscale(0.75) brightness(0.62) contrast(0.8)" : "grayscale(0.7) brightness(0.92) contrast(0.62)";
-      g.drawImage(img, 0, 0, W, H); g.filter = "none";
-      g.fillStyle = dark ? "rgba(10,20,29,0.42)" : "rgba(222,230,233,0.62)"; g.fillRect(0, 0, W, H);
-    }
-    if (geo) {
-      const box = { w: -180, e: 180, s: -90, n: 90 }, fx = (lon) => X(W, lon), fy = (lat) => Y(H, lat);
-      g.lineJoin = "round"; g.beginPath(); tracePath(g, geo.countries, fx, fy, box);
-      g.strokeStyle = dark ? "rgba(190,201,206,0.3)" : "rgba(60,58,48,0.28)"; g.lineWidth = Math.max(0.8, W / 4096); g.stroke();
-      g.beginPath(); tracePath(g, geo.land, fx, fy, box);
-      g.strokeStyle = dark ? "rgba(214,224,229,0.5)" : "rgba(40,40,32,0.62)"; g.lineWidth = Math.max(0.9, W / 3000); g.stroke();
-    }
-    return c;
-  }
   function hatchPattern(g, W) {
     const s = Math.max(6, Math.round(W / 560)), p = document.createElement("canvas"); p.width = p.height = s; const q = p.getContext("2d");
     q.fillStyle = tok("nodata", "#F0EEE6"); q.fillRect(0, 0, s, s); q.strokeStyle = tok("nodata-mark", "#6D777C"); q.lineWidth = Math.max(1, s / 5);
@@ -132,7 +115,13 @@ export async function render(container, claims, options = {}) {
   const isHov = (d) => !!(d && hover && d.id === hover.id);
   const capOf = (d) => (isHov(d) ? "rgba(255,255,255,0.16)" : d && d.id === selected ? "rgba(255,255,255,0.2)" : d && d.id === "__mark" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.015)");
   const altOf = (d) => (isHov(d) || (d && (d.id === selected || d.id === "__mark")) ? 0.012 : 0.004);
-  const refreshPolys = () => { if (!globe) return; globe.polygonsData([...cases.map(polyOf), ...(markPoly ? [markPoly] : [])]); globe.polygonAltitude(altOf); globe.polygonCapColor(capOf); };
+  // options.labels === "focus": a name label only on the selected region and on the hovered one; the case list marks the selected case
+  const labelEls = new Map(), focusLabels = options.labels === "focus";
+  function syncSel() {
+    for (const li of chips.children) { const a = li.firstChild; li.classList.toggle("is-selected", !!a && a.getAttribute("data-case") === selected); }
+    if (focusLabels) for (const [k, a] of labelEls) a.classList.toggle("is-off", !(k === selected || (hover && hover.id === k)));
+  }
+  const refreshPolys = () => { if (!globe) return; globe.polygonsData([...cases.map(polyOf), ...(markPoly ? [markPoly] : [])]); globe.polygonAltitude(altOf); globe.polygonCapColor(capOf); syncSel(); };
   const pick = (k, e) => { if (options.onPick) { if (e && e.preventDefault) e.preventDefault(); options.onPick(k); } else location.hash = "#/case/" + k.id; };
   const tipHtml = (k) => `<div class="gt-tooltip"><b>Case ${caseNo(k.id)} · ${k.short}</b><br>${k.withheld ? "Ruling withheld: no trend is drawn." : `${k.verdict}. Colours: each cell's trend.`}<br><i>Click to open the case</i></div>`;
   const view = { lat: 42, lng: -58, altitude: 1.5 };
@@ -147,24 +136,23 @@ export async function render(container, claims, options = {}) {
   }
   async function ensureGlobe() {
     const Globe = await loadGlobeLib(); if (destroyed) return;
-    const W = 4096; texCanvas = document.createElement("canvas"); texCanvas.width = W; texCanvas.height = W / 2; texCtx = texCanvas.getContext("2d"); baseTex = makeBase(W, W / 2);
+    const W = 4096; texCanvas = document.createElement("canvas"); texCanvas.width = W; texCanvas.height = W / 2; texCtx = texCanvas.getContext("2d"); baseTex = makeBase(W, W / 2, earth);
     const g = Globe({ rendererConfig: { antialias: true, alpha: true, powerPreference: "high-performance" }, animateIn: false })(host)
       .width(stage.clientWidth).height(stage.clientHeight).backgroundColor("rgba(0,0,0,0)")
-      .globeImageUrl(DUMMY).showAtmosphere(true).atmosphereColor(tok("viz-atmos", "#8FB1CC")).atmosphereAltitude(0.14)
+      .globeImageUrl(DUMMY)
       .polygonsData(cases.map(polyOf)).polygonGeoJsonGeometry("geometry").polygonAltitude(altOf)
       .polygonCapColor(capOf).polygonSideColor(() => "rgba(0,0,0,0)").polygonStrokeColor(() => "rgba(0,0,0,0)")
       .polygonLabel((d) => (!options.onPoint && kOf(d) ? tipHtml(kOf(d)) : "")).onPolygonHover((d) => { if (options.onPoint) return; hover = d || null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = hover ? "pointer" : "grab"; hold("hover", !!hover); if (hover && kOf(hover)) { const k = kOf(hover); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: ruling withheld.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}.`; } })
       .onPolygonClick((d) => { if (options.onPoint) return; const k = kOf(d); if (k) pick(k); })
       .htmlElementsData(cases).htmlLat((k) => k.lat).htmlLng((k) => k.lng).htmlAltitude(0.03).htmlElement((k) => {
-        const a = el("a", { href: "#/case/" + k.id, class: "gt-label" + (k.withheld ? " is-withheld" : ""), tabindex: "-1", "aria-hidden": "true" }, `${caseNo(k.id)} ${k.short}`); a.style.pointerEvents = "auto"; a.addEventListener("mouseenter", () => hold("label", true)); a.addEventListener("mouseleave", () => hold("label", false)); if (options.onPick) a.addEventListener("click", (e) => pick(k, e)); return a; });
+        const a = el("a", { href: "#/case/" + k.id, class: "gt-label" + (k.withheld ? " is-withheld" : ""), tabindex: "-1", "aria-hidden": "true" }, `${caseNo(k.id)} ${k.short}`); a.style.pointerEvents = "auto"; labelEls.set(k.id, a); a.addEventListener("mouseenter", () => hold("label", true)); a.addEventListener("mouseleave", () => hold("label", false)); if (options.onPick) a.addEventListener("click", (e) => pick(k, e)); return a; });
+    styleAtmosphere(g);
     globe = g;
     try { g.renderer().setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); } catch (e) { /* default ratio */ }
     const c = g.controls(); c.enablePan = false; c.autoRotate = false; c.minDistance = 110; c.maxDistance = 520; c.rotateSpeed = 0.55; c.zoomSpeed = 0.7;
     if (options.touchRotate === false) { c.enableRotate = false; c.enableZoom = false; host.style.touchAction = "pan-y"; host.querySelectorAll("canvas").forEach((cv) => { cv.style.touchAction = "pan-y"; }); }   // phones: a finger on the globe scrolls the page
-    tex = await new Promise((res) => { let n = 0; const iv = setInterval(() => { const m = g.globeMaterial().map; if (m) { clearInterval(iv); res(m); } else if (++n > 150) { clearInterval(iv); res(null); } }, 25); });
-    if (!tex || destroyed) return;
-    tex.dispose(); tex.image = texCanvas; tex.generateMipmaps = false; tex.minFilter = 1006;
-    try { tex.anisotropy = g.renderer().capabilities.getMaxAnisotropy(); } catch (e) { /* ignore */ }
+    tex = await useCanvasTexture(g, texCanvas, () => destroyed);
+    if (!tex) return;
     if (options.onPoint) {              // pointer handling done here, on the visible Earth only: the view ray is intersected with the sphere, so a box on the far side can never catch the pointer
       let down = null, moveRaf = 0; const cv = g.renderer().domElement;
       const geoAt = (e) => {
@@ -180,9 +168,9 @@ export async function render(container, claims, options = {}) {
       cv.addEventListener("pointermove", (e) => {
         if (e.buttons || moveRaf) return; const ev = { clientX: e.clientX, clientY: e.clientY };
         moveRaf = requestAnimationFrame(() => { moveRaf = 0; const k = caseAt(geoAt(ev)), was = hover && hover.id; if ((k && k.id) === was) return;
-          hover = k ? { id: k.id } : null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = k ? "pointer" : "grab"; hold("hover", !!k); });
+          hover = k ? { id: k.id } : null; syncSel(); g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = k ? "pointer" : "grab"; hold("hover", !!k); });
       });
-      cv.addEventListener("pointerleave", () => { if (hover) { hover = null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = "grab"; hold("hover", false); } });
+      cv.addEventListener("pointerleave", () => { if (hover) { hover = null; syncSel(); g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = "grab"; hold("hover", false); } });
       cv.addEventListener("click", (e) => {
         if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6) return;
         const pt = geoAt(e); if (!pt) return; const k = caseAt(pt);
@@ -190,17 +178,17 @@ export async function render(container, claims, options = {}) {
       });
     }
     c.addEventListener("start", () => { clearTimeout(holdT); hold("drag", true); }); c.addEventListener("end", () => { clearTimeout(holdT); holdT = setTimeout(() => hold("drag", false), 1200); });
-    home(false); paint();
+    home(false); paint(); syncSel();
     if (options.autoSpin && !reduce) setTurning(true);
     if ("IntersectionObserver" in window) { io = new IntersectionObserver((es) => { for (const e of es) { try { if (e.isIntersecting) { g.resumeAnimation(); hold("offscreen", false); } else { g.pauseAnimation(); hold("offscreen", true); } } catch (er) { /* ignore */ } } }); io.observe(stage); }
   }
 
-  [img, geo] = await Promise.all([loadImage(IMG_URL), loadGeo({ states: false }).catch(() => null)]);
+  earth = await loadEarth();
   if (destroyed) return null;
   await ensureGlobe();
   if (!globe) throw new Error("the globe could not start");
   const offSize = (() => { if (!window.ResizeObserver) return () => {}; const ro = new ResizeObserver(() => { if (globe && !destroyed) globe.width(stage.clientWidth).height(stage.clientHeight); }); ro.observe(stage); return () => ro.disconnect(); })();
-  const offTheme = onTheme(() => { scales = new Map(cases.map((k) => [k.id, makeScale(k.scaleData)])); chips.querySelectorAll(".gt-bar").forEach((b, i) => { const k = cases.filter((c) => !c.withheld)[i]; if (k) b.style.background = scales.get(k.id).gradient(); }); if (globe) { globe.atmosphereColor(tok("viz-atmos", "#8FB1CC")); baseTex = makeBase(texCanvas.width, texCanvas.height); paint(); } });
+  const offTheme = onTheme(() => { scales = new Map(cases.map((k) => [k.id, makeScale(k.scaleData)])); chips.querySelectorAll(".gt-bar").forEach((b, i) => { const k = cases.filter((c) => !c.withheld)[i]; if (k) b.style.background = scales.get(k.id).gradient(); }); if (globe) { globe.atmosphereColor(tok("viz-atmos", "#8FB1CC")); baseTex = makeBase(texCanvas.width, texCanvas.height, earth); paint(); } });
   const api = {
     hasGlobe: true,
     focus(lat, lng, altitude = 1.15, ms = 800) { if (!globe) return; globe.pointOfView({ lat, lng, altitude }, reduce ? 0 : ms); if (!reduce) { hold("fly", true); setTimeout(() => hold("fly", false), ms + 250); } },

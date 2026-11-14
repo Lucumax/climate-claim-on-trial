@@ -1,9 +1,10 @@
 // Exhibit Zero: The False-Alarm Planet. A synthetic planet with no trend in any cell, put through the same three
 // tests as the case files (naive Mann-Kendall, Yue-Wang corrected, Benjamini-Hochberg). Everything is computed live in
 // the browser by js/falsealarm-core.js, which calls the shipped statistics module. Rendering: globe.gl (vendored, MIT)
-// on a stylised sphere, or an equal-area (Mollweide) canvas map of the same cells on phones, without WebGL, or on request.
+// on the same muted Earth as the Home globe (viz/globe-style.js), or an equal-area (Mollweide) canvas map of the same cells on phones, without WebGL, or on request.
 import { h, announce, reducedMotion } from "../util.js";
 import { gavelIcon } from "./common.js";
+import { DUMMY, dressGlobe } from "../viz/globe-style.js";
 import { falseAlarmPlanet, ensembleCheck, N_CELLS, ALPHA, BH_Q } from "../falsealarm-core.js";
 
 const DEFAULT_SEED = 93;      // a planet whose naive and corrected rates sit near the average of 120 test planets
@@ -97,7 +98,7 @@ export function falseAlarm(opts = {}) {
     rotate: !reduced && !preview, ens: null, ensRunning: null, val: null,
   };
   const refs = {};
-  let globe = null, globeReady = false, globeFailed = false, token = 0, cancelFlag = { cancelled: false }, ensFlag = { cancelled: false };
+  let globe = null, look = null, globeReady = false, globeFailed = false, token = 0, cancelFlag = { cancelled: false }, ensFlag = { cancelled: false };
   let rafId = 0, ensTimer = 0, sliderTimer = 0, destroyed = false, settleTimer = 0, wakeTimer = 0, lastGlobeDraw = 0;
   let rank = null, state = new Uint8Array(N_CELLS), flat = null, io = null, ro = null, mo = null, mq = null;
 
@@ -222,8 +223,9 @@ export function falseAlarm(opts = {}) {
   const rulingColumn = h("div", { class: "ruling-column" }, ruling, refs.leak, refs.check, tipBox);
 
   // the compact version: the three tests on the left, the planet with its headline, count and legend on the right
-  const previewRail = h("div", { class: "hearings fa-rail", role: "group", "aria-label": "Choose a test" }, railList);
-  const previewStage = h("div", { class: "fa-prev-main" }, refs.headline, refs.sub, refs.stage, refs.readout, legend, refs.summary);
+  // (built only for the preview: appending the same elements here would move them out of the full page)
+  const previewRail = preview ? h("div", { class: "hearings fa-rail", role: "group", "aria-label": "Choose a test" }, railList) : null;
+  const previewStage = preview ? h("div", { class: "fa-prev-main" }, refs.headline, refs.sub, refs.stage, refs.readout, legend, refs.summary) : null;
   const node = preview
     ? h("div", { class: "fa-view fa-preview fa-pending" }, h("div", { class: "workspace fa-prev-ws" }, previewRail, previewStage))
     : h("div", { class: "fa-view fa-pending" },
@@ -572,10 +574,7 @@ export function falseAlarm(opts = {}) {
   function drawCells(full) { if (st.view === "flat") drawFlat(); else drawGlobe(full); }
   function themeGlobe() {
     if (!globe) return;
-    const pal = palette();
-    globe.globeMaterial().color.set(pal.land);
-    globe.atmosphereColor(pal.accent);
-    globe.pathColor(() => pal.line);
+    if (look) look.retheme();          // the same Earth as the Home globe: its texture and atmosphere follow light and dark
     drawGlobe(true);
   }
   async function setView(v) {
@@ -600,18 +599,17 @@ export function falseAlarm(opts = {}) {
     try {
       const Globe = await loadGlobeLib();
       if (destroyed) return;
-      const g = Globe()(refs.globeEl);
-      const pal = palette();
-      g.backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereColor(pal.accent).atmosphereAltitude(0.16);
-      g.globeMaterial().color.set(pal.land);
+      // Looks like the Home globe: the same muted Earth texture with its outlines, the same atmosphere and the same material (see viz/globe-style.js).
+      // Only the look is shared. The cells, their colours and the Synthetic label are this page's own.
+      const g = Globe({ rendererConfig: { antialias: true, alpha: true, powerPreference: "high-performance" }, animateIn: false })(refs.globeEl);
+      g.backgroundColor("rgba(0,0,0,0)").globeImageUrl(DUMMY);
+      try { g.renderer().setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); } catch (e) { /* default ratio */ }
       g.pointOfView({ lat: 22, lng: -30, altitude: preview ? 1.75 : 2.15 });
       const c = g.controls(); c.enableZoom = false; c.enablePan = false; c.autoRotate = st.rotate && !reduced; c.autoRotateSpeed = 0.55;
       g.pointsData([]).pointLat("lat").pointLng("lng").pointResolution(5).pointsMerge(false).pointsTransitionDuration(0)
         .pointLabel((d) => cellLabel(d.i));
-      const lines = [];
-      for (const lat of [-60, -30, 0, 30, 60]) { const a = []; for (let lon = -180; lon <= 180; lon += 6) a.push([lat, lon]); lines.push(a); }
-      for (let lon = -180; lon < 180; lon += 30) { const a = []; for (let lat = -90; lat <= 90; lat += 6) a.push([lat, lon]); lines.push(a); }
-      g.pathsData(lines).pathPoints((d) => d).pathPointLat((p) => p[0]).pathPointLng((p) => p[1]).pathPointAlt(() => 0.001).pathColor(() => pal.line).pathStroke(null).pathTransitionDuration(0);
+      look = await dressGlobe(g, { isDead: () => destroyed });
+      if (destroyed) { try { g._destructor && g._destructor(); } catch (e) { /* ignore */ } return; }
       globe = g; globeReady = true;
       if (st.res) g.pointsData(cellObjs());
       setStatus("", false);

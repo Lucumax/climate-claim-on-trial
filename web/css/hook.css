@@ -1,0 +1,152 @@
+/* Home hook: the record and the headline at the top, the big globe below. Tokens from tokens.css only. Georgia headings, tabular numbers, no gradients, no cards.
+   Everything is scoped under .hook so it cannot touch the other pages. (The prototype in web/proto has its own copy of these rules.) */
+.hook { font-variant-numeric: tabular-nums; }
+.hook .num { font-variant-numeric: tabular-nums; }
+.hook button:focus-visible, .hook a:focus-visible, .hook [tabindex]:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.hook .hk-hook { max-width: 1280px; }
+.hook .hk-kicker { margin: 0 0 8px; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-height: 1.4em; transition: opacity 400ms ease; }
+.hook .hk-kicker.is-loading { color: var(--ink); }
+
+/* the headline: a small lead line and a large number, in a slot that never changes height */
+.hook .hk-head { margin: 0; font-family: var(--font-serif); font-weight: 400; letter-spacing: -.012em; max-width: none; }
+.hook .hk-lead { display: block; font-size: clamp(1.25rem, 2.2vw, 1.875rem); line-height: 1.15; color: var(--ink); min-height: 1.15em; text-wrap: balance; }
+.hook .hk-num { font-family: var(--font-ui); font-weight: 400; display: block; font-size: clamp(2.5rem, 4.6vw, 4rem); line-height: 1.02; margin-top: 4px; min-height: 1.02em; letter-spacing: -.035em; }
+.hook .hk-num small { display: inline-block; font-family: var(--font-serif); font-size: .32em; letter-spacing: 0; color: var(--muted); font-weight: 400; margin-left: .2em; }
+.hook .hk-head[data-tone="down"] .hk-num { color: var(--down); }
+.hook .hk-head[data-tone="up"] .hk-num { color: var(--up); }
+.hook .hk-head[data-tone="flat"] .hk-num, .hook .hk-head[data-tone="full"] .hk-num { color: var(--ink); }
+.hook .hk-head[data-mode="none"] .hk-lead, .hook .hk-head[data-mode="none"] .hk-num { opacity: 0; }
+.hook .hk-head .hk-lead, .hook .hk-head .hk-num { transition: opacity 420ms cubic-bezier(.2, .7, .2, 1), transform 420ms cubic-bezier(.2, .7, .2, 1); }
+
+/* the record: short on purpose (about 140 px), so the globe gets the room */
+.hook .hk-fig { margin: 12px 0 0; position: relative; touch-action: pan-y; }
+.hook .hk-fig.is-loading, .hook .hk-head.is-loading { opacity: .45; transition: opacity 200ms ease; }
+.hook .hk-fig svg { display: block; width: 100%; height: auto; overflow: visible; user-select: none; -webkit-user-select: none; }
+.hook .hk-fig text { font: 400 12px/1 var(--font-ui); fill: var(--muted); font-variant-numeric: tabular-nums; }
+.hook .hk-fig .grid { stroke: var(--plot-grid); stroke-width: 1; opacity: .6; }
+.hook .hk-fig .axis { stroke: var(--edge); stroke-width: 1; }
+.hook .hk-fig .zero { stroke: var(--edge); stroke-width: 1; stroke-dasharray: 2 4; }
+.hook .hk-fig .ser { fill: none; stroke: var(--dot); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.hook .hk-fig .pt { fill: var(--dot); stroke: var(--bg); stroke-width: 1.2; }
+.hook .hk-fig .win { fill: var(--down); }
+.hook .hk-fig[data-tone="up"] .win { fill: var(--up); }
+.hook .hk-fig[data-tone="flat"] .win { fill: var(--muted); }
+.hook .hk-fig .win-fit { fill: none; stroke: var(--down); stroke-width: 3.5; stroke-linecap: round; }
+.hook .hk-fig[data-tone="up"] .win-fit { stroke: var(--up); }
+.hook .hk-fig[data-tone="flat"] .win-fit { stroke: var(--muted); }
+.hook .hk-fig .win-edge { stroke: var(--down); stroke-width: 1.5; }
+.hook .hk-fig[data-tone="up"] .win-edge { stroke: var(--up); }
+.hook .hk-fig[data-tone="flat"] .win-edge { stroke: var(--muted); }
+.hook .hk-fig .full-line { fill: none; stroke: var(--ink); stroke-width: 2.25; stroke-dasharray: 7 5; stroke-linecap: round; }
+.hook .hk-fig .full-lbl { fill: var(--ink); font-size: 12.5px; font-weight: 700; }
+.hook .hk-fig .full-sw { stroke-width: 2.25; }
+.hook .hk-fig .win-grip { cursor: grab; fill: transparent; }
+.hook .hk-fig .win-grip:active { cursor: grabbing; }
+.hook .hk-fig .win-handle { fill: var(--surface); stroke: var(--edge); stroke-width: 1.2; }
+.hook .hk-fig .win-handle-mark { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
+.hook .hk-fig .win-label { font-weight: 700; fill: var(--ink); font-size: 13px; }
+.hook .hk-fig .plot-hit { fill: transparent; cursor: pointer; }
+.hook .hk-fig g.win-g:focus-visible { outline: none; }
+.hook .hk-fig g.win-g:focus-visible .win-edge { stroke-width: 3; stroke: var(--focus); }
+.hook[data-stage="ready"] .win-g { transition: opacity 300ms ease; }
+
+/* presets, hint, replay */
+.hook .hk-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 10px; }
+.hook .hk-chip { font: inherit; font-size: .9375rem; color: var(--ink); background: transparent; border: 1px solid var(--edge); border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; display: inline-flex; gap: 10px; align-items: baseline; transition: background var(--t), border-color var(--t); }
+.hook .hk-chip b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.hook .hk-chip[data-tone] b { color: var(--ink); }
+.hook .hk-chip[data-tone="down"] b::before, .hook .hk-chip[data-tone="up"] b::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.hook .hk-chip[data-tone="down"] b::before { background: var(--down); } .hook .hk-chip[data-tone="up"] b::before { background: var(--up); }
+.hook .hk-chip:hover { background: var(--surface-2); }
+.hook .hk-chip[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--surface); }
+.hook .hk-chip[hidden] { display: none; }
+.hook .hk-chip[data-pick="full"] span::before { content: ""; display: inline-block; width: 16px; border-top: 2px dashed var(--ink); vertical-align: middle; margin-right: 8px; }
+.hook .hk-hint { color: var(--muted); font-size: .875rem; margin-left: 6px; opacity: 0; transition: opacity 500ms ease; }
+.hook .hk-replay { font: inherit; font-size: .875rem; margin-left: auto; color: var(--ink); background: none; border: 0; padding: 10px 4px; min-height: 44px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--edge); }
+.hook .hk-replay:hover { text-decoration-color: var(--ink); }
+.hook .hk-pick, .hook .hk-end { transition: opacity 600ms ease; }
+.hook[data-stage="intro"] .hk-pick .hk-chip, .hook[data-stage="intro"] .hk-replay { opacity: 0; pointer-events: none; }
+.hook[data-stage="ready"] .hk-hint { opacity: 1; }
+
+/* the closing lines: the question, the resolving answer, the source, the case link and verdict label */
+.hook .hk-end { margin-top: 8px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px 32px; opacity: 0; transform: translateY(8px); transition: opacity 700ms cubic-bezier(.2, .7, .2, 1), transform 700ms cubic-bezier(.2, .7, .2, 1); }
+.hook .hk-end.is-on { opacity: 1; transform: none; }
+.hook .hk-q { margin: 0; font: 400 clamp(1.125rem, 1.7vw, 1.5rem)/1.25 var(--font-serif); font-style: italic; letter-spacing: -.005em; text-wrap: balance; }
+.hook .hk-resolve { margin: 6px 0 0; max-width: 72ch; min-height: 3.1em; font: 400 clamp(1rem, 1.3vw, 1.125rem)/1.5 var(--font-ui); color: var(--ink); opacity: 0; transform: translateY(6px); transition: opacity 600ms cubic-bezier(.2, .7, .2, 1), transform 600ms cubic-bezier(.2, .7, .2, 1); }
+.hook .hk-resolve[hidden] { display: none; }
+.hook .hk-resolve.is-on { opacity: 1; transform: none; }
+.hook .hk-meta { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 8px; }
+.hook .hk-src { margin: 0; font-size: .8125rem; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+.hook .hk-ill { margin: 0; font-size: .8125rem; color: var(--muted); }
+.hook .hk-link { padding-top: 10px; border-top: 1px solid var(--line); max-width: 60ch; align-self: start; }
+.hook .hk-link[hidden] { display: none; }
+.hook .hk-link p { margin: 0; }
+.hook .hk-link-lead { font-weight: 700; font-size: .9375rem; }
+.hook .hk-link[data-kind="explore"] .hk-link-lead { display: inline-block; padding: 2px 8px; border: 1px dashed var(--ink); font-size: .875rem; }
+.hook .hk-link-row { margin-top: 4px; font-size: 1rem; }
+.hook .hk-go { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; font-weight: 700; }
+.hook .hk-link-note { margin-top: 4px; font-size: .8125rem; color: var(--muted); }
+
+/* the globe, big, under the record */
+.hook .hk-globe { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.hook .hk-globe-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 24px; flex-wrap: wrap; }
+.hook .hk-globe-head h2 { margin: 0; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.hook .hk-globe-head p { margin: 0; font-size: .8125rem; color: var(--muted); }
+.hook .hk-globe-host { margin-top: 4px; }
+.hook .hk-globe-host .viz-trials { max-width: 1100px; margin: 0 auto; animation: hk-in 700ms ease both; }
+.hook .hk-globe-host .viz-stage--stage { background: transparent; border: 0; border-radius: 0; overflow: visible; cursor: grab; }
+.hook .hk-globe-host .viz-stage canvas { margin: 0 auto; }
+.hook .hk-globe-host .viz-controls, .hook .hk-globe-host .gt-tip { display: none; }
+.hook .hk-globe-host .gt-label { font: 700 11px/1 var(--font-ui); color: var(--ink); background: var(--surface); border: 1px solid var(--edge); border-radius: 2px; padding: 3px 5px; text-decoration: none; white-space: nowrap; transform: translate(-50%, -150%); }
+.hook .hk-globe-host .gt-label.is-off { display: none; }
+/* with the live globe only the selected case's key is shown (its colour scale and docket link); the other five are one click away on the buttons below */
+.hook .hk-globe-host.is-live .gt-chips { display: block; max-width: 30rem; margin: 6px auto 0; }
+.hook .hk-globe-host.is-live .gt-chips li:not(.is-selected) { display: none; }
+.hook .hk-globe-host .poster-link { max-width: 900px; margin: 0 auto; }
+@keyframes hk-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* the region buttons under the globe */
+.hook .hk-regions { margin: 8px 0 0; }
+.hook .hk-regions-h { margin: 0 0 6px; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.hook .hk-regions-h span { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); font-size: .875rem; margin-left: 8px; }
+.hook .hk-regions-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.hook .hk-regions-l { font-size: .75rem; color: var(--muted); margin-right: 2px; }
+.hook .hk-regions-g { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-right: 18px; }
+.hook .hk-regions-btns { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.hook .hk-reg { min-height: 40px; padding: 6px 14px; font-size: .875rem; }
+.hook .hk-reg-x { border-style: dashed; }
+.hook .hk-reg-x[aria-pressed="true"] { border-style: solid; }
+.hook .hk-msg { margin: 8px 0 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--surface); font-size: .9375rem; }
+.hook .hk-msg[hidden] { display: none; }
+.hook .hk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 18px; }
+
+@media (min-width: 1000px) {
+  /* headline on the left, the short record on the right, then the presets, then the answer in two columns */
+  .hook .hk-hook { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(24px, 3vw, 48px); grid-template-areas: "kicker fig" "head fig" "pick pick" "end end"; align-items: start; }
+  .hook .hk-kicker { grid-area: kicker; }
+  .hook .hk-head { grid-area: head; }
+  .hook .hk-fig { grid-area: fig; margin-top: 0; align-self: center; }
+  .hook .hk-pick { grid-area: pick; }
+  .hook .hk-end { grid-area: end; grid-template-columns: minmax(0, 1fr) minmax(0, 24rem); }
+}
+@media (max-width: 700px) {
+  .hook .hk-lead { min-height: 2.3em; font-size: 1.375rem; }
+  .hook .hk-num { font-size: 3.25rem; }
+  .hook .hk-resolve { min-height: 6.2em; }
+  .hook .hk-hint { flex-basis: 100%; margin-left: 0; order: 5; }
+  .hook .hk-replay { order: 6; margin-left: 0; }
+  .hook .hk-chip { padding: 8px 12px; font-size: .875rem; }
+  .hook .hk-globe-head { flex-direction: column; }
+  .hook .hk-regions-h span { display: none; }
+  .hook .hk-regions-row { display: block; }
+  .hook .hk-regions-l { display: block; margin: 2px 0 2px; }
+  .hook .hk-regions-btns { display: flex; flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .hook .hk-regions-btns::-webkit-scrollbar { display: none; }
+  .hook .hk-reg { flex: 0 0 auto; }
+  .hook .hk-regions-g { display: block; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hook .hk-head .hk-lead, .hook .hk-head .hk-num, .hook .hk-end, .hook .hk-hint, .hook .hk-pick, .hook .hk-kicker, .hook .hk-resolve { transition: none !important; }
+  .hook .hk-resolve { transform: none; }
+  .hook .hk-globe-host .viz-trials { animation: none; }
+}

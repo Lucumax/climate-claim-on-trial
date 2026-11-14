@@ -5,6 +5,7 @@ import { landing } from "./views/landing.js";
 import { detective } from "./views/detective.js";
 import { caseList, caseDocket } from "./views/cases.js";
 import { method, evidence } from "./views/pages.js";
+import { falseAlarm } from "./views/falsealarm.js";
 
 const view = document.getElementById("view");
 let bundle = null, catalog = null;
@@ -27,6 +28,7 @@ function resolve(hash) {
   const parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
   const [a, id, sub] = parts;
   if (!a) return { nav: "home", v: landing(bundle, catalog) };
+  if (a === "false-alarm") return { nav: "false-alarm", v: falseAlarm() };
   if (a === "detective") return { nav: "detective", v: detective(catalog, bundle) };
   if (a === "cases") return { nav: "cases", v: caseList(bundle) };
   if (a === "case") {

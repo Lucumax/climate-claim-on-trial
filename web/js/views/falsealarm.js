@@ -36,9 +36,13 @@ function loadGlobeLib() {
 function hasWebGL() {
   try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; }
 }
+function hexA(hex, a) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim()); if (!m) return hex;
+  const v = parseInt(m[1], 16); return `rgba(${v >> 16}, ${(v >> 8) & 255}, ${v & 255}, ${a})`;
+}
 const tok = (name) => getComputedStyle(document.documentElement).getPropertyValue("--" + name).trim() || "#888";
 function palette() {
-  return { alarm: tok("bad"), flash: tok("accent"), cleared: tok("accent"), quiet: tok("edge"), land: tok("land"), ocean: tok("ocean"), line: tok("line"), ink: tok("ink"), muted: tok("muted"), accent: tok("accent") };
+  return { alarm: tok("bad"), flash: tok("accent"), cleared: hexA(tok("accent"), 0.6), quiet: tok("edge"), land: tok("land"), ocean: tok("ocean"), line: tok("line"), ink: tok("ink"), muted: tok("muted"), accent: tok("accent") };
 }
 
 // ------------------------------------------------------------------------------------------ published validation
@@ -153,7 +157,7 @@ export function falseAlarm() {
   refs.stage = h("div", { class: "fa-stage" },
     h("span", { class: "fa-badge" }, "Synthetic: every cell has zero true trend"), refs.globeEl, refs.canvas, h("p", { class: "fa-status", role: "status" }, ""));
   refs.status = refs.stage.querySelector(".fa-status");
-  refs.readout = h("p", { class: "readout fa-readout", "aria-hidden": "true" }, "Move over the map to read a cell.");
+  refs.readout = h("p", { class: "readout fa-readout", "aria-hidden": "true" }, "");
 
   // controls
   const outPhi = h("output", { for: "fa-phi" }, st.phi.toFixed(2)), outN = h("output", { for: "fa-n" }, String(st.n));
@@ -219,7 +223,6 @@ export function falseAlarm() {
   function dirty(now) {
     cancelFlag.cancelled = true; ensFlag.cancelled = true; clearTimeout(sliderTimer); clearTimeout(ensTimer);
     st.ens = null; st.ensRunning = null;
-    refs.seedChip && (refs.seedChip.textContent = String(st.seed));
     document.getElementById("fa-seed-chip") && (document.getElementById("fa-seed-chip").textContent = String(st.seed));
     stopAnim();
     setStatus("Growing the planet", true);
@@ -240,7 +243,7 @@ export function falseAlarm() {
     if (!rank) { rank = new Float32Array(N); let a = 12345; for (let i = 0; i < N; i++) { a = (a * 1664525 + 1013904223) >>> 0; rank[i] = a / 4294967296; } }
     setStatus("", false);
     document.getElementById("fa-seed-chip") && (document.getElementById("fa-seed-chip").textContent = String(st.seed));
-    prepareFlat();
+    prepareFlat(); renderLeak(); renderCheck();
     if (globe) { globe.pointsData(cellObjs()); }
     if (!st.firstDone && !reduced) { st.firstDone = true; st.stage = 0; st.shown = { stage: 0, p: 1 }; render(true); play(); return; }
     st.firstDone = true;
@@ -273,7 +276,8 @@ export function falseAlarm() {
     const segs = [{ d: 800, stage: 0 }, { d: 2300, stage: 1, anim: 1 }, { d: 1300, stage: 1 }, { d: 1700, stage: 2, anim: 1 }, { d: 1300, stage: 2 }, { d: 1500, stage: 3, anim: 1 }];
     const total = segs.reduce((a, s) => a + s.d, 0);
     const t0 = performance.now();
-    st.playing = true; st.stage = 0;
+    st.playing = true; st.stage = 0; st.shown = { stage: 0, p: 1 };
+    updateRuling();
     wake(total + 500);
     const frame = (now) => {
       if (destroyed || !st.playing) return;
@@ -283,6 +287,7 @@ export function falseAlarm() {
       for (const sg of segs) {
         if (e < acc + sg.d) {
           const p = sg.anim ? Math.min(1, (e - acc) / sg.d) : 1;
+          if (st.stage !== sg.stage) { st.stage = sg.stage; st.shown = { stage: sg.stage, p }; updateRuling(); }
           st.stage = sg.stage; st.shown = { stage: sg.stage, p };
           break;
         }
@@ -350,6 +355,7 @@ export function falseAlarm() {
     const r = st.res, s = st.shown.stage;
     refs.summary.textContent = r ? resultText() : "";
     refs.canvas.setAttribute("aria-label", r ? resultText() : "Map of the synthetic planet");
+    if (st.playing) { refs.rulingTitle.textContent = "The court is hearing the tests"; refs.rulingStamp.textContent = st.shown.stage ? "Rung " + st.shown.stage + " on the bench" : "Planet Null enters the court"; refs.rulingBody.replaceChildren(h("p", {}, "Watch the red cells. Each one is a place where a test claims to see a trend on a planet that has none.")); return; }
     if (!r) { refs.rulingTitle.textContent = "Ruling pending"; refs.rulingStamp.textContent = "Planet is being grown"; refs.rulingBody.replaceChildren(); return; }
     const [a, b, c] = r.counts;
     const body = [];
@@ -365,7 +371,7 @@ export function falseAlarm() {
     } else {
       refs.rulingTitle.textContent = `Ruling on Planet Null: ${fmt(c)} false ${plural(c, "alarm survives", "alarms survive")}`; refs.rulingStamp.textContent = "Final, after rung 3";
       body.push(h("p", {}, h("b", {}, `The naive test flagged ${fmt(a)} of ${fmt(N)} cells. The memory correction left ${fmt(b)}. Benjamini-Hochberg left ${fmt(c)}.`)));
-      body.push(h("p", {}, "This planet was built with no trend, so every one of those is false. The stack of tests removed " + pc(1 - c / Math.max(1, a), 1) + " of the naive alarms, but on this one planet it did not remove all of them" .replace("but on this one planet it did not remove all of them", c === 0 ? "and left none" : "and left " + fmt(c)) + "."));
+      body.push(h("p", {}, `This planet was built with no trend, so every one of those is false. Together the tests removed ${pc(1 - c / Math.max(1, a), 1)} of the naive alarms and left ${fmt(c)}.`));
       const p = pubNow();
       if (p && p.bhAny != null) body.push(h("p", { class: "caveat" }, h("b", {}, "One planet is one draw. "), `In the published check (${p.bhFields} planets like this), Benjamini-Hochberg left at least one false alarm on about ${pc(p.bhAny, 0)} of them at ${p.exactPhi ? "this memory" : "a nearby memory"}. Press New planet to see the spread.`));
       else body.push(h("p", { class: "caveat" }, h("b", {}, "One planet is one draw. "), "Press New planet to see how much the counts change from planet to planet."));
@@ -410,7 +416,7 @@ export function falseAlarm() {
     const nv = e ? cmp(e.naive, e.naiveSE, p.naive, p.naiveSE) : "", cv = e ? cmp(e.corrected, e.correctedSE, p.corrected, p.correctedSE) : "";
     const ensTxt = (v, se) => (e ? `${pc(v)} ± ${pc(se)}` : (st.ensRunning != null ? `running ${Math.round(st.ensRunning * 100)}%` : "waiting"));
     kids.push(h("p", { class: "muted small" }, "Cell flag rates on a no-trend planet, from this page's live computation and from the project's validation run (4,000 series per row, seed 101)."));
-    kids.push(h("div", { class: "scroll fa-cmp" }, h("table", { class: "data" },
+    kids.push(h("div", { class: "scroll fa-cmp", tabindex: "0", role: "region", "aria-label": "Comparison with the published validation (scrolls sideways)" }, h("table", { class: "data" },
       h("thead", {}, h("tr", {}, h("th", { scope: "col" }, "Test"), h("th", { scope: "col" }, "This planet"), h("th", { scope: "col" }, e ? `Average of ${e.R} planets` : "Average of planets"), h("th", { scope: "col" }, "Published"), h("th", { scope: "col" }, "Check"))),
       h("tbody", {},
         row("Naive", pc(a / N), ensTxt(e && e.naive, e && e.naiveSE), p ? pc(p.naive) : "n/a", nv),
@@ -461,9 +467,9 @@ export function falseAlarm() {
     idx.sort((x, y) => r.pA[x] - r.pA[y]);
     const rows = idx.slice(0, 400).map((i) => h("tr", {}, h("th", { scope: "row" }, String(i + 1)), h("td", {}, r.L.lat[i].toFixed(1)), h("td", {}, r.L.lon[i].toFixed(1)), h("td", {}, r.dir[i] > 0 ? "rising" : "falling"),
       h("td", {}, r.pA[i].toFixed(4)), h("td", {}, r.pB[i].toFixed(4)), h("td", {}, r.padj[i].toFixed(4)), h("td", {}, r.flags[2][i] ? "survives all three" : r.flags[1][i] ? "flagged by rungs 1 and 2" : r.flags[0][i] ? "cleared at rung 2" : "added at rung 2")));
-    const t2 = h("div", { class: "scroll" }, h("table", { class: "data" }, h("caption", { class: "fa-cap" }, `Cells flagged by any test (${fmt(idx.length)}${idx.length > 400 ? ", the 400 with the smallest naive p-value" : ""}). Every one is a false alarm.`),
+    const t2 = h("div", { class: "scroll", tabindex: "0", role: "region", "aria-label": "Cells flagged by any test (scrolls)" }, h("table", { class: "data" }, h("caption", { class: "fa-cap" }, `Cells flagged by any test (${fmt(idx.length)}${idx.length > 400 ? ", the 400 with the smallest naive p-value" : ""}). Every one is a false alarm.`),
       h("thead", {}, h("tr", {}, ["Cell", "Lat", "Lon", "Looks like", "Naive p", "Corrected p", "BH-adjusted p", "Status"].map((x) => h("th", { scope: "col" }, x)))), h("tbody", {}, rows)));
-    refs.tableBox.replaceChildren(t1, t2);
+    refs.tableBox.replaceChildren(h("div", { class: "scroll", tabindex: "0", role: "region", "aria-label": "Cells flagged at each test (scrolls sideways)" }, t1), t2);
   }
 
   // -------------------------------------------------------------- drawing: flat equal-area map
@@ -493,7 +499,7 @@ export function falseAlarm() {
   function drawFlat() {
     if (!flat || !st.res) return;
     const wrap = refs.stage;
-    if (flat.W !== Math.floor(wrap.clientWidth) && wrap.clientWidth > 0 || !flat.px[1]) layoutFlat();
+    if (!flat.W || (wrap.clientWidth > 0 && flat.W !== Math.max(240, Math.floor(wrap.clientWidth)))) layoutFlat();
     const ctx = refs.canvas.getContext("2d"), pal = palette(), { W, H, R } = flat, L = st.res.L;
     ctx.setTransform(flat.dpr, 0, 0, flat.dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
@@ -558,6 +564,7 @@ export function falseAlarm() {
     st.view = v;
     node.dataset.view = v;
     refs.stage.dataset.view = v;
+    refs.readout.textContent = v === "flat" ? "Move over or tap the map to read a cell." : "Hover a cell to read its p-values. Drag to turn the globe.";
     applyRotate();
     if (v === "flat") { refs.stage.classList.add("is-flat"); refs.stage.classList.remove("is-globe"); if (globe) { try { globe.pauseAnimation(); } catch (e) { /* ignore */ } } layoutFlat && flat && layoutFlat(); drawFlat(); return; }
     refs.stage.classList.add("is-globe"); refs.stage.classList.remove("is-flat");
@@ -579,7 +586,7 @@ export function falseAlarm() {
       const pal = palette();
       g.backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereColor(pal.accent).atmosphereAltitude(0.16);
       g.globeMaterial().color.set(pal.land);
-      g.pointOfView({ lat: 22, lng: -30, altitude: 2.5 });
+      g.pointOfView({ lat: 22, lng: -30, altitude: 2.15 });
       const c = g.controls(); c.enableZoom = false; c.enablePan = false; c.autoRotate = st.rotate && !reduced; c.autoRotateSpeed = 0.55;
       g.pointsData([]).pointLat("lat").pointLng("lng").pointResolution(5).pointsMerge(false).pointsTransitionDuration(0)
         .pointLabel((d) => cellLabel(d.i));
@@ -611,7 +618,7 @@ export function falseAlarm() {
     const rc = refs.canvas.getBoundingClientRect(), x = e.clientX - rc.left, y = e.clientY - rc.top;
     let best = -1, bd = (flat.sp * 1.6) ** 2;
     for (let i = 0; i < st.res.N; i++) { const dx = flat.px[i] - x, dy = flat.py[i] - y, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = i; } }
-    refs.readout.textContent = best < 0 ? "Move over the map to read a cell." : `Cell ${best + 1}: lat ${st.res.L.lat[best].toFixed(1)}, lon ${st.res.L.lon[best].toFixed(1)}. Naive p ${st.res.pA[best].toFixed(3)}, corrected p ${st.res.pB[best].toFixed(3)}. ${st.res.flags[0][best] ? "Flagged by the naive test." : "Not flagged."}${st.res.flags[2][best] ? " Survives all three." : ""}`;
+    refs.readout.textContent = best < 0 ? "Move over or tap the map to read a cell." : `Cell ${best + 1}: lat ${st.res.L.lat[best].toFixed(1)}, lon ${st.res.L.lon[best].toFixed(1)}. Naive p ${st.res.pA[best].toFixed(3)}, corrected p ${st.res.pB[best].toFixed(3)}. ${st.res.flags[0][best] ? "Flagged by the naive test." : "Not flagged."}${st.res.flags[2][best] ? " Survives all three." : ""}`;
   });
 
   // -------------------------------------------------------------- life cycle
@@ -633,6 +640,7 @@ export function falseAlarm() {
     applyRotate();
     refs.stage.classList.add(st.view === "flat" ? "is-flat" : "is-globe");
     node.dataset.view = st.view;
+    refs.readout.textContent = st.view === "flat" ? "Move over or tap the map to read a cell." : "Hover a cell to read its p-values. Drag to turn the globe.";
     updateRail(0); updateHeadline(0); updateRuling();
     mo = new MutationObserver(themeAll); mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)"); if (mq && mq.addEventListener) mq.addEventListener("change", themeAll);

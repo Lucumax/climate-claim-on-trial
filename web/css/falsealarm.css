@@ -1,0 +1,69 @@
+/* Exhibit Zero: The False-Alarm Planet. Courtroom tokens only (tokens.css); nothing here sets a colour literal. */
+.fa-view.fa-pending { visibility: hidden; }
+.fa-headline { font: 400 clamp(1.35rem, 3vw, 1.95rem)/1.15 var(--font-serif); letter-spacing: -.02em; margin: 6px 0 4px; min-height: 1.2em; }
+.fa-sub { color: var(--muted); font-size: .92rem; margin: 0 0 12px; min-height: 1.5em; }
+
+/* stage: globe or flat map on the ocean colour */
+.fa-stage { position: relative; background: var(--ocean); border: 1px solid var(--line); overflow: hidden; }
+.fa-stage.is-globe { aspect-ratio: 1 / 1; max-height: 34rem; }
+.fa-stage.is-globe .fa-flat { display: none; }
+.fa-stage.is-flat .fa-globe { display: none; }
+.fa-globe { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+.fa-globe:active { cursor: grabbing; }
+.fa-globe canvas { display: block; }
+.fa-flat { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.fa-badge { position: absolute; left: 10px; top: 10px; z-index: 2; background: var(--surface); color: var(--ink); border: 1px solid var(--warn); border-left: 4px solid var(--warn); padding: 4px 10px; font: 700 .72rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; max-width: calc(100% - 20px); }
+.fa-status { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 2; margin: 0; padding: 6px 14px; background: var(--surface); border: 1px solid var(--edge); border-radius: 3px; font-size: .85rem; display: none; white-space: nowrap; }
+.fa-status.on { display: block; }
+.fa-readout { margin-top: 8px; }
+.fa-tip { font: .8rem/1.35 var(--font-ui); padding: 4px 6px; }
+
+/* legend keys */
+.fa-legend { margin-bottom: 4px; }
+.fa-key { display: inline-block; flex: none; border-radius: 50%; width: 16px; height: 16px; box-sizing: border-box; }
+.fa-key.alarm { background: var(--bad); }
+.fa-key.cleared { border: 2px solid var(--accent); background: transparent; }
+.fa-key.quiet { width: 7px; height: 7px; margin: 0 4.5px; background: var(--edge); opacity: .7; }
+
+/* controls */
+.fa-controls { display: grid; gap: 14px 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin: 16px 0 12px; padding-top: 14px; border-top: 1px solid var(--line); }
+.fa-slider label, .fa-seedbox label { display: block; font-size: .85rem; font-weight: 700; margin-bottom: 4px; }
+.fa-slider output { font: 700 .95rem var(--font-mono); color: var(--accent); margin-left: 6px; }
+.fa-slider p { margin: 2px 0 0; }
+.fa-slider input[type="range"] { width: 100%; min-height: 32px; accent-color: var(--accent); margin: 0; }
+.fa-row { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: end; grid-column: 1 / -1; }
+.fa-seedbox { width: 8.5rem; }
+.fa-seedbox input { width: 100%; }
+.fa-summary { font-size: .92rem; margin: 12px 0 8px; }
+.fa-tablebar { margin: 6px 0 10px; }
+.fa-tablebox { margin-top: 8px; display: grid; gap: 14px; }
+.fa-tablebox[hidden] { display: none; }
+.fa-cap { caption-side: top; text-align: left; font-size: .85rem; color: var(--muted); padding-bottom: 6px; }
+.fa-cmp table.data td, .fa-cmp table.data th { white-space: nowrap; }
+.fa-cmp table.data td:last-child { text-align: left; }
+.fa-view table.data th[scope="row"] { text-align: left; font: 700 .85rem var(--font-ui); text-transform: none; letter-spacing: 0; color: var(--ink); }
+
+/* rail on narrow screens: three compact buttons */
+@media (max-width: 70rem) {
+  .hearings.fa-rail .hearing-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; }
+  .hearings.fa-rail .hearing-list li { min-width: 0; }
+  .hearings.fa-rail .hearings-head, .hearings.fa-rail .hearing-note, .hearings.fa-rail .explain { display: none; }
+  .hearings.fa-rail .hearing { border: 0; padding: 8px 6px; min-height: 64px; }
+  .hearings.fa-rail .hearing-top { justify-content: center; gap: 4px; font-size: .68rem; }
+  .hearings.fa-rail .hearing .status { display: none; }
+  .hearings.fa-rail .hearing h3 { margin: 4px 0 2px; font: 600 .78rem/1.15 var(--font-ui); text-align: center; }
+  .hearings.fa-rail .hearing .full { display: none; }
+  .hearings.fa-rail .hearing .short { display: inline; }
+  .hearings.fa-rail .hearing-result { justify-content: center; margin-top: 4px; }
+  .hearings.fa-rail .hearing-result .mini-bar, .hearings.fa-rail .hearing-result .delta { display: none; }
+  .hearings.fa-rail .hearing-result strong { font-size: 1rem; }
+}
+@media (min-width: 70.01rem) { .hearings.fa-rail .hearing .short { display: none; } }
+@media (max-width: 40rem) {
+  .fa-stage { margin-left: -18px; margin-right: -18px; border-left: 0; border-right: 0; }
+  .fa-badge { font-size: .62rem; letter-spacing: .03em; padding: 3px 8px; }
+  .fa-row .btn, .fa-row .btn-quiet { flex: 1 1 auto; }
+  .fa-seedbox { width: 100%; flex: 1 1 100%; }
+  .fa-status { white-space: normal; width: max-content; max-width: calc(100% - 20px); text-align: center; }
+}
+@media print { .fa-globe { display: none; } .fa-stage.is-globe { display: none; } }

@@ -1,0 +1,256 @@
+{
+ "source": "stats/out/validation/validation_B.json",
+ "seed": 101,
+ "alpha": 0.05,
+ "q": 0.1,
+ "regional": [
+  {
+   "n": 23,
+   "phi": 0.0,
+   "reps": 4000,
+   "naive": 0.039,
+   "naive_se": 0.0031,
+   "corrected": 0.0345,
+   "corrected_se": 0.0029
+  },
+  {
+   "n": 23,
+   "phi": 0.1,
+   "reps": 4000,
+   "naive": 0.054,
+   "naive_se": 0.0036,
+   "corrected": 0.0408,
+   "corrected_se": 0.0031
+  },
+  {
+   "n": 23,
+   "phi": 0.2,
+   "reps": 4000,
+   "naive": 0.0902,
+   "naive_se": 0.0045,
+   "corrected": 0.0638,
+   "corrected_se": 0.0039
+  },
+  {
+   "n": 23,
+   "phi": 0.3,
+   "reps": 4000,
+   "naive": 0.124,
+   "naive_se": 0.0052,
+   "corrected": 0.078,
+   "corrected_se": 0.0042
+  },
+  {
+   "n": 23,
+   "phi": 0.45,
+   "reps": 4000,
+   "naive": 0.1872,
+   "naive_se": 0.0062,
+   "corrected": 0.103,
+   "corrected_se": 0.0048
+  },
+  {
+   "n": 23,
+   "phi": 0.6,
+   "reps": 4000,
+   "naive": 0.276,
+   "naive_se": 0.0071,
+   "corrected": 0.1242,
+   "corrected_se": 0.0052
+  },
+  {
+   "n": 25,
+   "phi": 0.0,
+   "reps": 4000,
+   "naive": 0.0475,
+   "naive_se": 0.0034,
+   "corrected": 0.039,
+   "corrected_se": 0.0031
+  },
+  {
+   "n": 25,
+   "phi": 0.1,
+   "reps": 4000,
+   "naive": 0.0645,
+   "naive_se": 0.0039,
+   "corrected": 0.0495,
+   "corrected_se": 0.0034
+  },
+  {
+   "n": 25,
+   "phi": 0.2,
+   "reps": 4000,
+   "naive": 0.0953,
+   "naive_se": 0.0046,
+   "corrected": 0.0665,
+   "corrected_se": 0.0039
+  },
+  {
+   "n": 25,
+   "phi": 0.3,
+   "reps": 4000,
+   "naive": 0.128,
+   "naive_se": 0.0053,
+   "corrected": 0.0785,
+   "corrected_se": 0.0043
+  },
+  {
+   "n": 25,
+   "phi": 0.45,
+   "reps": 4000,
+   "naive": 0.2018,
+   "naive_se": 0.0063,
+   "corrected": 0.102,
+   "corrected_se": 0.0048
+  },
+  {
+   "n": 25,
+   "phi": 0.6,
+   "reps": 4000,
+   "naive": 0.2945,
+   "naive_se": 0.0072,
+   "corrected": 0.1278,
+   "corrected_se": 0.0053
+  },
+  {
+   "n": 45,
+   "phi": 0.0,
+   "reps": 4000,
+   "naive": 0.0525,
+   "naive_se": 0.0035,
+   "corrected": 0.0473,
+   "corrected_se": 0.0034
+  },
+  {
+   "n": 45,
+   "phi": 0.1,
+   "reps": 4000,
+   "naive": 0.0722,
+   "naive_se": 0.0041,
+   "corrected": 0.0563,
+   "corrected_se": 0.0036
+  },
+  {
+   "n": 45,
+   "phi": 0.2,
+   "reps": 4000,
+   "naive": 0.0995,
+   "naive_se": 0.0047,
+   "corrected": 0.0635,
+   "corrected_se": 0.0039
+  },
+  {
+   "n": 45,
+   "phi": 0.3,
+   "reps": 4000,
+   "naive": 0.1348,
+   "naive_se": 0.0054,
+   "corrected": 0.07,
+   "corrected_se": 0.004
+  },
+  {
+   "n": 45,
+   "phi": 0.45,
+   "reps": 4000,
+   "naive": 0.2195,
+   "naive_se": 0.0065,
+   "corrected": 0.0838,
+   "corrected_se": 0.0044
+  },
+  {
+   "n": 45,
+   "phi": 0.6,
+   "reps": 4000,
+   "naive": 0.3192,
+   "naive_se": 0.0074,
+   "corrected": 0.1042,
+   "corrected_se": 0.0048
+  }
+ ],
+ "cells": [
+  {
+   "n": 25,
+   "phi": 0.0,
+   "fields": 200,
+   "grid": [
+    20,
+    20
+   ],
+   "sigma_cells": 2.0,
+   "naive": 0.0416,
+   "corrected": 0.0354,
+   "bh_any_naive": 0.02,
+   "bh_any_corrected": 0.02
+  },
+  {
+   "n": 25,
+   "phi": 0.1,
+   "fields": 200,
+   "grid": [
+    20,
+    20
+   ],
+   "sigma_cells": 2.0,
+   "naive": 0.0655,
+   "corrected": 0.0502,
+   "bh_any_naive": 0.1,
+   "bh_any_corrected": 0.06
+  },
+  {
+   "n": 25,
+   "phi": 0.2,
+   "fields": 200,
+   "grid": [
+    20,
+    20
+   ],
+   "sigma_cells": 2.0,
+   "naive": 0.088,
+   "corrected": 0.06,
+   "bh_any_naive": 0.12,
+   "bh_any_corrected": 0.08
+  },
+  {
+   "n": 25,
+   "phi": 0.3,
+   "fields": 200,
+   "grid": [
+    20,
+    20
+   ],
+   "sigma_cells": 2.0,
+   "naive": 0.1275,
+   "corrected": 0.0813,
+   "bh_any_naive": 0.365,
+   "bh_any_corrected": 0.18
+  },
+  {
+   "n": 25,
+   "phi": 0.45,
+   "fields": 200,
+   "grid": [
+    20,
+    20
+   ],
+   "sigma_cells": 2.0,
+   "naive": 0.196,
+   "corrected": 0.1001,
+   "bh_any_naive": 0.705,
+   "bh_any_corrected": 0.405
+  },
+  {
+   "n": 25,
+   "phi": 0.6,
+   "fields": 200,
+   "grid": [
+    20,
+    20
+   ],
+   "sigma_cells": 2.0,
+   "naive": 0.2923,
+   "corrected": 0.1233,
+   "bh_any_naive": 0.94,
+   "bh_any_corrected": 0.615
+  }
+ ]
+}

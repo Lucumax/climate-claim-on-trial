@@ -1,0 +1,5 @@
+{
+  "_help": "Pairs used by Exhibit 0 (False-Alarm Planet). The graticule lines are decorative and not checked. Run: python tools/check_contrast.py --pairs tools/contrast_pairs_falsealarm.json",
+  "text": [["ink", "surface"], ["accent", "surface"], ["muted", "surface"], ["ink", "ocean"], ["accent", "brass-soft"], ["bad", "surface"], ["warn", "surface"]],
+  "graphics": [["bad", "ocean"], ["bad", "land"], ["accent", "land"], ["accent", "ocean"], ["edge", "land"], ["edge", "ocean"], ["warn", "surface"], ["accent", "surface"], ["bad", "surface"]]
+}

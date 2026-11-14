@@ -8,7 +8,9 @@ import { windowsChart } from "../chart.js";
 // "Where the trials are held": one Earth with all registered case regions, each drawn by its per-cell trend per decade; withheld cases are hatched.
 // It starts paused and never turns by itself. Browsers without WebGL get a labelled static poster
 // (web/img/globe-trials-light.jpg and -dark.jpg, a screenshot of this same globe) with the same case list under it.
-const POSTER_ALT = "Earth seen from above North America, with four outlined case regions. Interior and western Alaska and the central Sahel are coloured by each cell's trend per decade; the Southeastern United States is hatched because its ruling is withheld, and Wisconsin is shown with its trend colours and a not-supported ruling.";
+const POSTER_ALT = "Earth seen from above North America, with four outlined case regions. Interior and western Alaska and the central Sahel are coloured by each cell's trend per decade; the Southeastern United States is hatched because its ruling is withheld, and Wisconsin is shown with its trend colours and a not-supported ruling. This still image was taken before the two NO2082 regions (the eastern United States and northern India, both withheld) were added.";
+const NUM = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];   // the counts in the copy follow the number of registered cases
+const numWord = n => NUM[n] || String(n);
 const hasWebGL = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } };
 const phone = () => window.matchMedia("(max-width: 700px)").matches;
 
@@ -22,7 +24,7 @@ export function whenNear(node, start, margin = "300px") {
 
 function heroGlobe(claims) {
   const host = h("div", { class: "hero-globe-host" });
-  const cap = h("figcaption", { class: "hero-cap" }, h("b", {}, "Where the trials are held."), " Four registered regions, each drawn by its per-cell trend per decade. Click a region or a case below to open it. Imagery: NASA Blue Marble, muted.");
+  const cap = h("figcaption", { class: "hero-cap" }, h("b", {}, "Where the trials are held."), ` ${numWord(claims.length)} registered regions, each drawn by its per-cell trend per decade. Click a region or a case below to open it. Imagery: NASA Blue Marble, muted.`);
   const poster = () => h("a", { href: "#/cases", class: "poster-link", "aria-label": "Open the case files" },
     h("img", { class: "poster poster-light", src: "img/globe-trials-light.jpg", width: 1288, height: 996, alt: POSTER_ALT, loading: "lazy" }), h("img", { class: "poster poster-dark", src: "img/globe-trials-dark.jpg", width: 1288, height: 996, alt: POSTER_ALT, loading: "lazy" }));
   const fig = h("figure", { class: "hero-globe" }, host);
@@ -101,7 +103,7 @@ export function landing(b) {
   }
   const globe = ex ? heroGlobe(b.claims) : null;
   const globeBand = globe ? h("section", { class: "band band-globe", "aria-labelledby": "globe-h" },
-    h("div", { class: "band-head" }, h("h2", { id: "globe-h" }, "Four questions. Four case files."), h("p", {}, "Each registered claim was put on trial with its own NASA record. The globe shows where, and what each region's data did.")),
+    h("div", { class: "band-head" }, h("h2", { id: "globe-h" }, `${numWord(b.claims.length)} questions. ${numWord(b.claims.length)} case files.`), h("p", {}, "Each registered claim was put on trial with its own NASA record. The globe shows where, and what each region's data did.")),
     globe.node) : null;
   // ---- showcase bands: each mounts when it comes near the viewport and is destroyed when the visitor leaves
   const mountLive = (host, loader) => { cancels.push(whenNear(host, async () => { try { const r = await loader(); if (r) { if (dead) r.destroy && r.destroy(); else handles.push(r); } } catch (e) { console.error(e); host.append(h("p", { class: "muted small" }, "This preview could not be drawn here. The full exhibit is one click away.")); } })); };

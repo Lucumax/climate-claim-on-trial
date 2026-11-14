@@ -42,6 +42,8 @@ SHORT = {
     "C-C": {"product_label": "MERRA-2 2 m air temperature via NASA POWER (model output), 0.5° × 0.625° cells",
             "measure": "Yearly average air temperature", "palette": "warm_up"},
     "C-D": {"product_label": "MODIS Aqua aerosol optical depth, Wisconsin", "measure": "Summer aerosol optical depth", "palette": "warm_up"},
+    "C-E1": {"product_label": "OMI/Aura OMNO2d tropospheric NO₂ column, cloud-screened, 0.25° cells", "measure": "Annual tropospheric NO₂ column", "palette": "warm_up"},
+    "C-E2": {"product_label": "OMI/Aura OMNO2d tropospheric NO₂ column, cloud-screened, 0.25° cells", "measure": "Annual tropospheric NO₂ column", "palette": "warm_up"},
 }
 MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -189,7 +191,7 @@ def export(case):
         "region_name": claim["region_name"],
         "region_box": {"s": box["lat_min"], "n": box["lat_max"], "w": box["lon_min"], "e": box["lon_max"]},
         "units": units,
-        "units_label": units.replace("degC", "°C"),
+        "units_label": units.replace("degC", "°C").replace("1e15 molecules/cm2", "×10¹⁵ molecules/cm²"),
         "palette": meta.get("palette", "warm_up"),
         "product": claim["product"]["name"],
         "product_label": meta.get("product_label", claim["product"]["name"]),
@@ -237,10 +239,11 @@ def export(case):
 
 
 if __name__ == "__main__":
-    cases = sys.argv[1:] or ["C-A", "C-B", "C-C", "C-D"]
-    index = []
+    cases = sys.argv[1:] or ["C-A", "C-B", "C-C", "C-D", "C-E1", "C-E2"]
+    old = OUT / "index.json"
+    index = json.loads(old.read_text(encoding="utf-8"))["cases"] if old.exists() else []   # a partial run keeps the other cases listed
     for c in cases:
         r = export(c)
-        if r:
+        if r and c not in index:
             index.append(c)
     (OUT / "index.json").write_text(json.dumps({"cases": index}), encoding="utf-8")

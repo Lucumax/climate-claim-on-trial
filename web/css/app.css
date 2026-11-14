@@ -774,3 +774,7 @@ main:has(.home) { padding-top: var(--sp-4); }
 .demo-card.demo-list { position: static; display: block; margin: 0 0 var(--sp-5); }
 .demo-steps { list-style: none; margin: var(--sp-3) 0; padding: 0; display: grid; gap: var(--sp-3); max-width: 72ch; }
 .demo-steps li { font-size: 1rem; line-height: 1.5; }
+
+.callout .callout-h { font: 700 1rem/1.4 var(--font-ui); margin: 0 0 var(--sp-2); }
+.callout.no2-why p { max-width: 72ch; }
+.no2-limits p { margin: 0 0 var(--sp-2); }

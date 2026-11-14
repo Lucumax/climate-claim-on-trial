@@ -10,6 +10,7 @@ import { clinicStrip, whoActs } from "./clinic.js";
 import { exhibit } from "./exhibit.js";
 import { caseFrame } from "../viz/anomaly-map.js";
 import { METHOD_NAME } from "../data.js";
+import { hasNote, plainReason as no2Reason, whyBlock, mapBanner, limits as no2Limits } from "./no2.js";
 
 const NA = () => h("span", { class: "muted" }, "Not in this bundle yet.");
 const NOT_SHOWN = "Not shown: failed its coverage check.";
@@ -19,6 +20,7 @@ const cap = s_ => s_.charAt(0).toUpperCase() + s_.slice(1);
 const HEARING_SHORT = { 1: "Raw test", 2: "Seasonal cycle", 3: "Memory correction", 4: "False discovery" };
 // A withheld case is a deliberate outcome. The reason is the bundle's own text, rendered as is (no web copy second-guesses the diagnosis).
 function plainReason(c) {
+  if (hasNote(c)) return no2Reason(c);   // the registered NO2 pair has its own plain-English reason (views/no2.js)
   const rs = (c.verdict.withheld_reasons && c.verdict.withheld_reasons.length ? c.verdict.withheld_reasons : c.gate.reasons) || [];
   const why = rs.map(x => String(x).trim().replace(/\.$/, "")).filter(Boolean).join("; ");
   return (why ? `Why: ${why}.` : "The checks that a verdict depends on did not pass for this record.") + " A ruling here would not be honest, so we withhold it.";
@@ -140,11 +142,13 @@ export function caseDocket(b, c, query = "") {
   function drawMap(fade) {
     if (!mapHost) return;
     const q = L[sel];
-    if (!c.gate.cells) { mapHost.replaceChildren(withheldNote(c)); infoHost.replaceChildren(); return; }
+    const descriptive = !c.gate.cells && hasNote(c) && L.length > 0;   // NO2 pair: the map is shown for reading, labelled unadjusted and descriptive
+    if (!c.gate.cells && !descriptive) { mapHost.replaceChildren(withheldNote(c)); infoHost.replaceChildren(); return; }
     const m = renderMap(c, q, { id: `map-${c.id}-${q.rung}`, label: `Map for hearing ${sel + 1} of ${nL}: ${q.label}`, view: hearingView });
     const note = hearingNote(q, sel);
     mapHost.replaceChildren(m.node);
     infoHost.replaceChildren(...[
+      descriptive ? mapBanner(c) : null,
       h("div", { class: "measure" }, h("strong", { class: "num" }, pct(q[ak()], 1), " of mapped area flagged"),
         h("span", { class: "num" }, `${q[nk()]} of ${q.n_cells} cells (${pct(q[ck()], 1)})` + (q.cells_changed != null ? `; ${q.cells_changed} changed status from the previous hearing` : ""))),
       h("p", { class: "hearing-line" }, h("b", {}, q.label + ". "), q.changes),
@@ -215,7 +219,7 @@ export function caseDocket(b, c, query = "") {
     h("p", {}, h("b", {}, v.headline), " ", v.sentences.join(" ")),
     h("div", { class: "statgrid" },
       stat("Sen slope per decade", `${signed(r.sen.slope_per_decade, 2)} ${u}`, iv ? `${iv.label}: ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : `Interval: ${NOT_SHOWN.toLowerCase()}`),
-      t ? stat(t.title, `p = ${fmtPx(t.p)}`, `${sigLabel(t.p)}. A pattern this strong would be rare if there were no trend.`) : stat("Regional test", withheld ? "Withheld" : "Not shown", withheld ? "No test kept its false-alarm rate near 5% on records like this one, so no significance statement is made." : "It did not pass its calibration check, so no significance statement is made."),
+      t ? stat(t.title, `p = ${fmtPx(t.p)}`, `${sigLabel(t.p)}. A pattern this strong would be rare if there were no trend.`) : stat("Regional test", withheld ? "Withheld" : "Not shown", withheld ? (c.id === "C-E1" ? "No test was validated for this much year-to-year memory at 21 years, so no significance statement is made." : "No test kept its false-alarm rate near 5% on records like this one, so no significance statement is made.") : "It did not pass its calibration check, so no significance statement is made."),
       c.phi_hat != null ? stat("Persistence (lag-1)", signed(c.phi_hat, 2), `Year-to-year memory, ${persistenceText(c)}. ${c.phi_hat < -0.1 ? "Negative: a high year tends to be followed by a lower one." : c.phi_hat > 0.1 ? "Positive: a high year tends to be followed by another high one." : "Near zero: neighbouring years barely resemble each other."}`) : null,
       t ? stat("Variance factor", fac(t), "Above 1.00 means neighbouring years resemble each other, and the test widens to allow for it") : null),
     h("div", { class: "baseline" }, h("h3", {}, "Pooled distribution by period"),
@@ -235,6 +239,7 @@ export function caseDocket(b, c, query = "") {
   });
   const limits = disc("Limits of this finding",
     withheld ? h("p", {}, h("b", {}, "Why the ruling is withheld. "), (v.withheld_reasons && v.withheld_reasons.length ? v.withheld_reasons : c.gate.reasons).join(" "), " ", h("a", { href: "#/method" }, "How the checks work")) : withheldNote(c),
+    hasNote(c) ? no2Limits(c) : null,
     c.gate.adaptive_notes && c.gate.adaptive_notes.length ? c.gate.adaptive_notes.map(x => h("p", { class: "muted small" }, h("b", {}, "Calibration note. "), x)) : null,
     !iv && !withheld && c.gate.reasons_interval && c.gate.reasons_interval.length ? h("p", { class: "muted small" }, h("b", {}, "Why no interval. "), c.gate.reasons_interval.join(" ")) : null,
     f.scope_text ? h("p", {}, h("b", {}, "This number is for. "), f.scope_text) : null,
@@ -263,8 +268,8 @@ export function caseDocket(b, c, query = "") {
     h("p", { class: "crumb" }, h("a", { href: "#/cases" }, "Case files"), " / ", caseNo(c.id)),
     h("header", { class: "case-head" },
       h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id) + " · the registered claim"), h("h1", { id: "page-title", tabindex: "-1" }, "“" + c.claim_text + "”"),
-      h("p", { class: "definition" }, h("b", {}, c.variable.name + ": "), c.variable.plain)),
-    ex.node, ruling, ruleNote,
+      h("p", { class: "definition" }, h("b", {}, c.variable.name.replace(/^[A-Za-z0-9]+ \((.*)\)$/, (m, x) => cap(x)) + ": "), c.variable.plain)),
+    ex.node, ruling, hasNote(c) ? whyBlock(c) : null, ruleNote,
     (() => { const slot = clinicSlot(c.id), strip = clinicStrip(c); if (strip) slot.append(strip); return slot; })(),
     h("div", { class: "docket-more" }, statistics, limits, provenance)),
     afterMount: () => ex.start(), dispose: () => ex.dispose() };

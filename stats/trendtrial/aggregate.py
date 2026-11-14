@@ -12,21 +12,38 @@ import math
 import numpy as np
 
 
-def build_cube(values, year, month, years, months):
-    """Pick (year, month) slices out of a (T, ny, nx) stack into a (Y, M, ny, nx) cube.
+def is_wrap(months):
+    """A season wraps the calendar year if its months, in season order, go from a high month number to a low one."""
+    months = list(months)
+    return len(months) > 1 and months[0] > months[-1]
 
-    Slots that do not exist in the input stay NaN.
+
+def build_cube(values, year, month, years, months):
+    """Pick (year, month) slices out of a (T, ny, nx) stack into a (Y, M, ny, nx) cube indexed by season label year.
+
+    months is in season order. For a season that wraps the calendar year (e.g. [12, 1, 2]) the months at or after the
+    first month of the season (December) are taken from the PREVIOUS calendar year, and the season is labelled by the
+    year of its last months (the Jan-Feb year). The first season is dropped (all NaN) if none of its previous-year
+    months exist in the data. Slots that do not exist in the input stay NaN.
     """
     years = list(years)
     months = list(months)
+    wrap = is_wrap(months)
     ny, nx = values.shape[1:]
     cube = np.full((len(years), len(months), ny, nx), np.nan, dtype=np.float64)
     yi = {y: i for i, y in enumerate(years)}
     mi = {m: i for i, m in enumerate(months)}
     for k in range(values.shape[0]):
         y, m = int(year[k]), int(month[k])
-        if y in yi and m in mi:
-            cube[yi[y], mi[m]] = values[k]
+        if m not in mi:
+            continue
+        label = y + 1 if (wrap and m >= months[0]) else y
+        if label in yi:
+            cube[yi[label], mi[m]] = values[k]
+    if wrap and len(years):
+        carry = [i for i, m in enumerate(months) if m >= months[0]]
+        if not np.isfinite(cube[0][carry]).any():
+            cube[0] = np.nan
     return cube
 
 

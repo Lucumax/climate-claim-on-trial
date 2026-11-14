@@ -19,12 +19,14 @@ from pathlib import Path
 
 import numpy as np
 import scipy
+from scipy import stats
 
 from . import __version__
-from .aggregate import (build_cube, cell_season_series, climatology, cos_weights, regional_monthly,
+from .aggregate import (is_wrap, build_cube, cell_season_series, climatology, cos_weights, regional_monthly,
                         season_mean)
 from .bootstrap import residual_block_bootstrap
-from .trend import benjamini_hochberg, mk_core, ols, sen_ci_analytic
+from .trend import (BATCHED_METHODS, METHOD_LABELS, benjamini_hochberg, mk_core, ols, regional_test_p,
+                    sen_ci_analytic)
 from . import verdict as V
 
 SCHEMA_VERSION = "1.0"
@@ -68,6 +70,8 @@ def clean(o, sig=6):
 
 
 def season_label(months):
+    if is_wrap(months) and sorted(months) == [1, 2, 12]:
+        return "winter (December to February)"
     months = sorted(months)
     if months == list(range(1, 13)):
         return "annual mean"
@@ -83,7 +87,7 @@ def _sign(direction):
 
 
 def regional_analysis(cube, clim, weights, support, lat, years, months, params, cov_threshold=None,
-                      block_len=None, with_band=True, reps=None):
+                      block_len=None, with_band=True, reps=None, method=None):
     """Regional anomaly series, tests, bootstrap. Returns dict (arrays inside)."""
     cov_threshold = params["cov_threshold"] if cov_threshold is None else cov_threshold
     block_len = params["boot_block_len"] if block_len is None else block_len
@@ -103,6 +107,8 @@ def regional_analysis(cube, clim, weights, support, lat, years, months, params, 
                                                block_len=block_len, reps=reps,
                                                level=params["boot_level"], seed=params["seed"])
         out["sen_ci_hr"] = sen_ci_analytic(series, t, float(mk["var_s"][0]))
+        if method:
+            out["shipped"] = regional_test_p(series, t, method, seed=params["seed"])
     return out
 
 
@@ -123,7 +129,9 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     ny, nx = len(lat), len(lon)
     support = z["support"].astype(bool) if "support" in z.files else np.ones((ny, nx), bool)
 
-    months = sorted(claim["season_months"])
+    months = list(claim["season_months"])
+    if not is_wrap(months):
+        months = sorted(months)
     y0, y1 = claim["period"]
     years = list(range(int(y0), int(y1) + 1))
     direction = claim["direction"]
@@ -139,6 +147,25 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     mk1 = lambda d, k: float(d[k][0])
     n_valid_years = R["n"]
     dec = 10.0
+
+    # ---------- validation gate (chooses the shipped regional test, cell test, interval method) ----------
+    validation = {"status": "not_run", "gate": {"regional_verdict_enabled": False, "interval_enabled": False,
+                                               "cells_enabled": False, "cells_mode": "off", "regional_test": None,
+                                               "cell_test": None, "reasons_blocking_verdict": ["validation results not attached"]}}
+    phi_hat = _lag1(series)
+    sv = series[np.isfinite(series)]
+    skew = float(stats.skew(sv)) if len(sv) > 3 and sv.std() > 0 else 0.0
+    if validation_path and Path(validation_path).exists():
+        from .validation import gate_for_claim
+        vres = json.loads(Path(validation_path).read_text(encoding="utf-8"))
+        validation = gate_for_claim(vres, n_years=len(years), phi_hat=phi_hat,
+                                    has_gaps=bool(np.isnan(series).any()), q=P["bh_q"], skew=skew)
+        validation["claim_phi_hat"] = phi_hat
+        validation["claim_skewness"] = skew
+        validation["source_sha256"] = sha256_file(validation_path)
+    shipped_method = validation["gate"].get("regional_test")
+    if shipped_method and n_valid_years >= 5:
+        R["shipped"] = regional_test_p(series, t, shipped_method, seed=P["seed"])
 
     # baseline: area-weighted mean of the cell seasonal climatology (for absolute display)
     cl_season = np.nanmean(clim, axis=0)
@@ -176,6 +203,12 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
                           z=mk1(mk, "z"), p=mk1(mk, "p"),
                           significant=bool(mk1(mk, "p") < P["alpha"]), alpha=P["alpha"]),
             "mk_independent": dict(z=mk1(mk0, "z"), p=mk1(mk0, "p"), significant=bool(mk1(mk0, "p") < P["alpha"])),
+            "shipped": (dict(method=shipped_method, label=METHOD_LABELS[shipped_method], p=R["shipped"]["p"],
+                             z=R["shipped"]["z"], variance_factor=R["shipped"]["factor"],
+                             significant=bool(R["shipped"]["p"] < P["alpha"]), alpha=P["alpha"],
+                             selection="highest power among candidates whose size stayed within 0.05 +/- 2 SE at this "
+                                       "series' persistence (STATS_LOG addendum 2)")
+                        if shipped_method and "shipped" in R else None),
             "sen": dict(slope_per_decade=mk1(mk, "slope") * dec, intercept=mk1(mk, "intercept"),
                         ci_bootstrap_per_decade=[b["slope_ci"][0] * dec, b["slope_ci"][1] * dec],
                         ci_analytic_hr_per_decade=[R["sen_ci_hr"][0] * dec, R["sen_ci_hr"][1] * dec],
@@ -202,9 +235,10 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     if n_valid_years >= 5:
         for ct in P["sens_cov_thresholds"]:
             Rs = regional_analysis(cube, clim, weights, support, lat, years, months, P, cov_threshold=ct,
-                                   with_band=False, reps=min(500, P["boot_reps"]))
+                                   with_band=False, reps=min(500, P["boot_reps"]), method=shipped_method)
             if Rs["n"] >= 5:
-                p_ = float(Rs["mk"]["p"][0]); s_ = float(Rs["mk"]["slope"][0]) * dec
+                p_ = float(Rs["shipped"]["p"]) if "shipped" in Rs else float(Rs["mk"]["p"][0])
+                s_ = float(Rs["mk"]["slope"][0]) * dec
                 sens["coverage"].append(dict(cov_threshold=ct, years_valid=Rs["n"], p=p_, slope_per_decade=s_,
                                              significant_in_direction=bool(p_ < P["alpha"] and s_ * sgn > 0)))
             else:
@@ -234,7 +268,10 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     idx = np.where(cell_ok)[0]
     m1 = mk_core(Xraw[idx], t, hr=False)
     m2 = mk_core(Xan[idx], t, hr=False)
-    m3 = mk_core(Xan[idx], t, hr=True)
+    cell_test = validation["gate"].get("cell_test") or "hr_registered"
+    cells_mode = validation["gate"].get("cells_mode", "off")
+    m3reg = mk_core(Xan[idx], t, corr="hr")
+    m3 = m3reg if cell_test == "hr_registered" else mk_core(Xan[idx], t, corr=BATCHED_METHODS[cell_test])
     ncell = ny * nx
 
     def full(v):
@@ -243,6 +280,7 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         return a
 
     p1, p2, p3 = full(m1["p"]), full(m2["p"]), full(m3["p"])
+    p3reg = full(m3reg["p"])
     s_raw, s_an = full(m1["slope"]) * dec, full(m3["slope"]) * dec
     rej4, adj4 = benjamini_hochberg(p3, P["bh_q"])
     flags = {1: p1 < P["alpha"], 2: p2 < P["alpha"], 3: p3 < P["alpha"], 4: rej4}
@@ -251,15 +289,20 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
     wv = w[cell_ok].sum()
     names = {1: ("Raw Mann-Kendall", "raw seasonal means, assuming independent years"),
              2: ("Seasonal anomalies", "anomalies against each cell's own same-month climatology"),
-             3: ("Autocorrelation correction", "Hamed-Rao variance correction"),
+             3: ("Autocorrelation correction", METHOD_LABELS[cell_test]),
              4: ("False-discovery control", f"Benjamini-Hochberg at q = {P['bh_q']}, declared before results")}
     rungs = []
     prev = None
     for r in (1, 2, 3, 4):
         f = flags[r] & cell_ok
         fd = f & (slopes_for[r] * sgn > 0)
+        extra = {}
+        if r == 3:
+            fr = (p3reg < P["alpha"]) & cell_ok
+            extra = dict(method=cell_test, registered_hr_flagged_cells=int(fr.sum()),
+                         registered_hr_flagged_area_frac=float(w[fr].sum() / wv) if wv else None)
         rungs.append(dict(
-            rung=r, name=names[r][0], what_changes=names[r][1],
+            rung=r, name=names[r][0], what_changes=names[r][1], **extra,
             flagged_cells=int(f.sum()), flagged_area_frac=float(w[f].sum() / wv) if wv else None,
             flagged_in_direction_cells=int(fd.sum()),
             flagged_in_direction_area_frac=float(w[fd].sum() / wv) if wv else None,
@@ -275,28 +318,20 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         fields=dict(
             valid=cell_ok.astype(int),
             slope_raw_per_decade=s_raw, slope_per_decade=s_an,
-            p_rung1=p1, p_rung2=p2, p_rung3=p3, bh_adjusted_p=adj4, hr_factor=hr_factor,
+            p_rung1=p1, p_rung2=p2, p_rung3=p3, p_rung3_hr_registered=p3reg, bh_adjusted_p=adj4, hr_factor=hr_factor,
             flag_rung1=(flags[1] & cell_ok).astype(int), flag_rung2=(flags[2] & cell_ok).astype(int),
             flag_rung3=(flags[3] & cell_ok).astype(int), flag_rung4=(flags[4] & cell_ok).astype(int),
         ),
+        cells_mode=cells_mode, cell_test=cell_test,
+        cells_mode_note=("bh_flags: rung-4 flags are false-discovery controlled (measured on correlated synthetic fields). "
+                         "unadjusted_descriptive: rung-3 flags are UNADJUSTED and descriptive; no false-discovery claim; "
+                         "the verdict does not use the map. off: validation not attached."),
         rungs=rungs, rung2_cells_with_changed_p=rung2_p_changed,
         rung2_note=("With complete months, anomalies only shift each cell's series by a constant, which "
                     "Mann-Kendall and Sen ignore; rung 2 changes a cell only where months are missing."),
         flagged_in_direction_def="flag at the rung AND the cell's Sen slope has the claimed sign",
         area_weights="cos(latitude); fractions are of valid cells' weight; descriptive, never an error rate",
     )
-
-    # ---------- validation gate ----------
-    validation = {"status": "not_run", "gate": {"regional_verdict_enabled": False, "interval_enabled": False,
-                                               "cells_enabled": False, "reasons": ["validation results not attached"]}}
-    if validation_path and Path(validation_path).exists():
-        from .validation import gate_for_claim
-        vres = json.loads(Path(validation_path).read_text(encoding="utf-8"))
-        phi_hat = _lag1(series)
-        validation = gate_for_claim(vres, n_years=len(years), phi_hat=phi_hat,
-                                    has_gaps=bool(years_dropped), q=P["bh_q"])
-        validation["claim_phi_hat"] = phi_hat
-        validation["source_sha256"] = sha256_file(validation_path)
 
     # ---------- interval method chosen by the gate ----------
     gate0 = validation["gate"]
@@ -331,13 +366,12 @@ def run_claim(claim_dir, out_dir=None, params=None, validation_path=None, quiet=
         reasons.append(f"only {n_valid_years} of {len(years)} seasons have enough coverage (G-Cov)")
     gate = validation["gate"]
     sen = tests.get("sen", {})
-    hr = tests.get("mk_hr", {})
     inp = dict(
-        withheld_reasons=reasons, p=hr.get("p"), slope=sen.get("slope_per_decade"),
+        withheld_reasons=reasons, p=(tests.get("shipped") or {}).get("p"), slope=sen.get("slope_per_decade"),
         ci=tuple(sen["interval_used_per_decade"]) if sen and gate.get("interval_enabled") and sen.get("interval_used_per_decade") else None,
         direction=direction, interval_enabled=bool(gate.get("interval_enabled")),
         breadth_in_dir=rungs[3]["flagged_in_direction_area_frac"],
-        breadth_available=bool(gate.get("cells_enabled")) and cells["n_valid_cells"] > 0,
+        breadth_available=gate.get("cells_mode") == "bh_flags" and cells["n_valid_cells"] > 0,
     )
     vclaim = dict(region_name=claim.get("region_name", "the region"), season_label=season_label(months),
                   period_label=f"{y0} to {y1}", variable=claim.get("variable_plain", claim.get("variable", "value")),
@@ -412,8 +446,10 @@ def build_finding(claim, vclaim, tests, gate, verdict, coverage, cells, n_valid,
         not_sup.append("The significance test for this claim did not pass its calibration checks, so no verdict is given.")
     if not gate.get("interval_enabled"):
         not_sup.append("The slope interval and its band are not shown because they did not pass their calibration checks.")
-    if not gate.get("cells_enabled"):
-        not_sup.append("The map flags and flagged-area shares are not shown because the cell-level tests did not pass their calibration checks.")
+    if gate.get("cells_mode") == "unadjusted_descriptive":
+        not_sup.append("The cells marked on the map are UNADJUSTED: no false-discovery control passed its check at this persistence, so many marked cells are expected to be chance and the map is descriptive only.")
+    elif gate.get("cells_mode") == "off":
+        not_sup.append("The map flags are not shown as findings because validation did not run.")
     n_phrase = f"{n_valid} of {n_years} seasons"
     if claim.get("preregistered", True) and not claim.get("synthetic"):
         sel = (f"This headline is the one regional test registered for this claim before any data were downloaded "

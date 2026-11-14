@@ -29,7 +29,8 @@ def _compact(X, T):
     bad = np.isnan(X)
     order = np.argsort(bad, axis=1, kind="stable")
     Xc = np.take_along_axis(X, order, axis=1)
-    Tc = np.asarray(T, dtype=float)[order]
+    T = np.asarray(T, dtype=float)
+    Tc = np.take_along_axis(T, order, axis=1) if T.ndim == 2 else T[order]
     n = (~bad).sum(axis=1)
     valid = np.arange(N)[None, :] < n[:, None]
     return Xc, Tc, n, valid
@@ -50,7 +51,23 @@ def _median_sorted_masked(vals, m):
 _KEYS = ("n", "s", "var0", "n_ns_raw", "n_ns", "var_s", "z", "p", "slope", "intercept", "tau")
 
 
-def mk_core(X, T, hr=True, min_n=3, chunk=1000):
+CORRECTIONS = ("none", "hr", "hr_all", "yw", "tfpw")
+
+
+def _lag1_detrended(Xc, Tc, valid, n, slope):
+    """Lag-1 autocorrelation of the Sen-detrended data (compact order), plus the detrended data."""
+    res = np.where(valid, Xc - slope[:, None] * Tc, 0.0)
+    nf = np.where(n > 0, n, 1).astype(float)
+    m = res.sum(axis=1) / nf
+    y = np.where(valid, res - m[:, None], 0.0)
+    num = (y[:, :-1] * y[:, 1:]).sum(axis=1)
+    den = (y * y).sum(axis=1)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        r1 = np.where(den > 0, num / den, 0.0)
+    return r1, res
+
+
+def mk_core(X, T, hr=True, min_n=3, chunk=1000, corr=None):
     """Mann-Kendall (+ optional Hamed-Rao) for each row of X.
 
     Returns dict of arrays: n, s, var0, n_ns_raw, n_ns, var_s, z, p, slope, intercept, tau.
@@ -60,6 +77,12 @@ def mk_core(X, T, hr=True, min_n=3, chunk=1000):
     X = np.asarray(X, dtype=float)
     if X.ndim == 1:
         X = X[None, :]
+    if corr is None:
+        corr = "hr" if hr else "none"
+    assert corr in CORRECTIONS
+    if corr == "tfpw":
+        return _mk_tfpw(X, T, min_n, chunk)
+    hr = corr != "none"
     C, N = X.shape
     outs = {k: np.full(C, np.nan) for k in _KEYS}
     iu0, iu1 = np.triu_indices(N, 1)
@@ -88,7 +111,14 @@ def mk_core(X, T, hr=True, min_n=3, chunk=1000):
         med_t = _median_sorted_masked(np.sort(np.where(valid, Tc, np.nan), axis=1), n)
         intercept = med_x - slope * med_t
         n_ns_raw = np.ones(b - a)
-        if hr:
+        if corr == "yw":
+            r1, _ = _lag1_detrended(Xc, Tc, valid, n, slope)
+            r1 = np.clip(r1, -0.95, 0.95)
+            fac = np.ones(b - a)
+            for k in range(1, N):
+                fac += np.where(k < n, 2.0 * (1.0 - k / np.where(n > 0, nf, 1)) * r1 ** k, 0.0)
+            n_ns_raw = fac
+        elif hr:
             # The median-slope pair has a residual tie in exact arithmetic when the pair count is odd;
             # float rounding must not decide it, so residuals are rounded to 1e-9 of the series scale.
             scale = np.nanmax(np.abs(np.where(valid, Xc, np.nan)), axis=1)
@@ -105,7 +135,10 @@ def mk_core(X, T, hr=True, min_n=3, chunk=1000):
                 with np.errstate(divide="ignore", invalid="ignore"):
                     r_k = np.where(denom > 0, num / denom, 0.0)
                 w = (nf - k) * (nf - k - 1) * (nf - k - 2)
-                sig = (np.abs(r_k) > bound) & (k < nf)
+                if corr == "hr_all":
+                    sig = (k <= np.floor(nf / 3)) & (k < nf)
+                else:
+                    sig = (np.abs(r_k) > bound) & (k < nf)
                 sni += np.where(sig, w * r_k, 0.0)
             with np.errstate(divide="ignore", invalid="ignore"):
                 n_ns_raw = 1.0 + 2.0 / (nf * (nf - 1) * (nf - 2)) * sni
@@ -124,6 +157,38 @@ def mk_core(X, T, hr=True, min_n=3, chunk=1000):
             if k != "n":
                 v[bad] = np.nan
             outs[k][a:b] = v
+    return outs
+
+
+def _mk_tfpw(X, T, min_n, chunk):
+    """Trend-free pre-whitening (Yue et al. 2002): whiten the Sen-detrended data with its lag-1 r, add the trend back,
+    ordinary MK on the result. Slope and intercept are those of the original series."""
+    base = mk_core(X, T, corr="none", min_n=min_n, chunk=chunk)
+    C, N = X.shape
+    outs = {k: np.full(C, np.nan) for k in _KEYS}
+    for a in range(0, C, chunk):
+        b = min(C, a + chunk)
+        Xc, Tc, n, valid = _compact(X[a:b], T)
+        slope = np.where(np.isfinite(base["slope"][a:b]), base["slope"][a:b], 0.0)
+        r1, res = _lag1_detrended(Xc, Tc, valid, n, slope)
+        r1 = np.clip(r1, -0.95, 0.95)
+        W = res[:, 1:] - r1[:, None] * res[:, :-1] + slope[:, None] * Tc[:, 1:]
+        sc_ = np.nanmax(np.abs(np.where(valid, Xc, np.nan)), axis=1)
+        sc_ = np.where(np.isfinite(sc_) & (sc_ > 0), sc_, 1.0)
+        W = np.round(W / sc_[:, None], 9) * sc_[:, None]   # exact ties must not depend on float rounding
+        valid_w = valid[:, 1:]
+        W = np.where(valid_w, W, np.nan)
+        Tw = Tc[:, 1:]
+        r = mk_core(W, Tw, corr="none", min_n=min_n, chunk=chunk)
+        for k in _KEYS:
+            outs[k][a:b] = r[k]
+        outs["slope"][a:b] = base["slope"][a:b]
+        outs["intercept"][a:b] = base["intercept"][a:b]
+        outs["n"][a:b] = n.astype(float)
+        bad = n < min_n
+        for k in _KEYS:
+            if k != "n":
+                outs[k][a:b][bad] = np.nan
     return outs
 
 
@@ -198,3 +263,54 @@ def benjamini_hochberg(p, q=0.10):
     out_adj[ok] = adj
     out_rej[ok] = adj <= q
     return out_rej, out_adj
+
+
+# ---------------------------------------------------------------------------------------------
+# Regional test candidates (WP0 method addendum 2). Series-level; used by the pipeline and validation.
+
+REGIONAL_METHODS = ("mk_independent", "hr_registered", "hr_all_lags", "yue_wang", "tfpw", "boot_mk_L3", "boot_mk_L5")
+BATCHED_METHODS = {"mk_independent": "none", "hr_registered": "hr", "hr_all_lags": "hr_all", "yue_wang": "yw", "tfpw": "tfpw"}
+METHOD_LABELS = {
+    "mk_independent": "Mann-Kendall assuming independent years",
+    "hr_registered": "Mann-Kendall with Hamed-Rao correction (significance-screened lags)",
+    "hr_all_lags": "Mann-Kendall with Hamed-Rao correction (all lags up to n/3)",
+    "yue_wang": "Mann-Kendall with Yue-Wang effective-sample-size correction (lag-1)",
+    "tfpw": "Mann-Kendall after trend-free pre-whitening (Yue et al. 2002)",
+    "boot_mk_L3": "Mann-Kendall with moving-block bootstrap p-value (block 3)",
+    "boot_mk_L5": "Mann-Kendall with moving-block bootstrap p-value (block 5)",
+}
+
+
+def boot_mk_p(x, t, block_len=3, reps=499, seed=1):
+    """Moving-block bootstrap MK p-value. Null residuals: Sen-detrended, mean-centred, block-resampled."""
+    from .bootstrap import block_indices
+    x = np.asarray(x, float)
+    t = np.asarray(t, float)
+    ok = np.isfinite(x)
+    xv, tv = x[ok], t[ok]
+    n = len(xv)
+    if n < 5:
+        return np.nan
+    i0, i1 = np.triu_indices(n, 1)
+    s_obs = np.sign(xv[i1] - xv[i0]).sum()
+    sl = (xv[i1] - xv[i0]) / (tv[i1] - tv[i0])
+    slope = np.median(sl)
+    res = xv - slope * tv
+    res = res - res.mean()
+    rng = np.random.default_rng(seed)
+    idx = block_indices(n, block_len, reps, rng)
+    E = res[idx]
+    s_b = np.sign(E[:, i1] - E[:, i0]).sum(axis=1)
+    return float((1 + np.sum(np.abs(s_b) >= abs(s_obs))) / (1 + reps))
+
+
+def regional_test_p(x, t, method, seed=1):
+    """p-value of the chosen regional test for one series (x with NaN = gap)."""
+    x = np.asarray(x, float)
+    if method in BATCHED_METHODS:
+        r = mk_core(x[None, :], t, corr=BATCHED_METHODS[method])
+        return dict(p=float(r["p"][0]), z=float(r["z"][0]), n=int(r["n"][0]), slope=float(r["slope"][0]),
+                    factor=float(r["n_ns"][0]))
+    L = int(method.rsplit("L", 1)[1])
+    r = mk_core(x[None, :], t, corr="none")
+    return dict(p=boot_mk_p(x, t, block_len=L, seed=seed), z=None, n=int(r["n"][0]), slope=float(r["slope"][0]), factor=None)

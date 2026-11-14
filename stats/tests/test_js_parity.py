@@ -14,7 +14,7 @@ import numpy as np
 import pytest
 
 from trendtrial import verdict as V
-from trendtrial.aggregate import cell_season_series, climatology
+from trendtrial.aggregate import build_cube, cell_season_series, climatology, is_wrap
 from trendtrial.trend import mk_core, ols, sen_ci_analytic
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,11 +75,11 @@ def js_results(tmp_path_factory):
     rng = np.random.default_rng(99)
     seasonal = []
     for k in range(40):
-        months = [[6, 7, 8], [6, 7, 8, 9], list(range(1, 13)), [12, 1, 2][::-1]][k % 4]
-        months = sorted(months)
+        months = [[6, 7, 8], [6, 7, 8, 9], list(range(1, 13)), [12, 1, 2], [11, 12, 1, 2, 3]][k % 5]
         y0, y1 = 2001, int(rng.integers(2015, 2026))
         rows = []
-        for y in range(y0, y1 + 1):
+        first = y0 - 1 if is_wrap(months) and k % 2 == 0 else y0   # half the wrap sets include the previous December
+        for y in range(first, y1 + 1):
             for m in months:
                 if rng.random() < 0.2:
                     continue
@@ -128,20 +128,42 @@ def test_series_parity(js_results):
     assert n_mk >= 200
 
 
+def python_seasonal(c):
+    months, y0, y1 = c["opts"]["months"], c["opts"]["y0"], c["opts"]["y1"]
+    years = list(range(y0, y1 + 1))
+    vals = np.array([r["value"] for r in c["rows"]], float)[:, None, None]
+    cube = build_cube(vals, [r["year"] for r in c["rows"]], [r["month"] for r in c["rows"]], years, months)
+    clim = climatology(cube, 0.6)
+    raw, an = cell_season_series(cube, clim, 2 / 3)
+    return years, raw[:, 0, 0], an[:, 0, 0]
+
+
 def test_seasonal_parity(js_results):
     _, seasonal, _, res = js_results
+    n_wrap = 0
     for c, r in zip(seasonal, res["seasonal"]):
-        months, y0, y1 = c["opts"]["months"], c["opts"]["y0"], c["opts"]["y1"]
-        years = list(range(y0, y1 + 1))
-        cube = np.full((len(years), len(months), 1, 1), np.nan)
-        for row in c["rows"]:
-            cube[row["year"] - y0, months.index(row["month"]), 0, 0] = row["value"]
-        clim = climatology(cube, 0.6)
-        raw, an = cell_season_series(cube, clim, 2 / 3)
-        for a, b in ((raw[:, 0, 0], r["raw"]), (an[:, 0, 0], r["anomaly"])):
+        years, raw, an = python_seasonal(c)
+        for a, b in ((raw, r["raw"]), (an, r["anomaly"])):
             for x, y in zip(a, b):
                 assert close(None if np.isnan(x) else float(x), y, abs_=1e-9)
         assert r["years"] == years
+        n_wrap += bool(r["wrap"])
+    assert n_wrap >= 16
+
+
+def test_wrap_season_semantics():
+    """DJF: December comes from the previous year, the season is labelled by the Jan-Feb year, first season dropped
+    when its December is missing."""
+    rows = []
+    for y in range(2000, 2006):
+        for m in (12, 1, 2):
+            rows.append(dict(year=y, month=m, value=float(100 * (y if m == 12 else y) + m)))
+    # data start in Jan 2000: December 1999 absent, so season 2000 has no previous-year month and is dropped
+    opts = dict(months=[12, 1, 2], y0=2000, y1=2005)
+    years, raw, an = python_seasonal(dict(rows=rows, opts=opts))
+    assert np.isnan(raw[0])                         # first incomplete season dropped
+    # season 2001 = Dec 2000 + Jan 2001 + Feb 2001
+    assert raw[1] == pytest.approx((100 * 2000 + 12 + 100 * 2001 + 1 + 100 * 2001 + 2) / 3)
 
 
 def test_verdict_parity(js_results):
@@ -150,3 +172,43 @@ def test_verdict_parity(js_results):
         pid, text = V.detective_decide(v["p"], v["slope"], v["n"], v["units"])
         assert r["id"] == pid
         assert r["text"] == text, (r["text"], text)
+
+
+def test_correction_options_parity(js_results):
+    series, _, _, res = js_results
+    names = {"hr_all": "hr_all", "yw": "yw", "tfpw": "tfpw"}
+    for (t, y), r in zip(series, res["series"]):
+        for k in names:
+            mk = mk_core(y[None, :], t, corr=k)
+            js = r["alt"][k]
+            assert js["s"] is None or js["s"] == mk["s"][0] or k == "tfpw"
+            assert close(js["varS"], mk["var_s"][0], rel=1e-10)
+            assert close(js["z"], mk["z"][0], abs_=1e-9)
+            assert close(js["p"], mk["p"][0], abs_=1e-9)
+            assert js["correctionId"] == k and js["correctionName"] and js["correctionNote"]
+
+
+def test_ladder_steps_export(js_results):
+    _, _, _, res = js_results
+    assert [s["id"] for s in res["ladder"]] == ["raw", "anomaly", "autocorr"]
+    assert all(s["name"] and s["note"] for s in res["ladder"])
+    assert set(res["corrections"]) == {"none", "hr", "hr_all", "yw", "tfpw"}
+
+
+def test_new_corrections_properties():
+    rng = np.random.default_rng(3)
+    t = np.arange(30, dtype=float)
+    from trendtrial.synth import ar1_series
+    iid = ar1_series(300, 30, 0.0, rng)
+    ar = ar1_series(300, 30, 0.6, rng)
+    f_iid = np.median(mk_core(iid, t, corr="yw")["n_ns"])
+    f_ar = np.median(mk_core(ar, t, corr="yw")["n_ns"])
+    assert f_iid < 1.3 and f_ar > 1.5
+    X = ar[:20].copy()
+    X[rng.random(X.shape) < 0.1] = np.nan
+    for k in ("hr_all", "yw", "tfpw"):
+        big = mk_core(X, t, corr=k)
+        for i in range(0, 20, 5):
+            one = mk_core(X[i:i + 1], t, corr=k)
+            for key in big:
+                assert np.allclose(big[key][i], one[key][0], equal_nan=True)

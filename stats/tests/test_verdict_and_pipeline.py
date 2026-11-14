@@ -82,64 +82,94 @@ def test_detective_wording():
             assert not re.search(pat, V.detective_decide(p, s, 20)[1], re.I)
 
 
-def fake_results(**over):
+CANDS = ["mk_independent", "hr_registered", "hr_all_lags", "yue_wang", "tfpw", "boot_mk_L3", "boot_mk_L5"]
+PHIS = (0.0, 0.1, 0.2, 0.3, 0.45, 0.6)
+
+
+def _interval():
+    return dict(checks=dict(B3=dict(passed=True), B3a=dict(passed=True), B4=dict(passed=True)), floor_ok=True)
+
+
+def _null(sid, n, phi, size):
+    cands = {c: dict(size=dict(value=0.05, se=0.003, R=4000)) for c in CANDS}
+    checks = {c: dict(passed=True, side="ok") for c in CANDS}
+    for c, v in size.items():
+        cands[c]["size"]["value"] = v
+        checks[c] = dict(passed=v <= 0.0568, side="ok" if 0.0432 <= v <= 0.0568 else ("liberal" if v > 0.0568 else "conservative"))
+    return dict(id=sid, kind="regional", n=n, phi=phi, candidates=cands, size_checks=checks, floor_ok=True, interval=_interval())
+
+
+def _trend(sid, n, phi, power):
+    cands = {c: dict(power=dict(value=power.get(c, 0.3), se=0.007, R=4000)) for c in CANDS}
+    return dict(id=sid, kind="regional", n=n, phi=phi, candidates=cands, floor_ok=True, interval=_interval())
+
+
+def _cells(sid, phi, ok):
+    cands = {c: dict(B2_passed=ok.get(c, True), cell_size=dict(value=0.05), bh_power=dict(value=0.5),
+                     bh_fdr=dict(value=0.05, se=0.01)) for c in ["mk_independent", "hr_registered", "hr_all_lags", "yue_wang", "tfpw"]}
+    return dict(id=sid, kind="cells", n=25, phi=phi, candidates=cands, floor_ok=True)
+
+
+def fake_results(null_size=None, power=None, cells_ok=None, interval=None, extra=None):
+    """Build run-B-format results. null_size/power: {scenario_id: {candidate: value}}; cells_ok: {scenario_id: {cand: bool}}."""
+    null_size, power, cells_ok, interval = null_size or {}, power or {}, cells_ok or {}, interval or {}
     sc = []
-    phis = (0.0, 0.1, 0.2, 0.3, 0.45, 0.6)
     for n in (23, 25, 45):
-        for phi in phis:
-            ok = dict(B1=dict(passed=True, side="ok"), B3=dict(passed=True), B3a=dict(passed=True), B4=dict(passed=True))
-            sc.append(dict(id=f"R-null-n{n}-phi{phi}", kind="regional", n=n, phi=phi, checks=dict(ok), floor_ok=True,
-                           metrics={"regional_size": dict(value=0.05)}))
-            sc.append(dict(id=f"R-trend-n{n}-phi{phi}", kind="regional", n=n, phi=phi,
-                           checks={k: dict(v) for k, v in ok.items() if k != "B1"}, floor_ok=True, metrics={}))
-    for phi in phis:
+        for phi in PHIS:
+            sc.append(_null(f"R-null-n{n}-phi{phi}", n, phi, null_size.get(f"R-null-n{n}-phi{phi}", {})))
+            sc.append(_trend(f"R-trend-n{n}-phi{phi}", n, phi, power.get(f"R-trend-n{n}-phi{phi}", {})))
+    sc.append(_null("R-null-gaps-n25-phi0.3", 25, 0.3, null_size.get("R-null-gaps-n25-phi0.3", {})))
+    sc.append(_null("R-null-skewed-n25-phi0.3", 25, 0.3, null_size.get("R-null-skewed-n25-phi0.3", {})))
+    for phi in PHIS:
         for k in ("none", "positive", "mixed"):
-            sc.append(dict(id=f"C-{k}-phi{phi}", kind="cells", n=25, phi=phi, checks=dict(B2=dict(passed=True)),
-                           floor_ok=True, metrics={}))
-    sc.append(dict(id="R-null-gaps-n25-phi0.3", kind="regional", n=25, phi=0.3, floor_ok=True,
-                   metrics={"regional_size": dict(value=0.05)},
-                   checks=dict(B1=dict(passed=True, side="ok"), B3=dict(passed=True), B3a=dict(passed=True),
-                               B4=dict(passed=True))))
-    res = dict(run={}, scenarios=sc, summary={})
-    for sid, patch in over.items():
-        for s in sc:
-            if s["id"] == sid:
-                for b, c in patch.items():
-                    s["checks"][b] = dict(s["checks"][b], **c)
-    return res
+            sc.append(_cells(f"C-{k}-phi{phi}", phi, cells_ok.get(f"C-{k}-phi{phi}", {})))
+    for s_ in sc:
+        if s_["id"] in interval:
+            for b, v in interval[s_["id"]].items():
+                s_["interval"]["checks"][b] = dict(passed=v)
+    return dict(run=dict(kind="B_candidates"), scenarios=sc, summary={})
 
 
-def test_gate_rules():
-    r = fake_results()
+def test_gate_rules_and_selection():
+    # everything passes: the candidate with the highest power wins; ties within 0.5 SE go to the earlier candidate
+    r = fake_results(power={"R-trend-n25-phi0.1": {"hr_all_lags": 0.5, "tfpw": 0.6, "mk_independent": 0.1}})
     g = gate_for_claim(r, 25, 0.05, False)["gate"]
-    assert g["regional_verdict_enabled"] and g["interval_enabled"] and g["cells_enabled"]
-    assert g["interval_method"] == "bootstrap"
-    assert g["governing_phi"] == 0.1 and g["governing_n"] == 25
-    # liberal size failure disables the regional verdict (and with it the interval)
-    r = fake_results(**{"R-null-n25-phi0.1": {"B1": dict(passed=False, side="liberal")}})
+    assert g["regional_verdict_enabled"] and g["regional_test"] == "tfpw" and g["governing_phi"] == 0.1 and g["governing_n"] == 25
+    assert g["interval_method"] == "bootstrap" and g["cells_mode"] == "bh_flags" and g["cells_enabled"]
+    r = fake_results(power={"R-trend-n25-phi0.1": {"hr_all_lags": 0.5, "tfpw": 0.5 + 0.003}})
+    assert gate_for_claim(r, 25, 0.05, False)["gate"]["regional_test"] == "hr_all_lags"
+    # a liberal candidate is excluded even if its power is highest
+    r = fake_results(null_size={"R-null-n25-phi0.1": {"tfpw": 0.12}}, power={"R-trend-n25-phi0.1": {"tfpw": 0.9, "yue_wang": 0.4}})
     g = gate_for_claim(r, 25, 0.05, False)["gate"]
-    assert not g["regional_verdict_enabled"] and g["reasons_blocking_verdict"] and not g["interval_enabled"]
-    # conservative failure only flags
-    r = fake_results(**{"R-null-n25-phi0.1": {"B1": dict(passed=True, side="conservative")}})
+    assert g["regional_test"] != "tfpw" and g["candidate_table"]["tfpw"]["passes"] is False
+    # no candidate passes -> regional verdict disabled, interval too, reasons listed
+    r = fake_results(null_size={"R-null-n25-phi0.1": {c: 0.12 for c in CANDS}})
     g = gate_for_claim(r, 25, 0.05, False)["gate"]
-    assert g["regional_verdict_enabled"] and g["conservative_flags"]
-    # bootstrap coverage fails -> analytic interval; both fail -> none
-    r = fake_results(**{"R-null-n25-phi0.1": {"B3": dict(passed=False)}})
+    assert not g["regional_verdict_enabled"] and g["regional_test"] is None and g["reasons_blocking_verdict"] and not g["interval_enabled"]
+    # the gaps scenario also governs when the series has gaps
+    r = fake_results(null_size={"R-null-gaps-n25-phi0.3": {c: 0.12 for c in CANDS}})
+    assert gate_for_claim(r, 25, 0.05, True)["gate"]["regional_verdict_enabled"] is False
+    assert gate_for_claim(r, 25, 0.05, False)["gate"]["regional_verdict_enabled"] is True
+    # conservative size is flagged, not disabling
+    r = fake_results(null_size={"R-null-n25-phi0.1": {"hr_registered": 0.02}}, power={"R-trend-n25-phi0.1": {"hr_registered": 0.9}})
+    g = gate_for_claim(r, 25, 0.05, False)["gate"]
+    assert g["regional_test"] == "hr_registered" and g["conservative_flags"]
+    # interval rule: bootstrap -> analytic -> none
+    r = fake_results(interval={"R-null-n25-phi0.1": {"B3": False}})
     assert gate_for_claim(r, 25, 0.05, False)["gate"]["interval_method"] == "analytic_hr"
-    r = fake_results(**{"R-null-n25-phi0.1": {"B3": dict(passed=False), "B3a": dict(passed=False)}})
+    r = fake_results(interval={"R-null-n25-phi0.1": {"B3": False, "B3a": False}})
     g = gate_for_claim(r, 25, 0.05, False)["gate"]
     assert not g["interval_enabled"] and g["regional_verdict_enabled"]
-    # cells failure disables cells only
-    r = fake_results(**{"C-none-phi0.1": {"B2": dict(passed=False)}})
+    # sen bias failure disables the regional verdict
+    r = fake_results(interval={"R-null-n25-phi0.1": {"B4": False}})
+    assert not gate_for_claim(r, 25, 0.05, False)["gate"]["regional_verdict_enabled"]
+    # cells: none of the batched candidates passes -> unadjusted descriptive mode
+    r = fake_results(cells_ok={"C-none-phi0.1": {c: False for c in ["mk_independent", "hr_registered", "hr_all_lags", "yue_wang", "tfpw"]}})
     g = gate_for_claim(r, 25, 0.05, False)["gate"]
-    assert not g["cells_enabled"] and g["regional_verdict_enabled"]
+    assert g["cells_mode"] == "unadjusted_descriptive" and not g["cells_enabled"] and g["regional_verdict_enabled"]
     # persistence above the tested range disables everything
     g = gate_for_claim(fake_results(), 25, 0.8, False)["gate"]
     assert not (g["regional_verdict_enabled"] or g["interval_enabled"] or g["cells_enabled"])
-    # gaps add the gap scenario
-    r = fake_results(**{"R-null-gaps-n25-phi0.3": {"B1": dict(passed=False, side="liberal")}})
-    assert gate_for_claim(r, 25, 0.05, True)["gate"]["regional_verdict_enabled"] is False
-    assert gate_for_claim(r, 25, 0.05, False)["gate"]["regional_verdict_enabled"] is True
 
 
 @pytest.fixture(scope="module")

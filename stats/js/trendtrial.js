@@ -19,7 +19,7 @@
 //   fmtP(p), fmtG(x, 3)                 -> number formatting identical to the Python templates
 //   normalCdf(x), tCdf(x, df), tQuantile(p, df)
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 const Z975 = 1.959963984540054;
 const ALPHA = 0.05;
 
@@ -189,12 +189,30 @@ export function olsTest(t, y, alpha = ALPHA) {
 }
 
 // ------------------------------------------------------------------ Mann-Kendall, Sen, Hamed-Rao
-export function mannKendall(y, t, opts = {}) {
-  const hr = opts.hr !== false;
-  const [x, tc] = compact(y, t);
+export const CORRECTIONS = {
+  none: { name: "No correction", note: "Years are assumed to be independent of each other." },
+  hr: { name: "Hamed-Rao correction (screened lags)",
+    note: "Years that follow warm years tend to be warm too, which makes a trend look more certain than it is. This correction uses the year-to-year links that are strong enough to measure and makes the test more cautious." },
+  hr_all: { name: "Hamed-Rao correction (all lags up to n/3)",
+    note: "Years that follow warm years tend to be warm too, which makes a trend look more certain than it is. This correction counts every short-range year-to-year link, not only the strong ones, and makes the test more cautious." },
+  yw: { name: "Yue-Wang correction (lag-1)",
+    note: "Years that follow warm years tend to be warm too, which makes a trend look more certain than it is. This correction measures how strongly one year follows the last and counts the series as having fewer independent years." },
+  tfpw: { name: "Trend-free pre-whitening",
+    note: "Years that follow warm years tend to be warm too. This step removes that year-to-year carry-over from the series, keeps the trend, and then runs the Mann-Kendall test." },
+};
+
+export const LADDER_STEPS = [
+  { id: "raw", name: "Raw Mann-Kendall",
+    note: "The trend test on the raw seasonal values, treating every year as an independent draw." },
+  { id: "anomaly", name: "Seasonal anomalies",
+    note: "Each month is compared with its own average first, so a changing mix of months cannot fake a trend." },
+  { id: "autocorr", name: "Autocorrelation correction",
+    note: "Neighbouring years are not independent, so the test is made more cautious. The method used is named on the result (correctionName)." },
+];
+
+function mkSums(x, tc) {
+  // S, tie-corrected Var(S), Sen slope and intercept for a compact series
   const n = x.length;
-  const out = { n, s: null, tau: null, varS0: null, hrFactorRaw: null, hrFactor: null, varS: null, z: null, p: null, slope: null, intercept: null };
-  if (n < 3) return out;
   let S = 0;
   const slopes = [];
   for (let i = 0; i < n - 1; i++) {
@@ -205,21 +223,69 @@ export function mannKendall(y, t, opts = {}) {
       if (dt !== 0) { const s = d / dt; if (Number.isFinite(s)) slopes.push(s); }
     }
   }
-  // ties
   let tieTerm = 0;
   for (let i = 0; i < n; i++) {
     let ti = 0;
     for (let j = 0; j < n; j++) if (x[j] === x[i]) ti++;
     tieTerm += (ti - 1) * (2 * ti + 5);
   }
-  const nf = n;
-  const var0 = (nf * (nf - 1) * (2 * nf + 5) - tieTerm) / 18;
+  const var0 = (n * (n - 1) * (2 * n + 5) - tieTerm) / 18;
   slopes.sort((a, b) => a - b);
   const slope = median(slopes);
   const xs = x.slice().sort((a, b) => a - b), ts = tc.slice().sort((a, b) => a - b);
-  const intercept = median(xs) - slope * median(ts);
+  return { S, var0, slope, intercept: median(xs) - slope * median(ts) };
+}
+
+function zAndP(S, varS) {
+  const sd = Math.sqrt(varS);
+  const z = S > 0 ? (S - 1) / sd : S < 0 ? (S + 1) / sd : 0;
+  return { z, p: 2 * (1 - normalCdf(Math.abs(z))) };
+}
+
+function lag1Detrended(x, tc, slope) {
+  const n = x.length;
+  const res = x.map((v, i) => v - slope * tc[i]);
+  const m = res.reduce((a, b) => a + b, 0) / n;
+  let num = 0, den = 0;
+  for (let i = 0; i < n; i++) den += (res[i] - m) ** 2;
+  for (let i = 0; i < n - 1; i++) num += (res[i] - m) * (res[i + 1] - m);
+  return { r1: den > 0 ? num / den : 0, res };
+}
+
+// opts: {corr: "none" | "hr" | "hr_all" | "yw" | "tfpw"} (default "hr"); legacy {hr: false} means "none".
+export function mannKendall(y, t, opts = {}) {
+  const corr = opts.corr ?? (opts.hr === false ? "none" : "hr");
+  const meta = CORRECTIONS[corr];
+  const [x, tc] = compact(y, t);
+  const n = x.length;
+  const out = { n, s: null, tau: null, varS0: null, hrFactorRaw: null, hrFactor: null, varS: null, z: null, p: null,
+    slope: null, intercept: null, correctionId: corr, correctionName: meta.name, correctionNote: meta.note };
+  if (n < 3) return out;
+  const { S, var0, slope, intercept } = mkSums(x, tc);
+  const nf = n;
   let raw = 1;
-  if (hr) {
+  let S_use = S, var_use = var0, factor = 1;
+  if (corr === "tfpw") {
+    const { r1: r, res } = lag1Detrended(x, tc, slope);
+    const r1 = Math.min(0.95, Math.max(-0.95, r));
+    const W = [], Tw = [];
+    let sc = 0;
+    for (const v of x) sc = Math.max(sc, Math.abs(v));
+    if (!(sc > 0)) sc = 1;
+    for (let i = 0; i < n - 1; i++) {
+      const w0 = res[i + 1] - r1 * res[i] + slope * tc[i + 1];
+      W.push((rint((w0 / sc) * 1e9) / 1e9) * sc);   // exact ties must not depend on float rounding
+      Tw.push(tc[i + 1]);
+    }
+    const w = mkSums(W, Tw);
+    S_use = w.S; var_use = w.var0; factor = 1; raw = 1;
+  } else if (corr === "yw") {
+    const { r1: r } = lag1Detrended(x, tc, slope);
+    const r1 = Math.min(0.95, Math.max(-0.95, r));
+    raw = 1;
+    for (let k = 1; k < n; k++) raw += 2 * (1 - k / n) * Math.pow(r1, k);
+    factor = Math.max(raw, 1);
+  } else if (corr === "hr" || corr === "hr_all") {
     const resid = x.map((v, i) => v - slope * tc[i]);
     let scale = 0;
     for (const v of x) scale = Math.max(scale, Math.abs(v));
@@ -236,16 +302,15 @@ export function mannKendall(y, t, opts = {}) {
       let num = 0;
       for (let i = 0; i < n - k; i++) num += yv[i] * yv[i + k];
       const rk = denom > 0 ? num / denom : 0;
-      if (Math.abs(rk) > bound) sni += (nf - k) * (nf - k - 1) * (nf - k - 2) * rk;
+      const use = corr === "hr_all" ? k <= Math.floor(nf / 3) : Math.abs(rk) > bound;
+      if (use) sni += (nf - k) * (nf - k - 1) * (nf - k - 2) * rk;
     }
     raw = 1 + (2 / (nf * (nf - 1) * (nf - 2))) * sni;
+    factor = Math.max(raw, 1);
   }
-  const factor = hr ? Math.max(raw, 1) : 1;
-  const varS = var0 * factor;
-  const sd = Math.sqrt(varS);
-  const z = S > 0 ? (S - 1) / sd : S < 0 ? (S + 1) / sd : 0;
-  const p = 2 * (1 - normalCdf(Math.abs(z)));
-  return { n, s: S, tau: S / (0.5 * nf * (nf - 1)), varS0: var0, hrFactorRaw: hr ? raw : 1, hrFactor: factor, varS, z, p, slope, intercept };
+  const varS = corr === "tfpw" ? var_use : var0 * factor;
+  const { z, p } = zAndP(S_use, varS);
+  return { ...out, s: S, tau: S / (0.5 * nf * (nf - 1)), varS0: var0, hrFactorRaw: raw, hrFactor: factor, varS, z, p, slope, intercept };
 }
 
 export function senInterval(y, t, varS, alpha = ALPHA) {
@@ -270,8 +335,15 @@ export function senInterval(y, t, varS, alpha = ALPHA) {
 }
 
 // ------------------------------------------------------------------ seasonal subset and anomalies
+export function seasonWraps(months) {
+  return months.length > 1 && months[0] > months[months.length - 1];
+}
+
 export function seasonalSeries(rows, opts) {
-  const months = opts.months.slice().sort((a, b) => a - b);
+  // months in SEASON ORDER. A season that wraps the year (e.g. [12, 1, 2]) takes December from the previous calendar
+  // year and is labelled by the Jan-Feb year; the first season is dropped if none of its previous-year months exist.
+  const wrap = seasonWraps(opts.months);
+  const months = wrap ? opts.months.slice() : opts.months.slice().sort((a, b) => a - b);
   const y0 = opts.y0, y1 = opts.y1;
   const minMonthFrac = opts.minMonthFrac ?? 2 / 3, minClimFrac = opts.minClimFrac ?? 0.6;
   const years = [];
@@ -279,8 +351,16 @@ export function seasonalSeries(rows, opts) {
   const Y = years.length, M = months.length;
   const grid = years.map(() => new Array(M).fill(null));
   for (const r of rows) {
-    const yi = r.year - y0, mi = months.indexOf(r.month);
-    if (yi >= 0 && yi < Y && mi >= 0 && isNum(r.value)) grid[yi][mi] = r.value;
+    const mi = months.indexOf(r.month);
+    if (mi < 0 || !isNum(r.value)) continue;
+    const label = wrap && r.month >= months[0] ? r.year + 1 : r.year;
+    const yi = label - y0;
+    if (yi >= 0 && yi < Y) grid[yi][mi] = r.value;
+  }
+  if (wrap && Y > 0) {
+    let any = false;
+    for (let m = 0; m < M; m++) if (months[m] >= months[0] && grid[0][m] !== null) any = true;
+    if (!any) for (let m = 0; m < M; m++) grid[0][m] = null;
   }
   const clim = new Array(M).fill(null);
   for (let m = 0; m < M; m++) {
@@ -298,7 +378,7 @@ export function seasonalSeries(rows, opts) {
     nMonths.push(nv);
     if (nv >= need) { raw.push(sr / nv); anomaly.push(sa / nv); } else { raw.push(null); anomaly.push(null); }
   }
-  return { years, raw, anomaly, nMonths };
+  return { years, raw, anomaly, nMonths, wrap };
 }
 
 // ------------------------------------------------------------------ formatting and verdict (fixed templates)

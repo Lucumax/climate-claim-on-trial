@@ -18,3 +18,12 @@ Registered Sat Nov 14 2026, about 11:00 AM ET, by the orchestrator (Claude Opus 
 
 ## Audience note (official brief, read 10:45 AM)
 The brief suggests high school and college students and the science-literate public. The product fronts the registered claims with a short guided "detective" question flow and plain definitions of each variable. Users choose among the registered claims; they do not type free claims.
+
+## Addendum 1, Sat Nov 14 ~11:30 AM ET (before any C-D download; C-A to C-C unchanged)
+Reason: the challenge author's video (Cd9Q48LhNbo) lists five steps the app must let users do (choose variable, region incl. the world, period; make and examine the series; test significance) and uses MODIS Aqua AOD over Wisconsin as the worked example.
+
+| ID | Claim | Variable and product | Region | Season and period |
+|---|---|---|---|---|
+| C-D | Summer aerosol optical depth over Wisconsin has increased (the challenge author's own example, put on trial) | MODIS Aqua monthly atmosphere L3, AOD 550 nm Dark Target + Deep Blue combined (MYD08_M3 v6.1), or the same variable through Giovanni; product and DOI copied at download | Wisconsin bounding box 42.5-47.1N, 92.9-86.8W (state mask if cheap) | JJA, 2003-2025 (first full Aqua summer 2003) |
+
+Same regional test and ladder as section "Methods fixed now". Detective mode (user-chosen variable, region and period) is exploratory: its outputs carry a "your own exploration, not pre-registered" label and the same plain p < 0.05 wording the author uses, plus the honest caveats.

@@ -156,6 +156,14 @@ export function caseDocket(b, c) {
     const [mod, data] = await Promise.all([import("../viz/witness.js"), getJson("data/witness/C-A.json")]);
     return mod.render(body, data);
   }
+  // Second witness (C-A, C-B, C-C): a differently made record on the same axis. Exploratory; it never changes a ruling.
+  const WIT2 = { "C-A": { file: "C-A_esa", ask: "Does a European multi-sensor satellite record agree with MODIS Terra, and where do they part?" },
+    "C-B": { file: "C-B_knmi", ask: "Does a station-based rain-gauge record agree with the satellite rainfall?" },
+    "C-C": { file: "C-C_knmi", ask: "Does a station-based temperature record agree with the reanalysis?" } }[c.id];
+  async function mountWitness2(body) {
+    const [mod, data] = await Promise.all([import("../viz/witness2.js"), getJson(`data/witness/${WIT2.file}.json`)]);
+    return mod.render(body, data);
+  }
   async function mountYearly3d(body) {
     const [mod, data] = await Promise.all([import("../viz/cycle.js"), getJson(`data/viz/${c.id}.json`)]);
     return mod.renderCycle(body, data, {});
@@ -165,6 +173,7 @@ export function caseDocket(b, c) {
     { key: "record", label: "Regional record", title: "The regional record", ask: "What did the region's value do, year by year?", mount: mountRecord },
     { key: "anomaly", label: "Values over time", title: "Values over time", ask: "What changed, and when? Every grid cell, year by year, on one fixed colour scale.", mount: mountAnomaly, frame: true },
     { key: "hearings", label: "Evidence by hearing", title: "Evidence by hearing", ask: withheld ? "Which cells pass each hearing? A description of the tests, not a basis for a verdict." : "Where do the tests flag evidence? Each hearing asks a different question of the same cells.", mount: mountHearings, frame: true },
+    ...(WIT2 ? [{ key: "witness2", label: "Second witness", title: "Second witness", ask: WIT2.ask, mount: mountWitness2 }] : []),
     ...(c.id === "C-C" ? [{ key: "yearly3d", label: "Year by year (3D)", title: "Year by year (3D)", ask: "How did each month change over the years? Every month of every year, wound around the baseline; a descriptive view.", mount: mountYearly3d }] : []),
     ...(c.id === "C-A" ? [{ key: "witness", label: "Witness check: when did the satellite look?", title: "Witness check: when did the satellite look?", ask: "Did the satellite's observing time change, and did its readings follow?", mount: mountWitness }] : []),
     { key: "distribution", label: "Distribution", title: "Distribution", ask: "Is the whole distribution moving, or only the average? All cells and years in each period.", mount: mountDistribution },

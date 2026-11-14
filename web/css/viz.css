@@ -188,3 +188,13 @@
 .viz-table-scroll th:first-child, .viz-table-scroll td:first-child { text-align: left; }
 .viz-table-scroll thead th { font-weight: 700; }
 .viz-table-scroll:focus-visible { outline: 2px solid var(--focus, #7D5A15); outline-offset: 2px; }
+
+/* Second witness: one overlay chart, a three-line key and the words beside it. */
+.viz-w2:focus-visible { outline: 3px solid var(--focus, #1f6feb); outline-offset: 2px; }
+.viz-w2-legend { list-style: none; margin: var(--sp-3, 12px) 0 0; padding: 0; font-size: 14px; line-height: 20px; }
+.viz-w2-legend li { display: flex; align-items: center; gap: 8px; margin: 2px 0; overflow-wrap: break-word; min-width: 0; }
+.w2-key { flex: none; display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--ink, #192D40); }
+.w2-key-wit { border-top-color: var(--viz-warm-3, #B9601F); }
+.viz-w2-text { margin-top: var(--sp-3, 12px); max-width: 68ch; }
+.viz-w2-text p:not(.viz-note) { margin: 0 0 var(--sp-2, 8px); }
+.viz-witness2 .viz-note a { overflow-wrap: anywhere; }

@@ -2,7 +2,7 @@
  "claim_id": "C-C",
  "status": "station-based partner-agency witness, exploratory check, not the registered test",
  "title": "A second witness from the ground: station-based air temperature from KNMI Climate Explorer",
- "generated_utc": "2026-11-14T23:31:33+00:00",
+ "generated_utc": "2026-11-15T00:01:22+00:00",
  "witness": {
   "name": "KNMI Climate Explorer (Royal Netherlands Meteorological Institute)",
   "dataset": "CRU TS 4.10 mean temperature (tmp), 0.5 degree, land points, 1901-2025",
@@ -287,6 +287,8 @@
    "mk_tau": 0.29494949494949496,
    "mk_p_registered_method": 0.008766874509454015,
    "registered_method_name": "yue_wang",
+   "registered_method_label": "Mann-Kendall with Yue-Wang effective-sample-size correction (lag-1)",
+   "registered_method_note": "the case series' own validated test applied to this comparison record; exploratory here, because the case's validation does not transfer to another record",
    "ols_per_decade": 0.3239616237483531,
    "ols_p": 0.004798953367241454
   },
@@ -303,6 +305,8 @@
    "mk_tau": 0.34545454545454546,
    "mk_p_registered_method": 0.0014711595052949722,
    "registered_method_name": "yue_wang",
+   "registered_method_label": "Mann-Kendall with Yue-Wang effective-sample-size correction (lag-1)",
+   "registered_method_note": null,
    "ols_per_decade": 0.38846202555994724,
    "ols_p": 0.0007143024110511931
   },
@@ -319,6 +323,8 @@
    "mk_tau": -0.24444444444444444,
    "mk_p_registered_method": null,
    "registered_method_name": null,
+   "registered_method_label": null,
+   "registered_method_note": null,
    "ols_per_decade": -0.06450040181159418,
    "ols_p": 0.0076445759984618
   },

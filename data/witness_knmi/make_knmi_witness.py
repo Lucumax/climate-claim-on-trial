@@ -34,7 +34,7 @@ def read_monthly(path):
     return rows
 
 
-def trend_block(x, t, method=None):
+def trend_block(x, t, method=None, method_label=None, witness=False):
     x = np.asarray(x, float)
     t = np.asarray(t, float)
     mk = mk_core(x[None, :], t, hr=True)
@@ -52,6 +52,10 @@ def trend_block(x, t, method=None):
         "mk_tau": float(mk["tau"][0]),
         "mk_p_registered_method": (float(reg["p"]) if reg else None),
         "registered_method_name": method,
+        "registered_method_label": method_label,
+        "registered_method_note": ("the case series' own validated test applied to this comparison record; "
+                                   "exploratory here, because the case's validation does not transfer to another record"
+                                   if (method and witness) else None),
         "ols_per_decade": float(o["slope"]) * 10,
         "ols_p": float(o["p"]),
     }
@@ -113,8 +117,8 @@ def main():
     imerg_anom = np.array(bB["regional"]["anomaly"], float)
     imerg_base = float(bB["regional"]["baseline_mean"])
     imerg_abs = imerg_anom + imerg_base
-    tb_k = trend_block(jjas, t, bB['regional']['tests']['shipped']['method'])
-    tb_i = trend_block(imerg_anom, t, bB['regional']['tests']['shipped']['method'])
+    tb_k = trend_block(jjas, t, bB['regional']['tests']['shipped']['method'], bB['regional']['tests']['shipped']['label'], witness=True)
+    tb_i = trend_block(imerg_anom, t, bB['regional']['tests']['shipped']['method'], bB['regional']['tests']['shipped']['label'])
     tb_diff = trend_block(k_anom - (imerg_anom - imerg_anom.mean()), t)
     ag = agreement(jjas, imerg_abs, t)
     same_sign = bool(np.sign(tb_k["sen_per_decade"]) == np.sign(tb_i["sen_per_decade"]))
@@ -186,8 +190,8 @@ def main():
     merra_anom = np.array(bC["regional"]["anomaly"], float)
     merra_base = float(bC["regional"]["baseline_mean"])
     merra_abs = merra_anom + merra_base
-    tc_k = trend_block(ann, tC, bC['regional']['tests']['shipped']['method'])
-    tc_m = trend_block(merra_anom, tC, bC['regional']['tests']['shipped']['method'])
+    tc_k = trend_block(ann, tC, bC['regional']['tests']['shipped']['method'], bC['regional']['tests']['shipped']['label'], witness=True)
+    tc_m = trend_block(merra_anom, tC, bC['regional']['tests']['shipped']['method'], bC['regional']['tests']['shipped']['label'])
     tc_diff = trend_block(kC_anom - (merra_anom - merra_anom.mean()), tC)
     agC = agreement(ann, merra_abs, tC)
     ci_m = bC["regional"]["interval"]["selected"]

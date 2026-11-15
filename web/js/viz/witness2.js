@@ -73,18 +73,21 @@ function adaptKnmi(d) {
   const sk = Object.keys(d.series), wSeries = sk.find((k) => /^knmi.*anomaly/.test(k)), cSeries = sk.find((k) => /^our_.*anomaly/.test(k));
   const u = unitWord(Object.values(d.units)[0]), ws = d.stats[wKey], cs = d.stats[cKey], df = d.stats[dKey], ag = d.stats.agreement;
   const first = d.years[0], last = d.years[d.years.length - 1];
-  const rain = id === "C-B", caseName = rain ? "IMERG satellite rainfall" : "MERRA-2 air temperature", pick = (s) => (s.mk_p_registered_method != null ? s.mk_p_registered_method : s.mk_p_independent_years);
+  const rain = id === "C-B", caseName = rain ? "IMERG satellite rainfall" : "MERRA-2 air temperature", pick = (s) => (s.mk_p_registered_method != null ? s.mk_p_registered_method : s.mk_p_independent_years),
+    // Name the test behind every p-value shown: plain Mann-Kendall (every year independent) and the case's own method.
+    mname = (s) => String(s.registered_method_label || "the case's own test").replace(/ \(.*\)$/, ""),
+    pTxt = (s, expl) => `plain Mann-Kendall p ${fp(s.mk_p_independent_years)}${s.mk_p_registered_method != null ? `; ${mname(s)} p ${fp(s.mk_p_registered_method)}${expl ? ", exploratory on this record" : ""}` : ""}`;
   const dir = ws.sen_per_decade * cs.sen_per_decade > 0 ? "the same direction as" : "the opposite direction to";
   const slower = Math.abs(ws.sen_per_decade) < Math.abs(cs.sen_per_decade) ? "slightly slower" : "slightly faster";
   const sig = df && df.mk_p_independent_years < 0.05;
   return {
     id, years: d.years, u, per: u + " per decade",
-    caseS: { label: `${caseName} (the case series)`, short: rain ? "IMERG" : "MERRA-2", v: d.series[cSeries], slope: cs.sen_per_decade, p: pick(cs) },
-    witS: { label: "CRU TS station-based record", short: "CRU TS", v: d.series[wSeries], slope: ws.sen_per_decade, p: pick(ws) },
+    caseS: { label: `${caseName} (the case series)`, short: rain ? "IMERG" : "MERRA-2", v: d.series[cSeries], slope: cs.sen_per_decade, p: pick(cs), pTxt: pTxt(cs, false) },
+    witS: { label: "CRU TS station-based record", short: "CRU TS", v: d.series[wSeries], slope: ws.sen_per_decade, p: pick(ws), pTxt: pTxt(ws, true) },
     r: ag.pearson_r, n: ag.n_years, band: null, mark: null,
     kind: `CRU TS 4.10, a ${rain ? "rain-gauge" : "weather-station"} record gridded at 0.5 degrees and served by KNMI Climate Explorer. It is a different kind of measurement from the ${rain ? "satellite" : "reanalysis model"}, but it is not ground truth.${rain ? " IMERG Final is also adjusted to rain-gauge totals, and the two records share many of the same gauges, so their agreement is partly shared input: a cross-check, not a second independent measurement." : ""}`,
     words: [
-      `The station-based record shows ${signed(ws.sen_per_decade, 2)} ${u} per decade over ${first}–${last} (p ${fp(pick(ws))}), in ${dir} the case series' ${signed(cs.sen_per_decade, 2)} (p ${fp(pick(cs))}). The two series track each other year by year (r ${r2(ag.pearson_r)}).`,
+      `The station-based record shows ${signed(ws.sen_per_decade, 2)} ${u} per decade over ${first}–${last} (${pTxt(ws, true)}), in ${dir} the case series' ${signed(cs.sen_per_decade, 2)} (${pTxt(cs, false)}). The two series track each other year by year (r ${r2(ag.pearson_r)}). The two p-values for the station record are different tests, not one result: the plain test treats every year as independent, and the other is the case's own test run on this record without the case's checks.`,
       rain ? `It agrees on direction; its interval ${ws.sen_ci95_per_decade[0] < 0 ? "reaches below zero" : "stays above zero"}, so it does not settle the claim by itself. The ruling below is unchanged.`
         : `It also shows warming, ${slower} than the case series; the difference between the two slopes is ${sig ? "" : "not "}significant (p ${fp(df.mk_p_independent_years)}). The MERRA-2 box includes sea cells; the station record is land only. The ruling below is unchanged.`,
     ],
@@ -112,8 +115,8 @@ export async function render(container, data, opts = {}) {
   const summary = el("p", { class: "viz-summary sr-only", id: sumId }, `Line chart, ${Y[0]} to ${Y[n - 1]}, difference from each record's own average in ${A.u}. ${C.label}: Sen slope ${signed(C.slope, 2)} ${A.per}. ${Wt.label}: Sen slope ${signed(Wt.slope, 2)} ${A.per}.${T3 ? ` ${T3.label}: Sen slope ${signed(T3.slope, 2)} ${A.per}.` : ""} ${C.short} and ${Wt.short} correlate at r ${r2(A.r)} over ${A.n} years. A table of every value follows the chart.`);
 
   const legend = el("ul", { class: "viz-w2-legend" },
-    el("li", {}, el("span", { class: "w2-key w2-key-case", "aria-hidden": "true" }), `${C.label}: ${signed(C.slope, 2)} ${A.per} (p ${fp(C.p)})`),
-    el("li", {}, el("span", { class: "w2-key w2-key-wit", "aria-hidden": "true" }), `${Wt.label}: ${signed(Wt.slope, 2)} ${A.per} (p ${fp(Wt.p)})`),
+    el("li", {}, el("span", { class: "w2-key w2-key-case", "aria-hidden": "true" }), `${C.label}: ${signed(C.slope, 2)} ${A.per} (${C.pTxt || "p " + fp(C.p)})`),
+    el("li", {}, el("span", { class: "w2-key w2-key-wit", "aria-hidden": "true" }), `${Wt.label}: ${signed(Wt.slope, 2)} ${A.per} (${Wt.pTxt || "p " + fp(Wt.p)})`),
     T3 ? el("li", {}, el("span", { class: "w2-key w2-key-t3", "aria-hidden": "true" }), `${T3.label}: ${signed(T3.slope, 2)} ${A.per} (p ${fp(T3.p)})`) : null,
     el("li", {}, `Correlation between ${C.short} and ${Wt.short}: r ${r2(A.r)} (${A.n} years)` + (T3 ? `. Station air temperature with ${C.short}: r ${r2(A.r3.modis)}; with ${Wt.short}: r ${r2(A.r3.esa)}.` : "")));
   const words = el("div", { class: "viz-w2-text" }, ...(preview ? A.words.slice(0, 1) : A.words).map((t) => el("p", {}, t)),

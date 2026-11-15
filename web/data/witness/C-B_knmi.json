@@ -2,7 +2,7 @@
  "claim_id": "C-B",
  "status": "station-based partner-agency witness, exploratory check, not the registered test",
  "title": "A second witness from the ground: station-based rainfall from KNMI Climate Explorer",
- "generated_utc": "2026-11-14T23:31:33+00:00",
+ "generated_utc": "2026-11-15T00:01:22+00:00",
  "witness": {
   "name": "KNMI Climate Explorer (Royal Netherlands Meteorological Institute)",
   "dataset": "CRU TS 4.10 precipitation (pre), 0.5 degree, land points, 1901-2025",
@@ -187,6 +187,8 @@
    "mk_tau": 0.26666666666666666,
    "mk_p_registered_method": 0.012,
    "registered_method_name": "boot_mk_L3",
+   "registered_method_label": "Mann-Kendall with moving-block bootstrap p-value (block 3)",
+   "registered_method_note": "the case series' own validated test applied to this comparison record; exploratory here, because the case's validation does not transfer to another record",
    "ols_per_decade": 0.22241337767969732,
    "ols_p": 0.02026989124235712
   },
@@ -203,6 +205,8 @@
    "mk_tau": 0.31333333333333335,
    "mk_p_registered_method": 0.004,
    "registered_method_name": "boot_mk_L3",
+   "registered_method_label": "Mann-Kendall with moving-block bootstrap p-value (block 3)",
+   "registered_method_note": null,
    "ols_per_decade": 0.22893411492307694,
    "ols_p": 0.019847219692508133
   },
@@ -219,6 +223,8 @@
    "mk_tau": -0.18,
    "mk_p_registered_method": null,
    "registered_method_name": null,
+   "registered_method_label": null,
+   "registered_method_note": null,
    "ols_per_decade": -0.0065207372433796,
    "ols_p": 0.8852891833269483
   },

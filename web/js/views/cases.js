@@ -89,7 +89,7 @@ export function caseDocket(b, c, query = "") {
   const numEl = [h("p", { class: "est-label" }, "Registered case: Sen estimate"), h("p", { class: "verdict-num" }, signed(r.sen.slope_per_decade, 2), " ", h("small", {}, `${u} per decade (Sen slope${withheld ? ", descriptive only" : ""})`)),
     h("p", { class: "small muted", style: "margin:4px 0 0" }, "The Sen slope estimates the rate of change from the median slope between pairs of years."),
     iv ? h("p", { class: "verdict-iv" }, `Nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`, h("span", { class: "small muted", style: "display:block" }, "95% is the method's stated level. The measured coverage in simulations is given below.")) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
-    calLines(c, withheld).map(x => h("p", { class: "small muted cal-line", style: "margin:4px 0 0" }, x.charAt(0).toUpperCase() + x.slice(1) + "."))];
+    ...calLines(c, withheld).map(x => h("p", { class: "small muted cal-line", style: "margin:4px 0 0" }, x.charAt(0).toUpperCase() + x.slice(1) + "."))];
   const actionsEl = h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => ex.select("hearings", { scroll: true }) }, withheld ? "See the evidence by hearing" : "Explore the hearings"),
     copyButton("Copy finding", text, `finding_${c.id}.txt`));
   const notesEl = h("div", { class: "verdict-notes" },

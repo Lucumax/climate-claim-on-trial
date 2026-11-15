@@ -7,7 +7,7 @@
 //   loadLibrary()                                 -> [variable] (those listed in the manifest; empty if the manifest cannot be read)
 //   libraryPlan(variable, box)                    -> { whole, tiles, cells, mb } or { whole, tiles:0, cells:0, empty:true }
 //   libraryRegional({ variable, box, onProgress, signal }) -> { rows:[{year,month,value}], note, n_cells, n_tiles, first_year, last_year, gaps:[...], whole }
-//   completeSeasons(rows, months, y0, y1)         -> { rows, skipped:[season-year labels] }   (gaps break the series: incomplete seasons are dropped, never filled)
+//   completeSeasons(rows, months, y0, y1)         -> { rows, skipped:[season-year labels] }   (gaps break the series: incomplete or wholly absent seasons are dropped and listed, never filled)
 const BASE = "data/library/", NODATA = -32768, T = 30;
 let manifestP = null;
 const tileCache = new Map(), globalCache = new Map();
@@ -189,6 +189,7 @@ export function completeSeasons(rows, months, y0, y1) {
   const label = r => (wrap && r.month >= first ? r.year + 1 : r.year);
   const count = new Map();
   for (const r of rows) if (months.includes(r.month)) { const k = label(r); count.set(k, (count.get(k) || 0) + 1); }
-  const skipped = []; for (const [k, n] of count) if (n < months.length && k >= y0 && k <= y1) skipped.push(k);
+  // Every season-year in the asked period that is not complete, including years with no month at all (they are absent from `count`).
+  const skipped = []; for (let k = y0; k <= y1; k++) if ((count.get(k) || 0) < months.length) skipped.push(k);
   return { rows: rows.filter(r => months.includes(r.month) && count.get(label(r)) === months.length), skipped: skipped.sort((a, b) => a - b) };
 }

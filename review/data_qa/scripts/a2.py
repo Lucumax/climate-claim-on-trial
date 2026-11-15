@@ -1,5 +1,5 @@
 import numpy as np, json
-R="<repo>/"
+R="./"
 d=np.load(R+"data/C-B/monthly.npz")
 v=d['values'];y=d['year'];m=d['month'];lat=d['lat']
 w=np.cos(np.deg2rad(lat))

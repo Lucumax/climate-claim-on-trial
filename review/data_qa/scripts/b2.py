@@ -1,5 +1,5 @@
 import numpy as np, scipy.stats as st
-R="<repo>/"
+R="./"
 d=np.load(R+"data/C-B/monthly.npz"); v=d['values'];y=d['year'];lat=d['lat'];lon=d['lon']
 ys=np.arange(2001,2026)
 def lag1(x): x=x-x.mean(); return (x[:-1]*x[1:]).sum()/(x*x).sum()

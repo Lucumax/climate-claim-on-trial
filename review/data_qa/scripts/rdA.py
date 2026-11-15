@@ -1,6 +1,6 @@
 import json, re, numpy as np, importlib.util, netCDF4
 from concurrent.futures import ThreadPoolExecutor
-R="<repo>/"
+R="./"
 spec=importlib.util.spec_from_file_location("_t",R+"data/scripts/_token.py"); t=importlib.util.module_from_spec(spec); spec.loader.exec_module(t); assert t.ensure_token()
 import earthaccess; earthaccess.login(strategy="environment"); s=earthaccess.get_requests_https_session()
 gl=json.load(open(R+"data/C-A/C-A_cmr_granules.json"))["granules"]

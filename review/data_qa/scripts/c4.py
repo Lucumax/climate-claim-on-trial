@@ -1,6 +1,6 @@
 import numpy as np, scipy.stats as st, pickle
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-R="<repo>/"; OUT=R+"review/data_qa/"
+R="./"; OUT=R+"review/data_qa/"
 res=pickle.load(open("power.pkl","rb")); A=np.load("A_series.npz"); z=np.load("reread_A.npz"); d=np.load(R+"data/C-A/monthly.npz")
 ys=np.arange(2001,2026); sup=d['support']; lat25=d['lat']; lon25=d['lon']
 ours=A['shipped_0.25_support']

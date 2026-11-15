@@ -1,5 +1,5 @@
 import numpy as np, scipy.stats as st, json, re, datetime as dt, pickle
-R="<repo>/"
+R="./"
 z=np.load("reread_A.npz"); d=np.load(R+"data/C-A/monthly.npz"); nat=np.load(R+"data/C-A/C-A_subset_native.npz")
 ys=np.arange(2001,2026)
 print("lat file",z['lat'][:2],z['lat'][-2:],"lon",z['lon'][:2],z['lon'][-2:])

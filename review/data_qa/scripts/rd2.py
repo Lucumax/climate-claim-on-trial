@@ -1,5 +1,5 @@
 import numpy as np, json, datetime as dt
-R="<repo>/"
+R="./"
 rows=json.load(open("reread_B_time.json")); z=dict(np.load('reread_B.npz')); d=np.load(R+"data/C-B/monthly.npz")
 z['cube']=z['cube'].reshape(100,80,420)
 ep=dt.datetime(1980,1,6); bad=0; shown=[]

@@ -1,6 +1,6 @@
 import numpy as np, scipy.stats as st, pickle
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-R="<repo>/"; OUT=R+"review/data_qa/"
+R="./"; OUT=R+"review/data_qa/"
 A=np.load("A_series.npz"); ys=A['ys']; W=pickle.load(open("WA.pkl","rb")); ours=A['shipped_0.25_support']; ts=W[('TS',True)]; t2=W[('T2M',True)]
 vt=A['vtime']; d=ours-ts
 def sen(x,y=ys): return st.theilslopes(x,y)[0]*10

@@ -1,0 +1,511 @@
+{
+ "run": {
+  "kind": "N21_regional",
+  "generated_at": "2026-11-14T16:46:27-05:00",
+  "code_version": "1.2.0",
+  "seed0": 9101,
+  "complete": false,
+  "n_planned": 27,
+  "elapsed_seconds": 104.2
+ },
+ "scenarios": [
+  {
+   "id": "R-null-n21-phi-0.5",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.5,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0035,
+      "se": 0.0009337759367214386,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.0035,
+      "se": 0.0009337759367214386,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.0035,
+      "se": 0.0009337759367214386,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.00325,
+      "se": 0.0008999218716088636,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.011,
+      "se": 0.0016491664561226074,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.048,
+      "se": 0.0047799581588126895,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.06,
+      "se": 0.0053103672189407005,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04813244812655713,
+      0.05186755187344288
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04813244812655713,
+      0.05186755187344288
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04813244812655713,
+      0.05186755187344288
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04820015625678228,
+      0.05179984374321773
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.046701667087754785,
+      0.05329833291224522
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.040440083682374624,
+      0.05955991631762538
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": true,
+     "side": "ok",
+     "band": [
+      0.0393792655621186,
+      0.06062073443788141
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.905,
+     "se": 0.009272270487857868,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.8483555125644664
+    },
+    "coverage_analytic_hr": {
+     "value": 0.999,
+     "se": 0.0009994998749374613
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.004394363628353684,
+     "se": 0.004014377644620516
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.008028755289241032
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-null-n21-phi-0.7",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.7,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.0,
+   "candidates": {
+    "mk_independent": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "size": {
+      "value": 0.0,
+      "se": 1.5811388300841896e-08,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "size": {
+      "value": 0.006,
+      "se": 0.001221065108829173,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "size": {
+      "value": 0.0235,
+      "se": 0.0033873108803297047,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "size": {
+      "value": 0.0255,
+      "se": 0.003524893615415932,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {
+    "mk_independent": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "hr_registered": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "hr_all_lags": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "yue_wang": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.049999968377223404,
+      0.0500000316227766
+     ]
+    },
+    "tfpw": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04755786978234166,
+      0.052442130217658346
+     ]
+    },
+    "boot_mk_L3": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04322537823934059,
+      0.056774621760659415
+     ]
+    },
+    "boot_mk_L5": {
+     "passed": true,
+     "side": "conservative",
+     "band": [
+      0.04295021276916814,
+      0.057049787230831865
+     ]
+    }
+   },
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.926,
+     "se": 0.008277922444671728,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.788509835995706
+    },
+    "coverage_analytic_hr": {
+     "value": 1.0,
+     "se": 3.162277660168379e-08
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.007447984270974012,
+     "se": 0.003338171088608064
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": false,
+      "bar": 0.006676342177216128
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi-0.5",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.5,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.038,
+      "se": 0.0030230779017418655,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.038,
+      "se": 0.0030230779017418655,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.03775,
+      "se": 0.0030135086485689735,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.037,
+      "se": 0.002984585398342624,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.07225,
+      "se": 0.004093590645753432,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.198,
+      "se": 0.00891055553823666,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.2235,
+      "se": 0.009315249594079592,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.883,
+     "se": 0.010164201887015036,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.8535104279133829
+    },
+    "coverage_analytic_hr": {
+     "value": 0.996,
+     "se": 0.0019959959919799443
+    },
+    "sen_bias_sd_per_decade": {
+     "value": -0.004425473119472537,
+     "se": 0.004051855515341904
+    },
+    "checks": {
+     "B3": {
+      "passed": false,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.008103711030683807
+     }
+    },
+    "floor_ok": true
+   }
+  },
+  {
+   "id": "R-trend-n21-phi-0.7",
+   "kind": "regional",
+   "n": 21,
+   "phi": -0.7,
+   "noise": "normal",
+   "gap_frac": 0.0,
+   "trend_sd_per_decade": 0.3,
+   "candidates": {
+    "mk_independent": {
+     "power": {
+      "value": 0.0255,
+      "se": 0.0024924761784217717,
+      "R": 4000
+     }
+    },
+    "hr_registered": {
+     "power": {
+      "value": 0.02525,
+      "se": 0.002480546184814949,
+      "R": 4000
+     }
+    },
+    "hr_all_lags": {
+     "power": {
+      "value": 0.0255,
+      "se": 0.0024924761784217717,
+      "R": 4000
+     }
+    },
+    "yue_wang": {
+     "power": {
+      "value": 0.02525,
+      "se": 0.002480546184814949,
+      "R": 4000
+     }
+    },
+    "tfpw": {
+     "power": {
+      "value": 0.10475,
+      "se": 0.004841937564136902,
+      "R": 4000
+     }
+    },
+    "boot_mk_L3": {
+     "power": {
+      "value": 0.1805,
+      "se": 0.008599992732555068,
+      "R": 2000
+     }
+    },
+    "boot_mk_L5": {
+     "power": {
+      "value": 0.216,
+      "se": 0.00920173896608679,
+      "R": 2000
+     }
+    }
+   },
+   "size_checks": {},
+   "floor_ok": true,
+   "interval": {
+    "source": "round 3 (same bootstrap and analytic interval code)",
+    "coverage_bootstrap": {
+     "value": 0.926,
+     "se": 0.008277922444671728,
+     "R": 1000,
+     "mean_width_sd_per_decade": 0.7910168331135642
+    },
+    "coverage_analytic_hr": {
+     "value": 1.0,
+     "se": 3.162277660168379e-08
+    },
+    "sen_bias_sd_per_decade": {
+     "value": 0.0015505837555239038,
+     "se": 0.003355615289560895
+    },
+    "checks": {
+     "B3": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "residual block bootstrap"
+     },
+     "B3a": {
+      "passed": true,
+      "bar": 0.9,
+      "method": "analytic Sen CI with Hamed-Rao variance"
+     },
+     "B4": {
+      "passed": true,
+      "bar": 0.00671123057912179
+     }
+    },
+    "floor_ok": true
+   }
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 import numpy as np, pickle, scipy.stats as st
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-R="<repo>/"
+R="./"
 OUT=R+"review/data_qa/"
 res=pickle.load(open("power.pkl","rb"))
 d=np.load(R+"data/C-B/monthly.npz"); v=d['values'];y=d['year'];m=d['month'];lat=d['lat']

@@ -1,0 +1,19 @@
+# Virtual environments, caches and raw NASA files never go in this repository.
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+raw/
+*.hdf
+*.h5
+*.nc
+*.nc4
+scratch/
+.DS_Store
+Thumbs.db
+# Never commit credentials. The Earthdata token lives in your own environment (EARTHDATA_TOKEN).
+.env
+.netrc
+_netrc

@@ -79,7 +79,7 @@ This is the clearest defect.
 
 The bundle selects the analytic interval **0.19045–0.628303 °C/decade**. The bootstrap interval **0.220778–0.675726** failed the governing coverage check, according to `event_record/STATS_LOG.md:134`.
 
-Nevertheless, [web/js/data.js](</<repo>/web/js/data.js:69>) reads `ci_bootstrap_per_decade`. Those endpoints populate the chart caption, statistics and finding card. The screenshot consequently shows approximately **+0.22 to +0.68**, while the ruling says **0.19 to 0.628**.
+Nevertheless, [web/js/data.js](<web/js/data.js:69>) reads `ci_bootstrap_per_decade`. Those endpoints populate the chart caption, statistics and finding card. The screenshot consequently shows approximately **+0.22 to +0.68**, while the ruling says **0.19 to 0.628**.
 
 Worse, the finding describes those bootstrap endpoints using the **analytic** method name. This is a wrong number–method pairing, not rounding.
 

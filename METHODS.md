@@ -1,10 +1,10 @@
 # Methods
 
-How Climate Claim on Trial tests a claim, written for a science judge: what was fixed in advance, what changed afterwards, what the simulations do and do not show, and where each number lives. See also [README.md](README.md), [REPRODUCE.md](REPRODUCE.md), [ARCHITECTURE.md](ARCHITECTURE.md), [stats/SCHEMA.md](stats/SCHEMA.md) and [NOTICE.md](NOTICE.md). Times are Eastern Time on Nov 14, 2026.
+Climate Claim on Trial is a teaching prototype: its checks are simulation checks under stated assumptions, and its procedure is frozen, not broadly validated. This file explains how it tests a claim, written for a science judge: what was fixed in advance, what changed afterwards, what the simulations do and do not show, and where each number lives. See also [README.md](README.md), [REPRODUCE.md](REPRODUCE.md), [ARCHITECTURE.md](ARCHITECTURE.md), [stats/SCHEMA.md](stats/SCHEMA.md) and [NOTICE.md](NOTICE.md). Times are Eastern Time on Nov 14, 2026.
 
 ## 1. The question
 
-Each case is one sentence: "variable X over region R in season S has risen (or fallen) over period P". We fixed the claim, the NASA product, the box, the season, the years and the direction. The data answer one question: does this record, for this place and period, show a change in the claimed direction? A ruling describes the data. It does not say why anything changed and it is not a forecast. Six claims were registered. The Investigate page's free choices are labelled "your own exploration, not pre-registered" and are not covered here.
+We examine specific trend claims for a stated measurement, place and period. Each case is one sentence: "variable X over region R in season S has risen (or fallen) over period P". We fixed the claim, the NASA product, the box, the season, the years and the direction. The data answer one question: does this record, for this place and period, show a change in the claimed direction? A ruling describes the data. It does not say why anything changed and it is not a forecast. Six claims were registered. The Investigate page's free choices are labelled "your own exploration, not pre-registered" and are not covered here.
 
 ## 2. Registration, and what git can and cannot show
 
@@ -58,7 +58,7 @@ We measured every test on fake records where the answer is known. Each fake seri
 
 First match wins ([stats/trendtrial/verdict.py](stats/trendtrial/verdict.py)). The 25% and 5% thresholds are conventions fixed before results, not error rates.
 
-1. **Withheld:** a check failed (no calibrated test, a missing year, or memory above the tested range).
+1. **Withheld:** (this describes the tool's limits; it does not establish that the claimed change is absent) a check failed (no calibrated test, a missing year, or memory above the tested range).
 2. **Contradicted:** p below 0.05 with the slope opposite to the claim.
 3. **Supported:** p below 0.05 in the claimed direction, an interval excluding zero, and at least 25% of the mapped area flagged in that direction.
 4. **Partly supported:** p below 0.05 but a narrow map or an interval touching zero; or a non-significant average with at least 5% of the area flagged.
@@ -99,7 +99,7 @@ The Sahel result became stronger after a rule change made once we had seen resul
 
 ## 12. The NO2 pair
 
-C-E1 (eastern US NO2 has fallen) and C-E2 (northern India NO2 has risen) were registered together as an opposite-sign pair. Both were withheld. C-E1's memory is 0.70, above the highest tested value (0.6), so no scenario licenses a test. C-E2's memory is 0.39 (tested at 0.45), and at 21 years all seven tests raise too many false alarms there (the best, Yue-Wang, 10.7% against 5%). The readings point the claimed way (Sen -0.611 and +0.357 ×10^15 molecules/cm² per decade), but we did not change the gate or the claims after seeing that. The gate did what it was written to do: at 21 years and this memory no test passed its checks. That is also a limit. The gate is blind to curved trends (section 13), so it can refuse a trend that looks obvious, and the withholding costs the reader a verdict. Source: STATS_LOG entries of 4:44 PM and 5:12 PM.
+These regional NO2-column records illustrate opposite trend directions. They do not by themselves identify causes, measure surface exposure, or rank national climate performance. C-E1 (eastern US NO2 has fallen) and C-E2 (northern India NO2 has risen) were registered together as an opposite-sign pair. Both were withheld. C-E1's memory is 0.70, above the highest tested value (0.6), so no scenario licenses a test. C-E2's memory is 0.39 (tested at 0.45), and at 21 years all seven tests raise too many false alarms there (the best, Yue-Wang, 10.7% against 5%). The readings point the claimed way (Sen -0.611 and +0.357 ×10^15 molecules/cm² per decade), but we did not change the gate or the claims after seeing that. The gate did what it was written to do: at 21 years and this memory no test passed its checks. That is also a limit. The gate is blind to curved trends (section 13), so it can refuse a trend that looks obvious, and the withholding costs the reader a verdict. Source: STATS_LOG entries of 4:44 PM and 5:12 PM.
 
 ## 13. Exploratory checks after the results
 

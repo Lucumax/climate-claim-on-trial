@@ -3,7 +3,7 @@ import { h, download, U } from "../util.js";
 import { kindChip, disc } from "./common.js";
 
 // Set this once the public repository exists; until then the reproduction steps name the folders and commands only.
-const REPO_URL = "";
+const REPO_URL = "https://github.com/Lucumax/climate-claim-on-trial";
 
 const HOW = [["method", "Method", "#/method"], ["false-alarm", "False-Alarm Planet", "#/false-alarm"], ["glossary", "Measurements", "#/glossary"]];
 export function howShell(active, node) {

@@ -349,14 +349,14 @@ button.btn-text { background: none; border: 0; padding: 0; font: inherit; cursor
 .ruling-lite .chips { margin-bottom: var(--sp-2); }
 .ruling-fade { animation: fadein 200ms ease-out; }
 .trial-list { list-style: none; margin: 0 0 var(--sp-4); padding: 0; display: grid; gap: var(--sp-3); }
-.trial-step { border: 1px solid var(--line); background: var(--surface-2); padding: var(--sp-4); border-radius: var(--radius); }
-.trial-step-top { display: flex; justify-content: space-between; gap: var(--sp-3); align-items: center; color: var(--muted); font-size: .8125rem; font-weight: 700; }
+.trial-step { border: 1px solid var(--line); background: var(--surface-2); padding: var(--sp-4); border-radius: var(--radius); min-width: 0; }
+.trial-step-top { display: flex; justify-content: space-between; gap: var(--sp-1) var(--sp-3); flex-wrap: wrap; align-items: center; color: var(--muted); font-size: .8125rem; font-weight: 700; }
 .trial-step h4 { font-size: 1.0625rem; margin: var(--sp-1) 0; }
 .trial-step .explain { font-size: .875rem; color: var(--muted); margin: 0; }
-.pbar-row { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-3); }
+.pbar-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-3); margin-top: var(--sp-3); }
 .pbar-row strong { font: 700 1.125rem/1 var(--font-ui); white-space: nowrap; }
 .pbar-row .delta { font-size: .8125rem; white-space: nowrap; color: var(--muted); }
-.pbar { position: relative; flex: 1; height: 8px; background: var(--surface); border: 1px solid var(--edge); border-radius: 1px; }
+.pbar { position: relative; flex: 1 1 4rem; min-width: 4rem; height: 8px; background: var(--surface); border: 1px solid var(--edge); border-radius: 1px; }
 .pbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--slope); }
 .pbar em { position: absolute; top: -5px; bottom: -5px; width: 0; border-left: 2px solid var(--ink); }
 .caution { font-size: .875rem; color: var(--muted); border-left: 3px solid var(--edge); padding-left: var(--sp-3); margin: 0; }

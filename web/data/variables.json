@@ -50,8 +50,8 @@
    "name": "Sunlight reaching the ground",
    "one_line": "Sunlight energy landing on a flat patch of ground, clouds included.",
    "units": "kWh per m2 per day",
-   "kind": "model_reanalysis",
-   "source": "NASA POWER (MERRA-2 and CERES model-based data)",
+   "kind": "satellite_derived",
+   "source": "NASA POWER (CERES satellite-derived solar and cloud products)",
    "power_param": "ALLSKY_SFC_SW_DWN",
    "since": 1984,
    "live": true
@@ -61,8 +61,8 @@
    "name": "Cloud cover",
    "one_line": "The share of the sky covered by cloud, on average.",
    "units": "percent",
-   "kind": "model_reanalysis",
-   "source": "NASA POWER (MERRA-2 and CERES model-based data)",
+   "kind": "satellite_derived",
+   "source": "NASA POWER (CERES satellite-derived solar and cloud products)",
    "power_param": "CLOUD_AMT",
    "since": 1984,
    "live": true

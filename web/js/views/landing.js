@@ -22,7 +22,7 @@ export function landing(b) {
   const faHost = h("div", { class: "fa-prev-host", style: "min-height:min(60vw, 420px)" });
   mountLive(faHost, async () => { const mod = await import("./falsealarm.js"); const v = mod.falseAlarm({ preview: true }); faHost.replaceChildren(v.node); return v; });
   const faBand = h("section", { class: "band band-fa", "aria-labelledby": "fa-h" },
-    h("div", { class: "band-head" }, h("h2", { id: "fa-h" }, "Every flag is wrong."), h("p", {}, "This simulated planet has no underlying trend. See what the tests flag anyway."),
+    h("div", { class: "band-head" }, h("h2", { id: "fa-h" }, "Every alarm here is false."), h("p", {}, "This simulated planet has no trend anywhere. See how many places the tests mark as a trend anyway."),
       h("a", { class: "btn", href: "#/false-alarm" }, "Explore False-Alarm Planet"), " ", h("span", { class: "chip warn" }, "Synthetic")),
     faHost);
   // The guided 3-minute route: its one button sits in the hero, its card (closed until that button is pressed) goes between the hero and the comparison. Step 4 sends the visitor to the False-Alarm Planet band below.
@@ -35,14 +35,14 @@ export function landing(b) {
   mountLive(wHostB, async () => { const [mod, d] = await Promise.all([import("../viz/witness2.js"), getJson("data/witness/C-A_esa.json")]); return mod.render(wHostB, d, { preview: true }); });
   const witBand = ca ? h("section", { class: "band band-wit", "aria-labelledby": "wit-h" },
     h("div", { class: "band-head" }, h("h2", { id: "wit-h" }, "Before trusting the trend, check the witness."),
-      h("p", {}, `Changing observation time may affect a satellite record. Two exploratory checks on the land surface temperature record for ${ca.region.name}. They do not explain or change the ruling, which is ${ca.verdict.branch === "withheld" ? "withheld" : String(ca.verdict.label).toLowerCase()}: the registered reason for withholding is failed calibration under year-to-year dependence.`)),
+      h("p", {}, `Satellites can change when they look. Terra, the satellite behind our Southeastern US case (C–A), now passes over earlier in the morning. A second witness is another instrument or dataset that measures the same thing; it may share some inputs with the satellite, and we say which where we know. Two exploratory checks ask whether that shift could bend the land surface temperature record for ${ca.region.name}. They do not change the ruling, which is ${ca.verdict.branch === "withheld" ? "withheld: our own false-alarm check failed for records like this one" : String(ca.verdict.label).toLowerCase()}.`)),
     h("div", { class: "wit-pair" },
       h("div", { class: "wit-col" }, wHostA, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness" }, "Witness check: when did the satellite look?")),
       h("div", { class: "wit-col" }, wHostB, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness2" }, "Second witness")))) : null;
   const invite = h("section", { class: "band band-invite", "aria-labelledby": "inv-h" },
     h("h2", { id: "inv-h" }, "Now ask your own question"),
-    h("p", {}, "We examine specific trend claims for a stated measurement, place and period. Now pick a NASA measurement, a place and a period of your own. The answer updates as you choose, and the page keeps count of how many questions you have tried."),
-    h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/method" }, "How it works"), h("a", { class: "btn-text", href: "#/data" }, "Data and provenance")));
+    h("p", {}, "Pick a NASA measurement, a place and a period. The answer updates as you choose, and a counter shows how many questions you have tried, because more tries mean more chances of a lucky false alarm."),
+    h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/method" }, "How it works"), h("a", { class: "btn-text", href: "#/data" }, "Data sources")));
   const fallbackHead = hk ? null : h("section", { class: "hero" }, h("h1", { id: "page-title", tabindex: "-1" }, "Same NASA record. Opposite headlines."), h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and ask different questions of the same record."), h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question")));
   return { title: "Same NASA record, opposite headlines", node: h("div", { class: "home" }, hk ? hk.node : null, fallbackHead, faBand, witBand, invite),
     afterMount() { if (hk) hk.start(); },

@@ -102,7 +102,7 @@ export async function fetchMonthly({ variable, box, startYear, endYear, onProgre
   const rows = [...sum.keys()].sort().map(k => ({ year: +k.slice(0, 4), month: +k.slice(4), value: +(sum.get(k) / wsum.get(k)).toFixed(4) }));
   if (!rows.length) throw new PowerError("NASA POWER returned no values for this variable, place and period.", 0);
   const first = rows[0].year, last = rows[rows.length - 1].year;
-  let note = plan.kind === "point" ? plan.message + " " : `Average of ${cells.size} NASA POWER grid cells inside the box, weighted by cosine of latitude. `;
+  let note = plan.kind === "point" ? plan.message + " " : `Average of ${cells.size} NASA POWER grid squares in the box; squares nearer the poles count a little less because they cover less ground. `;
   if (first > startYear || last < endYear) note += `Data exist only from ${first} to ${last} here, so that is the period used. `;
   note += "NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate.";
   return { stub: false, source: variable.source, units: variable.units, rows, note, method: plan.kind, n_tiles: plan.tiles.length || 1, n_cells: cells.size, first_year: first, last_year: last };

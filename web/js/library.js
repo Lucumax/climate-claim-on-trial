@@ -22,10 +22,11 @@ const ym = s => { const [y, m] = String(s).split("-").map(Number); return { y, m
 const PICK = {
   precip_imerg: { name: "Rainfall and snow", group: "Water" },
   tws_grace: { name: "Water stored on land", group: "Water" },
-  airs_tair: { name: "Surface air temperature", group: "Temperature" },
+  airs_tair: { name: "Surface air temperature (satellite)", group: "Temperature" },
+  no2_omi: { name: "Nitrogen dioxide (NO₂) in the lower atmosphere", group: "Air" },
   airs_h2o: { name: "Water vapor in the air", group: "Water" },
   soil_gldas: { name: "Soil moisture, top 10 cm", group: "Water" },
-  et_gldas: { name: "Evapotranspiration", group: "Water" },
+  et_gldas: { name: "Evapotranspiration (water going from land to air)", group: "Water" },
   lst_day_myd11: { name: "Land surface temperature", group: "Temperature" },
   snow_mod10cm: { name: "Snow cover", group: "Snow and ice" },
   aod_myd08: { name: "Smoke and haze", group: "Air" },
@@ -60,7 +61,7 @@ export function loadLibrary() {
     const a = ym(v.period.first_month), b = ym(v.period.last_month), meta = PICK[v.id] || { name: v.name.replace(/\s*\(.*\)$/, ""), group: "Other" }, model = !/^satellite/i.test(String(v.kind || ""));
     return {
       key: v.id, src: "library", name: meta.name, group: meta.group, one_line: v.definition, units: String(v.units).replace(/\s*\(equivalent water height\)$/, ""), since: a.y, last: b.y, lastMonth: b.m, firstMonth: a.m, t0: v.period.t0, nAxis: v.period.n_months_axis,
-      missing: v.period.months_all_missing || [], kind: model ? "model_output" : "satellite_observation", chip: model ? `Model (NASA ${/GLDAS/i.test(v.product) ? "GLDAS" : "model"}, precomputed)` : /retrieval/i.test(String(v.kind)) ? "Satellite retrieval (NASA, precomputed)" : "Satellite (NASA, precomputed)", chipShort: model ? "Model" : "Satellite", limit: LIMITS[v.id] || null,
+      missing: v.period.months_all_missing || [], kind: model ? "model_output" : "satellite_observation", chip: model ? `Model · NASA ${/GLDAS/i.test(v.product) ? "GLDAS" : "model"} · precomputed` : /retrieval/i.test(String(v.kind)) ? "Satellite retrieval · NASA · precomputed" : "Satellite · NASA · precomputed", chipShort: model ? "Model" : "Satellite", limit: LIMITS[v.id] || null,
       ...quality(v, b), source: `${v.product} (${v.agency})`, product: v.product, doi: v.doi, caveats: v.caveats, scale: v.scale, offset: v.offset || 0,
       tileSet: new Set(v.tiles.map(([r, c]) => r + "_" + c)), full: v.name,
     };

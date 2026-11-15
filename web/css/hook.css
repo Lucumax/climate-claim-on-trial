@@ -22,8 +22,8 @@
 .hook .hk-lead { display: block; font-size: 1.125rem; line-height: 1.22; color: var(--ink); min-height: 1.22em; text-wrap: balance; }
 .hook .hk-num { font-family: var(--font-ui); font-weight: 400; display: block; font-size: 2.25rem; line-height: 1.055; margin-top: 4px; min-height: 1.055em; letter-spacing: -.03em; }
 .hook .hk-num small { display: inline-block; font-family: var(--font-ui); font-size: 1rem; line-height: 1.375; letter-spacing: 0; color: var(--muted); font-weight: 400; margin-left: .3em; }
-.hook .hk-head[data-tone="down"] .hk-num { color: var(--down); }
-.hook .hk-head[data-tone="up"] .hk-num { color: var(--up); }
+.hook .hk-head[data-tone="down"] .hk-num { color: var(--down-text, var(--down)); }
+.hook .hk-head[data-tone="up"] .hk-num { color: var(--up-text, var(--up)); }
 .hook .hk-head[data-tone="flat"] .hk-num, .hook .hk-head[data-tone="full"] .hk-num { color: var(--ink); }
 .hook .hk-head[data-mode="none"] .hk-lead, .hook .hk-head[data-mode="none"] .hk-num { opacity: 0; }
 .hook .hk-head .hk-lead, .hook .hk-head .hk-num { transition: opacity 420ms cubic-bezier(.2, .7, .2, 1), transform 420ms cubic-bezier(.2, .7, .2, 1); }
@@ -167,38 +167,60 @@
   .hook { --hk-stage-h: clamp(360px, 70vw, 600px); }
 }
 @media (min-width: 1000px) {
-  #view:has(> .home) { padding-left: 24px; padding-right: 24px; }
+  #view:has(> .home) { padding-left: clamp(24px, 3.4vw, 72px); padding-right: clamp(24px, 3.4vw, 72px); max-width: 1840px; }
+  body:has(.home) .foot > .wrap, body:has(.home) header.top > .wrap { max-width: 1840px; padding-left: clamp(24px, 3.4vw, 72px); padding-right: clamp(24px, 3.4vw, 72px); }
   #main:has(.home) { padding-top: var(--sp-2); }
-  .hook { --hk-stage-h: clamp(420px, min(calc(100svh - 168px), calc(100vw - 520px)), 728px); }
-  .hook .hk-hero { grid-template-columns: 448px minmax(0, 1fr); column-gap: 24px; row-gap: var(--sp-3); grid-template-rows: auto auto auto auto 1fr;
-    grid-template-areas: "h1 globe" "readout globe" "fig globe" "disclose globe" "cta globe"; }
-  .hook .hk-h1 { grid-area: h1; }
-  .hook .hk-globe { grid-area: globe; align-self: start; }
+  /* fluid sizes: everything below follows the width (and, for the heights, the height) of the window between about 1000 and 1920 px, so nothing jumps at a breakpoint */
+  .hook { --hk-left: clamp(480px, 36vw, 700px); --hk-stage-h: clamp(400px, min(calc(100svh - 212px), calc(100vw - var(--hk-left) - 120px)), 1000px); }
+  .hook .hk-hero { min-height: calc(100svh - 92px); align-content: center; grid-template-columns: var(--hk-left) minmax(0, 1fr); column-gap: clamp(24px, 2.4vw, 48px); row-gap: clamp(6px, 1.5svh, 18px);
+    grid-template-areas: "h1 globe" "readout globe" "fig globe" "pick globe" "disclose globe" "cta globe"; }
+  .hook .hk-h1 { grid-area: h1; font-size: clamp(2.25rem, min(calc(5px + 3.2vw), 6.6svh), 4.5rem); line-height: 1.08; max-width: none; }
+  .hook .hk-globe { grid-area: globe; align-self: center; }
   .hook .hk-readout { grid-area: readout; }
   .hook .hk-fig { grid-area: fig; }
+  .hook .hk-pick { grid-area: pick; }
   .hook .hk-disclose { grid-area: disclose; }
-  .hook .hk-cta { grid-area: cta; align-self: start; margin-top: var(--sp-2); }
+  .hook .hk-cta { grid-area: cta; align-self: start; margin-top: var(--sp-1); }
+  .hook .hk-lead { font-size: clamp(1.25rem, calc(.55rem + 1vw), 1.75rem); line-height: 1.25; min-height: 1.25em; }
+  .hook .hk-num { font-size: clamp(2.5rem, min(calc(2px + 3vw), 6.4svh), 4rem); line-height: 1.05; }
+  .hook .hk-num small { font-size: clamp(1.125rem, calc(.6rem + .6vw), 1.5rem); }
+  .hook .hk-src, .hook .hk-ill { font-size: clamp(.875rem, .6rem + .3vw, 1rem); }
   .hook .hk-bar { position: absolute; top: 0; left: 0; right: 0; margin: 0; z-index: 4; pointer-events: none; }
   .hook .hk-bar > * { pointer-events: auto; }
   .hook .hk-regions { position: absolute; top: 52px; right: 0; width: min(440px, 100%); margin: 0; z-index: 5; }
   .hook .hk-legend-btn { display: none; }
-  .hook .hk-below { max-width: none; grid-template-columns: minmax(0, 46rem); }
-  .hook .hk-q { font-size: 1.625rem; }
-}
-@media (min-width: 1400px) {
-  #view:has(> .home) { padding-left: 48px; padding-right: 48px; }
-  body:has(.home) header.top > .wrap { max-width: 1440px; padding-left: 48px; padding-right: 48px; }
-  .hook .hk-hero { grid-template-columns: 504px minmax(0, 1fr); column-gap: 32px; }
-  .hook .hk-h1 { font-size: 3rem; line-height: 1.0833; }
-  .hook .hk-lead { font-size: 1.375rem; }
-  .hook .hk-num { font-size: 3rem; line-height: 1.0417; }
-  .hook .hk-q { font-size: 1.75rem; line-height: 1.2143; }
-  .hook .hk-globe > .gt-chips { max-width: 22.5rem; }
-}
-@media (min-width: 1000px) and (max-width: 1399px) {
-  .hook .hk-globe > .gt-chips { max-width: 21rem; }
+  .hook .hk-globe > .gt-chips { max-width: clamp(21rem, 22vw, 26rem); }
+  /* the window presets and Replay sit right under the chart, in chip size */
+  .hook .hk-pick { gap: 6px; }
+  .hook .hk-pick .hk-chip { min-height: 40px; padding: 6px 10px; font-size: .8125rem; gap: 6px; white-space: nowrap; }
+  .hook .hk-pick .hk-chip[data-pick="full"] span::before { width: 12px; margin-right: 5px; }
+  .hook .hk-pick .hk-replay { min-height: 40px; padding: 6px 4px; }
+  .hook .hk-pick .hk-hint { flex: 1 1 14rem; order: 5; margin: 0; font-size: .8125rem; }
+  .hook .hk-pick .hk-replay { order: 6; }
+  .hook .hk-cta { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+  .hook .hk-cta .btn, .hook .hk-cta .hk-cta-2 { font-size: clamp(.9375rem, .7rem + .3vw, 1.0625rem); }
+  /* below the hero: the question and its answer beside the "More" disclosures */
+  .hook .hk-below { max-width: none; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(32px, 4vw, 80px); row-gap: 0; align-items: start; grid-template-areas: "compare more" "compare globe" "compare actions"; }
+  .hook .hk-compare { grid-area: compare; }
+  .hook .hk-below > #hk-more { grid-area: more; margin-top: 0; }
+  .hook .hk-more-globe { grid-area: globe; }
+  .hook .hk-actions { grid-area: actions; margin-top: var(--sp-2); }
+  .hook .hk-q { font-size: clamp(1.625rem, 1rem + 1vw, 2.25rem); line-height: 1.2; max-width: 30ch; }
+  .hook .hk-resolve { font-size: clamp(1rem, .75rem + .35vw, 1.1875rem); }
 }
 @media (max-width: 700px) {
+  /* phone: the number comes before the picture (H1, readout, globe, action, source, chart) and the globe stage is smaller, so the chart starts sooner */
+  .hook { --hk-stage-h: 280px; }
+  .hook .hk-hero { gap: var(--sp-2); }
+  .hook .hk-h1 { order: 0; }
+  .hook .hk-readout { order: 1; }
+  .hook .hk-globe { order: 2; }
+  .hook .hk-cta { order: 3; }
+  .hook .hk-disclose { order: 4; }
+  .hook .hk-fig { order: 5; }
+  .hook .hk-pick { order: 6; }
+  .hook .hk-cta { flex-direction: column; align-items: stretch; gap: 8px; }
+  .hook .hk-cta .hk-cta-2 { width: 100%; }
   .hook .hk-lead { min-height: 2.44em; }
   .hook .hk-chip { padding: 8px 12px; font-size: .875rem; }
   .hook .hk-hint { flex-basis: 100%; margin-left: 0; order: 5; }
@@ -244,3 +266,52 @@
 .guided .gd-actions { margin-top: var(--sp-3); gap: 8px 14px; }
 .guided .gd-case { margin: var(--sp-2) 0; font-size: .9375rem; }
 @media (max-width: 700px) { .guided { padding: var(--sp-3) var(--sp-3); margin-left: 0; margin-right: 0; } .guided .gd-head .btn { width: 100%; } .guided .gd-steps .gd-sn { display: none; } .guided .gd-steps .now .gd-sn { display: inline; } }
+
+/* desktop: an open guided card uses its width: title and lede in a side column, the step beside them */
+@media (min-width: 1100px) {
+  .guided.is-open:not([hidden]) { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 2.2fr); gap: var(--sp-2) clamp(32px, 4vw, 72px); align-items: start; }
+  .guided.is-open .gd-head { margin-bottom: 0; display: block; }
+  .guided .gd-body { max-width: 72ch; }
+}
+
+/* Home lower bands on a desktop: use the width. Planet: sticky title column beside the preview. Witness: title and paragraph side by side above the two charts. Invite: text beside its buttons. */
+@media (min-width: 1000px) {
+  .home .band-fa { position: relative; }
+  .home .band-fa .band-head { position: sticky; top: 88px; }
+  .home .band-wit .band-head { max-width: none; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--sp-2) clamp(32px, 4vw, 80px); align-items: baseline; }
+  .home .band-wit .band-head h2 { margin: 0; }
+  .home .band-wit .band-head p { max-width: 75ch; }
+  .home .band-invite { max-width: none; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(32px, 4vw, 80px); align-items: center; }
+  .home .band-invite h2 { grid-column: 1; margin-bottom: var(--sp-2); }
+  .home .band-invite p { grid-column: 1; max-width: 75ch; margin: 0; }
+  .home .band-invite .actions { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+}
+
+@media (min-width: 1000px) and (max-height: 760px) {
+  .hook .hk-pick .hk-hint { display: none; }
+  .hook .hk-pick .hk-replay { margin-left: auto; }
+  .hook .hk-lead { min-height: 0; }
+}
+
+/* Home False-Alarm Planet band on a desktop: title and text across the top, then the globe beside its readout and the three steps (R9) */
+@media (min-width: 1000px) {
+  .home .band-fa { --g: clamp(32px, 4vw, 80px); grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-5); }
+  .home .band-fa .band-head { position: static; display: grid; grid-template-columns: calc((100% - var(--g)) * 5 / 12) var(--g) auto auto minmax(0, 1fr); column-gap: 0; row-gap: var(--sp-3); align-items: baseline; max-width: none; }
+  .home .band-fa .band-head h2 { grid-column: 1; grid-row: 1 / span 2; margin: 0; }
+  .home .band-fa .band-head p { grid-column: 3 / -1; grid-row: 1; max-width: 75ch; margin: 0; }
+  .home .band-fa .band-head .btn { grid-column: 3; grid-row: 2; margin-top: 0; }
+  .home .band-fa .band-head .chip { grid-column: 4; grid-row: 2; margin-left: var(--sp-3); }
+  .home .fa-preview .fa-prev-ws { display: grid; grid-template-columns: calc((100% - var(--g)) * 5 / 12) minmax(0, 1fr); column-gap: var(--g); row-gap: var(--sp-2); align-content: start; }
+  .home .fa-preview .fa-prev-main { display: contents; }
+  .home .fa-preview .fa-prev-main > * { grid-column: 2; min-width: 0; }
+  .home .fa-preview .fa-prev-main > .fa-stage { grid-column: 1; grid-row: 1 / span 7; order: 0; align-self: start; }
+  .home .fa-preview .fa-stage.is-globe { max-height: none; }
+  .home .fa-preview .fa-prev-ws > .hearings { grid-column: 2; grid-row: 7; order: 0; margin-top: var(--sp-2); align-self: end; }
+  .home .fa-preview .fa-headline { margin-top: 0; }
+}
+
+/* Same color language as the globe key beside the chart: warming (or more haze) is warm orange, cooling is cool blue; for rain wetter is blue. NO2 keeps the default colors. */
+.hook[data-kind="temp"], .hook[data-kind="haze"] { --up: var(--viz-warm-3); --down: var(--viz-cool-3); }
+.hook[data-kind="rain"] { --up: var(--viz-cool-3); --down: var(--viz-warm-3); }
+/* the big number is text: mix toward the ink color so it keeps 4.5:1 or better on both backgrounds in both themes */
+.hook[data-kind="temp"], .hook[data-kind="haze"], .hook[data-kind="rain"] { --up-text: color-mix(in srgb, var(--up) 75%, var(--ink)); --down-text: color-mix(in srgb, var(--down) 75%, var(--ink)); }

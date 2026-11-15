@@ -23,11 +23,11 @@ const numWord = n => NUM[n] || String(n);
 const NO2 = "NO₂";
 
 const WORDS = {
-  temp: { down: "cooling", flat: "holding steady", up: "warming", fast: "warming" },
-  rain: { down: "drying", flat: "holding steady", up: "getting wetter" },
-  haze: { down: "getting clearer", flat: "holding steady", up: "getting hazier" },
-  no2: { down: "falling", flat: "holding steady", up: "rising" },                       // a tropospheric column, not ground-level air quality: never "cleaner" or "dirtier"
-  other: { down: "falling", flat: "holding steady", up: "rising" },
+  temp: { down: "cooling", flat: "changing little", up: "warming", fast: "warming" },
+  rain: { down: "drying", flat: "changing little", up: "getting wetter" },
+  haze: { down: "getting clearer", flat: "changing little", up: "getting hazier" },
+  no2: { down: "falling", flat: "changing little", up: "rising" },                       // a tropospheric column, not ground-level air quality: never "cleaner" or "dirtier"
+  other: { down: "falling", flat: "changing little", up: "rising" },
 };
 const SUBJECT = {
   "C-A": ["Summer days in the Southeast US", "are"], "C-B": ["The Sahel", "is"], "C-C": ["Alaska", "is"], "C-D": ["Wisconsin’s summer air", "is"],
@@ -35,12 +35,12 @@ const SUBJECT = {
 };
 const KICKER = {
   "C-A": "Summer daytime land surface temperature, southeastern US", "C-B": "Wet-season rainfall, central Sahel", "C-C": "Yearly air temperature, interior and western Alaska",
-  "C-D": "Summer aerosol optical depth (haze), Wisconsin", "C-E1": `Yearly tropospheric ${NO2} column, eastern US`, "C-E2": `Yearly tropospheric ${NO2} column, northern India`,
+  "C-D": "Summer aerosol optical depth (haze), Wisconsin", "C-E1": `Yearly tropospheric ${NO2} column (the gas in the air above each square centimeter of ground), eastern US`, "C-E2": `Yearly tropospheric ${NO2} column (the gas in the air above each square centimeter of ground), northern India`,
 };
 const PRODUCT = { "C-A": "NASA MODIS Terra", "C-B": "NASA GPM IMERG", "C-C": "NASA MERRA-2", "C-D": "NASA MODIS Aqua", "C-E1": "NASA Aura OMI", "C-E2": "NASA Aura OMI" };
 const BTN = { "C-A": "Southeast US", "C-B": "Sahel", "C-C": "Alaska", "C-D": "Wisconsin", "C-E1": "Eastern US", "C-E2": "Northern India" };
 const EXPLORE = [["India", 22.5, 78.5], ["North China", 38.5, 114.5], ["Mongolia", 47.5, 105.5], ["North Atlantic", 57.5, -37.5]];
-const POSTER_ALT = "Two views of the Earth side by side, with all six registered case regions outlined. On the left, North America: interior and western Alaska and Wisconsin are colored by each cell's estimated change per decade, and the Southeastern United States and the eastern United States are hatched because their rulings are withheld. On the right, Africa and Asia: the central Sahel is colored by each cell's estimated change per decade, and northern India is hatched because its ruling is withheld. Open the case files for each ruling.";
+const POSTER_ALT = "Two views of the Earth side by side, with all six registered case regions outlined. On the left, North America: interior and western Alaska and Wisconsin are colored by each cell's estimated change per decade, and the Southeastern United States and the eastern United States are marked as withheld because we give no ruling there. On the right, Africa and Asia: the central Sahel is colored by each cell's estimated change per decade, and northern India is also marked as withheld. Open the case files for each ruling.";
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const fmtLat = v => `${Math.abs(v).toFixed(1).replace(/\.0$/, "")}°${v >= 0 ? "N" : "S"}`, fmtLon = v => `${Math.abs(v).toFixed(1).replace(/\.0$/, "")}°${v >= 0 ? "E" : "W"}`;
 const plain = msg => Object.assign(new Error(msg), { plain: true });
@@ -78,7 +78,7 @@ export function hook(bundle) {
     h("div", { class: "hk-hero" },
       h("h1", { id: "page-title", tabindex: "-1", class: "hk-h1" }, h("span", { id: "hk-h1a" }, "Same NASA record. "), h("span", { id: "hk-h1b" }, "Opposite headlines.")),
       h("section", { class: "hk-globe", "aria-labelledby": "hk-globe-h" },
-        h("h2", { class: "sr-only", id: "hk-globe-h" }, "Where the trials are held"),
+        h("h2", { class: "sr-only", id: "hk-globe-h" }, "The six claims we tested"),
         h("div", { class: "hk-globe-host", id: "hk-globe" }),
         h("div", { class: "hk-bar", id: "hk-bar" },
           chip({ class: "hk-tool hk-legend-btn", id: "hk-legend-btn", "aria-expanded": "false", "aria-controls": "hk-legend", hidden: true }, "Color key"),
@@ -90,26 +90,26 @@ export function hook(bundle) {
             h("div", { class: "hk-regions-g" }, h("span", { class: "hk-regions-l", id: "hk-rl-x" }, "Explore, not a trial"), h("span", { class: "hk-regions-btns", id: "hk-regions-x", role: "group", "aria-labelledby": "hk-rl-x" }))),
           h("p", { class: "hk-peek", id: "hk-peek", hidden: true })),
         h("p", { class: "hk-msg", id: "hk-msg", role: "status", hidden: true })),
-      h("div", { class: "hk-cta", id: "hk-cta" }),
+      h("div", { class: "hk-cta", id: "hk-cta" }, h("a", { class: "btn-quiet hk-cta-2", href: "#/investigate" }, "Investigate a question")),
       h("div", { class: "hk-disclose" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "Illustrative headlines written from the numbers, not real news")),
       h("div", { class: "hk-readout" },
         h("p", { class: "hk-kicker", id: "hk-kicker" }, " "),
         h("div", { class: "hk-head", id: "hk-readout", "data-mode": "full" }, h("span", { class: "hk-lead", id: "hk-lead" }, " "), h("span", { class: "hk-num num", id: "hk-num" }, " ")),
-        h("p", { class: "hk-est", id: "hk-est" }, "Headline demo: least-squares estimate")),
-      h("div", { class: "hk-fig", id: "hk-fig", role: "group", "aria-labelledby": "hk-kicker" })),
+        h("p", { class: "hk-est", id: "hk-est" }, "Straight-line estimate (least squares).")),
+      h("div", { class: "hk-fig", id: "hk-fig", role: "group", "aria-labelledby": "hk-kicker" }),
+      h("div", { class: "hk-pick", id: "hk-pick", role: "group", "aria-label": "Choose a window" },
+        chip({ class: "hk-chip", "data-pick": "a", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "b", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "full", "aria-pressed": "false" }),
+        h("span", { class: "hk-hint", id: "hk-hint" }, "Drag the shaded window along the record."),
+        chip({ class: "hk-replay", id: "hk-replay" }, "Replay"))),
     h("div", { class: "hk-below" },
       h("section", { class: "hk-compare", "aria-labelledby": "hk-q" },
         h("h2", { class: "hk-q", id: "hk-q" }),
-        h("div", { class: "hk-pick", id: "hk-pick", role: "group", "aria-label": "Choose a window" },
-          chip({ class: "hk-chip", "data-pick": "a", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "b", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "full", "aria-pressed": "false" }),
-          h("span", { class: "hk-hint", id: "hk-hint" }, "Drag the shaded window along the record."),
-          chip({ class: "hk-replay", id: "hk-replay" }, "Replay")),
         h("p", { class: "hk-resolve", id: "hk-resolve", hidden: true }),
-        h("div", { class: "hk-link", id: "hk-link", hidden: true }),
-        h("details", { class: "hk-more", id: "hk-more" }, h("summary", {}, "More about these estimates"), h("div", { class: "hk-more-body", id: "hk-more-body" }))),
-      h("details", { class: "hk-more hk-more-globe" }, h("summary", {}, "Where the trials are held"),
-        h("div", { class: "hk-more-body" }, h("p", {}, `${numWord(claims.length)} registered regions. Each grid cell is colored by its estimated change per decade, and withheld cases are hatched. Imagery: NASA Blue Marble, muted.`))),
-      h("div", { class: "hk-actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))));
+        h("div", { class: "hk-link", id: "hk-link", hidden: true })),
+      h("details", { class: "hk-more", id: "hk-more" }, h("summary", {}, "More about these estimates"), h("div", { class: "hk-more-body", id: "hk-more-body" })),
+      h("details", { class: "hk-more hk-more-globe" }, h("summary", {}, "The six claims we tested"),
+        h("div", { class: "hk-more-body" }, h("p", {}, `Each claim is put on trial: we ask whether NASA data support it, using a test whose question we fixed in advance. The tests were adjusted along the way, and every adjustment is disclosed. Each grid square is colored by its estimated change per decade. Cases where we give no verdict (withheld) are shown as a dashed outline with no color inside. Imagery: NASA Blue Marble, muted.`), h("p", {}, "Why can the same variable trend one way in one region and the opposite way in another? ", h("a", { href: "#/method" }, "How it works: Earth is a coupled system"), "."))),
+      h("div", { class: "hk-actions" }, h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"), h("a", { class: "btn-text", href: "#/investigate" }, "Investigate a question"))));
   const $ = id => root.querySelector("#" + id);
   const fig = $("hk-fig"), lead = $("hk-lead"), num = $("hk-num"), head = $("hk-readout"), kicker = $("hk-kicker"), msg = $("hk-msg"), linkBox = $("hk-link"), globeHost = $("hk-globe"), moreBody = $("hk-more-body");
   const chipEls = [...root.querySelectorAll(".hk-pick .hk-chip")];
@@ -121,12 +121,13 @@ export function hook(bundle) {
     const prodName = PRODUCT[c.id] || ("NASA " + String(c.product.name || "").replace(/\s*\(.*$/, "").trim());
     const kind = c.data_kind === "model_reanalysis" ? "model-based" : "satellite observation";
     const v = c.verdict, withheld = v.branch === "withheld";
+    const senV = r.sen && Number.isFinite(r.sen.slope_per_decade) ? r.sen.slope_per_decade : null, senTxt = senV == null ? "" : ` The case uses the Sen slope (${senV < 0 ? "−" : "+"}${Math.abs(senV).toFixed(2)} ${U(r.units)} per decade); the number above is a least-squares line.`;
     return {
       type: "case", id: c.id, kind: kindOf(c), subject: sub[0], verb: sub[1], years: r.years, ser: r.anomaly, units: U(r.units),
       kicker: `${KICKER[c.id] || `${cap(c.variable.plain)}, ${c.region.name}`}, ${range(y0, y1)}`, src: `${prodName} · ${kind} · ${range(y0, y1)}`,
       short: c.region.name, box: c.region.box, claimId: c.id, verdict: v.id || v.branch, sen: r.sen && Number.isFinite(r.sen.slope_per_decade) ? r.sen.slope_per_decade : null,
-      link: { href: `#/case/${c.id}`, text: `Open case ${c.id.replace("-", "–")}`,
-        lead: withheld ? `Case ${c.id.replace("-", "–")}: no verdict given.` : `Case ${c.id.replace("-", "–")}, tested on the whole record: ${v.label}.`,
+      link: { href: `#/case/${c.id}`, text: `Open the ${BTN[c.id] || c.region.name} case file`,
+        lead: withheld ? `Case ${c.id.replace("-", "–")}: withheld, no verdict.` : `${BTN[c.id] || c.region.name} case (${c.id.replace("-", "–")}), tested on the whole record: ${v.label}.${senTxt}`,
         note: "We selected these two windows to illustrate how the estimated trend changes with the years. Both describe their selected periods; neither represents the full record. Only the registered test on the whole record gets a verdict.", must: withheld ? WITHHELD_LINE : "" },
     };
   }
@@ -172,6 +173,7 @@ export function hook(bundle) {
 
   function setData(sp) {
     spec = sp;
+    root.dataset.kind = sp.kind;                                                       // lets hook.css match the chart colors to the globe key (warm = up, cool = down; reversed for rain)
     const pts = sp.years.map((y, i) => [y, sp.ser[i]]).filter(p => p[1] != null && Number.isFinite(p[1]));
     years = pts.map(p => p[0]); ser = pts.map(p => p[1]); units = sp.units;
     Y0 = years[0]; Y1 = years[years.length - 1]; N = years.length;
@@ -203,16 +205,16 @@ export function hook(bundle) {
   // ---------------------------------------------------------------- the resolving line: what the whole record says, and what the case's own test said (from its bundle)
   function resolveText() {
     const u = `${signedFmt(SLOPES.full)} ${units} per decade`, ft = TONES.full, fw = said(word(SLOPES.full, true)), a = win(PRESET.a), b = win(PRESET.b);
-    const says = ft === "flat" ? `The full ${N}-year record shows no clear change (${u})` : `The full ${N}-year record says ${fw} (${u})`;
+    const says = ft === "flat" ? `The full ${N}-year record changes little over these years (${u}, a small slope)` : `The full ${N}-year record says ${fw} (${u})`;
     if (spec.type === "explore") return `${says}. No registered test here: open Investigate to test it yourself.`;
-    const odd = [...new Set([a, b].filter(w => tone(w.slope) !== ft).map(w => `“${said(word(w.slope, true))}”`))];
+    const odd = [...new Set([a, b].filter(w => tone(w.slope) !== ft).map(w => `“${tone(w.slope) === "flat" ? "little change" : said(word(w.slope, true))}”`))];
     const short = !CAN_FLIP ? "" : AGREE ? ` Every ${WIN}-year window points the same way.` : odd.length ? ` The ${odd.join(" and ")} ${odd.length > 1 ? "describe short windows" : "describes a short window"} of years, not the whole record.` : "";
     switch (spec.verdict) {
-      case "supported": return `${says}, and it holds up when tested.${short}`;
-      case "partly_supported": return `${says}, but only part of the claim holds up when tested.${short}`;
-      case "contradicted": return `${says}, which runs against the claim, and it holds up when tested.${short}`;
-      case "not_supported": return `${says}, but the record does not show the claimed change at our bar.${short}`;
-      case "withheld": return `${says}, but we cannot rule on this case yet: the checks a verdict depends on did not pass. Open the case file to see why.${short}`;
+      case "supported": return `${says}, and it passes our test.${short}`;
+      case "partly_supported": return `${says}, but only part of the claim passes our test.${short}`;
+      case "contradicted": return `${says}, which runs against the claim, and it passes our test.${short}`;
+      case "not_supported": return `${says}, but the change is too small, next to the year-to-year swings, to pass our test (our test is cautious here, so this is not evidence that no rise happened). Ruling: not supported.${short}`;
+      case "withheld": return `${says}, but we cannot rule on this case: our own validity checks did not pass for this record. Open the case file to see why.${short}`;
       default: return `${says}.${short}`;
     }
   }
@@ -225,7 +227,8 @@ export function hook(bundle) {
   let C = null;                                                                       // geometry and element handles for the current width
   function build() {
     const W = Math.max(280, Math.round(fig.clientWidth)), narrow = W < 400;                  // narrow: tick density and label length only; the height is chosen separately
-    const H = W >= 480 ? 264 : W >= 400 ? 240 : 192;
+    const wide = window.matchMedia && window.matchMedia("(min-width: 1000px)").matches;    // desktop: the height follows the screen (width and height of the window), phones keep three fixed heights
+    const H = wide ? Math.round(Math.min(380, Math.max(172, Math.min(W * 0.56, window.innerHeight - 560)))) : W >= 480 ? 264 : W >= 400 ? 240 : 192;
     const m = { l: narrow ? 36 : 48, r: narrow ? 8 : 16, t: 40, b: 28 };
     const lo0 = Math.min(...ser), hi0 = Math.max(...ser), pad = (hi0 - lo0) * 0.08, lo = lo0 - pad, hi = hi0 + pad;
     const xs = v => m.l + (v - Y0) / (Y1 - Y0) * (W - m.l - m.r), ys = v => H - m.b - (v - lo) / (hi - lo) * (H - m.t - m.b);
@@ -492,8 +495,8 @@ export function hook(bundle) {
     const a = h("a", { href: spec.link.href, class: "hk-go" }, spec.link.text);
     linkBox.replaceChildren(h("p", { class: "hk-link-lead" }, spec.link.lead), h("p", { class: "hk-link-row" }, a, " →"), ...(spec.link.must ? [h("p", { class: "hk-link-note" }, spec.link.must)] : []));
     moreBody.replaceChildren(h("p", {}, spec.link.note),
-      ...(spec.type === "case" && spec.sen != null ? [h("p", { class: "hk-slopes" }, [h("b", {}, "Two estimates, one record. "), `Headline demo: least-squares estimate, ${signedFmt(SLOPES.full)} ${units} per decade (the “whole record” line above). Registered case: Sen estimate, ${signedFmt(spec.sen)}, the median of the slopes between pairs of years, which one odd year barely moves.`])] : []),
-      h("p", {}, "The rates are least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."));
+      ...(spec.type === "case" && spec.sen != null ? [h("p", { class: "hk-slopes" }, [h("b", {}, "Two estimates, one record. "), `Headline demo: least-squares estimate, ${signedFmt(SLOPES.full)} ${units} per decade (the “whole record” line above). Registered case: Sen estimate, ${signedFmt(spec.sen)} ${units} per decade. It takes the middle value of the slopes between every pair of years, so one odd year barely moves it.`])] : []),
+      h("p", {}, "The rates are least-squares straight-line fits to yearly differences from the record's average. The case file uses a second method, so its number differs slightly."));
   }
   function paintList() {
     for (const b of root.querySelectorAll(".hk-regions button")) b.setAttribute("aria-pressed", String(spec.type === "case" ? b.dataset.case === spec.id : (b.dataset.x === `${spec.center.lat.toFixed(1)},${spec.center.lng.toFixed(1)}`)));
@@ -538,7 +541,7 @@ export function hook(bundle) {
     const bind = (b, text) => { for (const ev of ["mouseenter", "focus"]) b.addEventListener(ev, () => peek(text)); for (const ev of ["mouseleave", "blur"]) b.addEventListener(ev, () => peek("")); };
     for (const c of claims) {
       const b = chip({ class: "hk-chip hk-reg", "data-case": c.id, "aria-pressed": "false" }, BTN[c.id] || c.region.name);
-      b.addEventListener("click", e => { selectCase(c.id, e.detail > 0); closeAfter(); }); bind(b, `${BTN[c.id] || c.region.name}. ${caseSpec(c).link.lead}`); host.append(b);
+      b.addEventListener("click", e => { selectCase(c.id, e.detail > 0); closeAfter(); }); bind(b, c.verdict && c.verdict.branch === "withheld" ? `${BTN[c.id] || c.region.name}. Withheld: our tests can't rule here. Open the case.` : `${BTN[c.id] || c.region.name}. ${caseSpec(c).link.lead}`); host.append(b);
     }
     for (const [label, lat, lng] of EXPLORE) {
       const b = chip({ class: "hk-chip hk-reg hk-reg-x", "data-x": `${lat.toFixed(1)},${lng.toFixed(1)}`, "aria-pressed": "false", "aria-label": `Explore ${label}, not a trial` }, label);
@@ -547,7 +550,7 @@ export function hook(bundle) {
   }
 
   // ---------------------------------------------------------------- go
-  let ro = null, started = false;
+  let ro = null, started = false, rh = 0, onWinH = null;
   async function start() {
     if (started || dead) return; started = true;
     const xq = (param("at") || param("x") || "").split(",").map(Number), wantX = xq.length === 2 && xq.every(Number.isFinite);
@@ -556,7 +559,8 @@ export function hook(bundle) {
     if (wantX) { try { firstSpec = await exploreSpec(xq[0], xq[1]); } catch (e) { setMsg(e && e.plain ? e.message : "The NASA library could not be read for that spot just now.", "info"); } }
     if (dead) return;
     setData(firstSpec); chipLabels(); paintLink(); paintList(); build();
-    let rw = fig.clientWidth; if (window.ResizeObserver) { ro = new ResizeObserver(() => { if (Math.abs(fig.clientWidth - rw) > 1) { rw = fig.clientWidth; build(); } }); ro.observe(fig); }
+    let rw = fig.clientWidth; if (window.ResizeObserver) { ro = new ResizeObserver(() => { if (Math.abs(fig.clientWidth - rw) > 1) { rw = fig.clientWidth; rh = innerHeight; build(); } }); ro.observe(fig); }
+    rh = innerHeight; onWinH = () => { if (Math.abs(innerHeight - rh) > 40 && C) { rh = innerHeight; build(); } }; window.addEventListener("resize", onWinH);
     // A normal load shows the complete state at once: the whole record, its line, the answer. The globe mounts on its own clock (the poster stands in until it has painted).
     // Only ?t=ms (a frozen frame for video capture) or the Replay button runs the timed demonstration.
     if (HOLD != null) play(); else settle(false);
@@ -567,7 +571,7 @@ export function hook(bundle) {
     if (!G.ready) { const wait = setInterval(() => { if (dead) clearInterval(wait); else if (G.ready) { clearInterval(wait); flyTo(spec); } }, 400); setTimeout(() => clearInterval(wait), 15000); }
   }
   function dispose() {
-    dead = true; stop(); cancelAnimationFrame(glideTo.raf); clearTimeout(liveT); if (ro) ro.disconnect();
+    dead = true; stop(); cancelAnimationFrame(glideTo.raf); clearTimeout(liveT); if (ro) ro.disconnect(); if (onWinH) window.removeEventListener("resize", onWinH);
     document.removeEventListener("keydown", onKey); document.removeEventListener("pointerdown", onDown); if (mqPhone.removeEventListener) mqPhone.removeEventListener("change", onMq);
     if (G.api) { try { G.api.destroy(); } catch (e) { /* ignore */ } G.api = null; }
     for (const k of ["hookReady", "playAt", "globeReady"]) delete document.documentElement.dataset[k];

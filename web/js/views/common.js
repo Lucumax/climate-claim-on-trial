@@ -17,7 +17,7 @@ export function regionThumb(box, label) {
 export function withheldNote(c) {
   if (c.verdict.branch !== "withheld" && c.gate.cells && c.gate.interval) return null;
   const why = (c.verdict.withheld_reasons && c.verdict.withheld_reasons.length ? c.verdict.withheld_reasons : c.gate.reasons) || [];
-  return h("p", { class: "callout", role: "note" }, h("b", {}, "Some results are withheld. "), "The checks they depend on did not pass", why.length ? ": " + why.join("; ") : "", ". Numbers shown here are for reading only, not a basis for a verdict.");
+  return h("p", { class: "callout", role: "note" }, h("b", {}, "Some results are withheld. "), "Our own validity checks did not pass", why.length ? ": " + why.join("; ") : "", ". Numbers shown here are for reading only, not a basis for a verdict.");
 }
 
 export function tone(v) {
@@ -51,7 +51,7 @@ export const clinicSlot = (caseId) => h("div", { class: "clinic-slot", id: "clin
 export const WITHHELD_LINE = "Withheld describes this tool's limits; it does not establish that the claimed change is absent.";
 
 // One compact scope line for a ruling: variable, region, years, source type, and what the ruling cannot establish.
-const CANNOT = { supported: "why the value changed, what happens next, or anything outside this region, season and period", partly_supported: "why the value changed, what happens next, or how widespread the change is", not_supported: "that nothing changed: it says only that this record does not show the claimed change at the registered bar", contradicted: "why the value changed, or what happens next", withheld: "a calibrated significance finding for this record, or why the value changed" };
+const CANNOT = { supported: "why the value changed, what happens next, or anything outside this region, season and period", partly_supported: "why the value changed, what happens next, or how widespread the change is", not_supported: "that nothing changed (it says only that this record does not show the claimed change at the 5% level we registered)", contradicted: "why the value changed, or what happens next", withheld: "a significance finding we can trust for this record, or why the value changed" };
 export function scopeParts(c, range) {
   const model = c.data_kind === "model_reanalysis";
   const variable = String(c.variable.plain || c.variable.name).replace(/\s*\(.*$/, "").trim();

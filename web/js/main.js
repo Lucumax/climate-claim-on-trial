@@ -1,6 +1,6 @@
 // Hash router and shell. Every view returns { node, title }. Focus moves to the page title after each navigation.
 // Information architecture (one home per kind of content):
-//   Home (brand)  Investigate  Case files  How it works (Method, False-Alarm Planet, Measurements)  Data & provenance (utility)
+//   Home (brand)  Investigate  Case files  How it works (Method, False-Alarm Planet, Measurements)  Data & sources (utility)
 import { h, announce } from "./util.js";
 import { loadBundle, claimById } from "./data.js";
 import { landing } from "./views/landing.js";
@@ -8,8 +8,10 @@ import { detective } from "./views/detective.js";
 import { caseList, caseDocket } from "./views/cases.js";
 import { method, glossary, provenance, howShell } from "./views/pages.js";
 import { falseAlarm } from "./views/falsealarm.js";
+import { watchText } from "./textfix.js";
 
 const view = document.getElementById("view");
+watchText(view);   // one style for "p = 0.032", "C–A" and "±" on every route (see textfix.js)
 let bundle = null, catalog = null, disposeView = null;   // a view may return dispose() (stops animations, frees WebGL) and afterMount() (runs once its node is in the page)
 
 // Old routes keep working: they are rewritten in place (no extra history entry) before routing.

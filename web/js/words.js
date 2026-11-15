@@ -2,8 +2,8 @@
 import { signed, fmtP } from "./util.js";
 
 export const ALPHA = 0.05;
-export const PERSISTENCE_CAVEAT = "P-values from series whose years resemble each other tend to be too small, which is why step 5 applies a correction.";
-export const INTERVAL_EXPLORATORY = "95% interval (Sen slope, analytic; exploratory, not checked for your series)";
+export const PERSISTENCE_CAVEAT = "P-values from series whose years resemble each other tend to be too small, which is why hearing 3 applies a correction.";
+export const INTERVAL_EXPLORATORY = "95% interval (exploratory; not checked for your series)";
 // The statistics module's fixed sentence says a significant trend is "unlikely to be chance alone". That invites an inverse-probability reading, so we show the careful version.
 export const fixVerdict = t => String(t).replace(/degC/g, "°C").replace(/the (rise|fall) is unlikely to be chance alone/, "a pattern this strong would be rare if there were no trend (p < 0.05)");
 
@@ -21,12 +21,12 @@ export function trendWords(name, slope, lo, hi, units) {
   return t;
 }
 
-// Compare a rung with the one before it, in either direction.
+// Compare a hearing with the one before it, in either direction.
 export function stepWords(prev, cur) {
   if (!prev) return "Starting point.";
   const d = cur.p - prev.p, rel = prev.p > 0 ? Math.abs(d) / prev.p : 0;
-  if (Math.abs(d) < 0.0005 || rel < 0.02) return "This step barely changed the p-value.";
-  return d > 0 ? `This step made the p-value larger (${fmtP(prev.p)} to ${fmtP(cur.p)}): the result looks less certain.` : `This step made the p-value smaller (${fmtP(prev.p)} to ${fmtP(cur.p)}): the result looks more certain.`;
+  if (Math.abs(d) < 0.0005 || rel < 0.02) return "This hearing barely changed the p-value.";
+  return d > 0 ? `This hearing made the p-value larger (${fmtP(prev.p)} to ${fmtP(cur.p)}): the result looks less certain.` : `This hearing made the p-value smaller (${fmtP(prev.p)} to ${fmtP(cur.p)}): the result looks more certain.`;
 }
 
 export function sigClass(p) { return p < ALPHA ? "ok" : "neutral"; }

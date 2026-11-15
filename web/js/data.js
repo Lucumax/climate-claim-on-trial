@@ -1,7 +1,7 @@
 // Bundle loader and adapter. The real stats bundle (stats/SCHEMA, one bundle per claim) is mapped to the shape the views use.
 // Sources, first match wins: ?bundle=placeholder | ?bundle=withheld | data/index.json (list of bundle files) | data/example_bundle.json | placeholder.
 // All shape knowledge lives in this file, so a schema change is a one-place edit.
-import { chem } from "./util.js";
+import { chem, polish, U } from "./util.js";
 let cache = null;
 
 async function getJson(url) { const r = await fetch(url, { cache: "no-cache" }); if (!r.ok) throw new Error(url + " " + r.status); return r.json(); }
@@ -55,7 +55,8 @@ const testTitle = m => m === "mk_independent" ? "Mann-Kendall (years treated as 
 const COV_NOTE = "; passed a 90% coverage check in simulations";
 const INTERVAL_WORD = { analytic_hr: "Sen slope, analytic", bootstrap: "Sen slope, moving-block bootstrap" };
 export const BAND_MEANING = "The shaded band is the Sen line tilted between the lower and upper ends of the 95% slope interval, pivoting at the middle year. It shows how steep the trend could plausibly be. It does not show uncertainty about the level, and it is not a range for individual years.";
-export const REG_SHORT = "Questions registered; methods amended and disclosed; final gate frozen. The questions were registered before data download (10:29 AM ET; the NO₂ pair at 1:15 PM ET). Method changes, all disclosed: two method amendments made on simulated data before results, one cell-rule correction, and one validation-rule change made after the results (Addendum 4).";
+export const REG_CHIP = "Question fixed in advance; tests adjusted (disclosed)";
+export const REG_SHORT = "We fixed the questions before downloading their data: three at 10:29 AM ET, Wisconsin at 10:35 AM ET, and the NO₂ pair at 1:15 PM ET. The test rules were adjusted later, and every change is disclosed: two method adjustments made on simulated data before results, one cell-rule correction, and one validation-rule change made after the results (Addendum 4).";
 
 // The ONE place that decides which test, interval and band a case shows. Everything downstream reads r.test / r.interval / r.band / r.ctx.
 function pickRegional(reg, T, gate, val) {
@@ -73,7 +74,7 @@ function pickRegional(reg, T, gate, val) {
   if (sel && gate.interval_enabled !== false && Number.isFinite(sel.low) && Number.isFinite(sel.high)) {
     const cov = sel.coverage_achieved && sel.coverage_achieved.headline && sel.coverage_achieved.headline.value;
     interval = { lo: sel.low, hi: sel.high, level: sel.level_nominal || 0.95, method: sel.method, coverage: cov != null ? cov : null, meaning: sel.meaning || null,
-      label: `nominal 95% interval (${INTERVAL_WORD[sel.method] || sel.method}${cov != null ? `; measured coverage ${(cov * 100).toFixed(0)}% at this setting` : ""})` };
+      label: `95% interval as designed (${INTERVAL_WORD[sel.method] || sel.method}${cov != null ? `; measured coverage ${(cov * 100).toFixed(0)}% at this setting` : ""})` };
   }
   const band = interval && reg.band && Array.isArray(reg.band.lo) && Array.isArray(reg.band.hi) ? { lo: reg.band.lo, hi: reg.band.hi, meaning: reg.band.band_meaning || null } : null;
   const ctx = { hr: T.mk_hr ? { p: T.mk_hr.p, factor: T.mk_hr.hr_factor, factor_raw: T.mk_hr.hr_factor_raw } : null, raw: T.mk_independent ? { p: T.mk_independent.p } : null };
@@ -87,10 +88,10 @@ function displayTexts(val, iv) {
   const d = val.display || {}, ad = val.adaptive || {};
   const pc = o => (o && Number.isFinite(o.value) ? `${(o.value * 100).toFixed(1).replace(/\.0$/, "")}%` : null);
   let interval = iv ? (d.interval_text || null) : null;
-  if (iv && !interval && ad.status === "run" && pc(ad.interval_coverage_null)) interval = `nominal 95% interval; measured coverage ${pc(ad.interval_coverage_null)} in trendless simulations and ${pc(ad.interval_coverage_trend) || "n/a"} in simulations with a trend, at this setting`;
+  if (iv && !interval && ad.status === "run" && pc(ad.interval_coverage_null)) interval = `95% interval as designed; measured coverage ${pc(ad.interval_coverage_null)} in trendless simulations and ${pc(ad.interval_coverage_trend) || "n/a"} in simulations with a trend, at this setting`;
   let fp = d.false_positive_text || null;
   if (!fp && ad.status === "run" && pc(ad.size_given_release)) fp = `false-alarm rate among simulated records that received a verdict, at this setting: ${pc(ad.size_given_release)}${pc(ad.size_unconditional) ? ` (overall ${pc(ad.size_unconditional)})` : ""}`;
-  return { interval, falsePositive: fp };
+  return { interval: interval && polish(interval), falsePositive: fp && polish(fp) };
 }
 
 function fromReal(r) {
@@ -108,7 +109,7 @@ function fromReal(r) {
     registered_hr: R.registered_hr_flagged_cells != null ? { cells: R.registered_hr_flagged_cells, area: R.registered_hr_flagged_area_frac } : null,
   }));
   const [lbl, tone] = BRANCH[v.id] || BRANCH[v.branch] || [v.branch, "neutral"];
-  const sentences = v.text.split(/(?<=\.)\s+/);
+  const sentences = polish(v.text).split(/(?<=\.)\s+/);
   const R_ = pickRegional(reg, T, gate, val);
   const yearsOk = r.coverage.years_valid >= Math.max(r.params.min_valid_years_abs, r.params.min_valid_years_frac * r.coverage.years_total);
   const synthetic = !!cl.synthetic;
@@ -127,10 +128,10 @@ function fromReal(r) {
     change_per_decade: { value: T.sen.slope_per_decade, unit: cl.units + " per decade", text: `${T.sen.slope_per_decade >= 0 ? "+" : "−"}${Math.abs(T.sen.slope_per_decade).toFixed(2)} ${cl.units} per decade (Sen slope)` },
     interval: iv ? { lo: iv.lo, hi: iv.hi, level: iv.level, label: iv.label, meaning: ch.interval_meaning || "How often such intervals contain the true slope was measured on synthetic series. It is not an interval for individual years." } : null,
     test: R_.test,
-    product: cl.product, not_supported: Fd.not_supported || null,
+    product: cl.product, not_supported: Fd.not_supported ? Fd.not_supported.map(polish) : null,
     // The bundle's own sentence calls the headline "the one regional test registered", which is not accurate after the two method amendments. Show the accurate version.
     selection_disclosure: synthetic ? (Fd.selection_disclosure || null) : REG_SHORT + " The region, season and period were fixed in the registration and not changed after looking at results. The regional test shown is the one chosen by simulation on synthetic data (see the Method page), not the Hamed-Rao test originally registered.",
-    scope_text: Fd.scope_text || null,
+    scope_text: Fd.scope_text ? polish(Fd.scope_text) : null,
     run_id: r.run.run_id, ledger_ref: Fd.ledger_ref || null,
   };
   const noMask = r.coverage.n_support_cells != null && r.coverage.n_support_cells === r.coverage.n_cells_grid;
@@ -147,14 +148,14 @@ function fromReal(r) {
     cell_slope_per_decade: F.slope_per_decade.map((x, i) => F.valid[i] ? x : null),
     ladder, cell_test_name: cellTest, cell_test_key: cells.cell_test, cells_mode: cells.cells_mode || "bh_flags", bh_q: r.params.bh_q, alpha: r.params.alpha, thresholds: { breadth: r.params.breadth_min, local: r.params.local_min },
     regional: {
-      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${String(reg.units).replace("degC", "°C").replace(/^1 \(unitless\)$/, "AOD (unitless)").replace(/1e15 molecules\/cm2/g, "×10¹⁵ molecules/cm²")}`,
+      years: reg.years, anomaly: reg.anomaly, band_lo: R_.band ? R_.band.lo : null, band_hi: R_.band ? R_.band.hi : null, band_meaning: (R_.band && R_.band.meaning) || BAND_MEANING, units: reg.units, baseline: `${reg.baseline_mean.toFixed(2).replace(/^-/, "−")} ${U(reg.units)}`,
       sen_line: reg.sen_line, test: R_.test, interval: iv, ctx: R_.ctx,
       sen: { slope_per_decade: T.sen.slope_per_decade, intercept: T.sen.intercept },
       ols: { slope_per_decade: T.ols.slope_per_decade, ci_lo: T.ols.ci_per_decade[0], ci_hi: T.ols.ci_per_decade[1], p: T.ols.p, t: T.ols.t },
     },
-    display: displayTexts(val, iv), conservative: gate.conservative_flags || [], supersedes: (r.run && r.run.supersedes) || [],
-    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: gate.reasons_blocking_verdict || gate.reasons || [], reasons_interval: gate.reasons_interval || [], adaptive_notes: gate.adaptive_notes || [] },
-    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: v.withheld_reasons || [] },
+    display: displayTexts(val, iv), conservative: (gate.conservative_flags || []).map(polish), supersedes: (r.run && r.run.supersedes) || [],
+    gate: { regional: !!gate.regional_verdict_enabled, interval: !!gate.interval_enabled && !!iv, cells: !!gate.cells_enabled, reasons: (gate.reasons_blocking_verdict || gate.reasons || []).map(polish), reasons_interval: (gate.reasons_interval || []).map(polish), adaptive_notes: (gate.adaptive_notes || []).map(polish) },
+    verdict: { id: v.id || v.branch, branch: v.branch, label: lbl, scoped, tone, headline: sentences[0], sentences: sentences.slice(1), checklist, withheld_reasons: (v.withheld_reasons || []).map(polish) },
     finding, method_notes: r.method_notes, sensitivity: r.sensitivity, coverage: r.coverage,
   };
 }

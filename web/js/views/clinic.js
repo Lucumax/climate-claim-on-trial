@@ -7,7 +7,7 @@ import { h, pct, signed, U, range } from "../util.js";
 // tag: what kind of headline it is. test: what THIS record can and cannot test (one sentence). noun: short name of the measured thing.
 const CLINIC = {
   "C-A": { quote: "Can Poor Air Quality Mask Global Warming's Effects?", outlet: "NASA JPL", date: "Aug 7, 2017", url: "https://www.jpl.nasa.gov/news/can-poor-air-quality-mask-global-warmings-effects/",
-    tag: "Context only: about air, not land surface", noun: "summer daytime land surface temperature",
+    tag: "Older headline, context only: about air, not land surface", noun: "summer daytime land surface temperature",
     test: p => `Whether summer daytime land surface temperature in ${p.place} changed, ${p.period}. It cannot test air temperature or air quality.`,
     who: "Grid operators and insurers, who plan around summer heat." },
   "C-B": { quote: "A Deluge for the Sahara", outlet: "NASA Earth Observatory", date: "Sep 14, 2024", url: "https://science.nasa.gov/earth/earth-observatory/a-deluge-for-the-sahara-153320",
@@ -33,7 +33,7 @@ const pctWhole = f => pct(f, 0);
 export function supports(c, info) {
   const r = c.regional, u = U(r.units), v = c.verdict, ivl = r.interval, last = c.ladder[c.ladder.length - 1];
   const noun = (info && info.noun) || c.finding.variable.replace(/\s*\(.*?\)/g, ""), S = `${cap(noun)} in ${c.region.name}`, s0 = `${noun} in ${c.region.name}`, per = range(c.period.start, c.period.end);
-  const slope = `${signed(r.sen.slope_per_decade, 2)}${u ? " " + u : ""} per decade`, interval = ivl ? ` (nominal 95% interval ${signed(ivl.lo, 2)} to ${signed(ivl.hi, 2)})` : "";
+  const slope = `${signed(r.sen.slope_per_decade, 2)}${u ? " " + u : ""} per decade`, interval = ivl ? ` (95% interval as designed ${signed(ivl.lo, 2)} to ${signed(ivl.hi, 2)})` : "";
   const share = c.gate.cells && last ? `${pctWhole(last.flagged_fraction_claimed)} of the mapped area is flagged in the claimed direction` : null;
   const dataset = (c.product && c.product.name.replace(/\s*\(.*$/, "").replace(/,.*$/, "")) || "this dataset";
   const lead = txt => h("span", {}, h("b", {}, (v.scoped || v.label) + ". "), txt);
@@ -41,7 +41,7 @@ export function supports(c, info) {
   if (v.id === "supported") return lead(`${S} changed by ${slope}, ${per}${interval}, and ${share || "the regional test is significant"}. This is a ${c.period.n}-year trend in one dataset. It does not explain any single year or event, or why it changed.`);
   if (v.id === "partly_supported") return lead(`${S} changed by ${slope}, ${per}${interval}, but ${share ? "only " + share : "the map does not clearly agree"}. A regional average moved; the rest of the map did not clearly show it. It does not describe any single event.`);
   if (v.id === "contradicted") return lead(`${S} moved the other way: ${slope}, ${per}${interval}. This is what ${dataset} shows for this box and period.`);
-  return lead(`${S} shows no significant change in the claimed direction, ${per} (${slope}). That means the record does not show the claimed change at the registered bar. ${c.conservative && c.conservative.length ? "The test is conservative for this record, so it is not evidence that the change did not happen." : "It is not proof of no change."}`);
+  return lead(`${S} shows no significant change in the claimed direction, ${per} (${slope}). That means the record does not show the claimed change at the 5% level we registered. ${c.conservative && c.conservative.length ? "Our test is cautious for this record, so it is not evidence that the change did not happen." : "It is not proof of no change."}`);
 }
 
 export function clinicStrip(c) {

@@ -32,7 +32,7 @@ function addStation(A, d, extra) {
   A.words.push(
     `Station air temperature and the ESA record both lean up (${signed(k.sen_per_decade, 2)} and ${signed(esa.sen_per_decade, 2)} ${u} per decade; ${sigWord}) while MODIS Terra leans down (${signed(mod.sen_per_decade, 2)}). The gap between MODIS and the air temperature grows through the record (station minus MODIS: ${signed(gap.sen_per_decade, 2)} ${u} per decade)` +
     (ry.length ? `, and most of all in the early 2020s: the registered MODIS series sits colder than its ${res.fit_years[0]}\u2013${res.fit_years[1]} relation to air temperature predicts, by ${plain(Math.abs(res.residuals_later_years[ry[0]]), 2)} ${u} in ${ry[0]} and ${plain(Math.abs(res.residuals_later_years[ry[ry.length - 1]]), 2)} ${u} in ${ry[ry.length - 1]}. ` : ". ") +
-    (pre ? `MODIS already trails station air temperature before the orbit change: over 2001–2020, station minus MODIS is ${signed(pre.sen_per_decade, 2)} ${u} per decade (p ${fp(pre.p_hamed_rao_registered)}). So the drift does not explain the whole gap; part of it may be a real difference between land surface (skin) temperature and air temperature. ` : "") +
+    (pre ? `Before Terra's orbit began to drift, the MODIS trend already ran below the station air temperature trend: over 2001–2020, station minus MODIS is ${signed(pre.sen_per_decade, 2)} ${u} per decade (p ${fp(pre.p_hamed_rao_registered)}). So the drift does not explain the whole gap; part of it may be a real difference between land surface (skin) temperature and air temperature. ` : "") +
     "The comparison records do not show the same cooling trend.");
   A.kind3 = "The third line is station-based 2 m air temperature (CRU TS 4.10 daily maximum, via KNMI Climate Explorer), not land surface skin temperature, so compare changes, not levels. Station records share no input with MODIS or ESA. It is a cross-check, not ground truth, and it does not show which satellite series is right.";
   A.links.push(["CRU TS station data on KNMI Climate Explorer", extra.witness.page_url]);
@@ -48,7 +48,7 @@ function adaptA(d, extra) {
     const first = d.years[0], last = d.years[d.years.length - 1];
     const A = {
       id, years: d.years, u, per: u + " per decade",
-      caseS: { label: "MODIS Terra (the case series)", short: "MODIS Terra", v: d.series.modis_terra_jja_anomaly_degC, slope: t.modis_terra_same_footprint_2001_2024.sen_per_decade, p: t.modis_terra_same_footprint_2001_2024.p_hamed_rao_registered },
+      caseS: { label: "MODIS Terra (the case series, 2001–2024)", short: "MODIS Terra", v: d.series.modis_terra_jja_anomaly_degC, slope: t.modis_terra_same_footprint_2001_2024.sen_per_decade, p: t.modis_terra_same_footprint_2001_2024.p_hamed_rao_registered },
       witS: { label: "ESA multi-sensor record", short: "ESA", v: d.series.esa_jja_anomaly_degC, slope: t.esa.sen_per_decade, p: t.esa.p_hamed_rao_registered },
       r: ag.pearson_r, n: ag.n_years,
       band: terra.length === 2 ? { a: terra[0], b: terra[1], label: "ESA uses Terra MODIS" } : null,
@@ -126,7 +126,7 @@ export async function render(container, data, opts = {}) {
   const rows = Y.map((y, i) => [String(y), plain(C.v[i], 2), plain(Wt.v[i], 2), plain(Wt.v[i] - C.v[i], 2), ...(T3 ? [plain(T3.v[i], 2)] : [])]);
   const details = el("details", { class: "viz-details" }, el("summary", {}, "Values by year (table)"),
     dataTable(["Year", `${C.short} (${A.u})`, `${Wt.short} (${A.u})`, `${Wt.short} minus ${C.short} (${A.u})`, ...(T3 ? [`${T3.short} (${A.u}, 2 m air)`] : [])], rows, `${C.label}, ${Wt.label}${T3 ? " and " + T3.label : ""}, difference from each record's own average, by year`));
-  const root = el("figure", { class: "viz viz-witness2" }, el("p", { class: "viz-note", style: "margin:0 0 12px" }, el("span", { class: "chip" }, "Exploratory check, not the registered test"), " It does not change any ruling."),
+  const root = el("figure", { class: "viz viz-witness2" }, el("p", { class: "viz-note", style: "margin:0 0 12px" }, el("span", { class: "chip" }, "Exploratory check, not the registered test."), " It does not change any ruling."),
     wrap, readout, legend, words, preview ? null : links, summary, details);
   container.append(root);
 

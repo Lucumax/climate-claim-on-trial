@@ -11,8 +11,8 @@ const STEPS = ["Predict", "Move the years", "See the whole record", "Why tests g
 
 export function guided(hookRoot, { showPlanet } = {}) {
   const q = sel => hookRoot.querySelector(sel);
-  const S = { step: -1, guess: null, tones: new Set(), checked: false, shownFull: false };   // step: -1 closed, 0..3 steps, 4 exit question, 5 finish
-  let mo = null;
+  const S = { step: -1, guess: null, tones: new Set(), user: false, checked: false, shownFull: false };   // step: -1 closed, 0..3 steps, 4 exit question, 5 finish
+  let mo = null, unmark = null;
 
   const root = h("section", { class: "guided", id: "gd-panel", "aria-labelledby": "gd-h", hidden: true });
   const body = h("div", { class: "gd-body", hidden: true });
@@ -21,7 +21,7 @@ export function guided(hookRoot, { showPlanet } = {}) {
     h("div", {}, h("h2", { id: "gd-h" }, "Try a 3-minute investigation"),
       h("p", { class: "gd-lede" }, "Make a guess, move the years yourself, check the whole record, then see why tests get checked. Four short steps, and you can leave at any time.")));
   root.append(head, body);
-  const slot = q("#hk-cta"); if (slot) slot.append(startBtn);
+  const slot = q("#hk-cta"); if (slot) slot.prepend(startBtn);
   const badge = () => h("span", { class: "chip warn" }, "Synthetic");
 
   // ------------------------------------------------------------ helpers that read the hook
@@ -41,13 +41,15 @@ export function guided(hookRoot, { showPlanet } = {}) {
       if (hd.mode === "win") S.tones.add(fig.dataset.tone);
       const out = body.querySelector("#gd-readout");
       if (out) out.textContent = `${hd.win ? hd.win + ": " : ""}${hd.text}`;
-      if (S.step === 1 && S.tones.has("down") && S.tones.has("up")) setFeedback("You saw the headline flip from cooling to warming without changing a single data point. Only the years changed.", true);
+      if (S.step === 1 && S.user && S.tones.has("down") && S.tones.has("up")) setFeedback("You saw the headline flip from cooling to warming without changing a single data point. Only the years changed.", true);
     });
+    const mark = () => { S.user = true; };   // the message below is true only after the visitor has moved the window (not while the tour presses the first preset for them)
+    fig.addEventListener("pointerdown", mark); fig.addEventListener("keydown", mark); unmark = () => { fig.removeEventListener("pointerdown", mark); fig.removeEventListener("keydown", mark); };
     mo.observe(fig, { attributes: true, attributeFilter: ["data-tone"] });
     const t = q("#hk-lead"); if (t) mo.observe(t, { childList: true, characterData: true, subtree: true });
     const n = q("#hk-num"); if (n) mo.observe(n, { childList: true, characterData: true, subtree: true });
   }
-  function stopWatch() { if (mo) { mo.disconnect(); mo = null; } }
+  function stopWatch() { if (mo) { mo.disconnect(); mo = null; } if (unmark) { unmark(); unmark = null; } }
 
   // ------------------------------------------------------------ rendering
   let fb = null;
@@ -75,9 +77,9 @@ export function guided(hookRoot, { showPlanet } = {}) {
       return [stepTitle(2, "Move the years"),
         h("p", { class: "gd-q" }, "Slide the shaded window along the Alaska record above, and watch the headline flip."),
         h("p", { class: "muted small" }, "Drag the window, or focus it and use the arrow keys, or press a preset. It is the same record and the same method each time; only the years change."),
-        h("div", { class: "gd-choices" }, h("button", { class: "btn-quiet", type: "button", onclick: () => { press("a"); } }, "Show the first window"), h("button", { class: "btn-quiet", type: "button", onclick: () => { press("b"); } }, "Show the second window"),
+        h("div", { class: "gd-choices" }, h("button", { class: "btn-quiet", type: "button", onclick: () => { S.user = true; press("a"); } }, "Show the first window"), h("button", { class: "btn-quiet", type: "button", onclick: () => { S.user = true; press("b"); } }, "Show the second window"),
           h("button", { class: "btn-quiet", type: "button", onclick: () => { const g = q("#hk-fig .win-g"); if (g) g.focus(); } }, "Focus the window to use the arrow keys")),
-        h("p", { class: "gd-readout", id: "gd-readout", "aria-live": "off" }, `${hd.win ? hd.win + ": " : ""}${hd.text}`), fb, nav(next("Next: the whole record"), back(), skip())];
+        h("p", { class: "gd-readout", id: "gd-readout", "aria-live": "off" }, `${hd.win ? hd.win + ": " : ""}${hd.text}`), (fb.textContent = "Press “Show the first window”, then “Show the second window”.", fb), nav(next("Next: the whole record"), back(), skip())];
     }
     if (st === 2) {
       return [stepTitle(3, "See the whole record"),
@@ -89,13 +91,13 @@ export function guided(hookRoot, { showPlanet } = {}) {
           setFeedback(`${g && w ? (g === w ? `You guessed ${g}, and the whole record agrees. ` : `You guessed ${g}; the whole record says ${w}. `) : ""}${t}`, true);
           const lk = body.querySelector("#gd-case"); if (lk) lk.hidden = false; } }, "Show the whole record")),
         fb,
-        h("p", { class: "gd-case", id: "gd-case", hidden: true }, h("a", { href: "#/case/C-C" }, "Open the registered Alaska case"), " to see its ruling and scope. It uses a different estimate (Sen), which is why its number differs slightly from the demo."),
+        h("p", { class: "gd-case", id: "gd-case", hidden: true }, h("a", { href: "#/case/C-C" }, "Open the Alaska case file"), " to see its ruling and scope. It uses a different estimate (Sen), which is why its number differs slightly from the demo."),
         nav(next("Next: why tests get checked"), back(), skip())];
     }
     if (st === 3) {
       return [stepTitle(4, "Why tests get checked"),
         h("p", { class: "gd-q" }, "A test can also be fooled. So we test the tests."),
-        h("p", {}, "On the False-Alarm Planet ", badge(), " there is no real trend anywhere, yet a plain test still flags about 1 cell in 5 as a change. Each flag there is a false alarm."),
+        h("p", {}, "On the False-Alarm Planet ", badge(), " there is no real trend anywhere, yet a plain test still marks about 1 map square in 5 as a change. Each mark there is a false alarm."),
         h("div", { class: "gd-choices" }, h("button", { class: "btn", type: "button", id: "gd-planet", onclick: () => { if (showPlanet) showPlanet(); setFeedback("The planet is on this page, just below. Try the different tests on it; the real trend is zero everywhere.", true); } }, "Show me the planet on this page"),
           h("a", { class: "btn-quiet", href: "#/false-alarm" }, "Open False-Alarm Planet"), badge()), fb,
         nav(next("Next: the exit question"), back(), skip())];
@@ -116,7 +118,7 @@ export function guided(hookRoot, { showPlanet } = {}) {
       return [h("h3", { id: "gd-step-h", tabindex: "-1" }, "Exit question"), h("p", { class: "gd-q" }, "Why can two windows of the same record disagree?"), group, nav(check, show), fb, reveal, nav(fin, back(), skip())];
     }
     return [h("h3", { id: "gd-step-h", tabindex: "-1" }, "You've finished"),
-      h("p", { class: "gd-q" }, "You've finished: try your own claim in Investigate."),
+      h("p", { class: "gd-q" }, "Now try your own claim in Investigate."),
       h("p", { class: "muted" }, "Pick a NASA measurement, a place and a period, and see how the answer changes when you change one thing at a time."),
       nav(h("a", { class: "btn", href: "#/investigate", id: "gd-go" }, "Try your own claim in Investigate"), h("button", { class: "btn-quiet", type: "button", onclick: () => { S.guess = null; S.tones.clear(); go(0); } }, "Start over"), h("button", { class: "btn-text", type: "button", onclick: close }, "Close"))];
   }
@@ -124,7 +126,7 @@ export function guided(hookRoot, { showPlanet } = {}) {
   function go(n) {
     S.step = n; root.hidden = false; startBtn.setAttribute("aria-expanded", "true");
     if (n === 0) { ensureAlaska(); }
-    if (n === 1) { S.tones.clear(); watch(); setTimeout(() => press("a"), 0); }
+    if (n === 1) { S.tones.clear(); S.user = false; watch(); setTimeout(() => press("a"), 0); }
     if (n !== 1) { if (n >= 2) stopWatch(); }
     body.hidden = false; root.classList.add("is-open");
     body.replaceChildren(...[S.step <= 3 ? progress() : null, ...view()].filter(Boolean));

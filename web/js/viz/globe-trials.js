@@ -1,6 +1,6 @@
 // "Where the trials are held": all registered case regions on one Earth, each drawn by its per-cell TREND (Sen slope per decade, from the case bundle).
-// Home hero only. One symmetric color scale per case (the cases have different units). A case whose ruling is withheld is drawn as a neutral hatch,
-// never in trend colors, and says "withheld" on hover. Click a region (or a label, or a chip below) to open its case file. No year playback here.
+// Home hero only. One symmetric color scale per case (the cases have different units). A case whose ruling is withheld is drawn as a faint dashed outline only (no fill, never trend colors),
+// and says "Withheld: our tests can't rule here. Open the case." on hover. Click a region (or a label, or a chip below) to open its case file. No year playback here.
 // The globe starts paused. "Turn the Earth" is a deliberate, slow rotation; reduced motion keeps the Earth still (drag and the chips still work).
 // Optional (landing hook prototype): options.onPick(case) replaces "open the case file" on a region or label click, options.onPoint({lat,lng}) reports a click anywhere else on the Earth.
 //   options.view = {lat,lng,altitude} sets the opening camera. The returned object also has focus(lat,lng,altitude,ms), select(id|null), markBox(box|null) and turn(on).
@@ -14,6 +14,8 @@ import { DUMMY, loadEarth, makeBase, styleAtmosphere, useCanvasTexture } from ".
 const SHORT = { "C-A": "Southeast US", "C-B": "Sahel", "C-C": "Alaska", "C-D": "Wisconsin", "C-E1": "Eastern US", "C-E2": "Northern India" };
 const NICE = [0.05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.8, 1, 1.5, 2, 2.5, 3, 4, 5];
 const caseNo = (id) => id.replace("-", "–");
+const WITHHELD_TIP = "Withheld: our tests can't rule here. Open the case.";
+const KEY_LINE = "Colored = trend per decade, each case on its own scale (pick one for its key) · dashed = no ruling";
 
 let globeLib = null;
 function loadGlobeLib() {
@@ -65,46 +67,52 @@ export async function render(container, claims, options = {}) {
     const d = k.max >= 1 ? k.max.toFixed(0) : String(k.max);
     const li = el("li", {}, el("a", { class: "gt-chip" + (k.withheld ? " is-withheld" : ""), href: "#/case/" + k.id, "data-case": k.id, "aria-label": `Open case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "withheld, no trend drawn" : k.verdict}` },
       el("span", { class: "gt-chip-id" }, `Case ${caseNo(k.id)}`), el("span", { class: "gt-chip-name" }, k.short),
-      k.withheld ? el("span", { class: "gt-hatch-row" }, el("i", { class: "gt-hatch", "aria-hidden": "true" }), "Withheld, no trend drawn")
+      k.withheld ? el("span", { class: "gt-hatch-row" }, el("i", { class: "gt-hatch", "aria-hidden": "true" }), "Withheld: no ruling, no trend drawn")
         : el("span", { class: "gt-scale" }, chipGrad(k), el("span", { class: "gt-ends num", "aria-hidden": "true" }, el("span", {}, `← ${k.words[0]}`), el("span", {}, `${k.words[1]} →`)),
           el("span", { class: "gt-unit num" }, `±${d} ${k.unit} per decade · ${k.verdict}`))));
     const a = li.firstChild;
     a.addEventListener("mouseenter", () => focusCase(k)); a.addEventListener("focus", () => focusCase(k));
     return li;
   }));
-  const summary = el("p", { class: "sr-only" }, `${["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"][cases.length] || cases.length} registered cases on one Earth. ` + cases.map((k) => `Case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "withheld, drawn hatched" : `${k.verdict}, drawn by each cell's trend per decade`}.`).join(" "));
+  const key = el("p", { class: "gt-key" }, KEY_LINE);
+  const hoverTip = el("div", { class: "gt-hovertip", "aria-hidden": "true", hidden: true }, WITHHELD_TIP); let tipT = 0;
+  const summary = el("p", { class: "sr-only" }, `${["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"][cases.length] || cases.length} claims we tested, shown on one Earth. ` + cases.map((k) => `Case ${caseNo(k.id)}, ${k.name}: ${k.withheld ? "ruling withheld (shown as a dashed outline)" : `${k.verdict} (colored by each square's trend per decade)`}.`).join(" "));
   if (options.poster) {             // phones and browsers without WebGL: a labeled static picture, with the same case list below it
-    const r = el("figure", { class: "viz viz-trials", id }, options.poster, options.caption || null, chips, summary);
+    const r = el("figure", { class: "viz viz-trials", id }, options.poster, key, options.caption || null, chips, summary);
     container.append(r); return { el: r, destroy() { r.remove(); }, focus() {}, select() {}, markBox() {}, turn() {}, spinning() { return false; }, hasGlobe: false };
   }
-  const root = el("figure", { class: "viz viz-trials", id }, stage, options.caption || null, chips, el("div", { class: "viz-controls" }, turnBtn, resetBtn), tip, summary);
-  container.append(root);
+  const root = el("figure", { class: "viz viz-trials", id }, stage, key, options.caption || null, chips, el("div", { class: "viz-controls" }, turnBtn, resetBtn), tip, summary);
+  stage.append(hoverTip); container.append(root);
+  // the "withheld" note beside the pointer (mouse hover, or about three seconds after a tap); k = null hides it
+  function placeTip(k, ev, hold = 0) {
+    clearTimeout(tipT);
+    if (!k) { hoverTip.hidden = true; return; }
+    const r = stage.getBoundingClientRect(); hoverTip.hidden = false;
+    const w = hoverTip.offsetWidth, ht = hoverTip.offsetHeight, x = clamp(ev.clientX - r.left, w / 2 + 4, Math.max(w / 2 + 4, r.width - w / 2 - 4)), y = ev.clientY - r.top, above = y + 22 + ht > r.height - 4 && y - ht - 18 > 4;
+    hoverTip.style.left = x + "px"; hoverTip.style.top = (above ? y - ht - 14 : y + 22) + "px";
+    if (hold) tipT = setTimeout(() => { hoverTip.hidden = true; }, hold);
+  }
 
   // ---------------------------------------------------------------- the picture painted into the globe texture
   const X = (W, lon) => ((lon + 180) / 360) * W, Y = (H, lat) => ((90 - lat) / 180) * H;
-  function hatchPattern(g, W) {
-    const s = Math.max(6, Math.round(W / 560)), p = document.createElement("canvas"); p.width = p.height = s; const q = p.getContext("2d");
-    q.fillStyle = tok("nodata", "#F0EEE6"); q.fillRect(0, 0, s, s); q.strokeStyle = tok("nodata-mark", "#6D777C"); q.lineWidth = Math.max(1, s / 5);
-    q.beginPath(); q.moveTo(0, s); q.lineTo(s, 0); q.moveTo(-s / 2, s / 2); q.lineTo(s / 2, -s / 2); q.moveTo(s / 2, s * 1.5); q.lineTo(s * 1.5, s / 2); q.stroke();
-    return g.createPattern(p, "repeat");
-  }
   function paint() {
     if (!texCtx || !baseTex) return;
     const W = texCanvas.width, H = texCanvas.height, g = texCtx, dark = isDark(); g.drawImage(baseTex, 0, 0);
     for (const k of cases) {
       const { grid: gr } = k, hw = (Math.abs(gr.dlon) / 360) * W / 2, hh = (Math.abs(gr.dlat) / 180) * H / 2, sc = scales.get(k.id);
-      if (k.withheld) {
-        const x0 = X(W, k.box.w), x1 = X(W, k.box.e), y0 = Y(H, k.box.n), y1 = Y(H, k.box.s);
-        g.globalAlpha = 0.92; g.fillStyle = hatchPattern(g, W); g.fillRect(x0, y0, x1 - x0, y1 - y0); g.globalAlpha = 1;
-      } else {
-        for (let i = 0; i < gr.n_lat; i++) for (let j = 0; j < gr.n_lon; j++) {
-          const v = k.slopes[i * gr.n_lon + j]; if (v == null) continue;
-          g.fillStyle = sc.css(v, 0, 0.92);
-          const x = X(W, gr.lon[j]), y = Y(H, gr.lat[i]);
-          const x0 = Math.round(x - hw), x1 = Math.round(x + hw), y0 = Math.round(y - hh), y1 = Math.round(y + hh); g.fillRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
-        }
+      const bx = X(W, k.box.w), by = Y(H, k.box.n), bw = X(W, k.box.e) - X(W, k.box.w), bh = Y(H, k.box.s) - Y(H, k.box.n);
+      if (k.withheld) {                 // no ruling: a faint dashed outline only, no fill and no trend colors
+        g.save(); g.lineWidth = Math.max(1.8, W / 1450); g.setLineDash([W / 260, W / 380]); g.lineCap = "butt";
+        g.strokeStyle = dark ? "rgba(244,237,222,0.82)" : "rgba(25,45,64,0.8)"; g.strokeRect(bx, by, bw, bh); g.restore();
+        continue;
       }
-      g.lineWidth = Math.max(1.2, W / 2000); g.strokeStyle = dark ? "rgba(244,237,222,0.95)" : "rgba(25,45,64,0.9)"; g.strokeRect(X(W, k.box.w), Y(H, k.box.n), X(W, k.box.e) - X(W, k.box.w), Y(H, k.box.s) - Y(H, k.box.n));
+      for (let i = 0; i < gr.n_lat; i++) for (let j = 0; j < gr.n_lon; j++) {
+        const v = k.slopes[i * gr.n_lon + j]; if (v == null) continue;
+        g.fillStyle = sc.css(v, 0, 0.92);
+        const x = X(W, gr.lon[j]), y = Y(H, gr.lat[i]);
+        const x0 = Math.round(x - hw), x1 = Math.round(x + hw), y0 = Math.round(y - hh), y1 = Math.round(y + hh); g.fillRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
+      }
+      g.lineWidth = Math.max(1.2, W / 2000); g.strokeStyle = dark ? "rgba(244,237,222,0.95)" : "rgba(25,45,64,0.9)"; g.strokeRect(bx, by, bw, bh);
     }
     tex.needsUpdate = true;
   }
@@ -123,10 +131,10 @@ export async function render(container, claims, options = {}) {
   }
   const refreshPolys = () => { if (!globe) return; globe.polygonsData([...cases.map(polyOf), ...(markPoly ? [markPoly] : [])]); globe.polygonAltitude(altOf); globe.polygonCapColor(capOf); syncSel(); };
   const pick = (k, e) => { if (options.onPick) { if (e && e.preventDefault) e.preventDefault(); options.onPick(k); } else location.hash = "#/case/" + k.id; };
-  const tipHtml = (k) => `<div class="gt-tooltip"><b>Case ${caseNo(k.id)} · ${k.short}</b><br>${k.withheld ? "Withheld: no trend is drawn." : `${k.verdict}. Colors: each cell's trend.`}<br><i>Click to open the case</i></div>`;
+  const tipHtml = (k) => `<div class="gt-tooltip"><b>Case ${caseNo(k.id)} · ${k.short}</b><br>${k.withheld ? WITHHELD_TIP : `${k.verdict}. Colors: each cell's trend.<br><i>Click to open the case</i>`}</div>`;
   const view = { lat: 42, lng: -58, altitude: 1.5, ...(options.view || {}) };       // options.view: the Home page opens on its selected region at its own camera height
   function home(animate) { if (globe) globe.pointOfView(view, animate && !reduce ? 700 : 0); }
-  function focusCase(k) { if (globe) globe.pointOfView({ lat: k.lat, lng: k.lng, altitude: 1.15 }, reduce ? 0 : 800); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: withheld, so no trend is drawn.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}. Each square is one cell's trend per decade.`; }
+  function focusCase(k) { if (globe) globe.pointOfView({ lat: k.lat, lng: k.lng, altitude: 1.15 }, reduce ? 0 : 800); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: ${WITHHELD_TIP}` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}. Each square is one cell's trend per decade.`; }
   // The spin runs only while nothing holds it: a drag, a hover over a region or label, a fly-to, or the globe scrolled out of view. Reduced motion never spins.
   function applySpin() { if (!globe) return; const c = globe.controls(); c.autoRotateSpeed = options.spinSpeed || 0.45; c.autoRotate = turning && !reduce && holds.size === 0; }
   const hold = (k, on) => { if (on) holds.add(k); else holds.delete(k); applySpin(); };
@@ -142,7 +150,7 @@ export async function render(container, claims, options = {}) {
       .globeImageUrl(DUMMY)
       .polygonsData(cases.map(polyOf)).polygonGeoJsonGeometry("geometry").polygonAltitude(altOf)
       .polygonCapColor(capOf).polygonSideColor(() => "rgba(0,0,0,0)").polygonStrokeColor(() => "rgba(0,0,0,0)")
-      .polygonLabel((d) => (!options.onPoint && kOf(d) ? tipHtml(kOf(d)) : "")).onPolygonHover((d) => { if (options.onPoint) return; hover = d || null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = hover ? "pointer" : "grab"; hold("hover", !!hover); if (hover && kOf(hover)) { const k = kOf(hover); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: withheld.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}.`; } })
+      .polygonLabel((d) => (!options.onPoint && kOf(d) ? tipHtml(kOf(d)) : "")).onPolygonHover((d) => { if (options.onPoint) return; hover = d || null; g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = hover ? "pointer" : "grab"; hold("hover", !!hover); if (hover && kOf(hover)) { const k = kOf(hover); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: ${WITHHELD_TIP}` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}.`; } })
       .onPolygonClick((d) => { if (options.onPoint) return; const k = kOf(d); if (k) pick(k); })
       .htmlElementsData(cases).htmlLat((k) => k.lat).htmlLng((k) => k.lng).htmlAltitude(0.03).htmlElement((k) => {
         const a = el("a", { href: "#/case/" + k.id, class: "gt-label" + (k.withheld ? " is-withheld" : ""), tabindex: "-1", "aria-hidden": "true" }, `${caseNo(k.id)} ${k.short}`); a.style.pointerEvents = "auto"; labelEls.set(k.id, a); a.addEventListener("mouseenter", () => hold("label", true)); a.addEventListener("mouseleave", () => hold("label", false)); if (options.onPick) a.addEventListener("click", (e) => pick(k, e)); return a; });
@@ -167,13 +175,14 @@ export async function render(container, claims, options = {}) {
       cv.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY }; });
       cv.addEventListener("pointermove", (e) => {
         if (e.buttons || moveRaf) return; const ev = { clientX: e.clientX, clientY: e.clientY };
-        moveRaf = requestAnimationFrame(() => { moveRaf = 0; const k = caseAt(geoAt(ev)), was = hover && hover.id; if ((k && k.id) === was) return;
+        moveRaf = requestAnimationFrame(() => { moveRaf = 0; const k = caseAt(geoAt(ev)), was = hover && hover.id; placeTip(k && k.withheld ? k : null, ev); if ((k && k.id) === was) return;
           hover = k ? { id: k.id } : null; syncSel(); g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = k ? "pointer" : "grab"; hold("hover", !!k); });
       });
-      cv.addEventListener("pointerleave", () => { if (hover) { hover = null; syncSel(); g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = "grab"; hold("hover", false); } });
+      cv.addEventListener("pointerleave", () => { placeTip(null); if (hover) { hover = null; syncSel(); g.polygonAltitude(altOf); g.polygonCapColor(capOf); stage.style.cursor = "grab"; hold("hover", false); } });
       cv.addEventListener("click", (e) => {
         if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6) return;
         const pt = geoAt(e); if (!pt) return; const k = caseAt(pt);
+        if (k && k.withheld && e.pointerType === "touch") placeTip(k, e, 3500); else placeTip(null);
         if (k) pick(k); else options.onPoint(pt);
       });
     }
@@ -199,6 +208,6 @@ export async function render(container, claims, options = {}) {
     spinning() { return !!(globe && globe.controls().autoRotate); },
     screen(lat, lng) { return globe ? globe.getScreenCoords(lat, lng, 0) : null; },
   };
-  return { ...api, el: root, destroy() { destroyed = true; clearTimeout(holdT); offSize(); offTheme(); if (io) io.disconnect(); try { globe && globe._destructor && globe._destructor(); } catch (e) { /* ignore */ } root.remove(); } };
+  return { ...api, el: root, destroy() { destroyed = true; clearTimeout(holdT); clearTimeout(tipT); offSize(); offTheme(); if (io) io.disconnect(); try { globe && globe._destructor && globe._destructor(); } catch (e) { /* ignore */ } root.remove(); } };
 }
 void clamp; void signed;

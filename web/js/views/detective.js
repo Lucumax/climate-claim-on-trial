@@ -16,11 +16,11 @@ import { pWords, descPWords, descLabel, trendWords, stepWords, sigClass, sigLabe
 const LAST_YEAR = 2025, DEMO_TIMEOUT_MS = 25000, DEBOUNCE_MS = 450;
 // The two sources, named the same way everywhere. "short" is the label on a row; "full" is the label in the summary and for screen readers.
 const SRC = {
-  library: { short: "Satellite", full: "Satellite (NASA, precomputed)" },
-  power: { short: "Model", full: "Model (NASA POWER, live)" },
+  library: { short: "Satellite", full: "Satellite · NASA · precomputed" },
+  power: { short: "Model", full: "Model · NASA POWER · live" },
 };
 const endYear = v => (v.goodLast != null ? v.goodLast : v.last); // default end of a period: the last year the product can be trusted for trends
-const sinfo = v => v.src === "library" ? { short: v.chipShort, full: v.chip, cls: v.kind === "model_output" ? "power" : "library" } : { ...SRC.power, cls: "power" };
+const sinfo = v => v.src === "library" ? { short: v.chipShort, full: v.chip, cls: v.kind === "model_output" ? "power" : "library" } : v.kind === "satellite_derived" ? { short: "Satellite-derived", full: "Satellite-derived · NASA POWER · live", cls: "power" } : { ...SRC.power, cls: "power" };
 const state = { src: "power", key: "t2m", presetKey: "wisconsin", box: { s: 42.5, n: 47.1, w: -92.9, e: -86.8 }, y0: 1981, y1: 2025, season: "jja", view: "values", chart: "yearly", status: "idle", err: "", result: null, last: null, stale: false };
 
 // The five steps are the challenge author's, in the author's words.
@@ -38,7 +38,7 @@ const GROUP_ORDER = [["Temperature", "Temperature"], ["Water", "Water, snow and 
 // Starting measurements (source, key): plain, familiar, and covering model, satellite and gauge-blended records. The rest sit under "All measurements".
 const STARTERS = [["power", "t2m"], ["power", "precip"], ["library", "snow_mod10cm"], ["library", "soil_gldas"], ["library", "no2_omi"], ["library", "aod_myd08"]];
 const PLACE = { world: "the whole world", amazon: "the Amazon basin", sus: "the Southeastern United States" };
-const POWER_WORLD_NOTE = "Whole world is for the precomputed library measurements. Live NASA POWER requests are limited to regional boxes of about 40 by 50 degrees.";
+const POWER_WORLD_NOTE = "Whole world works only for measurements stored in our NASA library, not for live NASA POWER ones. Live NASA POWER requests are limited to regional boxes of about 40 by 50 degrees.";
 
 // Replay links: #/investigate?src=library|power&v=<id or POWER parameter>&b=south,north,west,east&y=2001-2025&s=JJAS  (season = key in data/variables.json).
 // The counter of questions tried lives in sessionStorage only: it is per tab, per visit, and never leaves the browser.
@@ -59,7 +59,7 @@ function noteTry(R) {
 const shareHash = R => "#/investigate?" + shareQuery(R);
 const shareUrl = R => location.origin + location.pathname + location.search + shareHash(R);
 function syncUrl(hash) { try { if (location.hash.startsWith("#/investigate") && location.hash !== hash) history.replaceState(null, "", hash); } catch (e) { /* ignore */ } }
-const triesText = () => { const n = triesNow(); return `You have tested ${n} distinct question${n === 1 ? "" : "s"} this visit. More tries create more opportunities for false alarms. These questions overlap, so ${n} does not determine an exact false-alarm probability. Keep every attempt, not just the striking one.`; };
+const triesText = () => { const n = triesNow(); return `You have tested ${n} distinct question${n === 1 ? "" : "s"} this visit. Each new window, place or season is another chance to find a trend by luck, and your questions overlap, so we cannot give an exact chance of a false alarm. Keep every attempt, not just the striking one.`; };
 const triesLine = () => { const n = triesNow(); if (!n) return null;
   return h("p", { class: "tries", id: "tries" }, triesText()); };
 
@@ -103,11 +103,11 @@ export function detective(cat, bundle, query = "") {
 
   // ======================================================== header: the question, filling in as choices are made
   const slot = txt => h("span", { class: "slot" }, txt);
-  const head = h("header", { class: "inv-head" });
+  const head = h("header", { class: "inv-head" }), guidedHost = h("div", { class: "guided-slot" });   // the "Try a guided example" button sits in the header row, beside the badges
   function drawHeader() {
     const v = curVar(), se = curSeason();
     head.replaceChildren(
-      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Computed live in your browser")),
+      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Computed live in your browser"), guidedHost),
       h("h1", { id: "page-title", tabindex: "-1" }, "Investigate a question"),
       h("p", { class: "question" }, "Did ", slot(PHRASE[v.key] || v.name.toLowerCase()), " over ", slot(placeName()), " change from ", slot(String(state.y0)), " to ", slot(String(state.y1)), se.key === "all" ? "" : [", ", slot(seasonShort(se)), " only"], "?"));
     document.title = "Investigate a question · Climate Claim on Trial";
@@ -129,7 +129,7 @@ export function detective(cat, bundle, query = "") {
     if (n === 3) return `${state.y0}–${state.y1}` + (state.season === "all" ? "" : ", " + seasonShort(curSeason()));
     if (!L || state.status === "error") return state.status === "error" ? "Could not run" : "Not run yet";
     if (L.W.tooShort) return n === 4 ? "Too few years" : "Cannot test";
-    return n === 4 ? `${L.W.n} years` : `p ${fmtP(L.rungs[2].p)} after the trial`;
+    return n === 4 ? `${L.W.n} years` : `p ${fmtP(L.rungs[2].p)} after hearing 3`;
   }
   function drawProgress() {
     progress.replaceChildren(h("ol", { class: "prog-list" }, STEPS.map(st => {
@@ -162,13 +162,13 @@ export function detective(cat, bundle, query = "") {
       groups.map(g => h("fieldset", { class: "pick-group" }, h("legend", {}, g.label), g.items.map(v => row(v, "variable")))));
     const list = h("div", { class: "pick-list", role: "group", "aria-label": "Measurement" },
       starters.length ? h("fieldset", { class: "pick-group pick-start", role: "radiogroup" }, h("legend", {}, "Good places to start"), starters.map(v => row(v, "variable-start"))) : null, full);
-    const model = cur.src === "power" || cur.kind === "model_output";
+    const model = (cur.src === "power" && cur.kind !== "satellite_derived") || cur.kind === "model_output";
     measureBody.replaceChildren(list,
       h("div", { class: "defpanel", "aria-live": "polite" },
         h("div", { class: "chips" }, h("span", { class: "chip src " + sinfo(cur).cls }, sinfo(cur).full), h("span", { class: "chip" }, `${cur.since}–${cur.last}`), cur.goodLast != null ? h("span", { class: "chip warn" }, `Trusted to ${cur.qualityEndText}`) : null, h("span", { class: "chip" }, U(cur.units))),
         cur.limit ? h("p", { class: "small muted", style: "margin:8px 0 0" }, h("b", {}, "Limit. "), cur.limit) : null,
         disc("What is this measurement?", h("p", { class: "small" }, cur.one_line), h("p", { class: "small" }, h("b", {}, "Source. "), cur.source, cur.doi ? [" · ", h("a", { href: cur.doi, target: "_blank", rel: "noopener" }, "NASA product page")] : ""),
-          h("p", { class: "small" }, model ? (cur.src === "power" ? "A computer model blended many measurements to fill the whole map. It is useful for trends but is not a direct measurement. A trend can reflect changes in the data that feed the model as well as the climate." : cur.caveats) : cur.caveats))),
+          h("p", { class: "small" }, cur.kind === "satellite_derived" ? "This comes from satellite-based solar and cloud products (NASA CERES) served through NASA POWER. It is derived from satellite measurements by a retrieval method, not read directly, and the instruments and methods change over the record, so a trend can partly reflect those changes." : model ? (cur.src === "power" ? "A computer model blended many measurements to fill the whole map. It is useful for trends but is not a direct measurement. A trend can reflect changes in the data that feed the model as well as the climate." : cur.caveats) : cur.caveats))),
       ...(aod ? [h("p", { class: "other-case" }, `${aod.name} is a registered case, not a live measurement. `, h("a", { href: aod.case_link }, "Open case " + aod.case_id))] : []));
   }
   function setMeasure(v) {
@@ -330,7 +330,7 @@ export function detective(cat, bundle, query = "") {
       // A question counts once, when its result is displayed: failed, superseded and too-short runs do not count, and neither do repeats.
       if (!state.last.W.tooShort) { noteTry(R); if (!demo) syncUrl(shareHash(R)); }
       drawResult(); drawProgress(); updateStrip();
-      announce("Result updated. " + (state.last.W.tooShort ? "Too few years to test." : `${rulingLabel(state.last).calibrated ? "Ruling: " : ""}${rulingLabel(state.last).label}.`));
+      announce("Result updated. " + (state.last.W.tooShort ? "Too few years to test." : `${rulingLabel(state.last).label} (exploratory).`));
       return true;
     } catch (e) {
       if (my !== runId || (signal && signal.aborted)) return false;
@@ -385,7 +385,7 @@ export function detective(cat, bundle, query = "") {
     const { W, rungs } = L, pRaw = rungs[0].p, pFin = rungs[2].p, sig = pFin < ALPHA, weak = pRaw < ALPHA && !sig, calibrated = !!(W.gate && W.gate.calibrated) && !L.R.flagged;
     if (L.R.flagged) return { label: "Withheld", tone: "warn", sig: false, weak: false, noVerdict: true, calibrated: false, pRaw, pFin, W };
     if (!calibrated) return { label: EXPLORATORY_HEAD, tone: "warn", sig, weak, calibrated: false, pRaw, pFin, W };
-    return { label: sig ? "Significant at 0.05" : weak ? "Weakened by the trial" : "Not significant at 0.05", tone: sig ? "ok" : weak ? "warn" : "", sig, weak, calibrated: true, pRaw, pFin, W };
+    return { label: sig ? "Significant at 0.05" : weak ? "Weakened by the hearings" : "Not significant at 0.05", tone: sig ? "ok" : weak ? "warn" : "", sig, weak, calibrated: true, pRaw, pFin, W };
   }
   // The simulation setting the check actually looked at, and the plain reasons it failed. Built from the gate's own fields; nothing new is computed.
   function calibrationFacts(gate, R) {
@@ -406,8 +406,8 @@ export function detective(cat, bundle, query = "") {
   }
   // One compact scope line shown on every Investigate ruling: variable, place, years, source type, and what the ruling cannot establish.
   function scopeEl(R, extra) {
-    const model = R.v.src === "power" || R.v.kind === "model_output";
-    return h("p", { class: "scope-line" }, h("b", {}, "Scope. "), `${R.v.name} · ${isWorld(R.box) ? "the whole world" : boxStr(R.box)} · ${R.season.name} · ${R.y0}–${R.y1} · ${model ? "model output, not a direct measurement" : "satellite observation"}. `, h("b", {}, "Cannot establish: "), `why the value changed or what comes next${extra || ""}.`);
+    const model = (R.v.src === "power" && R.v.kind !== "satellite_derived") || R.v.kind === "model_output";
+    return h("p", { class: "scope-line" }, h("b", {}, "Scope. "), `${R.v.name} · ${isWorld(R.box) ? "the whole world" : boxStr(R.box)} · ${R.season.name} · ${R.y0}–${R.y1} · ${model ? "model output, not a direct measurement" : R.v.kind === "satellite_derived" ? "satellite-derived product, not a direct measurement" : "satellite observation"}. `, h("b", {}, "Cannot establish: "), `why the value changed or what comes next${extra || ""}.`);
   }
   // The ruling is a compact aside. The word comes from the same rule as before; the longer reading notes are in a disclosure.
   function rulingLite(L) {
@@ -421,7 +421,7 @@ export function detective(cat, bundle, query = "") {
     if (!g.calibrated) {
       const f = calibrationFacts(gate, R);
       return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
-        h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), h("span", { class: "chip warn" }, "Calibration failed")),
+        h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Result for these settings, after hearing 3"), h("span", { class: "chip warn" }, "Calibration failed")),
         h("h3", { class: "ruling-h" }, g.label), scopeEl(R, "; this is your own exploration, not a registered test, and its calibration failed"),
         h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "1. What the record shows"),
           h("p", {}, `The record ${moves(slope)}.`),
@@ -433,10 +433,10 @@ export function detective(cat, bundle, query = "") {
         h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "3. Why the distinction matters"), h("p", {}, "A failed calibration describes this tool's limits. It does not show that the trend is real, and it does not show that it is absent.")),
         disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
           h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),
-          h("p", { class: "muted small" }, (gate ? gate.label : "Your own exploration, not pre-registered") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
+          h("p", { class: "muted small" }, (gate ? gate.label : "This is your own exploration, not a registered test") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
     }
     const lines = [h("p", {}, fixVerdict(A.verdict.text))];
-    if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the trial it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until the record is asked different questions.`));
+    if (weak) lines.push(h("p", {}, `At first the trend looked significant (p ${fmtP(pRaw)}). After the three hearings it no longer clears the 0.05 line (p ${fmtP(pFin)}). A trend can look clearer than it is until the record is asked different questions.`));
     else if (sig && Math.max(pRaw, pFin) < 0.001) lines.push(h("p", {}, "It held up clearly: p is below 0.001 at the start and still below 0.001 after the correction."));
     else if (sig && pFin > pRaw * 1.5) lines.push(h("p", {}, `It held up, but less strongly: p went from ${fmtP(pRaw)} to ${fmtP(pFin)} over the three hearings.`));
     else if (sig) lines.push(h("p", {}, Math.abs(pFin - pRaw) < 0.0005 ? `It held up, and none of the three hearings moved the p-value (p ${fmtP(pFin)}).` : `It held up through all three hearings (p ${fmtP(pRaw)} at the start, ${fmtP(pFin)} at the end).`));
@@ -444,12 +444,12 @@ export function detective(cat, bundle, query = "") {
     if (!sig) lines.push(h("p", { class: "muted small" }, "Inconclusive is a result too. Next: try a longer period or a larger region, and keep a note of every try."));
     lines.push(h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u)));
     return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
-      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), h("span", { class: "chip" }, `Calibration checked at a nearby simulated setting (${gate.nGov} years, persistence ${gate.phiGov !== null && gate.phiGov !== undefined ? gate.phiGov : gate.phiHat.toFixed(2)}), not on the record itself. This record: ${gate.nValid} years, persistence ${gate.phiHat.toFixed(2)}, skew ${gate.skew.toFixed(2)}`)),
+      h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Result for these settings, after hearing 3"), h("span", { class: "chip" }, `We checked the test on made-up series with no trend that resemble yours (${gate.nGov} years, year-to-year memory (persistence) ${gate.phiGov !== null && gate.phiGov !== undefined ? gate.phiGov : gate.phiHat.toFixed(2)}), not on your record itself. This record: ${gate.nValid} years, memory ${gate.phiHat.toFixed(2)}, skewness ${gate.skew.toFixed(2)} (whether big swings lean one way)`)),
       h("h3", { class: "ruling-h" }, g.label), scopeEl(R, "; this is your own exploration, not a registered test"), h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip " + g.tone }, `p ${fmtP(pFin)}`)), ...lines,
-      h("p", { class: "muted small calib" }, calibrationFacts(gate, R).setting, " This is your own exploration, not a pre-registered test, and a p-value is not the probability that the trend is real."),
+      h("p", { class: "muted small calib" }, calibrationFacts(gate, R).setting, " This is your own exploration, not a registered test, and a p-value is not the probability that the trend is real."),
       disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
         h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),
-        h("p", { class: "muted small" }, (gate ? gate.label : "Your own exploration, not pre-registered") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
+        h("p", { class: "muted small" }, (gate ? gate.label : "This is your own exploration, not a registered test") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
   }
   const csvBtn = (W, R) => h("button", { class: "btn-quiet", type: "button", onclick: () => download(`investigate_${R.v.src}_${R.v.key}_${R.y0}-${R.y1}.csv`, "year,season_mean,anomaly\n" + W.years.map((yr, i) => `${yr},${W.raw[i].toFixed(5)},${W.anomaly[i].toFixed(5)}`).join("\n"), "text/csv") }, "Download series (CSV)");
   const linkBtn = R => demo ? null : copyButton("Copy link to this investigation", () => shareUrl(R), null, "Link");
@@ -480,10 +480,10 @@ export function detective(cat, bundle, query = "") {
       R.data.dropped ? h("p", { class: "muted small", style: "margin:0 0 var(--sp-3)" }, `${R.data.dropped} month${R.data.dropped === 1 ? " was" : "s were"} dropped because fewer than 80% of the box's usable area had a value.`) : null,
       left ? h("p", { class: "callout info", role: "note" }, h("b", {}, `${left} year${left === 1 ? "" : "s"} left out: ${R.skipped.join(", ")}. `), `The data have no value for at least one month of ${season.key === "all" ? "those years" : "the " + seasonShort(season) + " season in those years"}, and gaps are never filled in. The tests use the ${W.n} years that remain.`) : null,
       h("div", { class: "seg-row" }, chartSeg, cycle ? null : toggle),
-      cycle ? null : h("p", { class: "slope-label top" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade; ${INTERVAL_EXPLORATORY} ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)}`),
+      cycle ? null : h("p", { class: "slope-label top" }, `Sen slope ${signed(A.sen.slopePerDecade, 2)} ${u} per decade (the typical change per year across all pairs of years, shown per decade); 95% interval ${signed(A.sen.intervalPerDecade[0], 2)} to ${signed(A.sen.intervalPerDecade[1], 2)} (exploratory; not checked for your series)`),
       cycle ? h("div", { id: "det-chart" }, h("p", { class: "muted small", style: "margin:0 0 8px" }, `Each loop is one year; each point is one month, measured from the average of the same calendar month over ${R.y0}–${R.y1}. A descriptive view of the same data: the trend test uses the yearly record.`), cycHost) : h("div", { id: "det-chart" }, chart.node),
       disc("Two tests side by side", h("div", { class: "statgrid" },
-        stat("Mann-Kendall test", `p ${fmtP(R_.mkIndependent.p)}`, `${sigL(R_.mkIndependent.p)}. Sen slope ${signed(R_.sen.slopePerDecade, 2)} ${u} per decade, ${cal ? "95% range" : "exploratory interval; coverage not validated:"} ${signed(R_.sen.intervalPerDecade[0], 2)} to ${signed(R_.sen.intervalPerDecade[1], 2)}`),
+        stat("Mann-Kendall test (do later years tend to be higher or lower than earlier ones?)", `p ${fmtP(R_.mkIndependent.p)}`, `${sigL(R_.mkIndependent.p)}. Sen slope ${signed(R_.sen.slopePerDecade, 2)} ${u} per decade, ${cal ? "95% range" : "exploratory interval; coverage not validated:"} ${signed(R_.sen.intervalPerDecade[0], 2)} to ${signed(R_.sen.intervalPerDecade[1], 2)}`),
         stat("Familiar t-test (least squares)", `p ${fmtP(R_.ols.p)}`, `${sigL(R_.ols.p)}. ${signed(R_.ols.slopePerDecade, 2)} ${u} per decade, ${cal ? "95% range" : "exploratory interval; coverage not validated:"} ${signed(R_.ols.ciPerDecade[0], 2)} to ${signed(R_.ols.ciPerDecade[1], 2)}`)),
         h("p", { class: "small", style: "margin:12px 0 0" }, cal ? pWords(R_.mkIndependent.p) : descPWords(R_.mkIndependent.p)),
         h("p", { class: "muted small" }, "Mann-Kendall asks whether later values tend to be higher or lower than earlier ones, with no straight-line assumption. The t-test is the version most people learn first. They can differ a little. That is normal.")),
@@ -493,7 +493,7 @@ export function detective(cat, bundle, query = "") {
   }
   function trialSection(L) {
     const { W, R, rungs } = L, u = U(R.v.units), cal = rulingLabel(L).calibrated;
-    return h("div", { class: "res-sec", id: "result-trial" }, h("h3", { id: "result-trial-h", tabindex: "-1" }, "The trial: does it hold up?"),
+    return h("div", { class: "res-sec", id: "result-trial" }, h("h3", { id: "result-trial-h", tabindex: "-1" }, "The three hearings: does it hold up?"),
       h("p", { class: "chart-sub" }, "Three hearings, each changing one thing. We report what happened, whichever way the p-value moves."),
       h("ol", { class: "trial-list" }, rungs.map((r, i) => {
         const pw = Math.min(1, r.p / 0.2) * 100;
@@ -502,10 +502,10 @@ export function detective(cat, bundle, query = "") {
           h("h4", {}, r.title || r.name), r.method ? h("p", { class: "small", style: "margin:0 0 4px" }, h("b", {}, "Method: "), r.method) : null,
           h("p", { class: "explain" }, r.note, r.extra ? " " + r.extra + "." : ""),
           h("div", { class: "pbar-row" }, h("strong", { class: "num" }, "p " + fmtP(r.p)), h("span", { class: "pbar", "aria-hidden": "true" }, h("i", { style: `width:${pw}%` }), h("em", { style: "left:25%" })), h("span", { class: "delta" }, i ? (Math.abs(r.p - rungs[i - 1].p) < 0.0005 ? "no change" : (r.p > rungs[i - 1].p ? "weaker ↑" : "stronger ↓")) : "baseline")),
-          h("p", { class: "small", style: "margin:8px 0 0" }, h("b", {}, "What this step did. "), stepWords(rungs[i - 1], r), ` Sen slope ${signed(r.slope, 2)} ${u} per decade.`));
+          h("p", { class: "small", style: "margin:8px 0 0" }, h("b", {}, "What this hearing did. "), stepWords(rungs[i - 1], r), ` Sen slope ${signed(r.slope, 2)} ${u} per decade.`));
       })),
       h("p", { class: "note" }, cal ? "The short bar marks the 0.05 line: left of it is significant." : "The short bar marks the 0.05 line. These p-values are descriptive: calibration failed for this record."),
-      h("p", { class: "muted small", style: "margin:0" }, `Statistics: trendtrial ${STATS_VERSION}, checked against the Python reference.`));
+      h("p", { class: "muted small", style: "margin:0" }, `Statistics code: trendtrial ${STATS_VERSION}, checked against the pymannkendall package.`));
   }
 
   function drawResult() {
@@ -532,7 +532,7 @@ export function detective(cat, bundle, query = "") {
     }
     const foot = L && !L.W.tooShort && state.status !== "error" ? h("div", { class: "result-foot" },
       h("div", { class: "actions" }, csvBtn(L.W, L.R), linkBtn(L.R)), triesLine(),
-      h("p", { class: "caution" }, "Every new window, place or season you try is another chance to find a trend by luck. Report every try, not only the one that looks best. ", h("a", { href: "#/cases" }, "See a registered case"))) : null;
+      h("p", { class: "caution" }, "Report every try, not only the one that looks best. ", h("a", { href: "#/cases" }, "See a registered case"))) : null;
     const own = R && L && !L.W.tooShort && state.status !== "error" ? h("p", { class: "result-own muted small", style: "margin:0 0 var(--sp-3)" }, `${R.v.name} \u00b7 ${isWorld(R.box) ? "whole world" : boxStr(R.box)} \u00b7 ${R.y0}\u2013${R.y1} \u00b7 ${R.season.key === "all" ? "whole year" : seasonShort(R.season)}`) : null;
     const prev = h("p", { class: "callout", id: "prev-note", role: "note", hidden: !(state.stale && (pending || state.status === "loading")) }, h("b", {}, "Previous question \u2014 updating. "), "The numbers below belong to the settings listed above them, not to the ones you have just chosen.");
     resultHost.replaceChildren(headRow, prev, own, body, foot);
@@ -547,10 +547,10 @@ export function detective(cat, bundle, query = "") {
     if (g.noVerdict) return "Withheld: this window includes months the data product flags as unreliable.";
     if (!g.calibrated) return `${EXPLORATORY_HEAD}. The record ${moves(L.W.A_an.sen.slopePerDecade)}, but this analysis ${EXPLORATORY_SUB}. Descriptive p-values: ${a} at the start, ${b} after the correction.`;
     if (g.sig && Math.max(g.pRaw, g.pFin) < 0.001) t = `It holds, clearly: p is below 0.001 at the start and still below 0.001 after the correction.`;
-    else if (g.sig && Math.abs(g.pFin - g.pRaw) < 0.0005) t = `It holds, and the trial changes nothing: all three hearings give p ${b}.`;
+    else if (g.sig && Math.abs(g.pFin - g.pRaw) < 0.0005) t = `It holds, and the hearings change nothing: all three give p ${b}.`;
     else if (g.sig && g.pFin > g.pRaw * 1.5) t = `It holds, but less strongly: p goes from ${a} to ${b}.`;
     else if (g.sig) t = `It holds through all three hearings: p goes from ${a} to ${b}.`;
-    else if (g.weak) t = `The trial weakens it: the first look was significant (p ${a}), but the test that allows for year-to-year persistence is not (p ${b}).`;
+    else if (g.weak) t = `The hearings weaken it: the first look was significant (p ${a}), but the test that allows for year-to-year persistence is not (p ${b}).`;
     else t = `It is not significant at the start (p ${a}) and still is not at the end (p ${b}).`;
     return t;
   }
@@ -586,10 +586,10 @@ export function detective(cat, bundle, query = "") {
   function drawDemoCard() {
     if (!demo) {
       const ok = DEMOS.filter(d => d.src === "power" || M.some(v => v.src === "library" && v.key === d.key));
-      demoHost.replaceChildren();
-      launchHost.replaceChildren(h("details", { class: "quiet guided", id: "demo" }, h("summary", {}, "Try a guided example"),
-        h("p", { class: "muted small", style: "margin:8px 0 0;max-width:62ch" }, "Three real questions with different outcomes. Each one fills in the five steps and runs the real computation. The results are computed from the selected data rather than supplied in advance. If NASA POWER cannot be reached, a clearly labeled saved copy from Nov 14 is used for the two POWER examples."),
-        h("div", { class: "btns" }, ok.map(d => h("button", { class: "btn-quiet", type: "button", onclick: () => startDemo(d) }, d.title, h("span", { class: "btn-tag" }, d.tag))))));
+      demoHost.replaceChildren(); launchHost.replaceChildren();
+      guidedHost.replaceChildren(h("details", { class: "quiet guided", id: "demo" }, h("summary", {}, "Try a guided example"), h("div", { class: "guided-pop" },
+        h("p", { class: "muted small", style: "margin:0 0 8px;max-width:62ch" }, "Three real questions with different outcomes. Each one fills in the five steps and runs the real computation. The results are computed from the selected data rather than supplied in advance. If NASA POWER cannot be reached, a clearly labeled saved copy from Nov 14 is used for the two POWER examples."),
+        h("div", { class: "btns" }, ok.map(d => h("button", { class: "btn-quiet", type: "button", onclick: () => startDemo(d) }, d.title, h("span", { class: "btn-tag" }, d.tag)))))));
       return;
     }
     // A running example shows all five steps at once, as a plain numbered list: nothing to click through, nothing sticky, nothing that moves focus on a timer.
@@ -597,6 +597,7 @@ export function detective(cat, bundle, query = "") {
     const wait = state.status === "error" ? "The data could not be fetched just now. Try the example again, or close it." : "Running the real computation.";
     const steps = [["Choose variable", d.s1], ["Pick region", d.s2], ["Set period", d.s3],
       ["Examine the series", ready ? recordCaption(L) : wait], ["Test significance", ready ? h("span", {}, trialCaption(L), d.after ? d.after() : null) : wait]];
+    guidedHost.replaceChildren();
     launchHost.replaceChildren(h("section", { class: "demo-card demo-list", id: "demo", "aria-labelledby": "demo-h" },
       h("p", { class: "eyebrow brass" }, `Guided example: ${d.title}`, R && R.data && R.data.cached ? " · cached copy from Nov 14" : ""),
       h("h2", { id: "demo-h", tabindex: "-1" }, "The five steps, all at once"),

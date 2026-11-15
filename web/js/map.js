@@ -15,7 +15,7 @@ export function mapSummary(claim, rung) {
     if (w / tot >= 0.65) parts.push("western"); else if (w / tot <= 0.35) parts.push("eastern");
     if (parts.length) t += ` Flagged cells sit mostly in the ${parts.join(" and ")} part of the region.`;
   }
-  if (c.up + c.down === 0) t = `No cell is flagged on this rung. ${c.n} cells have data.`;
+  if (c.up + c.down === 0) t = `No cell is flagged at this hearing. ${c.n.toLocaleString("en-US")} cells have data.`;
   return t;
 }
 
@@ -60,7 +60,7 @@ export function renderMap(claim, rung, opts = {}) {
   }
   svg.addEventListener("pointermove", fromPointer); svg.addEventListener("pointerdown", fromPointer);
   const sumId = id + "-sum";
-  const wrap = h("div", { class: "mapfocus", tabindex: "0", role: "group", "aria-label": `${opts.label || "Map for rung " + rung.rung + ": " + rung.label}. Arrow keys move between cells.`, "aria-describedby": sumId }, svg);
+  const wrap = h("div", { class: "mapfocus", tabindex: "0", role: "group", "aria-label": `${opts.label || "Map for hearing " + rung.rung + ": " + rung.label}. Arrow keys move between cells.`, "aria-describedby": sumId }, svg);
   wrap.addEventListener("keydown", ev => {
     const mv = { ArrowUp: [1, 0], ArrowDown: [-1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[ev.key];
     if (!mv) { if (ev.key === "Escape") { cursor.setAttribute("visibility", "hidden"); cur = null; } return; }

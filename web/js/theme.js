@@ -1,5 +1,5 @@
 "use strict";
-/* Light/dark toggle. Follows the system setting until the person clicks the toggle; the choice is then saved in
+/* Light/dark toggle. Dark is the default (the system setting is ignored) until the person clicks the toggle; the choice is then saved in
    localStorage (this browser only). Every storage call is wrapped, so the page works with storage blocked.
    ?theme=dark or ?theme=light forces a theme for one page view and is never saved (for screenshots).
    Load this script in <head> so a saved theme is applied before the first paint. */
@@ -9,8 +9,7 @@
   function valid(v) { return v === "dark" || v === "light" ? v : null; }
   function stored() { try { return valid(win.localStorage.getItem(KEY)); } catch (e) { return null; } }
   function remember(v) { try { win.localStorage.setItem(KEY, v); } catch (e) { /* private window or blocked storage */ } }
-  function system() { return win.matchMedia && win.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
-  function current() { return valid(root.getAttribute("data-theme")) || system(); }
+  function current() { return valid(root.getAttribute("data-theme")) || "dark"; }
   function paint() {
     var b = doc.getElementById("theme-toggle");
     if (!b) return;
@@ -26,16 +25,12 @@
   }
   var forced = null;
   try { forced = valid(new win.URLSearchParams(win.location.search).get("theme")); } catch (e) { forced = null; }
-  var first = forced || stored();
-  if (first) root.setAttribute("data-theme", first);
+  var first = forced || stored() || "dark"; // dark by default; set on <html> before first paint so there is no flash
+  root.setAttribute("data-theme", first);
   function wire() {
     var b = doc.getElementById("theme-toggle");
     if (b) b.addEventListener("click", toggle);
     paint();
-    if (win.matchMedia) {
-      var m = win.matchMedia("(prefers-color-scheme: dark)");
-      if (m && m.addEventListener) m.addEventListener("change", paint);
-    }
   }
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", wire); else wire();
 })(window, document);

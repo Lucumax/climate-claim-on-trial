@@ -140,8 +140,8 @@
   .hook .hk-regions-h span { display: none; }
   .hook .hk-regions-row { display: block; }
   .hook .hk-regions-l { display: block; margin: 2px 0 2px; }
-  .hook .hk-regions-btns { display: flex; flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .hook .hk-regions-btns::-webkit-scrollbar { display: none; }
+  /* wrap to rows instead of a hidden sideways scroll, so every region (eastern US, northern India) is visible without a gesture */
+  .hook .hk-regions-btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 2px 0 4px; }
   .hook .hk-reg { flex: 0 0 auto; }
   .hook .hk-regions-g { display: block; margin: 0; }
 }

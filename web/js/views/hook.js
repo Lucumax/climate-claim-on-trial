@@ -1,4 +1,4 @@
-// Home hook: "Same NASA record. Opposite headlines. Which one is true?"
+// Home hook: "Same NASA record. Opposite headlines. Which one describes the whole record?"
 // The record and the headline sit at the top, the big globe below them. A short 15-year window is chosen on a short yearly record, the headline follows it,
 // then the whole record puts it in context. Pick another case region, or click anywhere else on the Earth (land or sea) to explore NASA AIRS air temperature there.
 // Every number is computed here, in the browser, from the archived case series or the NASA AIRS library (same least squares as the Investigate page). Nothing is typed in.
@@ -73,7 +73,7 @@ export function hook(bundle) {
   const root = h("section", { class: "hook", "data-stage": "intro", "aria-labelledby": "page-title" },
     h("div", { class: "hk-hook" },
       h("p", { class: "hk-kicker", id: "hk-kicker" }, " "),
-      h("h1", { id: "page-title", tabindex: "-1", class: "hk-head", "data-mode": "none" }, h("span", { class: "hk-lead", id: "hk-lead" }, " "), h("span", { class: "hk-num num", id: "hk-num" }, " ")),
+      h("h1", { id: "page-title", tabindex: "-1", class: "hk-head", "data-mode": "none" }, h("span", { class: "sr-only", id: "hk-h-wait" }, "Same NASA record, opposite headlines"), h("span", { class: "hk-lead", id: "hk-lead" }, " "), h("span", { class: "hk-num num", id: "hk-num" }, " ")),
       h("div", { class: "hk-fig", id: "hk-fig", role: "group", "aria-labelledby": "hk-kicker" }),
       h("div", { class: "hk-pick", id: "hk-pick", role: "group", "aria-label": "Choose a window" },
         chip({ class: "hk-chip", "data-pick": "a", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "b", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "full", "aria-pressed": "false" }),
@@ -81,7 +81,7 @@ export function hook(bundle) {
         chip({ class: "hk-replay", id: "hk-replay" }, "Replay")),
       h("div", { class: "hk-end", id: "hk-end" },
         h("div", { class: "hk-end-text" },
-          h("p", { class: "hk-q", id: "hk-q" }, "Same NASA record. Opposite headlines. Which one is true?"),
+          h("p", { class: "hk-q", id: "hk-q" }, "Same NASA record. Opposite headlines. Which one describes the whole record?"),
           h("p", { class: "hk-resolve", id: "hk-resolve", hidden: true }),
           h("div", { class: "hk-meta" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "Illustrative headlines written from the numbers, not real news. The rates come from least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."))),
         h("div", { class: "hk-link", id: "hk-link", hidden: true }))),
@@ -110,7 +110,7 @@ export function hook(bundle) {
     return {
       type: "case", id: c.id, kind: kindOf(c), subject: sub[0], verb: sub[1], years: r.years, ser: r.anomaly, units: U(r.units),
       kicker: `${KICKER[c.id] || `${cap(c.variable.plain)}, ${c.region.name}`}, ${range(y0, y1)}`, src: `${prodName} · ${kind} · ${range(y0, y1)}`,
-      short: c.region.name, box: c.region.box, claimId: c.id, verdict: v.id || v.branch,
+      short: c.region.name, box: c.region.box, claimId: c.id, verdict: v.id || v.branch, sen: r.sen && Number.isFinite(r.sen.slope_per_decade) ? r.sen.slope_per_decade : null,
       link: { href: `#/case/${c.id}`, text: `Open case ${c.id.replace("-", "–")}`,
         lead: withheld ? `Case ${c.id.replace("-", "–")}: no verdict given.` : `Case ${c.id.replace("-", "–")}, tested on the whole record: ${v.label}.`,
         note: "The windows above show how a headline can be chosen. Only the registered test on the whole record gets a verdict." },
@@ -182,7 +182,7 @@ export function hook(bundle) {
     $("hk-src").textContent = sp.src;
     $("hk-resolve").textContent = resolveText(); $("hk-resolve").hidden = false;
     kicker.dataset.base = sp.kicker; kicker.textContent = sp.kicker;
-    $("hk-q").textContent = AGREE ? `Same NASA record, and every ${WIN}-year window points the same way. Choosing a window would not change the headline.` : TONES.a !== "flat" && TONES.b !== "flat" ? "Same NASA record. Opposite headlines. Which one is true?" : "Same NASA record. Different windows, different headlines. Which one is true?";
+    $("hk-q").textContent = AGREE ? `Same NASA record, and every ${WIN}-year window points the same way. Choosing a window would not change the headline.` : TONES.a !== "flat" && TONES.b !== "flat" ? "Same NASA record. Opposite headlines. Which one describes the whole record?" : "Same NASA record. Different windows, different headlines. Which one describes the whole record?";
   }
 
   // ---------------------------------------------------------------- the resolving line: what the whole record says, and what the case's own test said (from its bundle)
@@ -191,7 +191,7 @@ export function hook(bundle) {
     const says = ft === "flat" ? `The full ${N}-year record shows no clear change (${u})` : `The full ${N}-year record says ${fw} (${u})`;
     if (spec.type === "explore") return `${says}. No registered test here: open Investigate to test it yourself.`;
     const odd = [...new Set([a, b].filter(w => tone(w.slope) !== ft).map(w => `“${said(word(w.slope, true))}”`))];
-    const short = !CAN_FLIP ? "" : AGREE ? ` Every ${WIN}-year window points the same way.` : odd.length ? ` The ${odd.join(" and ")} came from ${odd.length > 1 ? "short windows" : "a short window"} of years picked to fit a story.` : "";
+    const short = !CAN_FLIP ? "" : AGREE ? ` Every ${WIN}-year window points the same way.` : odd.length ? ` The ${odd.join(" and ")} ${odd.length > 1 ? "describe short windows" : "describes a short window"} of years, not the whole record.` : "";
     switch (spec.verdict) {
       case "supported": return `${says}, and it holds up when tested.${short}`;
       case "partly_supported": return `${says}, but only part of the claim holds up when tested.${short}`;
@@ -309,7 +309,7 @@ export function hook(bundle) {
     const key = S.mode === "win" ? "w" + (AGREE ? "agree" : word(w.slope)) : "f";
     const L = sentence(S.mode, w), Nn = S.mode === "win" ? w.slope : SLOPES.full;
     head.dataset.mode = S.mode; head.dataset.tone = S.mode === "win" ? tone(w.slope) : "full";
-    lead.textContent = L;
+    lead.textContent = L; const wait = $("hk-h-wait"); if (wait) wait.remove();   // the placeholder name stays only until the first headline is written
     num.textContent = `${signedFmt(Nn)} `;
     const sm = document.createElement("small"); sm.textContent = `${units} per decade`; num.append(sm);
     if (animate && !reduce && key !== lastKey) for (const el of [lead, num]) el.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 460, easing: "cubic-bezier(.2,.7,.2,1)" });
@@ -448,7 +448,8 @@ export function hook(bundle) {
   function paintLink() {
     linkBox.hidden = false; linkBox.dataset.kind = spec.type;
     const a = h("a", { href: spec.link.href, class: "hk-go" }, spec.link.text);
-    linkBox.replaceChildren(h("p", { class: "hk-link-lead" }, spec.link.lead), h("p", { class: "hk-link-row" }, a, " →"), h("p", { class: "hk-link-note" }, spec.link.note));
+    linkBox.replaceChildren(h("p", { class: "hk-link-lead" }, spec.link.lead), h("p", { class: "hk-link-row" }, a, " →"), h("p", { class: "hk-link-note" }, spec.link.note),
+      spec.type === "case" && spec.sen != null ? h("p", { class: "hk-link-note hk-slopes" }, `Two slopes, one record: the “whole record” line above is a least-squares fit (${signedFmt(SLOPES.full)} ${units} per decade). The case uses the Sen slope, the median of the slopes between pairs of years (${signedFmt(spec.sen)}), which one odd year barely moves.`) : null);
   }
   function paintList() {
     for (const b of root.querySelectorAll(".hk-regions button")) b.setAttribute("aria-pressed", String(spec.type === "case" ? b.dataset.case === spec.id : (b.dataset.x === `${spec.center.lat.toFixed(1)},${spec.center.lng.toFixed(1)}`)));

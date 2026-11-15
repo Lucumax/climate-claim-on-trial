@@ -3,6 +3,7 @@
 //   4 see the False-Alarm Planet (why tests get checked)  then an exit question with the answer revealed, and a clear finish.
 // It drives the hook through its own controls (the preset buttons and the region button) and reads its headline back from the page,
 // so every number shown here is the one the hook computed. Skippable at any point; every control is a real button or radio.
+// R7: the single primary button ("Start the 3-minute investigation") lives in the hero (the #hk-cta slot); the card below it stays hidden until that button opens Step 1.
 import { h, announce } from "../util.js";
 
 const WORD = { warming: "warming", cooling: "cooling", unsure: "not sure" };
@@ -13,19 +14,20 @@ export function guided(hookRoot, { showPlanet } = {}) {
   const S = { step: -1, guess: null, tones: new Set(), checked: false, shownFull: false };   // step: -1 closed, 0..3 steps, 4 exit question, 5 finish
   let mo = null;
 
-  const root = h("section", { class: "guided", "aria-labelledby": "gd-h" });
+  const root = h("section", { class: "guided", id: "gd-panel", "aria-labelledby": "gd-h", hidden: true });
   const body = h("div", { class: "gd-body", hidden: true });
-  const startBtn = h("button", { class: "btn", type: "button", id: "gd-start" }, "Start the 3-minute investigation");
+  const startBtn = h("button", { class: "btn hk-cta-btn", type: "button", id: "gd-start", "aria-expanded": "false", "aria-controls": "gd-panel" }, "Start the 3-minute investigation");
   const head = h("div", { class: "gd-head" },
     h("div", {}, h("h2", { id: "gd-h" }, "Try a 3-minute investigation"),
-      h("p", { class: "gd-lede" }, "Make a guess, move the years yourself, check the whole record, then see why tests get checked. Four short steps, and you can leave at any time.")),
-    startBtn);
+      h("p", { class: "gd-lede" }, "Make a guess, move the years yourself, check the whole record, then see why tests get checked. Four short steps, and you can leave at any time.")));
   root.append(head, body);
+  const slot = q("#hk-cta"); if (slot) slot.append(startBtn);
+  const badge = () => h("span", { class: "chip warn" }, "Synthetic");
 
   // ------------------------------------------------------------ helpers that read the hook
   const readHeadline = () => {
     const lead = (q("#hk-lead") || {}).textContent || "", num = (q("#hk-num") || {}).textContent || "", win = (q(".win-label") || {}).textContent || "";
-    return { text: `${lead.trim()} ${num.replace(/\s+/g, " ").trim()}`.trim(), win: win.trim(), mode: (q("#page-title") || {}).dataset ? q("#page-title").dataset.mode : "none" };
+    return { text: `${lead.trim()} ${num.replace(/\s+/g, " ").trim()}`.trim(), win: win.trim(), mode: (q("#hk-readout") || {}).dataset ? q("#hk-readout").dataset.mode : "none" };
   };
   const press = pick => { const b = q(`.hk-chip[data-pick="${pick}"]`); if (b) b.click(); };
   const ensureAlaska = () => { const b = q('.hk-regions button[data-case="C-C"]'); if (b && b.getAttribute("aria-pressed") !== "true") b.click(); };
@@ -93,9 +95,9 @@ export function guided(hookRoot, { showPlanet } = {}) {
     if (st === 3) {
       return [stepTitle(4, "Why tests get checked"),
         h("p", { class: "gd-q" }, "A test can also be fooled. So we test the tests."),
-        h("p", {}, "On the False-Alarm Planet there is no real trend anywhere, yet a plain test still flags about 1 cell in 5 as a change. Each flag there is a false alarm."),
+        h("p", {}, "On the False-Alarm Planet ", badge(), " there is no real trend anywhere, yet a plain test still flags about 1 cell in 5 as a change. Each flag there is a false alarm."),
         h("div", { class: "gd-choices" }, h("button", { class: "btn", type: "button", id: "gd-planet", onclick: () => { if (showPlanet) showPlanet(); setFeedback("The planet is on this page, just below. Try the different tests on it; the real trend is zero everywhere.", true); } }, "Show me the planet on this page"),
-          h("a", { class: "btn-quiet", href: "#/false-alarm" }, "Open False-Alarm Planet")), fb,
+          h("a", { class: "btn-quiet", href: "#/false-alarm" }, "Open False-Alarm Planet"), badge()), fb,
         nav(next("Next: the exit question"), back(), skip())];
     }
     if (st === 4) {
@@ -120,7 +122,7 @@ export function guided(hookRoot, { showPlanet } = {}) {
   }
 
   function go(n) {
-    S.step = n; startBtn.hidden = true;
+    S.step = n; root.hidden = false; startBtn.setAttribute("aria-expanded", "true");
     if (n === 0) { ensureAlaska(); }
     if (n === 1) { S.tones.clear(); watch(); setTimeout(() => press("a"), 0); }
     if (n !== 1) { if (n >= 2) stopWatch(); }
@@ -130,14 +132,8 @@ export function guided(hookRoot, { showPlanet } = {}) {
     announce(S.step === 5 ? "You've finished." : S.step === 4 ? "Exit question." : `Step ${n + 1} of 4: ${STEPS[n]}.`);
   }
   function close() {
-    stopWatch(); S.step = -1; body.hidden = true; body.replaceChildren(); root.classList.remove("is-open"); startBtn.hidden = false; startBtn.focus();
+    stopWatch(); S.step = -1; body.hidden = true; body.replaceChildren(); root.classList.remove("is-open"); root.hidden = true; startBtn.setAttribute("aria-expanded", "false"); startBtn.focus();
   }
-  startBtn.addEventListener("click", () => go(0));
-  // On a phone the card sits two screens below the headline, so the hook also carries a compact entry to the same route (hidden on wide screens, where the card is already in view).
-  const row = q("#hk-pick");
-  if (row) {
-    const jump = h("button", { class: "hk-guided-cta", type: "button", id: "gd-jump", onclick: () => { go(0); root.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); } }, "Try a 3-minute investigation");
-    row.append(jump);
-  }
-  return { node: root, dispose() { stopWatch(); const j = q("#gd-jump"); if (j) j.remove(); } };
+  startBtn.addEventListener("click", () => { if (S.step < 0) go(0); else { const hh = body.querySelector("#gd-step-h"); if (hh) hh.focus(); else root.scrollIntoView({ block: "start" }); } });
+  return { node: root, dispose() { stopWatch(); startBtn.remove(); } };
 }

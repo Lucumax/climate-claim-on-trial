@@ -1,32 +1,43 @@
-/* Home hook: the record and the headline at the top, the big globe below. Tokens from tokens.css only. Georgia headings, tabular numbers, no gradients, no cards.
+/* Home hook (R7): a large globe beside the story. H1, the whole-record readout, the record chart, the source line and one primary action are all visible on load; nothing waits for a timer.
+   Below the hero: the comparison (question, window presets, the answer), "More" disclosures and the secondary links. Tokens from tokens.css only. Georgia headings, tabular numbers, no gradients, no cards.
    Everything is scoped under .hook so it cannot touch the other pages. (The prototype in web/proto has its own copy of these rules.) */
-.hook { font-variant-numeric: tabular-nums; }
+.hook { font-variant-numeric: tabular-nums; --hk-stage-h: clamp(300px, 88vw, 560px); }
 .hook .num { font-variant-numeric: tabular-nums; }
-.hook button:focus-visible, .hook a:focus-visible, .hook [tabindex]:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.hook .hk-hook { max-width: 1280px; }
-.hook .hk-kicker { margin: 0 0 8px; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-height: 1.4em; transition: opacity 400ms ease; }
+.hook button:focus-visible, .hook a:focus-visible, .hook [tabindex]:focus-visible, .hook summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+/* the Home page runs wider than the other pages (gutters 16 / 24 / 48 px) so the Earth can be big */
+#view:has(> .home) { max-width: 1440px; padding-left: 16px; padding-right: 16px; }
+#main:has(.home) { padding-top: var(--sp-3); }
+
+/* ---------------------------------------------------------------- the hero. One column on a phone: H1, Earth, action, source, readout, chart. Two columns from 1000 px. */
+.hook .hk-hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); }
+.hook .hk-hero > * { min-width: 0; }
+.hook .hk-h1 { margin: 0; font: 400 2rem/1.0625 var(--font-serif); letter-spacing: -.015em; max-width: 20ch; text-wrap: balance; color: var(--ink); }
+.hook .hk-h1 span { display: block; }
+.hook .hk-kicker { margin: 0 0 4px; font: 700 .75rem/1.5 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); min-height: 1.5em; }
 .hook .hk-kicker.is-loading { color: var(--ink); }
 
-/* the headline: a small lead line and a large number, in a slot that never changes height */
-.hook .hk-head { margin: 0; font-family: var(--font-serif); font-weight: 400; letter-spacing: -.012em; max-width: none; }
-.hook .hk-lead { display: block; font-size: clamp(1.25rem, 2.2vw, 1.875rem); line-height: 1.15; color: var(--ink); min-height: 1.15em; text-wrap: balance; }
-.hook .hk-num { font-family: var(--font-ui); font-weight: 400; display: block; font-size: clamp(2.5rem, 4.6vw, 4rem); line-height: 1.02; margin-top: 4px; min-height: 1.02em; letter-spacing: -.035em; }
-.hook .hk-num small { display: inline-block; font-family: var(--font-serif); font-size: .32em; letter-spacing: 0; color: var(--muted); font-weight: 400; margin-left: .2em; }
+/* the readout: a subject line and a big rate, in a slot that keeps its height */
+.hook .hk-head { margin: 0; font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em; }
+.hook .hk-lead { display: block; font-size: 1.125rem; line-height: 1.22; color: var(--ink); min-height: 1.22em; text-wrap: balance; }
+.hook .hk-num { font-family: var(--font-ui); font-weight: 400; display: block; font-size: 2.25rem; line-height: 1.055; margin-top: 4px; min-height: 1.055em; letter-spacing: -.03em; }
+.hook .hk-num small { display: inline-block; font-family: var(--font-ui); font-size: 1rem; line-height: 1.375; letter-spacing: 0; color: var(--muted); font-weight: 400; margin-left: .3em; }
 .hook .hk-head[data-tone="down"] .hk-num { color: var(--down); }
 .hook .hk-head[data-tone="up"] .hk-num { color: var(--up); }
 .hook .hk-head[data-tone="flat"] .hk-num, .hook .hk-head[data-tone="full"] .hk-num { color: var(--ink); }
 .hook .hk-head[data-mode="none"] .hk-lead, .hook .hk-head[data-mode="none"] .hk-num { opacity: 0; }
 .hook .hk-head .hk-lead, .hook .hk-head .hk-num { transition: opacity 420ms cubic-bezier(.2, .7, .2, 1), transform 420ms cubic-bezier(.2, .7, .2, 1); }
+.hook .hk-est { margin: 2px 0 0; font: 700 .75rem/1.5 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 
-/* the record: short on purpose (about 140 px), so the globe gets the room */
-.hook .hk-fig { margin: 12px 0 0; position: relative; touch-action: pan-y; }
+/* the record chart: real height (264 / 240 / 192 px SVG), the window is draggable */
+.hook .hk-fig { margin: 0; position: relative; touch-action: pan-y; }
 .hook .hk-fig.is-loading, .hook .hk-head.is-loading { opacity: .45; transition: opacity 200ms ease; }
 .hook .hk-fig svg { display: block; width: 100%; height: auto; overflow: visible; user-select: none; -webkit-user-select: none; }
 .hook .hk-fig text { font: 400 12px/1 var(--font-ui); fill: var(--muted); font-variant-numeric: tabular-nums; }
 .hook .hk-fig .grid { stroke: var(--plot-grid); stroke-width: 1; opacity: .6; }
 .hook .hk-fig .axis { stroke: var(--edge); stroke-width: 1; }
 .hook .hk-fig .zero { stroke: var(--edge); stroke-width: 1; stroke-dasharray: 2 4; }
-.hook .hk-fig .ser { fill: none; stroke: var(--dot); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.hook .hk-fig .ser { fill: none; stroke: var(--dot); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
 .hook .hk-fig .pt { fill: var(--dot); stroke: var(--bg); stroke-width: 1.2; }
 .hook .hk-fig .win { fill: var(--down); }
 .hook .hk-fig[data-tone="up"] .win { fill: var(--up); }
@@ -38,10 +49,11 @@
 .hook .hk-fig[data-tone="up"] .win-edge { stroke: var(--up); }
 .hook .hk-fig[data-tone="flat"] .win-edge { stroke: var(--muted); }
 .hook .hk-fig .full-line { fill: none; stroke: var(--ink); stroke-width: 2.25; stroke-dasharray: 7 5; stroke-linecap: round; }
-.hook .hk-fig .full-lbl { fill: var(--ink); font-size: 12.5px; font-weight: 700; }
+.hook .hk-fig .full-lbl { fill: var(--ink); font-size: 12px; font-weight: 700; }
 .hook .hk-fig .full-sw { stroke-width: 2.25; }
 .hook .hk-fig .win-grip { cursor: grab; fill: transparent; }
 .hook .hk-fig .win-grip:active { cursor: grabbing; }
+.hook .hk-fig .win-edge-hit { fill: transparent; cursor: ew-resize; }
 .hook .hk-fig .win-handle { fill: var(--surface); stroke: var(--edge); stroke-width: 1.2; }
 .hook .hk-fig .win-handle-mark { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
 .hook .hk-fig .win-label { font-weight: 700; fill: var(--ink); font-size: 13px; }
@@ -50,8 +62,68 @@
 .hook .hk-fig g.win-g:focus-visible .win-edge { stroke-width: 3; stroke: var(--focus); }
 .hook[data-stage="ready"] .win-g { transition: opacity 300ms ease; }
 
-/* presets, hint, replay */
-.hook .hk-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 10px; }
+/* source and the mandatory disclosure: always visible, never inside a revealed block */
+.hook .hk-disclose { display: grid; gap: 2px; }
+.hook .hk-src { margin: 0; font: 600 .875rem/1.43 var(--font-ui); letter-spacing: .02em; color: var(--muted); }
+.hook .hk-ill { margin: 0; font: 400 .875rem/1.43 var(--font-ui); color: var(--muted); }
+
+/* the one primary action (placed by guided.js) */
+.hook .hk-cta { display: flex; align-items: flex-end; }
+.hook .hk-cta .btn { min-height: 44px; width: 100%; padding: 0 var(--sp-5); font-size: 1rem; }
+
+/* ---------------------------------------------------------------- the Earth: a stage on the page background, quiet controls, the selected region's key right under it */
+.hook .hk-globe { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.hook .hk-globe-host { position: relative; order: 0; }
+.hook .hk-globe-host.is-waiting { min-height: var(--hk-stage-h); }
+.hook .hk-globe-host.is-waiting > .viz-trials { position: absolute; left: 0; right: 0; top: 0; visibility: hidden; }   /* the live globe lays out (it needs its size) but stays out of sight until it has painted */
+.hook .hk-poster-wait { display: flex; align-items: center; justify-content: center; min-height: inherit; background: var(--bg); }
+.hook .hk-poster-wait .poster-link { display: block; width: 100%; pointer-events: none; }
+.hook .hk-poster-wait .poster { width: 100%; height: auto; }
+.hook .hk-globe-host .viz-trials { max-width: none; margin: 0; animation: hk-in 700ms ease both; }
+.hook .hk-globe-host .viz-stage--stage { background: transparent; border: 0; border-radius: 0; overflow: visible; cursor: grab; }
+.hook .hk-globe-host .viz-stage canvas { margin: 0 auto; }
+/* the atmosphere glow is cut by the canvas edge; a radial fade at the stage edge turns that hard line into a soft one (the limb itself sits inside the solid part) */
+.hook .hk-globe-host .viz-stage canvas { -webkit-mask-image: radial-gradient(circle closest-side at 50% 50%, #000 97%, transparent 100%); mask-image: radial-gradient(circle closest-side at 50% 50%, #000 97%, transparent 100%); }
+.hook .hk-globe-host .viz-controls, .hook .hk-globe-host .gt-tip { display: none; }
+.hook .hk-globe-host .gt-label { font: 700 12px/1 var(--font-ui); color: var(--ink); background: var(--surface); border: 1px solid var(--edge); border-radius: 2px; padding: 4px 6px; text-decoration: none; white-space: nowrap; transform: translate(-50%, -150%); }
+.hook .hk-globe-host .gt-label.is-off { display: none; }
+.hook .hk-globe-host .poster-link { max-width: 100%; margin: 0 auto; }
+@keyframes hk-in { from { opacity: 0; } to { opacity: 1; } }
+
+.hook .hk-bar { order: 1; display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--sp-2); }
+.hook .hk-tool { font: 600 .875rem/1.43 var(--font-ui); min-height: 44px; padding: 0 var(--sp-3); color: var(--ink); background: var(--surface); border: 1px solid var(--edge); border-radius: var(--radius); cursor: pointer; transition: background var(--t), border-color var(--t); }
+.hook .hk-tool:hover { background: var(--surface-2); }
+.hook .hk-tool[aria-expanded="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.hook .hk-tool[hidden] { display: none; }
+.hook .hk-region-btn { margin-left: auto; }
+
+/* the key for the selected region: one line of name, the scale, its ends and its units */
+.hook .hk-globe > .gt-chips { order: 3; display: block; width: 100%; max-width: 22.5rem; margin: var(--sp-2) auto 0; padding: 0; list-style: none; }
+.hook .hk-globe > .gt-chips[hidden] { display: none; }
+.hook .hk-globe > .gt-chips li:not(.is-selected) { display: none; }
+.hook .hk-globe .gt-chip { grid-template-columns: auto minmax(0, 1fr); align-items: baseline; column-gap: 6px; row-gap: 2px; min-height: 0; padding: 6px 12px; }
+.hook .hk-globe .gt-chip-id::after { content: " ·"; }
+.hook .hk-globe .gt-chip-name { font-size: 1.0625rem; line-height: 1.3; }
+.hook .hk-globe .gt-scale, .hook .hk-globe .gt-hatch-row { grid-column: 1 / -1; gap: 2px; }
+.hook .hk-globe .gt-bar { height: 6px; }
+.hook .hk-globe .gt-ends, .hook .hk-globe .gt-unit { font-size: .875rem; line-height: 1.15; }
+
+/* the region chooser: a panel that is `hidden` while closed; in the page flow on a phone, over the Earth's corner on a desktop */
+.hook .hk-regions { order: 2; margin-top: var(--sp-2); padding: var(--sp-3) var(--sp-4); background: var(--surface); border: 1px solid var(--edge); border-radius: var(--radius); }
+.hook .hk-regions[hidden] { display: none; }
+.hook .hk-regions-h { margin: 0 0 var(--sp-2); font: 400 .875rem/1.43 var(--font-ui); color: var(--muted); }
+.hook .hk-regions-row { display: grid; gap: var(--sp-3); }
+.hook .hk-regions-l { display: block; margin: 0 0 4px; font: 700 .75rem/1.5 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.hook .hk-regions-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.hook .hk-peek { margin: var(--sp-2) 0 0; font: 400 .875rem/1.43 var(--font-ui); color: var(--ink); }
+.hook .hk-peek[hidden] { display: none; }
+.hook .hk-msg { order: 4; margin: var(--sp-2) 0 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--surface); font-size: .9375rem; }
+.hook .hk-msg[hidden] { display: none; }
+
+/* ---------------------------------------------------------------- below the hero */
+.hook .hk-below { margin-top: var(--sp-6); display: grid; gap: var(--sp-5); max-width: 46rem; }
+.hook .hk-q { margin: 0 0 var(--sp-3); font: 400 1.5rem/1.25 var(--font-serif); letter-spacing: -.01em; max-width: 28ch; text-wrap: balance; }
+.hook .hk-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
 .hook .hk-chip { font: inherit; font-size: .9375rem; color: var(--ink); background: transparent; border: 1px solid var(--edge); border-radius: 999px; padding: 8px 16px; min-height: 44px; cursor: pointer; display: inline-flex; gap: 10px; align-items: baseline; transition: background var(--t), border-color var(--t); }
 .hook .hk-chip b { font-weight: 700; font-variant-numeric: tabular-nums; }
 .hook .hk-chip[data-tone] b { color: var(--ink); }
@@ -61,102 +133,82 @@
 .hook .hk-chip[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--surface); }
 .hook .hk-chip[hidden] { display: none; }
 .hook .hk-chip[data-pick="full"] span::before { content: ""; display: inline-block; width: 16px; border-top: 2px dashed var(--ink); vertical-align: middle; margin-right: 8px; }
-.hook .hk-hint { color: var(--muted); font-size: .875rem; margin-left: 6px; opacity: 0; transition: opacity 500ms ease; }
+.hook .hk-hint { color: var(--muted); font-size: .875rem; margin-left: 6px; }
 .hook .hk-replay { font: inherit; font-size: .875rem; margin-left: auto; color: var(--ink); background: none; border: 0; padding: 10px 4px; min-height: 44px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--edge); }
 .hook .hk-replay:hover { text-decoration-color: var(--ink); }
-.hook .hk-pick, .hook .hk-end { transition: opacity 600ms ease; }
-.hook[data-stage="intro"] .hk-pick .hk-chip, .hook[data-stage="intro"] .hk-replay, .hook[data-stage="intro"] .hk-guided-cta { opacity: 0; pointer-events: none; }
-.hook .hk-guided-cta { display: none; min-height: 44px; padding: 8px 16px; border: 1px solid var(--ink); border-radius: var(--radius); background: var(--ink); color: var(--surface); font: 700 .9375rem var(--font-ui); cursor: pointer; }
-.hook[data-stage="ready"] .hk-hint { opacity: 1; }
-
-/* the closing lines: the question, the resolving answer, the source, the case link and verdict label */
-.hook .hk-end { margin-top: 8px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px 32px; opacity: 0; transform: translateY(8px); transition: opacity 700ms cubic-bezier(.2, .7, .2, 1), transform 700ms cubic-bezier(.2, .7, .2, 1); }
-.hook .hk-end.is-on { opacity: 1; transform: none; }
-.hook .hk-q { margin: 0; font: 400 clamp(1.125rem, 1.7vw, 1.5rem)/1.25 var(--font-serif); font-style: italic; letter-spacing: -.005em; text-wrap: balance; }
-.hook .hk-est { margin: 2px 0 0; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.hook .hk-resolve { margin: 6px 0 0; max-width: 72ch; min-height: 3.1em; font: 400 clamp(1rem, 1.3vw, 1.125rem)/1.5 var(--font-ui); color: var(--ink); opacity: 0; transform: translateY(6px); transition: opacity 600ms cubic-bezier(.2, .7, .2, 1), transform 600ms cubic-bezier(.2, .7, .2, 1); }
+.hook .hk-resolve { margin: var(--sp-3) 0 0; max-width: 65ch; font: 400 1rem/1.5 var(--font-ui); color: var(--ink); }
 .hook .hk-resolve[hidden] { display: none; }
-.hook .hk-resolve.is-on { opacity: 1; transform: none; }
-.hook .hk-meta { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 8px; }
-.hook .hk-src { margin: 0; font-size: .8125rem; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
-.hook .hk-ill { margin: 0; font-size: .8125rem; color: var(--muted); }
-.hook .hk-link { padding-top: 10px; border-top: 1px solid var(--line); max-width: 60ch; align-self: start; }
+.hook .hk-link { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--line); max-width: 60ch; }
 .hook .hk-link[hidden] { display: none; }
 .hook .hk-link p { margin: 0; }
 .hook .hk-link-lead { font-weight: 700; font-size: .9375rem; }
 .hook .hk-link[data-kind="explore"] .hk-link-lead { display: inline-block; padding: 2px 8px; border: 1px dashed var(--ink); font-size: .875rem; }
 .hook .hk-link-row { margin-top: 4px; font-size: 1rem; }
 .hook .hk-go { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; font-weight: 700; }
-.hook .hk-link-note { margin-top: 4px; font-size: .8125rem; color: var(--muted); }
+.hook .hk-link-note { margin-top: 4px; font-size: .875rem; color: var(--muted); }
 
-/* the globe, big, under the record */
-.hook .hk-globe { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
-.hook .hk-globe-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 24px; flex-wrap: wrap; }
-.hook .hk-globe-head h2 { margin: 0; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.hook .hk-globe-head p { margin: 0; font-size: .8125rem; color: var(--muted); }
-.hook .hk-globe-host { margin-top: 4px; position: relative; }
-.hook .hk-globe-host.is-waiting { min-height: 300px; }
-.hook .hk-globe-host.is-waiting > .viz-trials { position: absolute; left: 0; right: 0; top: 0; visibility: hidden; }   /* the live globe lays out (it needs its size) but stays out of sight until it has painted */
-.hook .hk-poster-wait { display: flex; align-items: center; justify-content: center; min-height: inherit; background: var(--bg); }
-.hook .hk-poster-wait .poster-link { display: block; width: 100%; max-width: 900px; pointer-events: none; }
-.hook .hk-poster-wait .poster { width: 100%; height: auto; }
-.hook .hk-globe-host .viz-trials { max-width: 1100px; margin: 0 auto; animation: hk-in 700ms ease both; }
-.hook .hk-globe-host .viz-stage--stage { background: transparent; border: 0; border-radius: 0; overflow: visible; cursor: grab; }
-.hook .hk-globe-host .viz-stage canvas { margin: 0 auto; }
-.hook .hk-globe-host .viz-controls, .hook .hk-globe-host .gt-tip { display: none; }
-.hook .hk-globe-host .gt-label { font: 700 11px/1 var(--font-ui); color: var(--ink); background: var(--surface); border: 1px solid var(--edge); border-radius: 2px; padding: 3px 5px; text-decoration: none; white-space: nowrap; transform: translate(-50%, -150%); }
-.hook .hk-globe-host .gt-label.is-off { display: none; }
-/* with the live globe only the selected case's key is shown (its colour scale and docket link); the other five are one click away on the buttons below */
-.hook .hk-globe-host.is-live .gt-chips { display: block; max-width: 30rem; margin: 6px auto 0; }
-.hook .hk-globe-host.is-live .gt-chips li:not(.is-selected) { display: none; }
-.hook .hk-globe-host .poster-link { max-width: 900px; margin: 0 auto; }
-@keyframes hk-in { from { opacity: 0; } to { opacity: 1; } }
+/* "More": native disclosures, closed by default */
+.hook .hk-more { margin-top: var(--sp-3); max-width: 65ch; }
+.hook .hk-more > summary { cursor: pointer; display: inline-flex; align-items: center; min-height: 44px; font: 600 .9375rem/1.4 var(--font-ui); color: var(--ink); text-decoration: underline; text-decoration-color: var(--edge); text-underline-offset: 4px; }
+.hook .hk-more > summary:hover { text-decoration-color: var(--ink); }
+.hook .hk-more[open] > summary { margin-bottom: var(--sp-1); }
+.hook .hk-more-body p { margin: 0 0 var(--sp-3); font: 400 1rem/1.5 var(--font-ui); color: var(--ink); }
+.hook .hk-more-globe { margin-top: 0; }
+.hook .hk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
 
-/* the region buttons under the globe */
-.hook .hk-regions { margin: 8px 0 0; }
-.hook .hk-regions-h { margin: 0 0 6px; font: 700 .75rem/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
-.hook .hk-regions-h span { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); font-size: .875rem; margin-left: 8px; }
-.hook .hk-regions-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
-.hook .hk-regions-l { font-size: .75rem; color: var(--muted); margin-right: 2px; }
-.hook .hk-regions-g { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-right: 18px; }
-.hook .hk-regions-btns { display: inline-flex; flex-wrap: wrap; gap: 6px; }
-.hook .hk-reg { min-height: 40px; padding: 6px 14px; font-size: .875rem; }
-.hook .hk-reg-x { border-style: dashed; }
-.hook .hk-reg-x[aria-pressed="true"] { border-style: solid; }
-.hook .hk-msg { margin: 8px 0 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--surface); font-size: .9375rem; }
-.hook .hk-msg[hidden] { display: none; }
-.hook .hk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 18px; }
-
+/* tablets and up: a wider H1, bigger rate, the question as a real subheading */
+@media (min-width: 701px) {
+  .hook .hk-h1 { font-size: 2.5rem; line-height: 1.1; }
+  .hook .hk-lead { font-size: 1.375rem; line-height: 1.27; min-height: 1.27em; }
+  .hook .hk-num { font-size: 2.5rem; line-height: 1.05; }
+  .hook .hk-num small { font-size: 1.125rem; line-height: 1.33; }
+  .hook .hk-cta .btn { width: auto; min-height: 48px; }
+  .hook .hk-q { font-size: 1.625rem; line-height: 1.31; }
+  .hook { --hk-stage-h: clamp(360px, 70vw, 600px); }
+}
 @media (min-width: 1000px) {
-  /* headline on the left, the short record on the right, then the presets, then the answer in two columns */
-  .hook .hk-hook { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(24px, 3vw, 48px); grid-template-areas: "kicker fig" "head fig" "est fig" "pick pick" "end end"; align-items: start; }
-  .hook .hk-kicker { grid-area: kicker; }
-  .hook .hk-head { grid-area: head; }
-  .hook .hk-est { grid-area: est; }
-  .hook .hk-fig { grid-area: fig; margin-top: 0; align-self: center; }
-  .hook .hk-pick { grid-area: pick; }
-  .hook .hk-end { grid-area: end; grid-template-columns: minmax(0, 1fr) minmax(0, 24rem); }
+  #view:has(> .home) { padding-left: 24px; padding-right: 24px; }
+  #main:has(.home) { padding-top: var(--sp-2); }
+  .hook { --hk-stage-h: clamp(420px, min(calc(100svh - 168px), calc(100vw - 520px)), 728px); }
+  .hook .hk-hero { grid-template-columns: 448px minmax(0, 1fr); column-gap: 24px; row-gap: var(--sp-3); grid-template-rows: auto auto auto auto 1fr;
+    grid-template-areas: "h1 globe" "readout globe" "fig globe" "disclose globe" "cta globe"; }
+  .hook .hk-h1 { grid-area: h1; }
+  .hook .hk-globe { grid-area: globe; align-self: start; }
+  .hook .hk-readout { grid-area: readout; }
+  .hook .hk-fig { grid-area: fig; }
+  .hook .hk-disclose { grid-area: disclose; }
+  .hook .hk-cta { grid-area: cta; align-self: start; margin-top: var(--sp-2); }
+  .hook .hk-bar { position: absolute; top: 0; left: 0; right: 0; margin: 0; z-index: 4; pointer-events: none; }
+  .hook .hk-bar > * { pointer-events: auto; }
+  .hook .hk-regions { position: absolute; top: 52px; right: 0; width: min(440px, 100%); margin: 0; z-index: 5; }
+  .hook .hk-legend-btn { display: none; }
+  .hook .hk-below { max-width: none; grid-template-columns: minmax(0, 46rem); }
+  .hook .hk-q { font-size: 1.625rem; }
+}
+@media (min-width: 1400px) {
+  #view:has(> .home) { padding-left: 48px; padding-right: 48px; }
+  body:has(.home) header.top > .wrap { max-width: 1440px; padding-left: 48px; padding-right: 48px; }
+  .hook .hk-hero { grid-template-columns: 504px minmax(0, 1fr); column-gap: 32px; }
+  .hook .hk-h1 { font-size: 3rem; line-height: 1.0833; }
+  .hook .hk-lead { font-size: 1.375rem; }
+  .hook .hk-num { font-size: 3rem; line-height: 1.0417; }
+  .hook .hk-q { font-size: 1.75rem; line-height: 1.2143; }
+  .hook .hk-globe > .gt-chips { max-width: 22.5rem; }
+}
+@media (min-width: 1000px) and (max-width: 1399px) {
+  .hook .hk-globe > .gt-chips { max-width: 21rem; }
 }
 @media (max-width: 700px) {
-  .hook .hk-lead { min-height: 2.3em; font-size: 1.375rem; }
-  .hook .hk-num { font-size: 3.25rem; }
-  .hook .hk-resolve { min-height: 6.2em; }
+  .hook .hk-lead { min-height: 2.44em; }
+  .hook .hk-chip { padding: 8px 12px; font-size: .875rem; }
   .hook .hk-hint { flex-basis: 100%; margin-left: 0; order: 5; }
   .hook .hk-replay { order: 6; margin-left: 0; }
-  .hook .hk-chip { padding: 8px 12px; font-size: .875rem; }
-  .hook .hk-guided-cta { display: block; flex: 1 1 100%; order: 8; }
-  .hook .hk-globe-head { flex-direction: column; }
-  .hook .hk-regions-h span { display: none; }
-  .hook .hk-regions-row { display: block; }
-  .hook .hk-regions-l { display: block; margin: 2px 0 2px; }
-  /* wrap to rows instead of a hidden sideways scroll, so every region (eastern US, northern India) is visible without a gesture */
-  .hook .hk-regions-btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 2px 0 4px; }
-  .hook .hk-reg { flex: 0 0 auto; }
-  .hook .hk-regions-g { display: block; margin: 0; }
+  .hook .hk-bar > .hk-tool { flex: 1 1 auto; padding: 0 10px; }
+  .hook .hk-region-btn { margin-left: 0; }
+  .hook .hk-regions-h { margin-bottom: var(--sp-2); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hook .hk-head .hk-lead, .hook .hk-head .hk-num, .hook .hk-end, .hook .hk-hint, .hook .hk-pick, .hook .hk-kicker, .hook .hk-resolve { transition: none !important; }
-  .hook .hk-resolve { transform: none; }
+  .hook .hk-head .hk-lead, .hook .hk-head .hk-num, .hook .hk-kicker, .hook .hk-tool, .hook .hk-chip { transition: none !important; }
   .hook .hk-globe-host .viz-trials { animation: none; }
 }
 

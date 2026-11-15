@@ -3,7 +3,7 @@
 // never in trend colors, and says "withheld" on hover. Click a region (or a label, or a chip below) to open its case file. No year playback here.
 // The globe starts paused. "Turn the Earth" is a deliberate, slow rotation; reduced motion keeps the Earth still (drag and the chips still work).
 // Optional (landing hook prototype): options.onPick(case) replaces "open the case file" on a region or label click, options.onPoint({lat,lng}) reports a click anywhere else on the Earth.
-//   The returned object also has focus(lat,lng,altitude,ms), select(id|null), markBox(box|null) and turn(on).
+//   options.view = {lat,lng,altitude} sets the opening camera. The returned object also has focus(lat,lng,altitude,ms), select(id|null), markBox(box|null) and turn(on).
 // Optional (Home hook): options.labels = "focus" shows a region's name label only on the selected region and on the one under the pointer (six labels never collide),
 //   and marks the selected case's chip so the page can show just that chip (its color key and case-file link). The default draws every label and every chip.
 // render(container, claims, options) -> {destroy, el}.  claims: bundle.claims (data.js shape: grid, cell_slope_per_decade, regional.units, verdict).
@@ -124,7 +124,7 @@ export async function render(container, claims, options = {}) {
   const refreshPolys = () => { if (!globe) return; globe.polygonsData([...cases.map(polyOf), ...(markPoly ? [markPoly] : [])]); globe.polygonAltitude(altOf); globe.polygonCapColor(capOf); syncSel(); };
   const pick = (k, e) => { if (options.onPick) { if (e && e.preventDefault) e.preventDefault(); options.onPick(k); } else location.hash = "#/case/" + k.id; };
   const tipHtml = (k) => `<div class="gt-tooltip"><b>Case ${caseNo(k.id)} · ${k.short}</b><br>${k.withheld ? "Withheld: no trend is drawn." : `${k.verdict}. Colors: each cell's trend.`}<br><i>Click to open the case</i></div>`;
-  const view = { lat: 42, lng: -58, altitude: 1.5 };
+  const view = { lat: 42, lng: -58, altitude: 1.5, ...(options.view || {}) };       // options.view: the Home page opens on its selected region at its own camera height
   function home(animate) { if (globe) globe.pointOfView(view, animate && !reduce ? 700 : 0); }
   function focusCase(k) { if (globe) globe.pointOfView({ lat: k.lat, lng: k.lng, altitude: 1.15 }, reduce ? 0 : 800); tip.textContent = k.withheld ? `Case ${caseNo(k.id)}, ${k.short}: withheld, so no trend is drawn.` : `Case ${caseNo(k.id)}, ${k.short}: ${k.verdict}. Each square is one cell's trend per decade.`; }
   // The spin runs only while nothing holds it: a drag, a hover over a region or label, a fly-to, or the globe scrolled out of view. Reduced motion never spins.

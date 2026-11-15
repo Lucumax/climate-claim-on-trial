@@ -1,6 +1,7 @@
 // Home hook: "Same NASA record. Opposite headlines. Which one describes the whole record?"
-// The record and the headline sit at the top, the big globe below them. A short 15-year window is chosen on a short yearly record, the headline follows it,
-// then the whole record puts it in context. Pick another case region, or click anywhere else on the Earth (land or sea) to explore NASA AIRS air temperature there.
+// R7 layout: a large globe beside the story (H1, the whole-record readout, the record chart, the source line and one primary action), everything visible at once on load.
+// The comparison (question, window presets, the answer), the "More" notes and the region chooser are ordinary content below or behind real buttons. The Replay button runs the
+// timed demonstration: a short 15-year window is chosen on the yearly record, the headline follows it, then the whole record puts it in context. Pick another case region, or click anywhere else on the Earth (land or sea) to explore NASA AIRS air temperature there.
 // Every number is computed here, in the browser, from the archived case series or the NASA AIRS library (same least squares as the Investigate page). Nothing is typed in.
 // URL: ?r=C-B starts on a case region, ?at=lat,lng starts on an exploration point, ?spin=0 holds the globe still, ?t=ms freezes the timeline (for video capture).
 // Prototype history: web/proto/hook.html (variants a, b, c). This is variant A's layout with C's behaviour.
@@ -71,35 +72,46 @@ export function hook(bundle) {
 
   // ---------------------------------------------------------------- the page furniture
   const chip = (attrs, ...kids) => h("button", { type: "button", ...attrs }, ...kids);
-  const root = h("section", { class: "hook", "data-stage": "intro", "aria-labelledby": "page-title" },
-    h("div", { class: "hk-hook" },
-      h("p", { class: "hk-kicker", id: "hk-kicker" }, " "),
-      h("h1", { id: "page-title", tabindex: "-1", class: "hk-head", "data-mode": "none" }, h("span", { class: "sr-only", id: "hk-h-wait" }, "Same NASA record, opposite headlines"), h("span", { class: "hk-lead", id: "hk-lead" }, " "), h("span", { class: "hk-num num", id: "hk-num" }, " ")),
-      h("p", { class: "hk-est", id: "hk-est" }, "Headline demo: least-squares estimate"),
-      h("div", { class: "hk-fig", id: "hk-fig", role: "group", "aria-labelledby": "hk-kicker" }),
-      h("div", { class: "hk-pick", id: "hk-pick", role: "group", "aria-label": "Choose a window" },
-        chip({ class: "hk-chip", "data-pick": "a", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "b", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "full", "aria-pressed": "false" }),
-        h("span", { class: "hk-hint", id: "hk-hint" }, "Drag the shaded window along the record."),
-        chip({ class: "hk-replay", id: "hk-replay" }, "Replay")),
-      h("div", { class: "hk-end", id: "hk-end" },
-        h("div", { class: "hk-end-text" },
-          h("p", { class: "hk-q", id: "hk-q" }, "Same NASA record. Opposite headlines. Which one describes the whole record?"),
-          h("p", { class: "hk-resolve", id: "hk-resolve", hidden: true }),
-          h("div", { class: "hk-meta" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "We selected these two windows to illustrate how the estimated trend changes with the years. Both describe their selected periods; neither represents the full record. The headlines are illustrative, written from the numbers, not real news. The rates are least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."))),
-        h("div", { class: "hk-link", id: "hk-link", hidden: true }))),
-    h("section", { class: "hk-globe", "aria-labelledby": "hk-globe-h" },
-      h("div", { class: "hk-globe-head" }, h("h2", { id: "hk-globe-h" }, "Where the trials are held"),
-        h("p", {}, `${numWord(claims.length)} registered regions. Each grid cell is colored by its estimated change per decade, and withheld cases are hatched. Imagery: NASA Blue Marble, muted.`)),
-      h("div", { class: "hk-globe-host", id: "hk-globe" }),
-      h("div", { class: "hk-regions", id: "hk-regions", role: "group", "aria-labelledby": "hk-regions-h" },
-        h("p", { class: "hk-regions-h", id: "hk-regions-h" }, "Try another region ", h("span", {}, "Press a region on the globe, or anywhere else, land or sea, to explore it.")),
-        h("div", { class: "hk-regions-row" },
-          h("span", { class: "hk-regions-g" }, h("span", { class: "hk-regions-l", id: "hk-rl-c" }, "Case regions"), h("span", { class: "hk-regions-btns", id: "hk-regions-cases", role: "group", "aria-labelledby": "hk-rl-c" })),
-          h("span", { class: "hk-regions-g" }, h("span", { class: "hk-regions-l", id: "hk-rl-x" }, "Explore, not a trial"), h("span", { class: "hk-regions-btns", id: "hk-regions-x", role: "group", "aria-labelledby": "hk-rl-x" }))),
+  // Hero: the story (H1, the readout, the record, the source, one primary action) beside a large globe. Everything in the hero is visible at once, nothing waits for a timer.
+  // Below the hero: the comparison (question, window presets, the answer), the "More" disclosures and the secondary links. The guided card (guided.js) goes between the two.
+  const root = h("section", { class: "hook", "data-stage": "ready", "aria-labelledby": "page-title" },
+    h("div", { class: "hk-hero" },
+      h("h1", { id: "page-title", tabindex: "-1", class: "hk-h1" }, h("span", { id: "hk-h1a" }, "Same NASA record. "), h("span", { id: "hk-h1b" }, "Opposite headlines.")),
+      h("section", { class: "hk-globe", "aria-labelledby": "hk-globe-h" },
+        h("h2", { class: "sr-only", id: "hk-globe-h" }, "Where the trials are held"),
+        h("div", { class: "hk-globe-host", id: "hk-globe" }),
+        h("div", { class: "hk-bar", id: "hk-bar" },
+          chip({ class: "hk-tool hk-legend-btn", id: "hk-legend-btn", "aria-expanded": "false", "aria-controls": "hk-legend", hidden: true }, "Color key"),
+          chip({ class: "hk-tool hk-region-btn", id: "hk-region-btn", "aria-expanded": "false", "aria-controls": "hk-regions" }, "Try another region")),
+        h("div", { class: "hk-regions", id: "hk-regions", role: "group", "aria-label": "Try another region", hidden: true },
+          h("p", { class: "hk-regions-h", id: "hk-regions-h" }, "Press a region on the globe, or anywhere else, land or sea, to explore it."),
+          h("div", { class: "hk-regions-row" },
+            h("div", { class: "hk-regions-g" }, h("span", { class: "hk-regions-l", id: "hk-rl-c" }, "Case regions"), h("span", { class: "hk-regions-btns", id: "hk-regions-cases", role: "group", "aria-labelledby": "hk-rl-c" })),
+            h("div", { class: "hk-regions-g" }, h("span", { class: "hk-regions-l", id: "hk-rl-x" }, "Explore, not a trial"), h("span", { class: "hk-regions-btns", id: "hk-regions-x", role: "group", "aria-labelledby": "hk-rl-x" }))),
+          h("p", { class: "hk-peek", id: "hk-peek", hidden: true })),
         h("p", { class: "hk-msg", id: "hk-msg", role: "status", hidden: true })),
+      h("div", { class: "hk-cta", id: "hk-cta" }),
+      h("div", { class: "hk-disclose" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "Illustrative headlines written from the numbers, not real news")),
+      h("div", { class: "hk-readout" },
+        h("p", { class: "hk-kicker", id: "hk-kicker" }, " "),
+        h("div", { class: "hk-head", id: "hk-readout", "data-mode": "full" }, h("span", { class: "hk-lead", id: "hk-lead" }, " "), h("span", { class: "hk-num num", id: "hk-num" }, " ")),
+        h("p", { class: "hk-est", id: "hk-est" }, "Headline demo: least-squares estimate")),
+      h("div", { class: "hk-fig", id: "hk-fig", role: "group", "aria-labelledby": "hk-kicker" })),
+    h("div", { class: "hk-below" },
+      h("section", { class: "hk-compare", "aria-labelledby": "hk-q" },
+        h("h2", { class: "hk-q", id: "hk-q" }),
+        h("div", { class: "hk-pick", id: "hk-pick", role: "group", "aria-label": "Choose a window" },
+          chip({ class: "hk-chip", "data-pick": "a", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "b", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "full", "aria-pressed": "false" }),
+          h("span", { class: "hk-hint", id: "hk-hint" }, "Drag the shaded window along the record."),
+          chip({ class: "hk-replay", id: "hk-replay" }, "Replay")),
+        h("p", { class: "hk-resolve", id: "hk-resolve", hidden: true }),
+        h("div", { class: "hk-link", id: "hk-link", hidden: true }),
+        h("details", { class: "hk-more", id: "hk-more" }, h("summary", {}, "More about these estimates"), h("div", { class: "hk-more-body", id: "hk-more-body" }))),
+      h("details", { class: "hk-more hk-more-globe" }, h("summary", {}, "Where the trials are held"),
+        h("div", { class: "hk-more-body" }, h("p", {}, `${numWord(claims.length)} registered regions. Each grid cell is colored by its estimated change per decade, and withheld cases are hatched. Imagery: NASA Blue Marble, muted.`))),
       h("div", { class: "hk-actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question"), h("a", { class: "btn-text", href: "#/cases" }, "Explore registered cases"))));
   const $ = id => root.querySelector("#" + id);
-  const fig = $("hk-fig"), lead = $("hk-lead"), num = $("hk-num"), head = root.querySelector("#page-title"), kicker = $("hk-kicker"), msg = $("hk-msg"), linkBox = $("hk-link"), globeHost = $("hk-globe");
+  const fig = $("hk-fig"), lead = $("hk-lead"), num = $("hk-num"), head = $("hk-readout"), kicker = $("hk-kicker"), msg = $("hk-msg"), linkBox = $("hk-link"), globeHost = $("hk-globe"), moreBody = $("hk-more-body");
   const chipEls = [...root.querySelectorAll(".hk-pick .hk-chip")];
   const say = t => announce(t);
 
@@ -115,7 +127,7 @@ export function hook(bundle) {
       short: c.region.name, box: c.region.box, claimId: c.id, verdict: v.id || v.branch, sen: r.sen && Number.isFinite(r.sen.slope_per_decade) ? r.sen.slope_per_decade : null,
       link: { href: `#/case/${c.id}`, text: `Open case ${c.id.replace("-", "–")}`,
         lead: withheld ? `Case ${c.id.replace("-", "–")}: no verdict given.` : `Case ${c.id.replace("-", "–")}, tested on the whole record: ${v.label}.`,
-        note: "We selected these two windows to illustrate how the estimated trend changes with the years. Both describe their selected periods; neither represents the full record. Only the registered test on the whole record gets a verdict." + (withheld ? " " + WITHHELD_LINE : "") },
+        note: "We selected these two windows to illustrate how the estimated trend changes with the years. Both describe their selected periods; neither represents the full record. Only the registered test on the whole record gets a verdict.", must: withheld ? WITHHELD_LINE : "" },
     };
   }
 
@@ -184,7 +196,8 @@ export function hook(bundle) {
     $("hk-src").textContent = sp.src;
     $("hk-resolve").textContent = resolveText(); $("hk-resolve").hidden = false;
     kicker.dataset.base = sp.kicker; kicker.textContent = sp.kicker;
-    $("hk-q").textContent = AGREE ? `Same NASA record, and every ${WIN}-year window points the same way. Choosing a window would not change the headline.` : TONES.a !== "flat" && TONES.b !== "flat" ? "Same NASA record. Opposite headlines. Which one describes the whole record?" : "Same NASA record. Different windows, different headlines. Which one describes the whole record?";
+    $("hk-h1b").textContent = AGREE ? "Every window agrees." : TONES.a !== "flat" && TONES.b !== "flat" ? "Opposite headlines." : "Different windows, different headlines.";
+    $("hk-q").textContent = AGREE ? `Same NASA record, and every ${WIN}-year window points the same way. Choosing a window would not change the headline.` : "Which one describes the whole record?";
   }
 
   // ---------------------------------------------------------------- the resolving line: what the whole record says, and what the case's own test said (from its bundle)
@@ -208,16 +221,16 @@ export function hook(bundle) {
   const S = { draw: 0, start: 0, fstart: 0, winVis: 0, fit: 0, full: 0, mode: "none" };   // mode: none | win | full
   let lastKey = "";
 
-  // ---------------------------------------------------------------- the chart (own SVG so the window can be dragged). Short on purpose: about 140 px, the globe gets the room.
+  // ---------------------------------------------------------------- the chart (own SVG so the window can be dragged). Real plot height (R7): 204 / 180 / 132 px inside a 264 / 240 / 192 px SVG.
   let C = null;                                                                       // geometry and element handles for the current width
   function build() {
-    const W = Math.max(280, Math.round(fig.clientWidth)), narrow = W < 560;
-    const H = narrow ? 124 : 140;
-    const m = { l: narrow ? 36 : 48, r: narrow ? 8 : 16, t: 32, b: 24 };
+    const W = Math.max(280, Math.round(fig.clientWidth)), narrow = W < 400;                  // narrow: tick density and label length only; the height is chosen separately
+    const H = W >= 480 ? 264 : W >= 400 ? 240 : 192;
+    const m = { l: narrow ? 36 : 48, r: narrow ? 8 : 16, t: 40, b: 28 };
     const lo0 = Math.min(...ser), hi0 = Math.max(...ser), pad = (hi0 - lo0) * 0.08, lo = lo0 - pad, hi = hi0 + pad;
     const xs = v => m.l + (v - Y0) / (Y1 - Y0) * (W - m.l - m.r), ys = v => H - m.b - (v - lo) / (hi - lo) * (H - m.t - m.b);
     const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, "aria-label": `${cap(spec.kicker)}, anomaly in ${units}, ${Y0} to ${Y1}. Drag the shaded window, or use the buttons, to choose a ${WIN}-year window.`, role: "group" });
-    const maxTicks = Math.max(2, Math.floor((H - m.t - m.b) / 24));
+    const maxTicks = Math.max(2, Math.floor((H - m.t - m.b) / 34));
     const nice = [1, 2, 5].flatMap(k => [0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000].map(p => k * p)).sort((a, b) => a - b);
     const step = [0.5, ...nice].filter(s => s > 0).sort((a, b) => a - b).find(s => (hi - lo) / s <= maxTicks) || 5;
     const sdec = step >= 1 ? 0 : Math.min(4, Math.ceil(-Math.log10(step) - 1e-9));
@@ -228,10 +241,15 @@ export function hook(bundle) {
     const unit = sv("text", { x: m.l, y: 11 }); unit.textContent = narrow && units.length > 8 ? "Anomaly" : `Anomaly, ${units}`; svg.append(unit);
     if (lo < 0 && hi > 0) svg.append(sv("line", { class: "zero", x1: m.l, x2: W - m.r, y1: ys(0), y2: ys(0) }));
     svg.append(sv("line", { class: "axis", x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b }));
-    const yrTicks = [...new Set([Y0, ...[1980, 1990, 2000, 2010, 2020].filter(y => y > Y0 + 2 && y < Y1 - 1), Y1])].filter(y => !narrow || (y !== Y0 && y !== Y1) || N < 30);
-    const showTicks = narrow ? yrTicks.filter((y, i) => i % 2 === 0 || y === Y1 && yrTicks.length < 5) : yrTicks;
+    const yrAll = [...new Set([Y0, ...[1980, 1990, 2000, 2010, 2020].filter(y => y > Y0 + 2 && y < Y1 - 1), Y1])];
+    const showTicks = [];                                                              // both record endpoints stay; a middle tick that would touch one is dropped
+    for (const y of yrAll) {
+      const last = () => showTicks[showTicks.length - 1];
+      if (y === Y1) { while (showTicks.length > 1 && xs(y) - xs(last()) < 36) showTicks.pop(); showTicks.push(y); }
+      else if (!showTicks.length || xs(y) - xs(last()) >= 36) showTicks.push(y);
+    }
     for (const yr of showTicks) {
-      const tx = sv("text", { x: xs(yr), y: H - m.b + 16, "text-anchor": "middle" }); tx.textContent = String(yr);
+      const tx = sv("text", { x: xs(yr), y: H - m.b + 17, "text-anchor": "middle" }); tx.textContent = String(yr);
       svg.append(tx, sv("line", { class: "axis", x1: xs(yr), x2: xs(yr), y1: H - m.b, y2: H - m.b + 4 }));
     }
     // the record, revealed left to right through a clip
@@ -240,7 +258,7 @@ export function hook(bundle) {
     cp.append(cr); defs.append(cp); svg.append(defs);
     const rec = sv("g", { "clip-path": `url(#${cid})` });
     rec.append(sv("polyline", { class: "ser", points: years.map((v, i) => `${xs(v).toFixed(1)},${ys(ser[i]).toFixed(1)}`).join(" ") }));
-    years.forEach((v, i) => rec.append(sv("circle", { class: "pt", cx: xs(v).toFixed(1), cy: ys(ser[i]).toFixed(1), r: narrow ? 2.2 : 2.6 })));
+    years.forEach((v, i) => rec.append(sv("circle", { class: "pt", cx: xs(v).toFixed(1), cy: ys(ser[i]).toFixed(1), r: narrow ? 2.4 : 2.8 })));
     // whole-record line and its label
     const fy = v => fullFit.intercept + fullFit.per * (v - Y0);
     const fl = sv("line", { class: "full-line", x1: xs(Y0), y1: ys(fy(Y0)), x2: xs(Y0), y2: ys(fy(Y0)) });
@@ -255,21 +273,22 @@ export function hook(bundle) {
     const e1 = sv("line", { class: "win-edge", y1: m.t, y2: H - m.b }), e2 = sv("line", { class: "win-edge", y1: m.t, y2: H - m.b });
     const fit = sv("line", { class: "win-fit" });
     const grip = sv("rect", { class: "win-grip", y: m.t, height: H - m.t - m.b });
+    const eh1 = sv("rect", { class: "win-edge-hit", y: m.t, width: 28, height: H - m.t - m.b }), eh2 = sv("rect", { class: "win-edge-hit", y: m.t, width: 28, height: H - m.t - m.b });   // wide transparent targets for the thin handles
     const hh = 22, hy = (m.t + H - m.b) / 2 - hh / 2;
     const h1 = sv("rect", { class: "win-handle", width: 9, height: hh, rx: 4.5, y: hy }), h2 = sv("rect", { class: "win-handle", width: 9, height: hh, rx: 4.5, y: hy });
     const m1 = sv("line", { class: "win-handle-mark", y1: hy + hh / 2 - 5, y2: hy + hh / 2 + 5 }), m2 = sv("line", { class: "win-handle-mark", y1: hy + hh / 2 - 5, y2: hy + hh / 2 + 5 });
     const lbl = sv("text", { class: "win-label", "text-anchor": "middle", y: m.t - 7 });
-    g.append(wr, e1, e2, grip, fit, h1, h2, m1, m2, lbl);
+    g.append(wr, e1, e2, grip, eh1, eh2, fit, h1, h2, m1, m2, lbl);
     svg.append(rec, fl, hit, g, fsw, flab);
     fig.replaceChildren(svg);
     try { const L = flab.getComputedTextLength(); fsw.setAttribute("x1", W - m.r - L - 30); fsw.setAttribute("x2", W - m.r - L - 8); } catch (e) { /* no layout yet */ }
-    C = { W, H, m, xs, ys, yearAt: x => Y0 + (x - m.l) / (W - m.l - m.r) * (Y1 - Y0), svg, cr, fl, flab, fsw, fy, g, wr, e1, e2, fit, grip, h1, h2, m1, m2, lbl, hit };
+    C = { W, H, m, xs, ys, yearAt: x => Y0 + (x - m.l) / (W - m.l - m.r) * (Y1 - Y0), svg, cr, fl, flab, fsw, fy, g, wr, e1, e2, fit, grip, eh1, eh2, h1, h2, m1, m2, lbl, hit };
     wire(); apply();
   }
 
   function apply() {
     if (!C) return;
-    const { m, W, xs, ys, cr, fl, flab, fsw, fy, g, wr, e1, e2, fit, grip, h1, h2, m1, m2, lbl } = C;
+    const { m, W, xs, ys, cr, fl, flab, fsw, fy, g, wr, e1, e2, fit, grip, eh1, eh2, h1, h2, m1, m2, lbl } = C;
     cr.setAttribute("width", ((W - m.l - m.r + 12) * S.draw).toFixed(1));
     const w = win(S.start), fs = S.fstart, x0 = xs(fs - 0.5), x1 = xs(fs + WIN - 1 + 0.5), yl = x => w.ym + w.per * (x - w.tm);
     fig.dataset.tone = tone(w.slope);
@@ -277,7 +296,7 @@ export function hook(bundle) {
     g.style.pointerEvents = S.winVis < 0.05 ? "none" : "all";
     wr.setAttribute("x", x0); wr.setAttribute("width", x1 - x0);
     e1.setAttribute("x1", x0); e1.setAttribute("x2", x0); e2.setAttribute("x1", x1); e2.setAttribute("x2", x1);
-    grip.setAttribute("x", x0); grip.setAttribute("width", x1 - x0);
+    grip.setAttribute("x", x0); grip.setAttribute("width", x1 - x0); eh1.setAttribute("x", x0 - 14); eh2.setAttribute("x", x1 - 14);
     const fa = fs, fb = fs + WIN - 1, fe = fa + (fb - fa) * S.fit;
     fit.setAttribute("x1", xs(fa)); fit.setAttribute("y1", ys(yl(fa))); fit.setAttribute("x2", xs(fe)); fit.setAttribute("y2", ys(yl(fe)));
     h1.setAttribute("x", x0 - 4.5); h2.setAttribute("x", x1 - 4.5);
@@ -311,7 +330,7 @@ export function hook(bundle) {
     const key = S.mode === "win" ? "w" + (AGREE ? "agree" : word(w.slope)) : "f";
     const L = sentence(S.mode, w), Nn = S.mode === "win" ? w.slope : SLOPES.full;
     head.dataset.mode = S.mode; head.dataset.tone = S.mode === "win" ? tone(w.slope) : "full";
-    lead.textContent = L; const wait = $("hk-h-wait"); if (wait) wait.remove();   // the placeholder name stays only until the first headline is written
+    lead.textContent = L;
     num.textContent = `${signedFmt(Nn)} `;
     const sm = document.createElement("small"); sm.textContent = `${units} per decade`; num.append(sm);
     if (animate && !reduce && key !== lastKey) for (const el of [lead, num]) el.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 460, easing: "cubic-bezier(.2,.7,.2,1)" });
@@ -331,44 +350,63 @@ export function hook(bundle) {
 
   // ---------------------------------------------------------------- globe
   const G = { api: null, ready: false };
-  function altFor(box) { const span = Math.max(box.n - box.s, (box.e - box.w) * 0.8); return clamp(1.1 + span / 50, 1.45, 2.0); }
+  const HOME_ALT = phone() ? 1.5 : 1.41;                                                // camera height: the Earth fills about 96% of the stage height (phone: 93%) at the usual 20-degree region
+  function altFor(box) { const span = Math.max(box.n - box.s, (box.e - box.w) * 0.8); return clamp(HOME_ALT + (span - 20) / 80, HOME_ALT, 1.9); }
+  const centerOf = b => [(b.s + b.n) / 2, (b.w + b.e) / 2];
   function flyTo(sp) {
     if (!G.ready || !G.api || !G.api.hasGlobe) return;
-    const b = sp.box; G.api.focus((b.s + b.n) / 2, (b.w + b.e) / 2, sp.type === "explore" ? 1.55 : altFor(b), 900);
+    const b = sp.box, [la, lo] = centerOf(b); G.api.focus(la, lo, sp.type === "explore" ? HOME_ALT + 0.1 : altFor(b), 900);
     if (sp.type === "case") { G.api.markBox(null); G.api.select(sp.id); } else { G.api.select(null); G.api.markBox(sp.box); }
   }
+  const globeSec = root.querySelector(".hk-globe"), bar = $("hk-bar"), legendBtn = $("hk-legend-btn");
+  let legendEl = null;
+  function syncLegend() {                                                                // a phone shows the color key on request, in the page flow; wider screens always show it
+    if (!legendEl) return;
+    const ph = phone(), open = legendBtn.getAttribute("aria-expanded") === "true";
+    legendBtn.hidden = !ph; legendEl.hidden = ph && !open;
+  }
+  legendBtn.addEventListener("click", () => { legendBtn.setAttribute("aria-expanded", String(legendBtn.getAttribute("aria-expanded") !== "true")); syncLegend(); });
+  const mqPhone = window.matchMedia("(max-width: 700px)"), onMq = () => syncLegend();
+  if (mqPhone.addEventListener) mqPhone.addEventListener("change", onMq);
   async function mountGlobe() {
     const poster = () => { const a = h("a", { href: "#/cases", class: "poster-link", "aria-label": "Open the case files" });
       for (const k of ["light", "dark"]) a.append(h("img", { class: `poster poster-${k}`, src: `img/globe-trials-${k}.jpg`, width: 1288, height: 645, alt: POSTER_ALT })); return a; };
     try {
       if (!hasWebGL()) { G.api = await renderGlobe(globeHost, bundle.claims, { poster: poster() }); return; }
-      const opts = { height: phone() ? "300px" : "clamp(360px, 60vh, 620px)", touchRotate: !phone(), labels: "focus", autoSpin: param("spin") !== "0", spinSpeed: 0.35,
+      const [la, lo] = centerOf(spec.box);
+      const opts = { height: "var(--hk-stage-h)", touchRotate: !phone(), labels: "focus", autoSpin: param("spin") !== "0", spinSpeed: 0.35, view: { lat: la, lng: lo, altitude: spec.type === "explore" ? HOME_ALT + 0.1 : altFor(spec.box) },
         onPick: k => selectCase(k.id, true), onPoint: p => selectPoint(p.lat, p.lng, true) };
       // The live globe takes a moment (the library, the textures, a phone's graphics chip). Until it has painted, the existing poster picture stands in for it, so the space is never blank.
       const wait = h("div", { class: "hk-poster-wait", "aria-hidden": "true" }, poster()); wait.querySelector("a").tabIndex = -1; globeHost.append(wait); globeHost.classList.add("is-waiting");
       try { G.api = await renderGlobe(globeHost, bundle.claims, opts); } finally { wait.remove(); globeHost.classList.remove("is-waiting"); }
+      if (dead) { if (G.api) G.api.destroy(); G.api = null; return; }
       G.ready = !!G.api; window.__hookGlobe = G.api; globeHost.classList.add("is-live");
-      if (dead && G.api) G.api.destroy();
+      // quiet controls: the persistent Pause button joins the corner bar; the color key moves out of the figure so it can sit directly under the Earth
+      const turn = globeHost.querySelector(".viz-controls .viz-btn[aria-pressed]"); if (turn) { turn.classList.add("hk-tool"); turn.classList.remove("viz-btn"); bar.prepend(turn); }
+      legendEl = globeHost.querySelector(".gt-chips"); if (legendEl) { legendEl.id = "hk-legend"; globeSec.append(legendEl); }
+      syncLegend();
+      document.documentElement.dataset.globeReady = "1";
     } catch (e) {
       console.error(e);
       if (!dead) { globeHost.replaceChildren(); try { G.api = await renderGlobe(globeHost, bundle.claims, { poster: poster() }); } catch (e2) { console.error(e2); } }
     }
   }
 
-  // ---------------------------------------------------------------- the 6-second hook
+  // ---------------------------------------------------------------- the Replay demonstration (explicit, or frozen at ?t=ms for video capture)
   const HOLD = param("t") != null ? +param("t") : null;
   let raf = 0, t0 = 0, running = false, fired = {}, firstRun = true;
-  const END = 7600;                                                                   // the resolving line comes about 1.5 s after the question
+  const END = 7600;                                                                   // the Replay demonstration runs this long; a normal load does not play it
   const setStage = s => { root.dataset.stage = s; };
   function resetState() {
     Object.assign(S, { draw: 0, start: PRESET.a, fstart: PRESET.a, winVis: 0, fit: 0, full: 0, mode: "none" }); lastKey = ""; fired = {};
-    $("hk-end").classList.remove("is-on"); $("hk-resolve").classList.remove("is-on"); head.dataset.mode = "none"; kicker.textContent = kicker.dataset.base; fig.dataset.tone = tone(SLOPES.a);
+    head.dataset.mode = "none"; kicker.textContent = kicker.dataset.base; fig.dataset.tone = tone(SLOPES.a);
     chipEls.forEach(c => c.setAttribute("aria-pressed", "false"));
   }
-  function finalState() {
+  function finalState(speak = true) {                                                  // the complete, readable state: the whole record, its line, the answer. Every normal load and every region pick lands here at once.
     Object.assign(S, { draw: 1, start: PRESET.b, fstart: PRESET.b, winVis: CAN_FLIP ? 0.5 : 0, fit: 1, full: 1, mode: "full" });
-    setHeadline(false); apply(); $("hk-end").classList.add("is-on"); $("hk-resolve").classList.add("is-on"); setStage("ready"); announceFinal();
+    setHeadline(false); apply(); setStage("ready"); if (speak) announceFinal();
   }
+  function settle(speak) { stop(); resetState(); finalState(speak); }
   function stop() { cancelAnimationFrame(raf); running = false; }
   function play() {
     stop(); resetState();
@@ -394,8 +432,7 @@ export function hook(bundle) {
       if (!fired.c) { fired.c = 1; S.mode = "full"; setHeadline(true); }
       const p = ease(clamp((t - 5100) / 800)); S.full = p; S.winVis = CAN_FLIP ? 1 - 0.5 * p : 0;
     }
-    if (t >= 5800 && !fired.d) { fired.d = 1; $("hk-end").classList.add("is-on"); }
-    if (t >= 7300 && !fired.e) { fired.e = 1; $("hk-resolve").classList.add("is-on"); announceFinal(); }
+    if (t >= 7300 && !fired.e) { fired.e = 1; announceFinal(); }
     apply();
   }
   function skipIntro() { if (!running) return; stop(); resetState(); finalState(); S.winVis = 0.5; apply(); }
@@ -415,7 +452,7 @@ export function hook(bundle) {
     announceWin();
   }
   function wire() {
-    const { svg, g, hit, grip } = C;
+    const { svg, g, hit, grip, eh1, eh2 } = C;
     let drag = null;
     const toYear = e => { const r = svg.getBoundingClientRect(); return C.yearAt((e.clientX - r.left) * (C.W / r.width)); };
     const down = e => {
@@ -428,7 +465,7 @@ export function hook(bundle) {
     };
     const move = e => { if (!drag) return; const v = clamp(Math.round(toYear(e) - drag.off), Y0, Y1 - WIN + 1); S.fstart = S.start = v; setHeadline(false); apply(); announceWin(); };
     const up = () => { drag = null; };
-    for (const el of [hit, grip]) el.addEventListener("pointerdown", down);
+    for (const el of [hit, grip, eh1, eh2]) el.addEventListener("pointerdown", down);
     svg.addEventListener("pointermove", move); svg.addEventListener("pointerup", up); svg.addEventListener("pointercancel", up);
     g.addEventListener("keydown", e => {
       const k = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1, PageDown: -5, PageUp: 5 }[e.key];
@@ -439,7 +476,7 @@ export function hook(bundle) {
   chipEls[0].addEventListener("click", () => { skipIntro(); S.winVis = 1; S.fit = 1; S.mode = "win"; glideTo(PRESET.a); setHeadline(true); announceWin(); });
   chipEls[1].addEventListener("click", () => { skipIntro(); S.winVis = 1; S.fit = 1; S.mode = "win"; glideTo(PRESET.b); setHeadline(true); announceWin(); });
   chipEls[2].addEventListener("click", () => { skipIntro(); S.mode = "full"; S.winVis = CAN_FLIP ? 0.5 : 0; S.full = 1; setHeadline(true); apply(); announceWin(); });
-  $("hk-replay").addEventListener("click", () => { cancelAnimationFrame(glideTo.raf); play(); });
+  $("hk-replay").addEventListener("click", () => { cancelAnimationFrame(glideTo.raf); showHook(true); play(); });
 
   // ---------------------------------------------------------------- regions: pick a case on the globe or from the list, or explore any other point
   let token = 0;
@@ -448,26 +485,28 @@ export function hook(bundle) {
   function showHook(byPointer) {
     if (!byPointer) return;
     const r = fig.getBoundingClientRect();
-    if (r.bottom < 40 || r.top > innerHeight - 40) head.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+    if (r.bottom < 40 || r.top > innerHeight - 40) kicker.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
   }
   function paintLink() {
     linkBox.hidden = false; linkBox.dataset.kind = spec.type;
     const a = h("a", { href: spec.link.href, class: "hk-go" }, spec.link.text);
-    linkBox.replaceChildren(h("p", { class: "hk-link-lead" }, spec.link.lead), h("p", { class: "hk-link-row" }, a, " →"), h("p", { class: "hk-link-note" }, spec.link.note),
-      spec.type === "case" && spec.sen != null ? h("p", { class: "hk-link-note hk-slopes" }, [h("b", {}, "Two estimates, one record. "), `Headline demo: least-squares estimate, ${signedFmt(SLOPES.full)} ${units} per decade (the “whole record” line above). Registered case: Sen estimate, ${signedFmt(spec.sen)}, the median of the slopes between pairs of years, which one odd year barely moves.`]) : null);
+    linkBox.replaceChildren(h("p", { class: "hk-link-lead" }, spec.link.lead), h("p", { class: "hk-link-row" }, a, " →"), ...(spec.link.must ? [h("p", { class: "hk-link-note" }, spec.link.must)] : []));
+    moreBody.replaceChildren(h("p", {}, spec.link.note),
+      ...(spec.type === "case" && spec.sen != null ? [h("p", { class: "hk-slopes" }, [h("b", {}, "Two estimates, one record. "), `Headline demo: least-squares estimate, ${signedFmt(SLOPES.full)} ${units} per decade (the “whole record” line above). Registered case: Sen estimate, ${signedFmt(spec.sen)}, the median of the slopes between pairs of years, which one odd year barely moves.`])] : []),
+      h("p", {}, "The rates are least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."));
   }
   function paintList() {
     for (const b of root.querySelectorAll(".hk-regions button")) b.setAttribute("aria-pressed", String(spec.type === "case" ? b.dataset.case === spec.id : (b.dataset.x === `${spec.center.lat.toFixed(1)},${spec.center.lng.toFixed(1)}`)));
   }
   function startRun(sp, { fly = true } = {}) {
     cancelAnimationFrame(glideTo.raf); stop();
-    setData(sp); chipLabels(); paintLink(); paintList(); build(); play(); if (fly) flyTo(sp);
+    setData(sp); chipLabels(); paintLink(); paintList(); build(); settle(true); if (fly) flyTo(sp);
     fig.classList.remove("is-loading"); kicker.classList.remove("is-loading");
   }
   function selectCase(id, byPointer) {
     const c = claimOf(id); if (!c) return;
     token++; setMsg(""); showHook(byPointer);
-    if (spec && spec.type === "case" && spec.id === id && !running && !reduce) { play(); flyTo(spec); return; }   // pressing the same region again replays it
+    if (spec && spec.type === "case" && spec.id === id && !running) { setChooser(false); flyTo(spec); return; }   // the same region again changes nothing (Replay is its own button)
     startRun(caseSpec(c));
   }
   async function selectPoint(lat, lng, byPointer) {
@@ -483,15 +522,27 @@ export function hook(bundle) {
       if (e && e.plain) setMsg(e.message, "info"); else { console.error(e); setMsg("The NASA library could not be read for that spot just now. Try another point.", "info"); }
     }
   }
+  // The region chooser: a real button with aria-expanded, a panel that is `hidden` while closed, a preview on hover or keyboard focus (the same text opens on tap by selecting), Escape closes it.
+  const regionBtn = $("hk-region-btn"), chooser = $("hk-regions"), peekEl = $("hk-peek");
+  function setChooser(on) {
+    chooser.hidden = !on; regionBtn.setAttribute("aria-expanded", String(!!on)); if (!on) peek("");
+  }
+  const peek = t => { peekEl.hidden = !t; peekEl.textContent = t || ""; };
+  const closeAfter = () => { const had = chooser.contains(document.activeElement); setChooser(false); if (had) regionBtn.focus(); };   // keyboard focus returns to the trigger instead of vanishing
+  regionBtn.addEventListener("click", () => setChooser(chooser.hidden));
+  const onKey = e => { if (e.key === "Escape" && !chooser.hidden) { setChooser(false); regionBtn.focus(); } };
+  const onDown = e => { if (!chooser.hidden && !chooser.contains(e.target) && !regionBtn.contains(e.target)) setChooser(false); };
+  document.addEventListener("keydown", onKey); document.addEventListener("pointerdown", onDown);
   function buildRegionList() {
     const host = $("hk-regions-cases"), ex = $("hk-regions-x");
+    const bind = (b, text) => { for (const ev of ["mouseenter", "focus"]) b.addEventListener(ev, () => peek(text)); for (const ev of ["mouseleave", "blur"]) b.addEventListener(ev, () => peek("")); };
     for (const c of claims) {
       const b = chip({ class: "hk-chip hk-reg", "data-case": c.id, "aria-pressed": "false" }, BTN[c.id] || c.region.name);
-      b.addEventListener("click", e => selectCase(c.id, e.detail > 0)); host.append(b);
+      b.addEventListener("click", e => { selectCase(c.id, e.detail > 0); closeAfter(); }); bind(b, `${BTN[c.id] || c.region.name}. ${caseSpec(c).link.lead}`); host.append(b);
     }
     for (const [label, lat, lng] of EXPLORE) {
       const b = chip({ class: "hk-chip hk-reg hk-reg-x", "data-x": `${lat.toFixed(1)},${lng.toFixed(1)}`, "aria-pressed": "false", "aria-label": `Explore ${label}, not a trial` }, label);
-      b.addEventListener("click", e => selectPoint(lat, lng, e.detail > 0)); ex.append(b);
+      b.addEventListener("click", e => { selectPoint(lat, lng, e.detail > 0); closeAfter(); }); bind(b, `${label}. Exploration, not a trial: no registered test.`); ex.append(b);
     }
   }
 
@@ -506,19 +557,20 @@ export function hook(bundle) {
     if (dead) return;
     setData(firstSpec); chipLabels(); paintLink(); paintList(); build();
     let rw = fig.clientWidth; if (window.ResizeObserver) { ro = new ResizeObserver(() => { if (Math.abs(fig.clientWidth - rw) > 1) { rw = fig.clientWidth; build(); } }); ro.observe(fig); }
-    // The globe builds a 4096 px texture on the main thread, which would stall the animation. So wait for it to settle (at most 4 s), then play.
-    const settle = () => new Promise(res => { const t1 = performance.now(); let last = t1, ok = 0; const f = now => { if (dead) return res(); ok = now - last < 60 ? ok + 1 : 0; last = now; if (now - t1 > 1200 && ok >= 8) res(); else requestAnimationFrame(f); }; requestAnimationFrame(f); });
-    await Promise.race([mountGlobe().then(settle), new Promise(r => setTimeout(r, 4500))]);
+    // A normal load shows the complete state at once: the whole record, its line, the answer. The globe mounts on its own clock (the poster stands in until it has painted).
+    // Only ?t=ms (a frozen frame for video capture) or the Replay button runs the timed demonstration.
+    if (HOLD != null) play(); else settle(false);
+    document.documentElement.dataset.hookReady = "1";
+    await mountGlobe();
     if (dead) return;
-    play();
     flyTo(spec);
     if (!G.ready) { const wait = setInterval(() => { if (dead) clearInterval(wait); else if (G.ready) { clearInterval(wait); flyTo(spec); } }, 400); setTimeout(() => clearInterval(wait), 15000); }
-    document.documentElement.dataset.hookReady = "1";
   }
   function dispose() {
     dead = true; stop(); cancelAnimationFrame(glideTo.raf); clearTimeout(liveT); if (ro) ro.disconnect();
+    document.removeEventListener("keydown", onKey); document.removeEventListener("pointerdown", onDown); if (mqPhone.removeEventListener) mqPhone.removeEventListener("change", onMq);
     if (G.api) { try { G.api.destroy(); } catch (e) { /* ignore */ } G.api = null; }
-    for (const k of ["hookReady", "playAt"]) delete document.documentElement.dataset[k];
+    for (const k of ["hookReady", "playAt", "globeReady"]) delete document.documentElement.dataset[k];
     if (window.__hookGlobe) delete window.__hookGlobe;
   }
   return { node: root, start, dispose };

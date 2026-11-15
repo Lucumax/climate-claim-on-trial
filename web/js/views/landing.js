@@ -23,12 +23,12 @@ export function landing(b) {
   mountLive(faHost, async () => { const mod = await import("./falsealarm.js"); const v = mod.falseAlarm({ preview: true }); faHost.replaceChildren(v.node); return v; });
   const faBand = h("section", { class: "band band-fa", "aria-labelledby": "fa-h" },
     h("div", { class: "band-head" }, h("h2", { id: "fa-h" }, "Every flag is wrong."), h("p", {}, "This simulated planet has no underlying trend. See what the tests flag anyway."),
-      h("a", { class: "btn", href: "#/false-alarm" }, "Explore False-Alarm Planet")),
+      h("a", { class: "btn", href: "#/false-alarm" }, "Explore False-Alarm Planet"), " ", h("span", { class: "chip warn" }, "Synthetic")),
     faHost);
-  // The guided 3-minute route sits right under the hook, before the globe. Step 4 sends the visitor to the False-Alarm Planet band below.
+  // The guided 3-minute route: its one button sits in the hero, its card (closed until that button is pressed) goes between the hero and the comparison. Step 4 sends the visitor to the False-Alarm Planet band below.
   const showPlanet = () => { const hd = faBand.querySelector("#fa-h"); if (!hd) return; hd.setAttribute("tabindex", "-1"); faBand.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); hd.focus({ preventScroll: true }); };
   const gd = hk ? guided(hk.node, { showPlanet }) : null;
-  if (gd) { const g = hk.node.querySelector(".hk-globe"); if (g) hk.node.insertBefore(gd.node, g); else hk.node.append(gd.node); }
+  if (gd) { const g = hk.node.querySelector(".hk-below"); if (g) hk.node.insertBefore(gd.node, g); else hk.node.append(gd.node); }
   const ca = b.claims.find(q => q.id === "C-A");
   const wHostA = h("div", { class: "wit-host", style: "min-height:260px" }), wHostB = h("div", { class: "wit-host", style: "min-height:260px" });
   mountLive(wHostA, async () => { const [mod, d] = await Promise.all([import("../viz/witness.js"), getJson("data/witness/C-A.json")]); return mod.render(wHostA, d, { preview: true }); });

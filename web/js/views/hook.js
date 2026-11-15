@@ -8,6 +8,7 @@ import { h, fmtNum, U, range, announce } from "../util.js";
 import { olsTest } from "../stats.js";
 import { render as renderGlobe, hasWebGL } from "../viz/globe-trials.js";
 import { loadGeo } from "../viz/geo.js";
+import { WITHHELD_LINE } from "./common.js";
 import { loadLibrary, libraryPlan, libraryRegional, completeSeasons } from "../library.js";
 
 const NS = "http://www.w3.org/2000/svg";
@@ -74,6 +75,7 @@ export function hook(bundle) {
     h("div", { class: "hk-hook" },
       h("p", { class: "hk-kicker", id: "hk-kicker" }, " "),
       h("h1", { id: "page-title", tabindex: "-1", class: "hk-head", "data-mode": "none" }, h("span", { class: "sr-only", id: "hk-h-wait" }, "Same NASA record, opposite headlines"), h("span", { class: "hk-lead", id: "hk-lead" }, " "), h("span", { class: "hk-num num", id: "hk-num" }, " ")),
+      h("p", { class: "hk-est", id: "hk-est" }, "Headline demo: least-squares estimate"),
       h("div", { class: "hk-fig", id: "hk-fig", role: "group", "aria-labelledby": "hk-kicker" }),
       h("div", { class: "hk-pick", id: "hk-pick", role: "group", "aria-label": "Choose a window" },
         chip({ class: "hk-chip", "data-pick": "a", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "b", "aria-pressed": "false" }), chip({ class: "hk-chip", "data-pick": "full", "aria-pressed": "false" }),
@@ -83,7 +85,7 @@ export function hook(bundle) {
         h("div", { class: "hk-end-text" },
           h("p", { class: "hk-q", id: "hk-q" }, "Same NASA record. Opposite headlines. Which one describes the whole record?"),
           h("p", { class: "hk-resolve", id: "hk-resolve", hidden: true }),
-          h("div", { class: "hk-meta" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "Illustrative headlines written from the numbers, not real news. The rates come from least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."))),
+          h("div", { class: "hk-meta" }, h("p", { class: "hk-src", id: "hk-src" }), h("p", { class: "hk-ill" }, "We selected these two windows to illustrate how the estimated trend changes with the years. Both describe their selected periods; neither represents the full record. The headlines are illustrative, written from the numbers, not real news. The rates are least-squares straight-line fits to yearly differences from the record's average; the registered case tests the whole record with a different method."))),
         h("div", { class: "hk-link", id: "hk-link", hidden: true }))),
     h("section", { class: "hk-globe", "aria-labelledby": "hk-globe-h" },
       h("div", { class: "hk-globe-head" }, h("h2", { id: "hk-globe-h" }, "Where the trials are held"),
@@ -113,7 +115,7 @@ export function hook(bundle) {
       short: c.region.name, box: c.region.box, claimId: c.id, verdict: v.id || v.branch, sen: r.sen && Number.isFinite(r.sen.slope_per_decade) ? r.sen.slope_per_decade : null,
       link: { href: `#/case/${c.id}`, text: `Open case ${c.id.replace("-", "–")}`,
         lead: withheld ? `Case ${c.id.replace("-", "–")}: no verdict given.` : `Case ${c.id.replace("-", "–")}, tested on the whole record: ${v.label}.`,
-        note: "The windows above show how a headline can be chosen. Only the registered test on the whole record gets a verdict." },
+        note: "We selected these two windows to illustrate how the estimated trend changes with the years. Both describe their selected periods; neither represents the full record. Only the registered test on the whole record gets a verdict." + (withheld ? " " + WITHHELD_LINE : "") },
     };
   }
 
@@ -342,7 +344,10 @@ export function hook(bundle) {
       if (!hasWebGL()) { G.api = await renderGlobe(globeHost, bundle.claims, { poster: poster() }); return; }
       const opts = { height: phone() ? "300px" : "clamp(360px, 60vh, 620px)", touchRotate: !phone(), labels: "focus", autoSpin: param("spin") !== "0", spinSpeed: 0.35,
         onPick: k => selectCase(k.id, true), onPoint: p => selectPoint(p.lat, p.lng, true) };
-      G.api = await renderGlobe(globeHost, bundle.claims, opts); G.ready = !!G.api; window.__hookGlobe = G.api; globeHost.classList.add("is-live");
+      // The live globe takes a moment (the library, the textures, a phone's graphics chip). Until it has painted, the existing poster picture stands in for it, so the space is never blank.
+      const wait = h("div", { class: "hk-poster-wait", "aria-hidden": "true" }, poster()); wait.querySelector("a").tabIndex = -1; globeHost.append(wait); globeHost.classList.add("is-waiting");
+      try { G.api = await renderGlobe(globeHost, bundle.claims, opts); } finally { wait.remove(); globeHost.classList.remove("is-waiting"); }
+      G.ready = !!G.api; window.__hookGlobe = G.api; globeHost.classList.add("is-live");
       if (dead && G.api) G.api.destroy();
     } catch (e) {
       console.error(e);
@@ -449,7 +454,7 @@ export function hook(bundle) {
     linkBox.hidden = false; linkBox.dataset.kind = spec.type;
     const a = h("a", { href: spec.link.href, class: "hk-go" }, spec.link.text);
     linkBox.replaceChildren(h("p", { class: "hk-link-lead" }, spec.link.lead), h("p", { class: "hk-link-row" }, a, " →"), h("p", { class: "hk-link-note" }, spec.link.note),
-      spec.type === "case" && spec.sen != null ? h("p", { class: "hk-link-note hk-slopes" }, `Two slopes, one record: the “whole record” line above is a least-squares fit (${signedFmt(SLOPES.full)} ${units} per decade). The case uses the Sen slope, the median of the slopes between pairs of years (${signedFmt(spec.sen)}), which one odd year barely moves.`) : null);
+      spec.type === "case" && spec.sen != null ? h("p", { class: "hk-link-note hk-slopes" }, [h("b", {}, "Two estimates, one record. "), `Headline demo: least-squares estimate, ${signedFmt(SLOPES.full)} ${units} per decade (the “whole record” line above). Registered case: Sen estimate, ${signedFmt(spec.sen)}, the median of the slopes between pairs of years, which one odd year barely moves.`]) : null);
   }
   function paintList() {
     for (const b of root.querySelectorAll(".hk-regions button")) b.setAttribute("aria-pressed", String(spec.type === "case" ? b.dataset.case === spec.id : (b.dataset.x === `${spec.center.lat.toFixed(1)},${spec.center.lng.toFixed(1)}`)));

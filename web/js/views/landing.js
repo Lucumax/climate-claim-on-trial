@@ -2,6 +2,7 @@
 // with the big globe of the registered case regions right below it. The showcase bands below mount when they come near the viewport.
 import { h } from "../util.js";
 import { hook } from "./hook.js";
+import { guided } from "./guided.js";
 
 // Run start() once node is near the viewport (or at once without IntersectionObserver). Returns a cancel function.
 export function whenNear(node, start, margin = "300px") {
@@ -24,6 +25,10 @@ export function landing(b) {
     h("div", { class: "band-head" }, h("h2", { id: "fa-h" }, "Every flag is wrong."), h("p", {}, "This simulated planet has no underlying trend. See what the tests flag anyway."),
       h("a", { class: "btn", href: "#/false-alarm" }, "Explore False-Alarm Planet")),
     faHost);
+  // The guided 3-minute route sits right under the hook, before the globe. Step 4 sends the visitor to the False-Alarm Planet band below.
+  const showPlanet = () => { const hd = faBand.querySelector("#fa-h"); if (!hd) return; hd.setAttribute("tabindex", "-1"); faBand.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); hd.focus({ preventScroll: true }); };
+  const gd = hk ? guided(hk.node, { showPlanet }) : null;
+  if (gd) { const g = hk.node.querySelector(".hk-globe"); if (g) hk.node.insertBefore(gd.node, g); else hk.node.append(gd.node); }
   const ca = b.claims.find(q => q.id === "C-A");
   const wHostA = h("div", { class: "wit-host", style: "min-height:260px" }), wHostB = h("div", { class: "wit-host", style: "min-height:260px" });
   mountLive(wHostA, async () => { const [mod, d] = await Promise.all([import("../viz/witness.js"), getJson("data/witness/C-A.json")]); return mod.render(wHostA, d, { preview: true }); });
@@ -36,10 +41,10 @@ export function landing(b) {
       h("div", { class: "wit-col" }, wHostB, h("a", { class: "btn-quiet", href: "#/case/C-A?view=witness2" }, "Second witness")))) : null;
   const invite = h("section", { class: "band band-invite", "aria-labelledby": "inv-h" },
     h("h2", { id: "inv-h" }, "Now ask your own question"),
-    h("p", {}, "Pick a NASA measurement, a place and a period. The answer updates as you choose, and the page keeps count of how many questions you have tried."),
+    h("p", {}, "We examine specific trend claims for a stated measurement, place and period. Now pick a NASA measurement, a place and a period of your own. The answer updates as you choose, and the page keeps count of how many questions you have tried."),
     h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Start investigating"), h("a", { class: "btn-text", href: "#/method" }, "How it works"), h("a", { class: "btn-text", href: "#/data" }, "Data and provenance")));
   const fallbackHead = hk ? null : h("section", { class: "hero" }, h("h1", { id: "page-title", tabindex: "-1" }, "Same NASA record. Opposite headlines."), h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and ask different questions of the same record."), h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question")));
   return { title: "Same NASA record, opposite headlines", node: h("div", { class: "home" }, hk ? hk.node : null, fallbackHead, faBand, witBand, invite),
     afterMount() { if (hk) hk.start(); },
-    dispose() { dead = true; cancels.forEach(c => c()); if (hk) hk.dispose(); handles.forEach(x => x && x.destroy && x.destroy()); } };
+    dispose() { dead = true; cancels.forEach(c => c()); if (hk) hk.dispose(); if (gd) gd.dispose(); handles.forEach(x => x && x.destroy && x.destroy()); } };
 }

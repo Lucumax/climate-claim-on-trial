@@ -16,8 +16,8 @@ export function directionWord(slope) { return slope > 0 ? "rose" : slope < 0 ? "
 
 export function trendWords(name, slope, lo, hi, units) {
   const spans0 = lo <= 0 && hi >= 0;
-  let t = `Over this period, ${name.toLowerCase()} ${directionWord(slope)} by about ${Math.abs(slope).toPrecision(2)} ${units} per decade. The 95% range runs from ${signed(lo, 3)} to ${signed(hi, 3)}.`;
-  if (spans0) t += " That range includes zero, so a flat line is among the plausible answers.";
+  let t = `Over this period, ${name.toLowerCase()} ${directionWord(slope)} by about ${Math.abs(slope).toPrecision(2)} ${units} per decade. Exploratory interval; coverage not validated: ${signed(lo, 3)} to ${signed(hi, 3)}.`;
+  if (spans0) t += " That interval includes zero, so a flat line is among the plausible answers.";
   return t;
 }
 

@@ -51,6 +51,7 @@ export function whyBlock(c) {
   const e1 = c.id === "C-E1", claimed = e1 ? "fallen" : "risen", other = e1 ? "C-E2" : "C-E1";
   const ad = adaptive(c);
   const paras = [
+    h("p", {}, h("b", {}, "About this pair. "), "These regional NO₂-column records illustrate opposite trend directions. They do not by themselves identify causes, measure surface exposure, or rank national climate performance."),
     h("p", {}, h("b", {}, "What the readings say. "), `The Sen slope is ${slope}. In hearings 1 to ${c.ladder.length}, ${hearingRange(c)} of the mapped area is flagged in the claimed direction (${e1 ? "falling" : "rising"}), a description only. The readings point the way the claim says, in both boxes of this pair. They are not verdicts.`),
     h("p", {}, h("b", {}, "Why the court still does not rule. "), shape(c), ` A straight-line test reads a bend like that as year-to-year "memory". ${MEMORY} Here it is ${phi}.`),
     e1

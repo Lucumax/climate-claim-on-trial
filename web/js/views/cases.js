@@ -4,7 +4,7 @@
 import { h, pct, signed, fmtNum, fmtPx, boxStr, announce, U, range } from "../util.js";
 import { renderMap } from "../map.js";
 import { seriesChart } from "../chart.js";
-import { KIND, withheldNote, regionThumb, copyButton, clinicSlot, disc, datasetName, kindChip } from "./common.js";
+import { KIND, WITHHELD_LINE, scopeParts, withheldNote, regionThumb, copyButton, clinicSlot, disc, datasetName, kindChip } from "./common.js";
 import { sigClass, sigLabel } from "../words.js";
 import { clinicStrip, whoActs } from "./clinic.js";
 import { exhibit } from "./exhibit.js";
@@ -32,19 +32,18 @@ const calLines = (c, withheld) => c.display ? [c.display.interval, withheld ? nu
 // Persistence is always said the same way: the bundle's lag-1 autocorrelation is computed after removing the linear trend; the raw one is shown beside it.
 const lag1 = y => { const a = y.slice(0, -1), b = y.slice(1), m = x => x.reduce((p, q) => p + q, 0) / x.length, ma = m(a), mb = m(b); let n = 0, da = 0, db = 0; a.forEach((v, i) => { n += (v - ma) * (b[i] - mb); da += (v - ma) ** 2; db += (b[i] - mb) ** 2; }); return n / Math.sqrt(da * db); };
 export const persistenceText = c => c.phi_hat == null ? null : `after removing the linear trend (${signed(c.phi_hat, 2)}; raw ${signed(lag1(c.regional.anomaly.filter(v => v != null)), 2)})`;
-const scopeLine = c => [cap(c.region.name), c.season.toLowerCase(), range(c.period.start, c.period.end), datasetName(c)].join(" · ");
 
 export function caseList(b) {
   return { title: "Case files", node: h("div", {},
     h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "Case files"),
-      h("p", { class: "lede" }, "Questions registered before each claim's data were downloaded, then tested with NASA data. The questions cannot be edited. The methods were amended and disclosed, and the final gate is frozen."), indexNote()),
+      h("p", { class: "lede" }, "We examine specific trend claims for a stated measurement, place and period. Questions registered before each claim's data were downloaded, then tested with NASA data. The questions cannot be edited. The methods were amended and disclosed, and the final gate is frozen."), indexNote()),
     h("div", { class: "case-rows" }, b.claims.map(c => {
       const r = c.regional, iv = r.interval, u = U(r.units);
       return h("article", { class: "case-row", "aria-labelledby": "ct-" + c.id },
         h("div", { class: "locator" }, regionThumb(c.region.box, `Map showing where ${c.region.name} is; the box used is outlined.`)),
         h("div", {}, h("p", { class: "eyebrow brass" }, "Case " + caseNo(c.id)), h("h2", { id: "ct-" + c.id }, "“" + c.claim_text + ".”"),
           h("p", { class: "meta-line" }, `${cap(c.region.name)} · ${c.season.toLowerCase()}, ${range(c.period.start, c.period.end)} · ${datasetName(c)} · ${KIND[c.data_kind].split(",")[0]}`),
-          h("p", { class: "finding-line" }, h("b", {}, c.verdict.branch === "withheld" ? "Withheld" : (c.verdict.scoped || c.verdict.label)), c.verdict.branch === "withheld" ? ": the evidence did not pass the court's own checks, so no verdict is given." : `: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade${iv ? ` (nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)})` : ""}`)),
+          h("p", { class: "finding-line" }, h("b", {}, c.verdict.branch === "withheld" ? "Withheld" : (c.verdict.scoped || c.verdict.label)), c.verdict.branch === "withheld" ? ": the evidence did not pass the court's own checks, so no verdict is given. " + WITHHELD_LINE : `: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade${iv ? ` (nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)})` : ""}`)),
         h("a", { class: "btn", href: `#/case/${c.id}`, "aria-label": `Open case file ${caseNo(c.id)}` }, "Open case file"));
     }))) };
 }
@@ -81,24 +80,33 @@ export function caseDocket(b, c, query = "") {
   })();
   const essential = withheld ? "The record and the map are shown below for reading. They are a description, not a basis for a verdict. The technical reasons are under Limits of this finding." :
     c.data_kind === "model_reanalysis" ? "This is model output, not a direct measurement, and a trend does not say why it changed." : (f.not_supported && f.not_supported[0]) || "A trend alone does not say why it changed or what comes next.";
-  const text = () => [withheld ? "Withheld: the court cannot rule on this evidence. " + plainReason(c) : v.scoped, v.headline, ...v.sentences,
-    `Claim: ${c.claim_text}. Scope: ${scopeLine(c)}. Change: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade (Sen slope); ${iv ? `${iv.label} ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : "interval not shown: failed its coverage check"}.${calLines(c, withheld).length ? " " + calLines(c, withheld).join(". ") + "." : ""} Regional test: ${t ? `${t.title}, p = ${fmtPx(t.p)}, variance factor ${fac(t)}` : "not shown (it did not pass its calibration check)"}. Dataset: ${f.product.name}, version ${f.product.version}, DOI ${f.product.doi}. Run ${f.run_id}; ledger ${f.ledger_ref || "n/a"}.`,
+  const text = () => [withheld ? "Withheld: the court cannot rule on this evidence. " + plainReason(c) + " " + WITHHELD_LINE : v.scoped, v.headline, ...v.sentences,
+    `Claim: ${c.claim_text}. Scope: ${scopeText} Change: ${signed(r.sen.slope_per_decade, 2)} ${u} per decade (Sen slope); ${iv ? `${iv.label} ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)}` : "interval not shown: failed its coverage check"}.${calLines(c, withheld).length ? " " + calLines(c, withheld).join(". ") + "." : ""} Regional test: ${t ? `${t.title}, p = ${fmtPx(t.p)}, variance factor ${fac(t)}` : "not shown (it did not pass its calibration check)"}. Dataset: ${f.product.name}, version ${f.product.version}, DOI ${f.product.doi}. Run ${f.run_id}; ledger ${f.ledger_ref || "n/a"}.`,
     c.region.note || "", f.selection_disclosure || ""].filter(Boolean).join("\n");
-  const ruling = h("section", { class: "surface verdict" + (withheld ? " withheld" : ""), role: "status", "aria-labelledby": "ruling-h" },
-    h("div", {}, h("p", { class: "eyebrow" }, "The ruling"), h("h2", { id: "ruling-h", class: "verdict-word" }, withheld ? "Withheld" : v.label),
-      withheld ? h("p", { class: "verdict-scope" }, "The court cannot rule on this evidence.") : null,
-      h("p", { class: "verdict-scope" }, scopeLine(c)),
-      why ? h("p", { class: "verdict-scope" }, why) : null,
-      h("div", { class: "chips" }, h("span", { class: "chip" }, withheld ? "Withheld" : "Regional ruling: final"), c.synthetic ? h("span", { class: "chip warn" }, "Synthetic test case") : h("a", { class: "chip", href: "#/data/registration" }, "Question registered; methods amended"), kindChip(c.data_kind))),
-    h("div", {}, h("p", { class: "eyebrow" }, withheld ? "What the record shows" : "Regional change"), h("p", { class: "verdict-num" }, signed(r.sen.slope_per_decade, 2), " ", h("small", {}, `${u} per decade (Sen slope${withheld ? ", descriptive only" : ""})`)),
-      h("p", { class: "small muted", style: "margin:4px 0 0" }, "The Sen slope estimates the rate of change from the median slope between pairs of years."),
-      iv ? h("p", { class: "verdict-iv" }, `Nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`, h("span", { class: "small muted", style: "display:block" }, "95% is the method's stated level. The measured coverage in simulations is given below.")) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
-      calLines(c, withheld).map(x => h("p", { class: "small muted cal-line", style: "margin:4px 0 0" }, x.charAt(0).toUpperCase() + x.slice(1) + ".")),
-      h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => ex.select("hearings", { scroll: true }) }, withheld ? "See the evidence by hearing" : "Explore the hearings"),
-        copyButton("Copy finding", text, `finding_${c.id}.txt`))),
-    h("div", { class: "verdict-notes" },
-      whoActs(c) ? h("p", { class: "verdict-who" }, h("b", {}, "Who acts on this? "), whoActs(c)) : null,
-      h("p", { class: "verdict-caveat" }, h("b", {}, "Essential caveat. "), essential)));
+  const sp = scopeParts(c, range), scopeText = `${sp.variable}; ${sp.where}; ${sp.years}; ${sp.src} (${datasetName(c)}). Cannot establish: ${sp.cannot}.`;
+  const scopeEl = h("p", { class: "scope-line" }, h("b", {}, "Scope. "), `${sp.variable} · ${sp.where} · ${sp.years} · ${sp.src} (${datasetName(c)}). `, h("b", {}, "Cannot establish: "), sp.cannot + ".");
+  const chipsEl = h("div", { class: "chips" }, h("span", { class: "chip" }, withheld ? "Withheld" : "Regional ruling: final"), c.synthetic ? h("span", { class: "chip warn" }, "Synthetic test case") : h("a", { class: "chip", href: "#/data/registration" }, "Question registered; methods amended"), kindChip(c.data_kind));
+  const numEl = [h("p", { class: "est-label" }, "Registered case: Sen estimate"), h("p", { class: "verdict-num" }, signed(r.sen.slope_per_decade, 2), " ", h("small", {}, `${u} per decade (Sen slope${withheld ? ", descriptive only" : ""})`)),
+    h("p", { class: "small muted", style: "margin:4px 0 0" }, "The Sen slope estimates the rate of change from the median slope between pairs of years."),
+    iv ? h("p", { class: "verdict-iv" }, `Nominal 95% interval ${signed(iv.lo, 2)} to ${signed(iv.hi, 2)} ${u} per decade`, h("span", { class: "small muted", style: "display:block" }, "95% is the method's stated level. The measured coverage in simulations is given below.")) : h("p", { class: "verdict-iv" }, withheld ? "No interval and no significance statement are given for this record." : "95% interval not shown: it failed its coverage check, so only the point estimate is given."),
+    calLines(c, withheld).map(x => h("p", { class: "small muted cal-line", style: "margin:4px 0 0" }, x.charAt(0).toUpperCase() + x.slice(1) + "."))];
+  const actionsEl = h("div", { class: "actions" }, h("button", { class: "btn", type: "button", onclick: () => ex.select("hearings", { scroll: true }) }, withheld ? "See the evidence by hearing" : "Explore the hearings"),
+    copyButton("Copy finding", text, `finding_${c.id}.txt`));
+  const notesEl = h("div", { class: "verdict-notes" },
+    whoActs(c) ? h("p", { class: "verdict-who" }, h("b", {}, "Who acts on this? "), whoActs(c)) : null,
+    h("p", { class: "verdict-caveat" }, h("b", {}, "Essential caveat. "), essential));
+  // A withheld ruling reads in one fixed order: what the record shows, what the tool can conclude, why the distinction matters.
+  const ruling = withheld
+    ? h("section", { class: "surface verdict withheld", role: "status", "aria-labelledby": "ruling-h" },
+      h("div", {}, h("p", { class: "eyebrow" }, "The ruling"), h("h2", { id: "ruling-h", class: "verdict-word" }, "Withheld"), h("p", { class: "verdict-scope" }, "The court cannot rule on this evidence."), scopeEl, chipsEl),
+      h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "1. What the record shows"), numEl),
+      h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "2. What the tool can conclude"), h("p", { class: "verdict-scope" }, why)),
+      h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "3. Why the distinction matters"), h("p", { class: "verdict-scope withheld-line" }, WITHHELD_LINE), actionsEl),
+      notesEl)
+    : h("section", { class: "surface verdict", role: "status", "aria-labelledby": "ruling-h" },
+      h("div", {}, h("p", { class: "eyebrow" }, "The ruling"), h("h2", { id: "ruling-h", class: "verdict-word" }, v.label), scopeEl, why ? h("p", { class: "verdict-scope" }, why) : null, chipsEl),
+      h("div", {}, h("p", { class: "eyebrow" }, "Regional change"), numEl, actionsEl),
+      notesEl);
 
   // ---------------------------------------------------------------- the exhibit area: one View selector, one mounted view at a time
   let anomYear, distPeriod, mapHost = null, infoHost = null;

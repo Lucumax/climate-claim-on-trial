@@ -47,6 +47,19 @@ export function copyButton(label, getText, filename, what = "Finding") {
 export const clinicSlot = (caseId) => h("div", { class: "clinic-slot", id: "clinic-slot", "data-case": caseId });
 
 // Neutral provenance chips: what kind of data this is, never a warning color.
+// The sentence that must travel with every withheld ruling, so a screenshot of the ruling keeps its meaning.
+export const WITHHELD_LINE = "Withheld describes this tool's limits; it does not establish that the claimed change is absent.";
+
+// One compact scope line for a ruling: variable, region, years, source type, and what the ruling cannot establish.
+const CANNOT = { supported: "why the value changed, what happens next, or anything outside this region, season and period", partly_supported: "why the value changed, what happens next, or how widespread the change is", not_supported: "that nothing changed: it says only that this record does not show the claimed change at the registered bar", contradicted: "why the value changed, or what happens next", withheld: "a calibrated significance finding for this record, or why the value changed" };
+export function scopeParts(c, range) {
+  const model = c.data_kind === "model_reanalysis";
+  const variable = String(c.variable.plain || c.variable.name).replace(/\s*\(.*$/, "").trim();
+  const where = String(c.region.name).replace(/^the /i, "");
+  const src = `${model ? "model output (reanalysis), not a direct measurement" : "satellite observation"}`;
+  return { variable: variable.charAt(0).toUpperCase() + variable.slice(1), where: where.charAt(0).toUpperCase() + where.slice(1), years: range(c.period.start, c.period.end), src, cannot: CANNOT[c.verdict.branch] || CANNOT[c.verdict.id] || CANNOT.supported };
+}
+
 export const kindChip = kind => h("span", { class: "chip" }, kind === "model_reanalysis" ? "Model-based data" : "Satellite observation");
 
 export const disc = (title, ...kids) => h("details", { class: "disc" }, h("summary", {}, title), h("div", { class: "disc-body" }, ...kids));

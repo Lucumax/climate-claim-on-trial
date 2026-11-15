@@ -18,10 +18,10 @@ export function method(b) {
   const stage = (n, title, ...kids) => h("section", { class: "stage", "aria-labelledby": "st" + n }, h("span", { class: "stage-n", "aria-hidden": "true" }, String(n)), h("div", {}, h("h2", { id: "st" + n }, title), ...kids));
   return { title: "Method", node: howShell("method", h("div", { class: "prose" },
     h("header", { class: "page-head" }, h("h1", { id: "page-title", tabindex: "-1" }, "How a trend gets tested"),
-      h("p", { class: "lede" }, "A trend is a claim about the past. Four stages decide how far to believe it, and each one can make the answer stronger or weaker.")),
+      h("p", { class: "lede" }, "We examine specific trend claims for a stated measurement, place and period. Four stages decide how far to believe each one, and each can make the answer stronger or weaker.")),
     stage(1, "Fix the question first",
-      h("p", {}, "A case file begins with a written claim: a variable, a region, a season and a period. We wrote ours down before downloading any claim data, so the question could not be bent to fit the answer."),
-      why("If you may choose the years after seeing the data, you may choose the answer. The Home page shows one record that supports opposite headlines."),
+      h("p", {}, "A case file begins with a written claim: a variable, a region, a season and a period. We wrote ours down before downloading any claim data, so the question could not change after we saw the answer."),
+      why("If the years are chosen after seeing the data, the choice can change the answer. The Home page shows one record whose estimated trend changes sign with the years."),
       h("p", {}, "Investigate works the other way round: you choose everything, so its result is labeled exploratory. Our rule is: questions registered; methods amended and disclosed; final gate frozen. The case questions were registered in advance, but the methods were amended: two on simulated data before any result, and the validation gate after the results. ", h("a", { href: "#/data/registration" }, "Read what changed and when"), ".")),
     stage(2, "Measure how much changed",
       h("p", {}, "The Sen slope is the median of the slopes between every pair of years. One odd year barely moves it. We report it per decade with a 95% interval, and draw the ordinary least squares line beside it as the familiar baseline."),

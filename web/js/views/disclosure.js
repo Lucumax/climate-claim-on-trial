@@ -19,6 +19,7 @@ const MEM = "Year-to-year memory is how much each year's value resembles the yea
 // ------------------------------------------------------------------ two to four lines under the ruling
 const BRIEF = {
   "C-A": [
+    "This case concerns summer daytime land surface temperature in the stated region and years. Its descriptive cooling slope does not establish a broader regional climate trend; the ruling is withheld.",
     "This is a satellite record whose observation time changed. Against station air temperature, MODIS already trails by about 0.5 °C per decade over 2001 to 2020 (p = 0.003), before the orbit drift, so the drift does not explain the whole gap.",
     "The ruling is withheld because our own checks failed, not because the trend is zero.",
   ],
@@ -37,7 +38,7 @@ const BRIEF = {
     "Three smoke summers (2021, 2023, 2025) carry the rise in a reviewer's check, and Aqua's later overpass since 2021 is flagged in our library but not removed here. A plain t-test gives p = 0.04; the sensitivity check is not stable.",
   ],
   "C-E1": [
-    "Known limit of our gate: it reads a curved trend as year-to-year memory and withholds. In a simulation of a clean curved decline like this one, the gate gave a verdict in 0 of 2,000 runs. That is a weakness of the method, not a finding about NO₂.",
+    "The record declines. Our straight-line procedure can mistake a bending trend for year-to-year dependence, so it gives no calibrated significance finding here. In a simulation of a clean curved decline like this one, the gate gave a verdict in 0 of 2,000 runs. That is a weakness of the method, not a finding about NO₂.",
     "A trend this strong would be rare in no-trend series even at memory 0.8 (exploratory, below); the case for the decline rests on outside knowledge of emission controls, not on this series alone.",
   ],
   "C-E2": [

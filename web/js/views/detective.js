@@ -7,7 +7,7 @@ import { worldMap } from "../worldmap.js";
 import { fetchMonthly, validateBox, planBox } from "../live.js";
 import { analyzeRows, stepInfo, detectiveVerdict, exploratoryGate, STATS_VERSION } from "../stats.js";
 import { trendChart } from "../chart.js";
-import { disc, copyButton } from "./common.js";
+import { disc, copyButton, WITHHELD_LINE } from "./common.js";
 import { monthlyData } from "../viz/monthly.js";
 import { groupVariables } from "./pages.js";
 import { loadLibrary, libraryPlan, libraryRegional, completeSeasons, isWorld, periodNote, pastQuality, WORLD } from "../library.js";
@@ -404,24 +404,33 @@ export function detective(cat, bundle, query = "") {
     if (!failed.length) failed.push("The calibration check did not pass for this record.");
     return { setting, failed };
   }
+  // One compact scope line shown on every Investigate ruling: variable, place, years, source type, and what the ruling cannot establish.
+  function scopeEl(R, extra) {
+    const model = R.v.src === "power" || R.v.kind === "model_output";
+    return h("p", { class: "scope-line" }, h("b", {}, "Scope. "), `${R.v.name} · ${isWorld(R.box) ? "the whole world" : boxStr(R.box)} · ${R.season.name} · ${R.y0}–${R.y1} · ${model ? "model output, not a direct measurement" : "satellite observation"}. `, h("b", {}, "Cannot establish: "), `why the value changed or what comes next${extra || ""}.`);
+  }
   // The ruling is a compact aside. The word comes from the same rule as before; the longer reading notes are in a disclosure.
   function rulingLite(L) {
     const { W, R, rungs } = L, A = W.A_an, g = rulingLabel(L), { sig, weak, pRaw, pFin } = g, gate = W.gate, u = U(R.v.units), slope = A.sen.slopePerDecade, ci = A.sen.intervalPerDecade;
     if (g.noVerdict) return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
       h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Not calibrated")),
-      h("h3", { class: "ruling-h" }, g.label),
-      h("p", { class: "callout", role: "note" }, h("b", {}, "Withheld. "), gate.caveat, " Shorten the period to end in ", String(R.v.goodLast), " to exclude the flagged months. The revised record will be checked again."),
-      h("p", { class: "muted" }, `Described only: the Sen slope is ${signed(slope, 3)} ${u} per decade. It is not a basis for a conclusion.`));
+      h("h3", { class: "ruling-h" }, g.label), scopeEl(R, "; this is your own exploration, not a registered test"),
+      h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "1. What the record shows"), h("p", { class: "muted" }, `Described only: the Sen slope is ${signed(slope, 3)} ${u} per decade. It is not a basis for a conclusion.`)),
+      h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "2. What the tool can conclude"), h("p", { class: "callout", role: "note" }, gate.caveat, " Shorten the period to end in ", String(R.v.goodLast), " to exclude the flagged months. The revised record will be checked again.")),
+      h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "3. Why the distinction matters"), h("p", { class: "withheld-line" }, WITHHELD_LINE)));
     if (!g.calibrated) {
       const f = calibrationFacts(gate, R);
       return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
         h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), h("span", { class: "chip warn" }, "Calibration failed")),
-        h("h3", { class: "ruling-h" }, g.label),
-        h("p", {}, `The record ${moves(slope)}, but this analysis ${EXPLORATORY_SUB}.`),
-        h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip neutral" }, `Descriptive p ${fmtP(pFin)}` + (pFin < 0.001 ? ` (${pFin.toPrecision(2)})` : ""))),
-        h("p", { class: "muted small" }, `The p-value is shown as a description only (${fmtP(pRaw) === fmtP(pFin) ? `p ${fmtP(pFin)} both at the start and after the correction` : `p ${fmtP(pRaw)} at the start, ${fmtP(pFin)} after the correction`} for year-to-year persistence). It is not read as a significance finding.`),
-        h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u)),
-        h("div", { class: "callout", role: "note" }, h("b", {}, "Why the calibration failed. "), h("ul", { class: "calib-list" }, f.failed.map(t => h("li", {}, t))), h("p", { class: "muted small", style: "margin:8px 0 0" }, f.setting)),
+        h("h3", { class: "ruling-h" }, g.label), scopeEl(R, "; this is your own exploration, not a registered test, and its calibration failed"),
+        h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "1. What the record shows"),
+          h("p", {}, `The record ${moves(slope)}.`),
+          h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip neutral" }, `Descriptive p ${fmtP(pFin)}` + (pFin < 0.001 ? ` (${pFin.toPrecision(2)})` : ""))),
+          h("p", { class: "muted small" }, `The p-value is shown as a description only (${fmtP(pRaw) === fmtP(pFin) ? `p ${fmtP(pFin)} both at the start and after the correction` : `p ${fmtP(pRaw)} at the start, ${fmtP(pFin)} after the correction`} for year-to-year persistence). It is not read as a significance finding.`),
+          h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u))),
+        h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "2. What the tool can conclude"), h("p", {}, `This analysis ${EXPLORATORY_SUB}.`),
+          h("div", { class: "callout", role: "note" }, h("b", {}, "Why the calibration failed. "), h("ul", { class: "calib-list" }, f.failed.map(t => h("li", {}, t))), h("p", { class: "muted small", style: "margin:8px 0 0" }, f.setting))),
+        h("div", { class: "verdict-step" }, h("p", { class: "eyebrow" }, "3. Why the distinction matters"), h("p", {}, "A failed calibration describes this tool's limits. It does not show that the trend is real, and it does not show that it is absent.")),
         disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
           h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),
           h("p", { class: "muted small" }, (gate ? gate.label : "Your own exploration, not pre-registered") + ". The interval is exploratory: it has not passed a coverage check for your series.")));
@@ -436,7 +445,7 @@ export function detective(cat, bundle, query = "") {
     lines.push(h("p", { class: "muted" }, trendWords(R.v.name, slope, ci[0], ci[1], u)));
     return h("div", { class: "ruling-lite ruling-fade", role: "group", "aria-label": "Ruling" },
       h("div", { class: "chips" }, h("span", { class: "chip brass" }, "Exploratory analysis"), h("span", { class: "chip" }, "Final for these settings, after hearing 3"), h("span", { class: "chip" }, `Calibration checked at a nearby simulated setting (${gate.nGov} years, persistence ${gate.phiGov !== null && gate.phiGov !== undefined ? gate.phiGov : gate.phiHat.toFixed(2)}), not on the record itself. This record: ${gate.nValid} years, persistence ${gate.phiHat.toFixed(2)}, skew ${gate.skew.toFixed(2)}`)),
-      h("h3", { class: "ruling-h" }, g.label), h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip " + g.tone }, `p ${fmtP(pFin)}`)), ...lines,
+      h("h3", { class: "ruling-h" }, g.label), scopeEl(R, "; this is your own exploration, not a registered test"), h("div", { class: "chips", style: "margin-bottom:12px" }, h("span", { class: "chip " + g.tone }, `p ${fmtP(pFin)}`)), ...lines,
       h("p", { class: "muted small calib" }, calibrationFacts(gate, R).setting, " This is your own exploration, not a pre-registered test, and a p-value is not the probability that the trend is real."),
       disc("How to read this", h("p", {}, h("b", {}, "Sen trend. "), "The Sen slope is the median slope between pairs of years, so one odd year barely moves it."), h("p", {}, h("b", {}, "Caveat. "), "A trend alone does not say what caused it or what comes next." + (R.v.src === "power" ? " NASA POWER series for this variable are model-based, so a trend can reflect changes in the data sources as well as the climate." : "")),
         h("p", { class: "muted small" }, PERSISTENCE_CAVEAT),

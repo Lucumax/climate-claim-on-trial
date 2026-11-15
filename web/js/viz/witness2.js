@@ -75,7 +75,7 @@ function adaptKnmi(d) {
   const first = d.years[0], last = d.years[d.years.length - 1];
   const rain = id === "C-B", caseName = rain ? "IMERG satellite rainfall" : "MERRA-2 air temperature", pick = (s) => (s.mk_p_registered_method != null ? s.mk_p_registered_method : s.mk_p_independent_years),
     // Name the test behind every p-value shown: plain Mann-Kendall (every year independent) and the case's own method.
-    mname = (s) => String(s.registered_method_label || "the case's own test").replace(/ \(.*\)$/, ""),
+    mname = (s) => String(s.registered_method_label || "the case's own test").replace(/ \(.*\)$/, "").replace(/ p-value$/, ""),
     pTxt = (s, expl) => `plain Mann-Kendall p ${fp(s.mk_p_independent_years)}${s.mk_p_registered_method != null ? `; ${mname(s)} p ${fp(s.mk_p_registered_method)}${expl ? ", exploratory on this record" : ""}` : ""}`;
   const dir = ws.sen_per_decade * cs.sen_per_decade > 0 ? "the same direction as" : "the opposite direction to";
   const slower = Math.abs(ws.sen_per_decade) < Math.abs(cs.sen_per_decade) ? "slightly slower" : "slightly faster";

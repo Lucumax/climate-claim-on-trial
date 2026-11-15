@@ -24,13 +24,13 @@ const BRIEF = {
   ],
   "C-B": [
     "Significant under both tests we ran: p = 0.030 (first test, plain Mann-Kendall) and p = 0.004 (second test, written after we saw the first results). The first test was already valid, only cautious: the change bought power, not validity.",
-    "\"Partly supported\" reflects what a 25-season map can see: at this setting it finds only about 1% to 9% of cells that truly change, so a small flagged share does not mean a narrow change.",
+    "\"Partly supported\" reflects what a 25-season map can see: in our simulated map settings it finds between 0.7% and 24% of the cells that truly change (under 12% in eight of the ten settings), so a small flagged share does not mean a narrow change.",
     "IMERG blends changing satellite inputs and is adjusted to rain-gauge totals. The station check (CRU) shares many of those gauges, so it is a cross-check, not an independent measurement.",
     "The result holds only if this window's alternating wet and dry years are real. With year-to-year memory of 0.2 or more it is no longer significant (exploratory, below).",
   ],
   "C-C": [
     "This is model output (MERRA-2), not a direct measurement. Station records warm about 0.06 °C per decade slower (difference p = 0.018), and the box includes sea cells.",
-    "In simulated trendless series like this one that received a verdict, 7.4% were called significant (4.8% counting withheld ones). The ruling does not lean on that: a pattern this strong would be rare even at high memory (below).",
+    "In simulated trendless series like this one that received a verdict, 7.4% were called significant (4.8% counting withheld ones). That is above the 5% target, so treat the p-value as a little less strong than it looks. In an exploratory check (below), a pattern this strong would still be rare with no trend even at high memory.",
   ],
   "C-D": [
     "Our test is cautious here (it catches 23% of a real rise of the reference size) and the 42-cell map finds almost nothing, so \"not supported\" is not evidence that no rise happened.",
@@ -41,7 +41,7 @@ const BRIEF = {
     "A trend this strong would be rare in no-trend series even at memory 0.8 (exploratory, below); the case for the decline rests on outside knowledge of emission controls, not on this series alone.",
   ],
   "C-E2": [
-    "Withheld because of real year-to-year memory (0.39), not curvature: a clean curve of this shape would get a verdict in about two runs of three.",
+    "Withheld because year-to-year memory is 0.39. A clean curve of this shape would get a verdict in about two runs of three, so the withhold is not explained by this fitted curve alone.",
     "A trend this strong would be rare in no-trend series even at memory 0.8 (exploratory, below).",
   ],
 };
@@ -79,7 +79,7 @@ export function moreLimits(c) {
   if (c.id === "C-E1" || c.id === "C-E2") {
     out.push(P("Known limit: curved trends.", c.id === "C-E1"
       ? "The gate measures year-to-year memory around a straight line, so a trend that bends (steep at first, flatter later) looks like memory and the gate withholds. In a simulation of a clean curved decline shaped like this record, with no memory at all, the gate gave a verdict in 0 of 2,000 runs; with twice the noise in 13%, with four times in 59%. A cleaner signal is less likely to get a verdict."
-      : "The northern India series is not curved in this way: a clean curve of its shape with no memory would get a verdict in about 68% of simulated runs, and its own year-to-year memory (0.39) is above what that simulation gives. Its withhold comes from real memory, not curvature."));
+      : "The northern India series is not curved in this way: a clean curve of its shape with no memory would get a verdict in about 68% of simulated runs, and its own year-to-year memory (0.39) is above what that simulation gives. Its withhold is not explained by this fitted curve alone."));
     if (c.id === "C-E1") out.push(P("Footprint.", "The box (35 to 45 N, 90 to 70 W) includes Atlantic Ocean cells; there is no land mask."));
   }
   return out;
@@ -120,7 +120,12 @@ function build(c, ex) {
   if (id === "C-B" && ex.sahel_map) {
     const m = ex.sahel_map;
     kids.push(h("h3", {}, "The map under both tests"));
-    kids.push(h("p", {}, `The first test flags ${pctShare(m.round2_hr_all_lags.flagged_area_frac)} of the area (${m.round2_hr_all_lags.flagged_cells} cells); the second flags ${pctShare(m.round3_tfpw.flagged_area_frac)} (${m.round3_tfpw.flagged_cells} cells). In our simulations a map this size finds under 10% of the cells that truly change by the reference amount, so a low share is not evidence that the change is narrow.`));
+    const mp = m.map_power ? Object.entries(m.map_power).map(([k, v]) => [k, v.tfpw]).filter(x => x[1] != null) : [];
+    const uni = mp.filter(x => !/het/.test(x[0])).map(x => x[1]), het = mp.filter(x => /het/.test(x[0])).map(x => x[1]);
+    const power = mp.length && het.length && uni.length
+      ? `In ${mp.length} simulated map settings (25 seasons, cells that truly change by the reference amount), the second test finds ${pctShare(Math.min(...uni, ...het))} to ${pctShare(Math.max(...uni, ...het))} of them: ${pctShare(Math.max(...uni))} or less when every cell has the same memory level (0 to −0.7), and ${pctShare(Math.min(...het))} to ${pctShare(Math.max(...het))} in the two settings where memory differs from cell to cell. A low share is not evidence that the change is narrow.`
+      : "In our simulations a 25-season map finds only a small share of the cells that truly change, so a low share is not evidence that the change is narrow.";
+    kids.push(h("p", {}, `The first test flags ${pctShare(m.round2_hr_all_lags.flagged_area_frac)} of the area, in either direction (${m.round2_hr_all_lags.flagged_cells} cells); the second flags ${pctShare(m.round3_tfpw.flagged_area_frac)} (${m.round3_tfpw.flagged_cells} cells; ${pctShare(m.round3_in_bundle.flagged_in_direction_area_frac)} in the increasing direction, which is the figure in the ruling). ${power}`));
   }
   if (id === "C-E1" && ex.curved_decline_gate && ex.curved_decline_gate.cases["C-E1"]) {
     const cd = ex.curved_decline_gate.cases["C-E1"], n = ex.curved_decline_gate.R, b = cd.by_noise;
@@ -130,7 +135,7 @@ function build(c, ex) {
   if (id === "C-E2" && ex.curved_decline_gate && ex.curved_decline_gate.cases["C-E2"]) {
     const cd = ex.curved_decline_gate.cases["C-E2"], n = ex.curved_decline_gate.R;
     kids.push(h("h3", {}, "A clean curve of this record's shape"));
-    kids.push(h("p", {}, `The same simulation for this record gave a verdict in ${cd.by_noise.noise_x1.gate_released} of ${n.toLocaleString("en-US")} runs, and this record's own memory (${fmtNum(cd.real_series_lag1, 2)}) is above what the simulation gives. So the withhold is because of real memory, not curvature.`));
+    kids.push(h("p", {}, `The same simulation for this record gave a verdict in ${cd.by_noise.noise_x1.gate_released} of ${n.toLocaleString("en-US")} runs, and this record's own memory (${fmtNum(cd.real_series_lag1, 2)}) is above what the simulation gives. So the withhold is not explained by this fitted curve alone.`));
   }
   if (ex.witness_differences && id === "C-A") {
     const w = ex.witness_differences.C_A_station_minus_MODIS_Terra.period_2001_2020;

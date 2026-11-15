@@ -18,6 +18,7 @@ const NOT_SHOWN = "Not shown: failed its coverage check.";
 const caseNo = id => id.replace("-", "–");
 const fac = t => (t && t.factor != null ? t.factor.toFixed(2) : "n/a");
 const cap = s_ => s_.charAt(0).toUpperCase() + s_.slice(1);
+const HEARING_WORD = { 3: "three", 4: "four" };
 const HEARING_SHORT = { 1: "Raw test", 2: "Seasonal cycle", 3: "Memory correction", 4: "False discovery" };
 // A withheld case is a deliberate outcome. The reason is the bundle's own text, rendered as is (no web copy second-guesses the diagnosis).
 function plainReason(c) {
@@ -58,6 +59,7 @@ export function caseDocket(b, c, query = "") {
   // ---------------------------------------------------------------- the ruling summary (final; the map selector never changes it)
   const why = withheld ? plainReason(c) : [t ? `The regional trend is ${t.p < (t.alpha || 0.05) ? "significant" : "not significant"} at ${t.alpha || 0.05} (p = ${fmtPx(t.p)}).` : "The regional test is not shown because it did not pass its calibration check.",
     c.gate.cells ? `${pct(finalQ.flagged_fraction_claimed, 1)} of the mapped area is flagged in the claimed direction after hearing ${nL}.` : null,
+    v.id === "partly_supported" && c.id === "C-B" ? "Partly supported: the regional increase passes both regional tests (p = 0.030 and p = 0.004). The \"partly\" comes from the map, which flags a small share of the area, and a 25-season map has low power, so a small share does not mean a narrow change." : null,
     v.id === "not_supported" ? "Not supported means the record does not show the claimed change at the registered bar." + (c.conservative && c.conservative.length ? " The test is conservative for this record, so this is not evidence that the change did not happen." : " It is not proof that nothing changed.") : null].filter(Boolean).join(" ");
   // A round-3 rule change made after the results: show the round-2 numbers beside the current ones (round-2 numbers: data/round2_reference.json, matched to run.supersedes).
   const ruleNote = h("section", { class: "callout rule-change", role: "note", hidden: true, "aria-label": "Rule change after the results" });
@@ -156,6 +158,8 @@ export function caseDocket(b, c, query = "") {
         h("span", { class: "num" }, `${q[nk()]} of ${q.n_cells} cells (${pct(q[ck()], 1)})` + (q.cells_changed != null ? `; ${q.cells_changed} changed status from the previous hearing` : ""))),
       h("p", { class: "hearing-line" }, h("b", {}, q.label + ". "), q.changes),
       note ? h("details", { class: "quiet" }, h("summary", {}, "Why this count changed"), h("p", { class: "rung-note", style: "margin-top:8px" }, note)) : null,
+      c.id === "C-B" ? h("p", { class: "callout map-mismatch", role: "note" }, h("b", {}, "Caution for this map. "), "The regional series has year-to-year memory near −0.67, but the middle cell is near −0.16 and about a fifth of cells are above zero. The cell test was checked at memories like the region's, so the map is partly outside the range it was checked at (details under the exploratory checks, below).") : null,
+      h("p", { class: "small muted hearing-reuse" }, `The ${HEARING_WORD[nL] || nL} hearings reuse one dataset: they are ${HEARING_WORD[nL] || nL} ways to read the same data, not ${HEARING_WORD[nL] || nL} independent confirmations.`),
       h("p", { class: "map-null" }, "Not flagged means too little evidence, not no change." + (c.region.note ? " " + c.region.note : ""))].filter(Boolean));
     if (fade) { infoHost.classList.remove("ruling-fade"); void infoHost.offsetWidth; infoHost.classList.add("ruling-fade"); }
   }

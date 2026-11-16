@@ -51,6 +51,58 @@ export function guided(hookRoot, { showPlanet } = {}) {
   }
   function stopWatch() { if (mo) { mo.disconnect(); mo = null; } if (unmark) { unmark(); unmark = null; } }
 
+
+  // ------------------------------------------------------------ the pointer: an outline and a short "Press here" / "Drag this" label next to the control a step talks about
+  // Decorative (aria-hidden); the step text says the same thing in words. It sits around the control, never over it, and follows it if the chart redraws or the window moves.
+  const inHook = sel => () => hookRoot.querySelector(sel), inCard = sel => () => body.querySelector(sel);
+  const POINT = [
+    { find: () => [...hookRoot.querySelectorAll(".hk-globe-host .gt-label:not(.is-off)")].find(e => /Alaska/.test(e.textContent)), text: "Alaska is here", pref: ["below", "above", "right", "left"] },
+    { find: inHook("#hk-fig .win-grip"), text: "Drag this", pref: ["below", "above", "right", "left"] },
+    { find: inHook('.hk-chip[data-pick="full"]'), text: "Press here", pref: ["below", "above", "right", "left"] },
+    { find: inCard("#gd-planet"), text: "Press here", pref: [], ring: true }];
+  let hl = null, hlRaf = 0, hlKey = "", hlScrolled = false;
+  const reduceMotion = () => !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  function clearPoint() {
+    cancelAnimationFrame(hlRaf); hlRaf = 0; hlKey = "";
+    if (hl) { hl.ring.remove(); hl.tag.remove(); hl = null; }
+  }
+  function point(spec) {
+    clearPoint(); if (!spec) return; hlScrolled = false;
+    const ring = h("div", { class: "gd-hl", "aria-hidden": "true" }), tag = h("div", { class: "gd-hl-tag", "aria-hidden": "true" }, spec.text);
+    document.body.append(ring, tag); hl = { ring, tag, spec };
+    const tick = () => {
+      if (!hl) return;
+      hlRaf = requestAnimationFrame(tick);
+      const el = spec.find();
+      const r = el ? el.getBoundingClientRect() : null;
+      if (!r || (r.width < 2 && r.height < 2)) { ring.style.display = tag.style.display = "none"; return; }
+      if (!hlScrolled) {   // once per step: bring the control into view, only when it fits on screen together with the start of the step card (the card text comes first)
+        hlScrolled = true;
+        const hd = body.querySelector("#gd-step-h"), hr = hd ? hd.getBoundingClientRect() : null, hb = document.querySelector("header.top"), stuck = hb && getComputedStyle(hb).position === "sticky", top = (stuck ? Math.ceil(hb.getBoundingClientRect().bottom) + 36 : 12);
+        const lo = hr ? Math.min(r.top, hr.top) : r.top, hi = hr ? Math.max(r.bottom, hr.bottom + 60) : r.bottom;
+        let dy = 0;
+        if (hi - lo <= innerHeight - top - 12) { if (lo < top) dy = lo - top; else if (hi > innerHeight - 12) dy = hi - (innerHeight - 12); }
+        else if (hr && hr.top - r.top <= 1.1 * innerHeight && (r.top < top || r.bottom > innerHeight - 12)) dy = r.top - top;   // short screen: the control first, its step card just below it
+        if (Math.abs(dy) > 2) { scrollTo({ top: Math.max(0, scrollY + dy), behavior: reduceMotion() ? "auto" : "smooth" }); return; }
+      }
+      const sx = scrollX, sy = scrollY, vw = document.documentElement.clientWidth, vh = innerHeight, pad = 5, gap = 17, key = [r.left, r.top, r.width, r.height, sx, sy, vw, vh].map(Math.round).join();
+      if (key === hlKey) return; hlKey = key;
+      ring.style.display = tag.style.display = "";
+      Object.assign(ring.style, { left: `${r.left + sx - pad - 3}px`, top: `${r.top + sy - pad - 3}px`, width: `${r.width + 2 * (pad + 3)}px`, height: `${r.height + 2 * (pad + 3)}px` });
+      const tw = tag.offsetWidth, th = tag.offsetHeight, cx = r.left + r.width / 2, cy = r.top + r.height / 2, o = pad + 3 + gap;
+      const at = { below: [cx - tw / 2, r.bottom + o], above: [cx - tw / 2, r.top - o - th], right: [r.right + o, cy - th / 2], left: [r.left - o - tw, cy - th / 2] };
+      const fits = ([x, y], side) => { const hx = side === "below" || side === "above"; const xx = hx ? Math.min(Math.max(x, 8), vw - tw - 8) : x; return xx >= 4 && xx + tw <= vw - 4 && y >= 4 && y + th <= vh - 4; };
+      const side = spec.pref.find(sd => fits(at[sd], sd)) || (spec.ring ? null : spec.pref[0]);
+      tag.style.display = side ? "" : "none";   // a control inside the step card: the outline alone, so the label never sits on the step text or a neighbouring button
+      if (!side) return;
+      let [x, y] = at[side];
+      if (side === "below" || side === "above") x = Math.min(Math.max(x, 8), vw - tw - 8);
+      tag.dataset.side = side; tag.style.setProperty("--ax", `${Math.min(Math.max(cx - x, 14), tw - 14)}px`);
+      Object.assign(tag.style, { left: `${x + sx}px`, top: `${y + sy}px` });
+    };
+    hlRaf = requestAnimationFrame(tick);
+  }
+
   // ------------------------------------------------------------ rendering
   let fb = null;
   function setFeedback(t, polite) { if (!fb) return; fb.textContent = t; if (polite) announce(t); }
@@ -131,11 +183,12 @@ export function guided(hookRoot, { showPlanet } = {}) {
     body.hidden = false; root.classList.add("is-open");
     body.replaceChildren(...[S.step <= 3 ? progress() : null, ...view()].filter(Boolean));
     const hh = body.querySelector("#gd-step-h"); if (hh) hh.focus({ preventScroll: false });
+    point(POINT[n]);
     announce(S.step === 5 ? "You've finished." : S.step === 4 ? "Exit question." : `Step ${n + 1} of 4: ${STEPS[n]}.`);
   }
   function close() {
-    stopWatch(); S.step = -1; body.hidden = true; body.replaceChildren(); root.classList.remove("is-open"); root.hidden = true; startBtn.setAttribute("aria-expanded", "false"); startBtn.focus();
+    stopWatch(); clearPoint(); S.step = -1; body.hidden = true; body.replaceChildren(); root.classList.remove("is-open"); root.hidden = true; startBtn.setAttribute("aria-expanded", "false"); startBtn.focus();
   }
   startBtn.addEventListener("click", () => { if (S.step < 0) go(0); else { const hh = body.querySelector("#gd-step-h"); if (hh) hh.focus(); else root.scrollIntoView({ block: "start" }); } });
-  return { node: root, dispose() { stopWatch(); startBtn.remove(); } };
+  return { node: root, dispose() { stopWatch(); clearPoint(); startBtn.remove(); } };
 }

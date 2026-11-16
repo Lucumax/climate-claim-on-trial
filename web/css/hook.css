@@ -315,3 +315,45 @@
 .hook[data-kind="rain"] { --up: var(--viz-cool-3); --down: var(--viz-warm-3); }
 /* the big number is text: mix toward the ink color so it keeps 4.5:1 or better on both backgrounds in both themes */
 .hook[data-kind="temp"], .hook[data-kind="haze"], .hook[data-kind="rain"] { --up-text: color-mix(in srgb, var(--up) 75%, var(--ink)); --down-text: color-mix(in srgb, var(--down) 75%, var(--ink)); }
+
+/* first-visit tour offer (tournudge.js): a small card, not a modal. Desktop: sits beside the hero buttons (the hero fills the screen, so there is no room below them) with a pointer to them; narrower screens: a compact card at the bottom of the screen. */
+.hook .hk-cta { position: relative; }
+.tour-nudge { z-index: 40; box-sizing: border-box; width: min(20rem, calc(100vw - 2 * var(--sp-3))); padding: var(--sp-3); background: var(--surface); color: var(--ink); border: 1px solid var(--edge); border-left: 4px solid var(--accent); border-radius: var(--radius); box-shadow: 0 6px 20px rgba(0, 0, 0, .3); }
+.tour-nudge[hidden] { display: none; }
+.tour-nudge .tn-t { margin: 0 0 6px; font-size: .9375rem; line-height: 1.3; }
+.tour-nudge .tn-b { display: flex; gap: var(--sp-2); }
+.tour-nudge .tn-b .btn, .tour-nudge .tn-b .btn-quiet { min-height: 44px; flex: 1 1 0; padding: 0 var(--sp-2); }
+@media (min-width: 1000px) {
+  .tour-nudge { position: absolute; left: calc(100% + 16px); bottom: -8px; width: 14.5rem; padding: 10px var(--sp-3); }
+  .tour-nudge::before { content: ""; position: absolute; left: -9px; bottom: 28px; width: 14px; height: 14px; background: var(--surface); border-left: 1px solid var(--edge); border-bottom: 1px solid var(--edge); transform: rotate(45deg); }
+}
+@media (max-width: 999px) {
+  .tour-nudge { position: fixed; left: var(--sp-3); bottom: var(--sp-3); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tour-nudge { animation: tn-in 260ms ease both; }
+  @keyframes tn-in { from { transform: translateY(6px); } to { transform: none; } }
+}
+
+/* the outline and short label ("Press here", "Drag this") that point at the control a guided step talks about (guided.js). Decorative: aria-hidden, no pointer events, drawn around the control and never over it. */
+.gd-hl, .gd-hl-tag { position: absolute; z-index: 15; pointer-events: none; }
+.gd-hl { box-sizing: border-box; border: 3px solid var(--accent); border-radius: 6px; }
+.gd-hl::after { content: ""; position: absolute; inset: -3px; border: 3px solid var(--accent); border-radius: 8px; opacity: 0; }
+.gd-hl-tag { box-sizing: border-box; padding: 4px 10px; font: 700 .875rem/1.3 var(--font-ui); white-space: nowrap; color: var(--on-primary); background: var(--primary); border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0, 0, 0, .3); }
+.gd-hl-tag::before { content: ""; position: absolute; width: 0; height: 0; border: 8px solid transparent; }
+.gd-hl-tag[data-side="below"]::before { top: -15px; left: var(--ax, 50%); margin-left: -8px; border-bottom-color: var(--primary); }
+.gd-hl-tag[data-side="above"]::before { bottom: -15px; left: var(--ax, 50%); margin-left: -8px; border-top-color: var(--primary); }
+.gd-hl-tag[data-side="right"]::before { left: -15px; top: 50%; margin-top: -8px; border-right-color: var(--primary); }
+.gd-hl-tag[data-side="left"]::before { right: -15px; top: 50%; margin-top: -8px; border-left-color: var(--primary); }
+@media (prefers-reduced-motion: no-preference) {
+  .gd-hl::after { animation: gd-ring 1.6s ease-out infinite; }
+  @keyframes gd-ring { 0% { opacity: .85; transform: scale(1); } 100% { opacity: 0; transform: scale(1.12); } }
+  .gd-hl-tag[data-side="below"] { animation: gd-bob-u 1.2s ease-in-out infinite; }
+  .gd-hl-tag[data-side="above"] { animation: gd-bob-d 1.2s ease-in-out infinite; }
+  .gd-hl-tag[data-side="right"] { animation: gd-bob-l 1.2s ease-in-out infinite; }
+  .gd-hl-tag[data-side="left"] { animation: gd-bob-r 1.2s ease-in-out infinite; }
+  @keyframes gd-bob-u { 50% { transform: translateY(-4px); } }
+  @keyframes gd-bob-d { 50% { transform: translateY(4px); } }
+  @keyframes gd-bob-l { 50% { transform: translateX(-4px); } }
+  @keyframes gd-bob-r { 50% { transform: translateX(4px); } }
+}

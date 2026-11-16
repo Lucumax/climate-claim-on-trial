@@ -3,6 +3,7 @@
 import { h } from "../util.js";
 import { hook } from "./hook.js";
 import { guided } from "./guided.js";
+import { tourNudge } from "./tournudge.js";
 
 // Run start() once node is near the viewport (or at once without IntersectionObserver). Returns a cancel function.
 export function whenNear(node, start, margin = "300px") {
@@ -29,6 +30,7 @@ export function landing(b) {
   const showPlanet = () => { const hd = faBand.querySelector("#fa-h"); if (!hd) return; hd.setAttribute("tabindex", "-1"); faBand.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); hd.focus({ preventScroll: true }); };
   const gd = hk ? guided(hk.node, { showPlanet }) : null;
   if (gd) { const g = hk.node.querySelector(".hk-below"); if (g) hk.node.insertBefore(gd.node, g); else hk.node.append(gd.node); }
+  const nd = gd ? tourNudge(hk.node) : null;   // first-visit offer of the guided route (non-modal; see tournudge.js)
   const ca = b.claims.find(q => q.id === "C-A");
   const wHostA = h("div", { class: "wit-host", style: "min-height:260px" }), wHostB = h("div", { class: "wit-host", style: "min-height:260px" });
   mountLive(wHostA, async () => { const [mod, d] = await Promise.all([import("../viz/witness.js"), getJson("data/witness/C-A.json")]); return mod.render(wHostA, d, { preview: true }); });
@@ -46,5 +48,5 @@ export function landing(b) {
   const fallbackHead = hk ? null : h("section", { class: "hero" }, h("h1", { id: "page-title", tabindex: "-1" }, "Same NASA record. Opposite headlines."), h("p", { class: "lede" }, "Pick a NASA measurement, a place and a period, and ask different questions of the same record."), h("div", { class: "actions" }, h("a", { class: "btn", href: "#/investigate" }, "Investigate a question")));
   return { title: "Same NASA record, opposite headlines", node: h("div", { class: "home" }, hk ? hk.node : null, fallbackHead, faBand, witBand, invite),
     afterMount() { if (hk) hk.start(); },
-    dispose() { dead = true; cancels.forEach(c => c()); if (hk) hk.dispose(); if (gd) gd.dispose(); handles.forEach(x => x && x.destroy && x.destroy()); } };
+    dispose() { dead = true; cancels.forEach(c => c()); if (hk) hk.dispose(); if (nd) nd.dispose(); if (gd) gd.dispose(); handles.forEach(x => x && x.destroy && x.destroy()); } };
 }

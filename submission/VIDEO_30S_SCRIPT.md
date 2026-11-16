@@ -26,6 +26,10 @@ Move the years yourself. Put a claim on trial.
 
 Word count: 7 + 13 + 12 + 13 + 10 + 9 = 64.
 
+## v3 note (final site, Nov 15)
+
+The v3 cut (`submission/video/out/..._v3.mp4`) re-records every shot against the final site (dark theme, 1280 px wide viewports). Same narration and block starts as v2. Shot 1 now runs the whole 0 to 8.46 s on the Home hero: the 1998-2012 window ("Alaska is cooling") is on screen from the first frame, the pointer presses the 1998-2012 and then the 2005-2019 preset, and the headline flips to "warming" about 6 s in. The ruling shot ends on the scope line (region, years, model output, MERRA-2). The last Home shot drags the years, turns the globe and presses the Sahel (colored). The listen check of block b2 (faster-whisper, two model sizes) hears "headlines" (plural), so the b2 caption and SRT say "headlines"; the line above this note still reads "headline". Details: `pipeline/README.md`.
+
 ## Shot table (delivered timing, v2)
 
 The times below are the delivered cut, read from `submission/video/pipeline/timing.json` and the SRT in `submission/video/out/` (the earlier planning targets are gone). Each shot starts with its narration block: 0.00, 3.08, 8.46, 12.56, 17.16 and 21.62 s; the end card starts at 25.7 s and the file is 29.3 s long (the cap is 29.5 s). Version v1 (the first cut) was re-cut as v2 with zoomed shots, so the case-page, false-alarm and ruling frames fill the picture; the narration text is unchanged. If `timing.json` changes again, change this table to match.

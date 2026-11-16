@@ -5,7 +5,7 @@
 *Investigate Earth-system trends with NASA data.* Team Earth on the Stand. NASA Space Apps Challenge 2026, "Be An Earth System Trend Detective!" (Local Event: Arlington, Virginia, virtual).
 
 **Live site:** https://lucumax.github.io/climate-claim-on-trial/
-**30-second video:** {{VIDEO_URL}}
+**30-second video:** https://youtu.be/_-iwXXr-gqM
 **Code (MIT license):** https://github.com/Lucumax/climate-claim-on-trial
 
 ## What it is
